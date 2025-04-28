@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schaltplan Dokumentation</title>
+    <style>
+        /* Modern, minimalistisches Design */
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #333333;
+            --accent-color: #4a6fa5;
+            --light-accent: #ebf0f7;
+            --border-color: #e0e0e0;
+            --pre-bg: #fafafa;
+            --warning-color: #ff5252;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            padding: 0;
+            margin: 0;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--accent-color);
+        }
+        
+        h2 {
+            font-size: 1.6rem;
+            font-weight: 500;
+            margin: 30px 0 20px 0;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--accent-color);
+        }
+        
+        h3 {
+            font-size: 1.3rem;
+            font-weight: 500;
+            margin: 25px 0 15px 0;
+            color: var(--accent-color);
+        }
+        
+        p {
+            margin-bottom: 15px;
+        }
+        
+        .circuit-container {
+            background-color: var(--pre-bg);
+            border-radius: 8px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        
+        .circuit-header {
+            background-color: var(--accent-color);
+            color: white;
+            padding: 10px 15px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        pre {
+            padding: 20px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.4;
+            white-space: pre;
+            background-color: var(--pre-bg);
+            border-radius: 0 0 8px 8px;
+        }
+        
+        .legend {
+            background-color: var(--light-accent);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .legend h3 {
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+        
+        .legend-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 10px;
+        }
+        
+        .legend-item {
+            margin-bottom: 8px;
+        }
+        
+        .legend-item strong {
+            color: var(--accent-color);
+        }
+        
+        .component {
+            padding: 15px 0;
+        }
+        
+        .component-name {
+            display: inline-block;
+            font-weight: 600;
+            color: var(--accent-color);
+            margin-bottom: 8px;
+        }
+        
+        .warning {
+            background-color: #fff8f8;
+            border-left: 4px solid var(--warning-color);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .warning strong {
+            color: var(--warning-color);
+        }
+        
+        .summary {
+            background-color: var(--light-accent);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 30px 0;
+        }
+        
+        .summary h3 {
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+        
+        ul {
+            padding-left: 20px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        section {
+            margin-bottom: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>RP2040/OV2640 Kamerasystem</h1>
+            <p>Schaltplan mit Buck-Boost-Wandler und P-Kanal MOSFET Verpolungsschutz</p>
+        </header>
+        
+        <section>
+            <h2>Schaltplan</h2>
+            <div class="circuit-container">
+                <div class="circuit-header">ASCII-Schaltplan</div>
+                <pre>
++-----------------------+      +-------+      +--------------------+      +-------------------------+      +----------------------+
+|    Li-Ion RCR123A     |      |       |      | P-FET Verpolungs-  |      | Buck-Boost Regler (U3)  |      |   RP2040 (z.B. Pico) |
+|  (BT1, 3.7V nominal)  |----->| SW1   |----->| Schutz (Q1+R/Z)    |----->| VIN         VOUT (+3.3V)|----->| 3V3(OUT) (Pin 36)    |------> +3.3V RAIL
++-----------------------+      | (On/  |      | (Low V-Drop)       |      |                         |      |         (U1)         |        |
+         |                     |  Off) |      +---------+----------+      | EN <---(Optional GP_EN)-|      |                      |        | C_dec1 (100nF)
+         | GND                 +-------+                |                 | SW/L (Pin(s) für L1)    |      | GND (multiple pins)  |<---+   | + C_bulk1 (10uF)
+         |  |                                           | GND             | (Requires L1, C_in, C_out)|      |                      |    |   |----------- GND
+         |  |                                           +---------------->| GND --------------------+----->|----(Verify 3V3_EN!)---|    |   |
+         |  |                                                             +-------------------------+      |                      |    |   |
+         |  |                                                                                              | **Kamera Interface** |    |   | +--------------------+
+         |  |                                                                                              |                      |    |   | |   OV2640 Kamera    |
+         |  |                                                                                              |        GP_PWDN (Out)|----|---+--->| PWDN               |
+         |  |                                                                                              |        GP_RESET(Out)|----|---+--->| RESET              |
+         |  |   +------------------------------------------------------------------------------------------+                      |    |   | |      (U2)          |
+         |  |   |                                                                                          |       **I2C/SCCB**   |    |   | |                    |
+         |  +---+------------------------------------------------------------------------------------------+          SDA (GP_SDA)|<---+---+-+>| SDA                |<-+ R1 (4k7) to +3.3V
+         |      |                                                                                          |          SCL (GP_SCL)|<---+---+-| SCL                |<-+ R2 (4k7) to +3.3V
+         |      |                                                                                          |                      |    |   | |                    |
+         |      |                                                                                          |       **Parallel Data**|    |   | |                    |
+         |      |      +-----------------------------------------------------------------------------------+ PCLK (GP_PIO_PCLK) |<---|---+---| PCLK               |
+         |      |      |                                                                                   | VSYNC(GP_PIO_VSYNC)|<---|---+---| VSYNC              |
+         |      |      |                                                                                   | HSYNC(GP_PIO_HSYNC)|<---|---+---| HSYNC              |
+         |      |      |                                                                                   | D0-D7(GP_PIO_D0_7) |<---|---+---| D0-D7              |
+         |      |      |                                                                                   |                      |    |   | |                    | C_dec2..n (100nF)
+         |      |      |   +-------------------------------------------------------------------------------+        **Clock**     |    |   | | + C_bulk2 (10uF)
+         |      |      |   |                                                                               |   XCLK (GP_PWM_XCLK)|----|---+--->| XCLK               |-------+
+         |      |      +---|-------------------------------------------------------------------------------+ VCC (from +3.3V) <---+    |   | |                    |       |
+         +------|-----------|------------------------------------------------------------------------------- GND    <------------+----+---|---| GND                |-------+-- GND
+                |           |                                                                               +----------------------+        | +--------------------+
+                +-----------+---- GND RAIL -----------------------------------------------------------------------------------------------+</pre>
+            </div>
+            
+            <div class="legend">
+                <h3>Komponenten</h3>
+                <div class="legend-grid">
+                    <div class="legend-item"><strong>BT1:</strong> Li-Ion Batterie (RCR123A/16340), 3.7V</div>
+                    <div class="legend-item"><strong>SW1:</strong> Ein/Aus Schalter (SPST)</div>
+                    <div class="legend-item"><strong>Q1+R/Z:</strong> P-Kanal MOSFET Verpolungsschutz</div>
+                    <div class="legend-item"><strong>U3:</strong> Buck-Boost DC/DC Wandler</div>
+                    <div class="legend-item"><strong>L1:</strong> Induktor für Buck-Boost</div>
+                    <div class="legend-item"><strong>U1:</strong> RP2040 Mikrocontroller</div>
+                    <div class="legend-item"><strong>U2:</strong> OV2640 Kameramodul</div>
+                    <div class="legend-item"><strong>R1, R2:</strong> I2C Pull-Up (4.7kΩ)</div>
+                    <div class="legend-item"><strong>C_dec, C_bulk:</strong> Entkopplungskondensatoren</div>
+                    <div class="legend-item"><strong>+3.3V RAIL:</strong> Stabilisierte Versorgung</div>
+                </div>
+            </div>
+        </section>
+        
+        <section>
+            <h2>Komponenten-Beschreibung</h2>
+            
+            <h3>Stromversorgung</h3>
+            
+            <div class="component">
+                <span class="component-name">BT1 (Quelle)</span>
+                <p>Wiederaufladbare Li-Ion Batterie (RCR123A / 16340), 3.7V nominal (ca. 3.0V - 4.2V).</p>
+            </div>
+            
+            <div class="component">
+                <span class="component-name">SW1 (Schalter)</span>
+                <p>SPST Hauptschalter.</p>
+            </div>
+            
+            <div class="component">
+                <span class="component-name">Q1+R/Z (Verpolungsschutz)</span>
+                <p>P-Kanal MOSFET-basierte Schutzschaltung nach dem Schalter. Verhindert Schäden bei falscher Batteriepolung und weist im Normalbetrieb einen sehr geringen Spannungsabfall auf (deutlich besser als eine Diode), was die Effizienz erhöht und die nutzbare Batteriespannung maximiert.</p>
+            </div>
+            
+            <div class="component">
+                <span class="component-name">U3 (Spannungsregler)</span>
+                <p>Buck-Boost DC/DC Wandler. Nimmt die variable Batteriespannung (VIN, 3.0V - 4.2V) auf und erzeugt eine stabile 3.3V Ausgangsspannung (VOUT). Diese Topologie stellt sicher, dass 3.3V auch dann verfügbar sind, wenn die Batteriespannung unter 3.3V fällt.</p>
+                
+                <p><strong>Auswahlkriterien:</strong> Geeigneter Eingangsspannungsbereich, Ausgangsstromfähigkeit, hohe Effizienz, geringer Ruhestrom (Iq), geeignete Schaltfrequenz.</p>
+                
+                <p><strong>Externe Komponenten:</strong> Induktor (L1), Eingangs- (C_in) und Ausgangskondensatoren (C_out). Die genauen Werte müssen dem Datenblatt des Buck-Boost ICs entnommen werden.</p>
+                
+                <p><strong>Enable Pin (EN):</strong> Optional vom RP2040 GPIO (GP_EN) steuerbar für Stromsparfunktionen.</p>
+            </div>
+            
+            <h3>Mikrocontroller</h3>
+            
+            <div class="component">
+                <span class="component-name">U1 (RP2040)</span>
+                <p>Zentraler Prozessor. Versorgung über 3V3(OUT)-Pin (Pin 36 am Pico) von der +3.3V RAIL.</p>
+                
+                <div class="warning">
+                    <strong>Wichtig:</strong> Die Versorgung über 3V3(OUT) muss anhand des offiziellen Raspberry Pi Pico Datenblatts geprüft werden. Insbesondere die korrekte Beschaltung des 3V3_EN Pins (Pin 37). Alternativ könnte die Versorgung über VSYS (Pin 39) mit den stabilen 3.3V des Buck-Boost erfolgen.
+                </div>
+            </div>
+            
+            <h3>Kamera-Interface</h3>
+            
+            <div class="component">
+                <span class="component-name">U2 (OV2640 Kameramodul)</span>
+                <p>Bildsensor. Versorgung von der stabileren +3.3V RAIL. Pull-Ups (R1, R2) und Steuersignale (PWDN, RESET) sind essenziell.</p>
+            </div>
+            
+            <h3>Masseführung</h3>
+            
+            <div class="component">
+                <p>Eine solide Massefläche ist unerlässlich. Schaltstrompfade (um U3, L1, C_in, C_out) müssen kurz und kompakt gehalten werden, um EMI zu minimieren. Getrennte Massebereiche für den Schaltregler und die empfindlichere Analog-/Digital-Logik können sinnvoll sein.</p>
+            </div>
+            
+            <div class="summary">
+                <h3>Zusammenfassung der Änderungen</h3>
+                <ul>
+                    <li><strong>Spannungsregler:</strong> LDO durch Buck-Boost Wandler (U3) ersetzt für stabile 3.3V über den gesamten Batterie-Entladebereich</li>
+                    <li><strong>Verpolungsschutz:</strong> Schottky-Diode durch P-Kanal MOSFET Schaltung ersetzt für minimalen Spannungsabfall</li>
+                    <li><strong>Externe Komponenten:</strong> Spezifikation von Induktor (L1) und Kondensatoren (C_in/C_out) für U3</li>
+                    <li><strong>RP2040 Versorgung:</strong> Verifizierung der korrekten Versorgung über 3V3(OUT) vs. VSYS</li>
+                    <li><strong>Layout:</strong> Optimierung für Buck-Boost-Wandler mit kurzen Leiterbahnen</li>
+                </ul>
+                <p>Der nächste Schritt ist die Auswahl spezifischer ICs (Buck-Boost, P-FET), die Festlegung der GPIOs und die Erstellung des detaillierten Schaltplans und Leiterplattenlayouts.</p>
+            </div>
+        </section>
+    </div>
+</body>
+</html>

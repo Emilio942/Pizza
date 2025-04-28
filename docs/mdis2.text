@@ -1,0 +1,437 @@
+Okay, ich integriere die spezifischen Bauteilauswahlen in den konzeptionellen Schaltplan und die Beschreibung. Die Struktur ist logisch und die Bauteile passen gut zusammen.
+
+1. Final Überarbeiteter Schaltplan (Konzeptionell, ASCII-Art - Mit spezifischen Bauteilen)
+
++-----------------------+      +-------+      +--------------------+      +-------------------------+      +----------------------+
+|    Li-Ion RCR123A     |      |       |      | P-FET Verp.-Schutz |      | Buck-Boost: TPS63031    |      |   RP2040 (Pico)      |
+|  (BT1, 3.7V nominal)  |----->| SW1   |----->| Q1: DMP2104L       |----->| U3 (WSON-10)            |----->| 3V3(OUT) (Pin 36)    |------> +3.3V RAIL
++-----------------------+      | (On/  |      | R_G: 100k to GND   |      | VIN         VOUT (+3.3V)|      |         (U1)         |        |
+         |                     |  Off) |      | (Low V-Drop)       |      |                         |      |                      |        | C_dec1 (100nF)
+         | GND                 +-------+      +---------+----------+      | EN <---(Optional GP_EN)-|      | *PIN 37 (3V3_EN)* -->|----GND | + C_bulk1 (10uF)
+         |  |                                           |                 |                         |      |                      |    |   |----------- GND
+         |  |                                           | GND             | L1(1.5µH) <---> SW Pin  |      | GND (multiple pins)  |<---+   |
+         |  |                                           +---------------->| PGND --+-- C_in(10µF)   |      |                      |    |   |
+         |  |                                                             | GND  ---+-- C_out(22µF) |----->|----(Siehe Hinweis!)---|    |   |
+         |  |                                                             +-------------------------+      |                      |    |   |
+         |  |                                                                                              | **Kamera Interface** |    |   | +--------------------+
+         |  |                                                                                              |                      |    |   | |   OV2640 Kamera    |
+         |  |                                                                                              |        GP_PWDN (Out)|----|---+--->| PWDN               |
+         |  |                                                                                              |        GP_RESET(Out)|----|---+--->| RESET              |
+         |  |   +------------------------------------------------------------------------------------------+                      |    |   | |      (U2)          |
+         |  |   |                                                                                          |       **I2C/SCCB**   |    |   | |                    |
+         |  +---+------------------------------------------------------------------------------------------+          SDA (GP_SDA)|<---+---+-+>| SDA                |<-+ R1 (4k7) to +3.3V
+         |      |                                                                                          |          SCL (GP_SCL)|<---+---+-| SCL                |<-+ R2 (4k7) to +3.3V
+         |      |                                                                                          |                      |    |   | |                    |
+         |      |                                                                                          |       **Parallel Data**|    |   | |                    |
+         |      |      +-----------------------------------------------------------------------------------+ PCLK (GP_PIO_PCLK) |<---|---+---| PCLK               |
+         |      |      |                                                                                   | VSYNC(GP_PIO_VSYNC)|<---|---+---| VSYNC              |
+         |      |      |                                                                                   | HSYNC(GP_PIO_HSYNC)|<---|---+---| HSYNC              |
+         |      |      |                                                                                   | D0-D7(GP_PIO_D0_7) |<---|---+---| D0-D7              |
+         |      |      |                                                                                   |                      |    |   | |                    | C_dec2..n (100nF)
+         |      |      |   +-------------------------------------------------------------------------------+        **Clock**     |    |   | | + C_bulk2 (10uF)
+         |      |      |   |                                                                               |   XCLK (GP_PWM_XCLK)|----|---+--->| XCLK               |-------+
+         |      |      +---|-------------------------------------------------------------------------------+ VCC (from +3.3V) <---+    |   | |                    |       |
+         +------|-----------|------------------------------------------------------------------------------- GND    <------------+----+---|---| GND                |-------+-- GND
+                |           |                                                                               +----------------------+        | +--------------------+
+                +-----------+---- GND RAIL -----------------------------------------------------------------------------------------------+
+
+
+2. Final Überarbeitete Beschreibung der Schaltungskomponenten und Verbindungen (mit spezifischen Teilen)
+
+Stromversorgung (Power Supply Unit):
+
+BT1 (Quelle): Wiederaufladbare Li-Ion Batterie (RCR123A / 16340), 3.7V nominal (ca. 3.0V - 4.2V).
+
+SW1 (Schalter): SPST Hauptschalter.
+
+Verpolungsschutz:
+
+Q1: P-Kanal MOSFET DMP2104L (SOT-23). Sorgt für sehr geringen Spannungsabfall im Normalbetrieb (typ. < 30mV bei 250mA).
+
+R_G: 100kΩ Widerstand zwischen Gate (G) von Q1 und GND. Zieht das Gate auf GND, wenn die Batterie korrekt eingelegt ist, und schaltet Q1 ein.
+
+U3 (Spannungsregler): Buck-Boost DC/DC Wandler Texas Instruments TPS63031DSKR (WSON-10).
+
+Nimmt die variable Batteriespannung (VIN, ca. 3.0V - 4.2V nach Q1) auf.
+
+Erzeugt eine stabile 3.3V Ausgangsspannung (VOUT) für die +3.3V RAIL.
+
+Eingangsspannungsbereich: 1.8V - 5.5V.
+
+Ausgangsstrom: Bis ca. 400mA bei VIN=3.0V, >500mA bei höheren VIN (ausreichend).
+
+Hohe Effizienz (bis 96%), niedriger Ruhestrom (typ. 20µA).
+
+Verfügt über einen Enable Pin (EN), der optional von einem RP2040 GPIO (GP_EN) gesteuert werden kann, um den Wandler abzuschalten (z.B. für Tiefschlaf).
+
+Externe Komponenten für U3 (TPS63031):
+
+L1 (Induktor): 1.5µH. Wichtig: Niedriger DCR (<100mΩ), Sättigungsstrom I_sat > 1.0A (z.B. Murata DFE252012P-H-1R5M=P2 oder Würth 7440430015). Muss nahe am SW-Pin von U3 platziert werden.
+
+C_in (Eingangskondensator): 10µF, 10V, X7R Keramik (z.B. 0603). Sehr nahe an VIN und PGND Pins von U3 platzieren.
+
+C_out (Ausgangskondensator): 22µF, 10V, X7R Keramik (z.B. 0805). Sehr nahe an VOUT und PGND Pins von U3 platzieren.
+
++3.3V RAIL: Die vom TPS63031 stabilisierte 3.3V Versorgungsschiene.
+
+Entkopplung: Wie zuvor beschrieben (C_dec = 100nF Keramik, C_bulk = 10µF Keramik/Tantal) an U1 und U2 sowie die spezifischen C_in/C_out an U3.
+
+Mikrocontroller (Microcontroller Unit):
+
+U1 (RP2040): Zentraler Prozessor (z.B. Raspberry Pi Pico Modul).
+
+Versorgung: Über Pin 36 (3V3(OUT)) von der +3.3V RAIL.
+
+WICHTIGE BESCHALTUNG (gemäß Pico Datenblatt): Wenn der Pico über Pin 36 (3V3(OUT)) versorgt wird, muss Pin 37 (3V3_EN) direkt mit GND verbunden werden, um den internen SMPS des Pico zu deaktivieren. Dies ist im ASCII-Diagramm nun explizit dargestellt.
+
+Kamera-Interface (Camera Interface):
+
+U2 (OV2640 Camera Module): Bildsensor. Versorgung und Anschlüsse wie zuvor, von der stabilen +3.3V RAIL gespeist.
+
+R1, R2: I2C/SCCB Pull-Up Widerstände (4.7kΩ) nach +3.3V RAIL.
+
+Steuersignale: PWDN, RESET (aktiv Low, oft), XCLK etc. über RP2040 GPIOs.
+
+Datenleitungen: I2C/SCCB (SDA, SCL), Parallel Data (D0-D7, PCLK, VSYNC, HSYNC) über RP2040 GPIOs (ggf. über PIO).
+
+Masseführung (Grounding):
+
+Besonders kritisch wegen des Schaltreglers (TPS63031).
+
+Solide Massefläche verwenden.
+
+Layout für U3: Die Stromschleife (C_in -> U3 -> L1 -> U3 -> C_out -> GND -> C_in) muss extrem kurz und kompakt sein. C_in und C_out direkt an die IC-Pins (VIN/PGND und VOUT/PGND). PGND des ICs direkt mit der Massefläche verbinden (ggf. über Vias, wenn auf der Unterseite). Layout-Empfehlungen im TPS63031 Datenblatt (Abschnitt 10) unbedingt beachten.
+
+Zusammenfassung der finalen Änderungen mit spezifischen Teilen:
+
+Verpolungsschutz: Q1 = DMP2104L, R_G = 100kΩ.
+
+Spannungsregler: U3 = TPS63031DSKR.
+
+Externe Regler-Komponenten: L1 = 1.5µH, C_in = 10µF, C_out = 22µF (spezifische Typen/Ratings beachten).
+
+RP2040 Versorgung: Expliziter Hinweis und Darstellung der Verbindung von Pin 37 (3V3_EN) nach GND bei Versorgung über Pin 36.
+
+Layout-Hinweise: Erneut betont, speziell für den TPS63031.
+
+Dieser Plan integriert die spezifischen Bauteile und stellt eine solide, technisch fundierte Basis für den detaillierten Schaltplan und das PCB-Layout dar. Die gewählten Komponenten sind gut aufeinander abgestimmt und für die Anwendung geeignet.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Absolut! Hier ist der detaillierte Schaltplan, der auf den vorherigen Überlegungen und den spezifischen Bauteilen basiert. Da ich keine grafische Software ausführen kann, beschreibe ich den Schaltplan detailliert und verwende Standardbezeichnungen. Stell dir dies als eine Anleitung vor, um den Schaltplan in einem EDA-Tool (wie KiCad, Eagle, Altium) zu zeichnen.
+
+Detaillierter Schaltplan: RP2040 Kamera mit Li-Ion Versorgung
+
+1. Stromversorgungseingang und Schutz
+
+BT1 (Batterieanschluss):
+
+Typ: 2-Pin Anschluss (z.B. JST PH 2-Pin oder Lötpads) für RCR123A / 16340 Li-Ion Zelle.
+
+Pin 1: BAT+ (+3.0V bis +4.2V)
+
+Pin 2: BAT- (GND)
+
+Verbindung Pin 2 (BAT-) direkt mit der Hauptmassefläche (GND).
+
+SW1 (Hauptschalter):
+
+Typ: SPST Schalter (z.B. Schiebeschalter, Kippschalter).
+
+Pin 1: Eingang, verbunden mit BAT+ von BT1.
+
+Pin 2: Ausgang, verbunden mit dem Drain von Q1.
+
+Q1 (Verpolungsschutz P-FET):
+
+Bauteil: DMP2104L (SOT-23 Gehäuse).
+
+Pin 1 (Gate): Verbunden mit R_G.
+
+Pin 2 (Source): Verbunden mit dem Netz VBATT_PROT. Dies ist die geschützte Batteriespannung.
+
+Pin 3 (Drain): Verbunden mit dem Ausgang von SW1.
+
+R_G (Gate Widerstand für Q1):
+
+Wert: 100kΩ (Gehäuse z.B. 0603).
+
+Pin 1: Verbunden mit Q1 Pin 1 (Gate).
+
+Pin 2: Verbunden mit GND.
+
+2. Buck-Boost Spannungsregler (U3)
+
+U3 (Buck-Boost IC):
+
+Bauteil: Texas Instruments TPS63031DSKR (WSON-10 Gehäuse).
+
+Pin 9 (VIN): Verbunden mit VBATT_PROT (Source von Q1).
+
+Pin 5 (VINA): Verbunden mit Pin 9 (VIN).
+
+Pin 1 (PGND): Verbunden mit GND (Power Ground). Direkt an die Massefläche unter dem IC anbinden.
+
+Pin 10 (PGND): Verbunden mit GND (Power Ground). Direkt an die Massefläche unter dem IC anbinden.
+
+Thermal Pad: Verbunden mit GND (Power Ground). Mehrere Vias zur Massefläche verwenden.
+
+Pin 6 (GND): Verbunden mit GND (Analog Ground). Sternförmig mit PGND nahe am IC verbinden.
+
+Pin 4 (EN): Verbunden mit RP2040 GPIO Pin GP_EN. Optional: Alternativ direkt an Pin 9 (VIN) für 'always on'. Wenn vom RP2040 gesteuert, sicherstellen, dass der Pin aktiv HIGH gezogen wird, um den Regler zu aktivieren. Ein optionaler Pull-Up Widerstand (z.B. 100kΩ nach VIN) kann sinnvoll sein, wenn der RP2040 Pin initial nicht definiert ist.
+
+Pin 8 (L1): Verbunden mit einer Seite von L1.
+
+Pin 7 (L2): Verbunden mit der anderen Seite von L1.
+
+Pin 2 (VOUT): Verbunden mit dem Netz +3.3V. Dies ist die Hauptversorgungsspannung für RP2040 und Kamera. Auch verbunden mit Pin 3 (FB) und C_out.
+
+Pin 3 (FB): Verbunden mit Pin 2 (VOUT).
+
+C_in (Eingangskondensator):
+
+Wert: 10µF, 10V, X7R Keramik (Gehäuse z.B. 0603 oder 0805).
+
+Pin 1: Verbunden mit Pin 9 (VIN) von U3. Platzierung: Sehr nahe an U3.
+
+Pin 2: Verbunden mit Pin 1/10/Pad (PGND) von U3. Platzierung: Sehr nahe an U3.
+
+L1 (Induktor):
+
+Wert: 1.5µH (z.B. Murata DFE252012P-H-1R5M=P2 oder Würth 7440430015). Achte auf niedrigen DCR (<100mΩ) und hohen Sättigungsstrom (>1.0A).
+
+Pin 1: Verbunden mit Pin 8 (L1) von U3.
+
+Pin 2: Verbunden mit Pin 7 (L2) von U3.
+
+Platzierung: Sehr nahe an U3.
+
+C_out (Ausgangskondensator):
+
+Wert: 22µF, 10V, X7R Keramik (Gehäuse z.B. 0805).
+
+Pin 1: Verbunden mit Pin 2 (VOUT) von U3. Platzierung: Sehr nahe an U3.
+
+Pin 2: Verbunden mit Pin 1/10/Pad (PGND) von U3. Platzierung: Sehr nahe an U3.
+
+3. Mikrocontroller (U1 - Raspberry Pi Pico)
+
+U1 (Raspberry Pi Pico Modul):
+
+Pin 36 (3V3(OUT)): Verbunden mit dem Netz +3.3V. Dies ist der Stromeingang für den Pico.
+
+Pin 37 (3V3_EN): Direkt mit GND verbunden. (Sehr wichtig bei Versorgung über Pin 36!)
+
+Pins 3, 8, 13, 18, 23, 28, 33, 38 (GND): Alle mit GND verbunden.
+
+Pin 30 (RUN): Kann offen gelassen werden (interner Pull-Up) oder mit einem Taster nach GND für einen Reset verbunden werden.
+
+Pin 39 (VSYS): Nicht verbunden (NC).
+
+Pin 40 (VBUS): Nicht verbunden (NC), es sei denn USB-Funktionalität wird benötigt und entsprechend beschaltet.
+
+GPIO Verbindungen: (Beispielhafte Pin-Nummern des Pico, müssen im Code angepasst werden!)
+
+GP_EN (U3 Enable): Z.B. Pin 29 (GPIO22) -> Pin 4 (EN) von U3.
+
+GP_SDA (I2C Data): Z.B. Pin 6 (GPIO4) -> SDA Pin von U2 und R1.
+
+GP_SCL (I2C Clock): Z.B. Pin 7 (GPIO5) -> SCL Pin von U2 und R2.
+
+GP_PWDN (Camera Power Down): Z.B. Pin 9 (GPIO6) -> PWDN Pin von U2.
+
+GP_RESET (Camera Reset): Z.B. Pin 10 (GPIO7) -> RESET Pin von U2.
+
+GP_PWM_XCLK (Camera Clock): Z.B. Pin 11 (GPIO8) -> XCLK Pin von U2.
+
+GP_PIO_PCLK (Camera Pixel Clock): Z.B. Pin 12 (GPIO9) -> PCLK Pin von U2.
+
+GP_PIO_VSYNC (Camera VSYNC): Z.B. Pin 14 (GPIO10) -> VSYNC Pin von U2.
+
+GP_PIO_HSYNC (Camera HSYNC): Z.B. Pin 15 (GPIO11) -> HSYNC Pin von U2.
+
+GP_PIO_D0_7 (Camera Data Bus): Z.B. Pins 16-22, 24 (GPIO12-GPIO19) -> D0-D7 Pins von U2.
+
+C_dec1 (Pico Entkopplung):
+
+Wert: 100nF, 10V, Keramik (0603).
+
+Pin 1: Verbunden mit Pin 36 (3V3(OUT)) von U1. Platzierung: Nahe Pin 36.
+
+Pin 2: Verbunden mit einem nahen GND Pin von U1 (z.B. Pin 38).
+
+C_bulk1 (Pico Bulk-Kapazität):
+
+Wert: 10µF, 10V, Keramik/Tantal (0805).
+
+Pin 1: Verbunden mit Pin 36 (3V3(OUT)) von U1. Platzierung: Nahe Pin 36.
+
+Pin 2: Verbunden mit einem nahen GND Pin von U1 (z.B. Pin 38).
+
+4. Kamera Modul (U2 - OV2640)
+
+U2 (OV2640 Kamera Modul): (Angenommen ein Standard-Modul mit Stiftleiste oder FPC-Anschluss)
+
+Pin VCC/3.3V: Verbunden mit dem Netz +3.3V.
+
+Pin GND: Verbunden mit GND.
+
+Pin SDA: Verbunden mit GP_SDA (Pico Pin 6 / GPIO4).
+
+Pin SCL: Verbunden mit GP_SCL (Pico Pin 7 / GPIO5).
+
+Pin PWDN: Verbunden mit GP_PWDN (Pico Pin 9 / GPIO6).
+
+Pin RESET: Verbunden mit GP_RESET (Pico Pin 10 / GPIO7). Prüfen ob Active-Low!
+
+Pin XCLK: Verbunden mit GP_PWM_XCLK (Pico Pin 11 / GPIO8).
+
+Pin PCLK: Verbunden mit GP_PIO_PCLK (Pico Pin 12 / GPIO9).
+
+Pin VSYNC: Verbunden mit GP_PIO_VSYNC (Pico Pin 14 / GPIO10).
+
+Pin HSYNC/HREF: Verbunden mit GP_PIO_HSYNC (Pico Pin 15 / GPIO11).
+
+Pins D0-D7: Verbunden mit GP_PIO_D0_7 (Pico Pins 16-22, 24 / GPIO12-19).
+
+C_dec2 (Kamera Entkopplung):
+
+Wert: 100nF, 10V, Keramik (0603).
+
+Pin 1: Verbunden mit dem VCC Pin von U2. Platzierung: Sehr nahe am Modul.
+
+Pin 2: Verbunden mit dem GND Pin von U2.
+
+C_bulk2 (Kamera Bulk-Kapazität):
+
+Wert: 10µF, 10V, Keramik/Tantal (0805).
+
+Pin 1: Verbunden mit dem VCC Pin von U2. Platzierung: Nahe am Modul.
+
+Pin 2: Verbunden mit dem GND Pin von U2.
+
+5. I2C Pull-Up Widerstände
+
+R1 (SDA Pull-Up):
+
+Wert: 4.7kΩ (0603).
+
+Pin 1: Verbunden mit dem Netz +3.3V.
+
+Pin 2: Verbunden mit der SDA Leitung (GP_SDA und U2 SDA Pin).
+
+R2 (SCL Pull-Up):
+
+Wert: 4.7kΩ (0603).
+
+Pin 1: Verbunden mit dem Netz +3.3V.
+
+Pin 2: Verbunden mit der SCL Leitung (GP_SCL und U2 SCL Pin).
+
+6. Layout-Hinweise (Zusammenfassung für den Schaltplan)
+
+GND: Eine durchgehende Massefläche (Ground Plane) auf einer Lage der Leiterplatte ist essenziell.
+
+Buck-Boost Layout (U3, C_in, L1, C_out): Diese Komponenten bilden eine kritische Stromschleife. Sie müssen extrem nah beieinander platziert werden, um Induktivität und Widerstand der Leiterbahnen zu minimieren und EMI zu reduzieren. Folge den Layout-Empfehlungen im TPS63031 Datenblatt (Abschnitt 10) genau! Insbesondere die PGND-Anbindung ist kritisch.
+
+Entkopplung: Platziere alle Entkopplungskondensatoren (C_dec*, C_bulk*) so nah wie möglich an den Versorgungspins der jeweiligen ICs/Module (U1, U2).
+
+Signalführung: Halte die High-Speed Signalleitungen (insbesondere XCLK, PCLK, D0-D7) möglichst kurz und direkt. Vermeide scharfe Winkel.
+
+Dieser detaillierte Plan sollte es dir ermöglichen, den Schaltplan in einem geeigneten Werkzeug zu erstellen und anschließend das Leiterplattenlayout zu entwickeln. Überprüfe immer die Pinbelegungen der spezifischen Bauteile und Module, die du verwendest, anhand ihrer Datenblätter!
+
+
+
+
+# Technischer Bericht: Energieoptimierung und Simulationsanalyse für ein Pizza-Erkennungssystem
+
+## Ziel des Systems
+Ein batteriebetriebenes eingebettetes System soll eine Kamera (z. B. OV2640) und einen RP2040-Mikrocontroller betreiben, um automatisch den Bräunungsgrad und die Fertigkeit einer Pizza im Ofen zu erkennen. Die Energieversorgung basiert auf einer einzelnen RCR123A Li-Ion-Zelle mit 700 mAh. Ziel ist es, den Stromverbrauch möglichst effizient zu gestalten, um eine ausreichend lange Laufzeit zu gewährleisten.
+
+---
+
+## Grundaufbau (Hardware-Komponenten)
+
+- **Akku:** RCR123A, 3.7 V nominal, 700 mAh
+- **Spannungsregler:** TPS63031 (Buck-Boost)
+- **Kamera:** OV2640 (bis zu 120 mA aktiv)
+- **Mikrocontroller:** RP2040 (ca. 20–30 mA idle, +50–80 mA bei CNN-Inferenz)
+
+---
+
+## Verhaltensmodell & Anforderungen
+
+Die Hauptaufgabe des Systems ist es, regelmäßig zu überprüfen, ob eine Pizza:
+1. Im Ofen liegt
+2. Sichtbar bräunt
+3. Als fertig erkannt werden kann
+
+Die Objekterkennung basiert auf einem einfachen CNN-Modell (z. B. MobileNet V1-artig), das lokal auf einem Edge-Mikrocontroller ausgeführt wird.
+
+---
+
+## Ursprüngliche Simulation (Zyklus: alle 10 s Bilderkennung)
+
+### Parameter:
+- **Bilderkennung alle 10 Sekunden**
+- **Last während CNN + Kamera:** ~230 mA für 150 ms
+- **Last im Idle-Modus:** ~30 mA
+- **Zyklus:** 2 aktive Schritte pro 50 (entspricht alle 10 s)
+
+### Ergebnis:
+- Batteriespannung bleibt stabil > 3.3 V über 300 Simulationsschritte
+- **Erwartete Laufzeit:** ca. **18,4 Stunden** bei durchgehender Überwachung
+
+---
+
+## Erweiterung: Adaptive Aktivierung durch Sensorbedingung (z. B. Thermosensor)
+
+### Idee:
+Ein externer Sensor (Temperatur oder Licht) steuert, wann die Kamera und CNN aktiviert werden dürfen – z. B. nur wenn Ofen > 180 °C oder Licht an.
+
+### Umsetzung:
+- 20 % der Zeit wird die Kamera **nicht aktiviert** (niedrige Temperatur)
+- CNN und Kamera nur aktiv, wenn Bedingung erfüllt
+
+### Ergebnis:
+- Batteriespannung bleibt deutlich länger über 3.3 V
+- **Laufzeit verbessert sich auf ca. 23,3 Stunden** (+24 %)
+
+---
+
+## Vorteile der aktuellen Lösung
+- Sehr einfache Implementierung
+- Keine zusätzliche Rechenlast oder Komplexität
+- Signifikant längere Batterielaufzeit durch smarte Sensorlogik
+- Stromaufnahme bleibt durch smarte Phasen-Taktung effizient
+
+---
+
+## Ideen zur weiteren Optimierung (nur angedacht, nicht umgesetzt)
+
+Diese Ideen wurden vorgeschlagen, aber nicht umgesetzt:
+- Dynamisches Taktungsverhalten basierend auf Bräunungsphase der Pizza (z. B. 1 Bild/60 s am Anfang, 1 Bild/5 s am Ende)
+- Aufteilung in mehrere Erkennungsmodelle (Pizza drin, Bräunung, Fertig) zur Energieeinsparung
+- Sleep-Modi & Deep Sleep für Mikrocontroller
+
+Diese könnten in zukünftigen Versionen des Systems integriert werden.
+
+---
+
+## Schlussfolgerung
+Die Einführung eines einfachen Sensors zur Vorentscheidung (z. B. Thermosensor) für die Aktivierung der Kamera und Bilderkennung zeigt in der Simulation eine deutliche Effizienzsteigerung. Die Laufzeit konnte von ca. 18 auf über 23 Stunden gesteigert werden, ohne dass wichtige Bilderkennungsinformationen verloren gingen. Damit ist diese Methode für energieeffiziente, intelligente Backofensysteme hervorragend geeignet.
+
+Weitere Verbesserungen durch Deep Sleep und adaptive Erkennungsintervalle sind möglich, aber wurden hier bewusst nicht implementiert, um die Systemkomplexität niedrig zu halten.
+

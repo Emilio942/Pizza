@@ -1,0 +1,65 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+venv/
+.env/
+.venv/
+ENV/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# ML specific
+*.pth
+*.onnx
+*.tflite
+data/raw/
+data/augmented/
+output/temp/
+models/checkpoints/
+
+# Logs
+*.log
+output/logs/
+
+# Hardware/EDA
+*.bak
+*.kicad_pcb-bak
+*.sch-bak
+*-cache.lib
+*-rescue.lib
+_autosave*
+*.net
+hardware/manufacturing/gerber/
+fp-info-cache
+
+# Keep
+!data/README.md
+!models/README.md
+!output/README.md

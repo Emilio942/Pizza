@@ -1,0 +1,28 @@
+# Example Makefile for RP2040 Pizza Detection
+
+# Compiler and flags
+CC = arm-none-eabi-gcc
+CFLAGS = -mcpu=cortex-m0plus -mthumb -O3 -DNDEBUG
+
+# RP2040 SDK path - update this to your SDK location
+PICO_SDK_PATH = /path/to/pico-sdk
+
+# Include paths
+INCLUDES = -I$(PICO_SDK_PATH)/src/common/pico_stdlib/include \
+           -I$(PICO_SDK_PATH)/src/rp2_common/hardware_gpio/include \
+           -I.
+
+# Source files
+SRCS = main.c pizza_model.c camera.c
+
+# Build targets
+all: pizza_detector.uf2
+
+pizza_detector.elf: $(SRCS)
+	$(CC) $(CFLAGS) $(INCLUDES) $^ -o $@
+
+pizza_detector.uf2: pizza_detector.elf
+	elf2uf2 $< $@
+
+clean:
+	rm -f *.elf *.uf2

@@ -1,0 +1,241 @@
+{
+  "accuracy": 0.0,
+  "confusion_matrix": [
+    [
+      0,
+      8,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      1,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  ],
+  "class_metrics": [
+    {
+      "class": "basic",
+      "tp": 0,
+      "fp": 0,
+      "fn": 8,
+      "precision": 0,
+      "recall": 0.0,
+      "f1": 0,
+      "support": 8
+    },
+    {
+      "class": "burnt",
+      "tp": 0,
+      "fp": 12,
+      "fn": 0,
+      "precision": 0.0,
+      "recall": 0,
+      "f1": 0,
+      "support": 0
+    },
+    {
+      "class": "combined",
+      "tp": 0,
+      "fp": 0,
+      "fn": 3,
+      "precision": 0,
+      "recall": 0.0,
+      "f1": 0,
+      "support": 3
+    },
+    {
+      "class": "mixed",
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "precision": 0,
+      "recall": 0.0,
+      "f1": 0,
+      "support": 1
+    },
+    {
+      "class": "progression",
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "precision": 0,
+      "recall": 0,
+      "f1": 0,
+      "support": 0
+    },
+    {
+      "class": "segment",
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "precision": 0,
+      "recall": 0,
+      "f1": 0,
+      "support": 0
+    }
+  ],
+  "macro_precision": 0.0,
+  "macro_recall": 0.0,
+  "macro_f1": 0.0,
+  "micro_f1": 0.0,
+  "errors": [
+    {
+      "batch": 0,
+      "sample": 0,
+      "true": 3,
+      "pred": 1,
+      "true_class": "mixed",
+      "pred_class": "burnt",
+      "confidence": 0.512123703956604,
+      "true_confidence": 0.14708417654037476
+    },
+    {
+      "batch": 0,
+      "sample": 1,
+      "true": 0,
+      "pred": 1,
+      "true_class": "basic",
+      "pred_class": "burnt",
+      "confidence": 0.421888142824173,
+      "true_confidence": 0.21227414906024933
+    },
+    {
+      "batch": 0,
+      "sample": 2,
+      "true": 2,
+      "pred": 1,
+      "true_class": "combined",
+      "pred_class": "burnt",
+      "confidence": 0.3676046133041382,
+      "true_confidence": 0.1528034657239914
+    },
+    {
+      "batch": 0,
+      "sample": 3,
+      "true": 0,
+      "pred": 1,
+      "true_class": "basic",
+      "pred_class": "burnt",
+      "confidence": 0.3844354748725891,
+      "true_confidence": 0.23046700656414032
+    },
+    {
+      "batch": 0,
+      "sample": 4,
+      "true": 0,
+      "pred": 1,
+      "true_class": "basic",
+      "pred_class": "burnt",
+      "confidence": 0.4230891466140747,
+      "true_confidence": 0.20982106029987335
+    },
+    {
+      "batch": 0,
+      "sample": 5,
+      "true": 0,
+      "pred": 1,
+      "true_class": "basic",
+      "pred_class": "burnt",
+      "confidence": 0.3439086079597473,
+      "true_confidence": 0.2717515826225281
+    },
+    {
+      "batch": 0,
+      "sample": 6,
+      "true": 0,
+      "pred": 1,
+      "true_class": "basic",
+      "pred_class": "burnt",
+      "confidence": 0.38632291555404663,
+      "true_confidence": 0.23419128358364105
+    },
+    {
+      "batch": 0,
+      "sample": 7,
+      "true": 0,
+      "pred": 1,
+      "true_class": "basic",
+      "pred_class": "burnt",
+      "confidence": 0.37638357281684875,
+      "true_confidence": 0.23935160040855408
+    },
+    {
+      "batch": 0,
+      "sample": 8,
+      "true": 0,
+      "pred": 1,
+      "true_class": "basic",
+      "pred_class": "burnt",
+      "confidence": 0.33462563157081604,
+      "true_confidence": 0.2623246908187866
+    },
+    {
+      "batch": 0,
+      "sample": 9,
+      "true": 2,
+      "pred": 1,
+      "true_class": "combined",
+      "pred_class": "burnt",
+      "confidence": 0.4139252007007599,
+      "true_confidence": 0.151358962059021
+    },
+    {
+      "batch": 0,
+      "sample": 10,
+      "true": 2,
+      "pred": 1,
+      "true_class": "combined",
+      "pred_class": "burnt",
+      "confidence": 0.48828640580177307,
+      "true_confidence": 0.16281390190124512
+    },
+    {
+      "batch": 0,
+      "sample": 11,
+      "true": 0,
+      "pred": 1,
+      "true_class": "basic",
+      "pred_class": "burnt",
+      "confidence": 0.38185447454452515,
+      "true_confidence": 0.24488165974617004
+    }
+  ]
+}

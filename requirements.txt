@@ -1,0 +1,17 @@
+torch>=2.0.0
+torchvision>=0.15.0
+numpy>=1.21.0
+Pillow>=9.0.0
+matplotlib>=3.5.0
+seaborn>=0.11.0
+tqdm>=4.65.0
+scipy>=1.7.0
+tensorflow>=2.12.0
+onnx>=1.14.0
+tensorboard>=2.12.0
+pytest>=7.3.1
+pytest-env>=0.8.1
+scikit-learn>=1.0.2
+opencv-python>=4.5.0 # Added for image processing (cv2)
+graphviz>=0.16       # Added for model visualization (Corrected name)
+torchviz>=0.0.2      # Added for model visualization
