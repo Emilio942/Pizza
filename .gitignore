@@ -2,7 +2,6 @@
 __pycache__/
 *.py[cod]
 *$py.class
-*.so
 .Python
 build/
 develop-eggs/
@@ -20,46 +19,76 @@ wheels/
 .installed.cfg
 *.egg
 
-# Virtual Environment
+# Virtuelle Umgebungen
+.env
+.venv
 venv/
-.env/
-.venv/
 ENV/
 
-# IDE
-.idea/
+# VS Code und History
 .vscode/
-*.swp
-*.swo
+.history/
+*.code-workspace
 
-# Jupyter Notebook
-.ipynb_checkpoints
-
-# ML specific
+# Projektspezifisch
+output/temp/
+output/logs/
 *.pth
 *.onnx
 *.tflite
-data/raw/
+
+# Bild- und Mediendateien
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.bmp
+*.tif
+*.tiff
+*.ico
+*.svg
+*.webp
+*.heic
+*.raw
+*.cr2
+*.nef
+*.mp4
+*.mov
+*.avi
+*.mkv
+*.webm
+*.wmv
+
+# Dateidirektor für Bilder
 data/augmented/
-output/temp/
-models/checkpoints/
+data/classified/
+data/processed/
+data/raw/
+data/synthetic/
+data/videos/
+output/augmented/
+output/clahe_resources/
+output/clahe_test/
+output/gradcam_results/
+models/visualizations/
 
-# Logs
-*.log
-output/logs/
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
 
-# Hardware/EDA
-*.bak
-*.kicad_pcb-bak
-*.sch-bak
-*-cache.lib
-*-rescue.lib
-_autosave*
-*.net
-hardware/manufacturing/gerber/
-fp-info-cache
-
-# Keep
-!data/README.md
-!models/README.md
-!output/README.md
+# Temporäre Dateien
+*~
+*.swp
+*.swo
+.*.sw*
+Thumbs.db

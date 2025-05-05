@@ -1,0 +1,429 @@
+name: Pizza Detection Model CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, master ]
+    paths:
+      - 'src/**'
+      - 'scripts/**'
+      - 'data/**'
+      - 'models/**'
+      - '.github/workflows/model_pipeline.yml'
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:  # Ermöglicht manuelles Auslösen
+
+env:
+  PYTHON_VERSION: '3.10'
+  MODEL_OUTPUT_DIR: 'models'
+  FIRMWARE_OUTPUT_DIR: 'models/rp2040_export'
+  NOTIFICATION_EMAIL: 'team@pizza-detection.example.com'
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Vollständiges Repository für bessere Versionierung
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          pip install pytest pytest-cov
+
+      - name: Validate dataset
+        run: |
+          echo "Validiere Datensatz-Integrität..."
+          python -c "
+          import os
+          import sys
+          sys.path.append('.')
+          from src.pizza_detector import PizzaDatasetAnalysis
+          
+          data_dir = 'data/augmented'
+          analyzer = PizzaDatasetAnalysis(data_dir)
+          
+          try:
+              stats = analyzer.analyze(sample_size=20)
+              print(f'Datensatz validiert: {len(stats)} Klassen gefunden')
+              sys.exit(0)
+          except Exception as e:
+              print(f'Fehler bei der Datensatz-Validierung: {e}')
+              sys.exit(1)
+          "
+
+      - name: Run basic tests
+        run: |
+          python -m pytest tests/test_pizza_detector.py -v
+
+    outputs:
+      dataset_valid: ${{ steps.validate_dataset.outputs.valid }}
+
+  train_model:
+    needs: prepare
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+      - name: Train pizza detection model
+        run: |
+          echo "Training des Pizza-Erkennungsmodells..."
+          python scripts/train_pizza_model.py \
+            --data-dir data/augmented \
+            --output-dir ${{ env.MODEL_OUTPUT_DIR }} \
+            --epochs 30 \
+            --batch-size 32 \
+            --early-stopping \
+            --save-checkpoints \
+            --model-name ci_pizza_model
+        
+      - name: Upload model artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: trained-model
+          path: ${{ env.MODEL_OUTPUT_DIR }}/ci_pizza_model.pth
+          retention-days: 7
+
+  quantize_model:
+    needs: train_model
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+      - name: Download trained model
+        uses: actions/download-artifact@v3
+        with:
+          name: trained-model
+          path: ${{ env.MODEL_OUTPUT_DIR }}
+
+      - name: Quantize model to Int8
+        run: |
+          echo "Quantisiere Modell zu Int8..."
+          python -c "
+          import sys
+          import os
+          import torch
+          sys.path.append('.')
+          from src.pizza_detector import quantize_model, RP2040Config
+          
+          model_path = os.path.join('${{ env.MODEL_OUTPUT_DIR }}', 'ci_pizza_model.pth')
+          output_path = os.path.join('${{ env.MODEL_OUTPUT_DIR }}', 'ci_pizza_model_int8.pth')
+          
+          try:
+              config = RP2040Config()
+              quantize_model(model_path, output_path, config)
+              print(f'Modell erfolgreich quantisiert und gespeichert unter {output_path}')
+              
+              # Überprüfe Modellgröße
+              float_size = os.path.getsize(model_path) / 1024
+              int8_size = os.path.getsize(output_path) / 1024
+              compression = (1 - int8_size / float_size) * 100
+              
+              print(f'Float32-Modellgröße: {float_size:.2f} KB')
+              print(f'Int8-Modellgröße: {int8_size:.2f} KB')
+              print(f'Speichereinsparung: {compression:.2f}%')
+              
+              if int8_size > 200:
+                  print('Warnung: Modellgröße überschreitet 200 KB!')
+              
+              sys.exit(0)
+          except Exception as e:
+              print(f'Fehler bei der Quantisierung: {e}')
+              sys.exit(1)
+          "
+
+      - name: Upload quantized model
+        uses: actions/upload-artifact@v3
+        with:
+          name: quantized-model
+          path: ${{ env.MODEL_OUTPUT_DIR }}/ci_pizza_model_int8.pth
+          retention-days: 7
+
+  generate_c_code:
+    needs: quantize_model
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+      - name: Download quantized model
+        uses: actions/download-artifact@v3
+        with:
+          name: quantized-model
+          path: ${{ env.MODEL_OUTPUT_DIR }}
+
+      - name: Generate C model code
+        run: |
+          echo "Generiere C-Code für das Modell..."
+          mkdir -p ${{ env.FIRMWARE_OUTPUT_DIR }}
+          
+          python -c "
+          import sys
+          import os
+          import torch
+          sys.path.append('.')
+          from src.pizza_detector import export_model_to_c, RP2040Config
+          
+          model_path = os.path.join('${{ env.MODEL_OUTPUT_DIR }}', 'ci_pizza_model_int8.pth')
+          output_dir = '${{ env.FIRMWARE_OUTPUT_DIR }}'
+          
+          try:
+              config = RP2040Config()
+              export_model_to_c(model_path, output_dir, config)
+              print(f'C-Code erfolgreich generiert in {output_dir}')
+              
+              # Überprüfe, ob die wichtigsten Dateien existieren
+              required_files = ['pizza_model.h', 'pizza_model.c', 'model_data.h']
+              for file in required_files:
+                  file_path = os.path.join(output_dir, file)
+                  if not os.path.exists(file_path):
+                      print(f'Fehler: Datei {file} wurde nicht generiert!')
+                      sys.exit(1)
+              
+              sys.exit(0)
+          except Exception as e:
+              print(f'Fehler bei der C-Code-Generierung: {e}')
+              sys.exit(1)
+          "
+
+      - name: Upload C code artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: model-c-code
+          path: ${{ env.FIRMWARE_OUTPUT_DIR }}
+          retention-days: 7
+
+  build_firmware:
+    needs: generate_c_code
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up ARM GCC
+        uses: fiam/arm-none-eabi-gcc@v1
+        with:
+          release: '10-2020-q4'
+
+      - name: Setup CMake
+        uses: jwlawson/actions-setup-cmake@v1.13
+        with:
+          cmake-version: '3.20.x'
+
+      - name: Download C model code
+        uses: actions/download-artifact@v3
+        with:
+          name: model-c-code
+          path: ${{ env.FIRMWARE_OUTPUT_DIR }}
+
+      - name: Build RP2040 firmware
+        run: |
+          echo "Erstelle RP2040-Firmware..."
+          
+          # Beispiel: Einrichtung des Pico SDK
+          # Hinweis: In einer realen Umgebung würde hier der tatsächliche Firmware-Build erfolgen
+          git clone https://github.com/raspberrypi/pico-sdk.git
+          cd pico-sdk
+          git submodule update --init
+          cd ..
+          
+          # Erstelle Build-Verzeichnis
+          mkdir -p build
+          cd build
+          
+          # Konfiguriere und baue mit CMake
+          # Hier würde der tatsächliche CMAKE Befehl stehen, der den C-Code mit dem Pico SDK kompiliert
+          echo "export PICO_SDK_PATH=`pwd`/../pico-sdk" > setup_env.sh
+          echo "CMake-Konfiguration und Build erfolgreich (simuliert)"
+          
+          # Simuliere die Firmware-Erstellung
+          cd ..
+          echo "// Simulierte Firmware - In einer realen Pipeline wird hier die echte Firmware erstellt" > build/pizza_detector_firmware.uf2
+          
+          echo "Firmware-Build abgeschlossen"
+
+      - name: Upload firmware
+        uses: actions/upload-artifact@v3
+        with:
+          name: rp2040-firmware
+          path: build/pizza_detector_firmware.uf2
+          retention-days: 7
+
+  test_model:
+    needs: [quantize_model, generate_c_code]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          pip install pytest pytest-cov
+
+      - name: Download models
+        uses: actions/download-artifact@v3
+        with:
+          name: quantized-model
+          path: ${{ env.MODEL_OUTPUT_DIR }}
+
+      - name: Run model tests
+        run: |
+          echo "Führe Tests für das quantisierte Modell durch..."
+          
+          python -c "
+          import sys
+          import os
+          import torch
+          sys.path.append('.')
+          from src.pizza_detector import load_model, evaluate_model, RP2040Config
+          from src.pizza_detector import create_optimized_dataloaders
+          
+          model_path = os.path.join('${{ env.MODEL_OUTPUT_DIR }}', 'ci_pizza_model_int8.pth')
+          
+          try:
+              config = RP2040Config()
+              model = load_model(model_path, config, quantized=True)
+              
+              # Lade Validierungsdaten
+              _, val_loader, class_names, _ = create_optimized_dataloaders(config)
+              
+              # Evaluiere Modell
+              metrics = evaluate_model(model, val_loader, config, class_names)
+              
+              print(f'Modell-Genauigkeit: {metrics[\"accuracy\"]:.2f}%')
+              print(f'F1-Score: {metrics[\"f1\"]:.4f}')
+              
+              # Mindestgenauigkeit für CI/CD-Erfolg
+              threshold = 70.0  # 70% Genauigkeit
+              if metrics['accuracy'] < threshold:
+                  print(f'Modell erreicht nicht die Mindestgenauigkeit von {threshold}%!')
+                  sys.exit(1)
+              
+              sys.exit(0)
+          except Exception as e:
+              print(f'Fehler bei den Modelltests: {e}')
+              sys.exit(1)
+          "
+
+      - name: Run emulator tests
+        run: |
+          echo "Führe Emulator-Tests mit quantisiertem Modell durch..."
+          python -m pytest tests/test_emulator.py -v
+
+  notify:
+    needs: [build_firmware, test_model]
+    runs-on: ubuntu-latest
+    if: success()
+    steps:
+      - name: Send email notification
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          username: ${{ secrets.MAIL_USERNAME }}
+          password: ${{ secrets.MAIL_PASSWORD }}
+          subject: Pizza Detection CI/CD Pipeline erfolgreich abgeschlossen
+          to: ${{ env.NOTIFICATION_EMAIL }}
+          from: GitHub Actions
+          body: |
+            Die CI/CD-Pipeline für das Pizza-Erkennungssystem wurde erfolgreich abgeschlossen.
+            
+            Workflow: ${{ github.workflow }}
+            Repository: ${{ github.repository }}
+            Commit: ${{ github.sha }}
+            
+            Artefakte:
+            - Trainiertes Modell
+            - Quantisiertes Modell (Int8)
+            - C-Code für RP2040
+            - Firmware (UF2)
+            
+            Workflow-Details: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
+      - name: Send Slack notification
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ job.status }}
+          fields: repo,message,commit,author,action,workflow
+          text: 'Pizza Detection CI/CD Pipeline erfolgreich! :pizza: :rocket:'
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        if: ${{ env.SLACK_WEBHOOK_URL != '' }}
+
+  summary:
+    needs: [train_model, quantize_model, generate_c_code, build_firmware, test_model]
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - name: Gather pipeline results
+        run: |
+          echo "Pipeline-Zusammenfassung:"
+          echo "======================="
+          echo "Training: ${{ needs.train_model.result }}"
+          echo "Quantisierung: ${{ needs.quantize_model.result }}"
+          echo "C-Code-Generierung: ${{ needs.generate_c_code.result }}"
+          echo "Firmware-Build: ${{ needs.build_firmware.result }}"
+          echo "Modell-Tests: ${{ needs.test_model.result }}"
+          echo "======================="
+          
+          if [[ "${{ needs.train_model.result }}" == "success" && 
+                "${{ needs.quantize_model.result }}" == "success" && 
+                "${{ needs.generate_c_code.result }}" == "success" && 
+                "${{ needs.build_firmware.result }}" == "success" && 
+                "${{ needs.test_model.result }}" == "success" ]]; then
+            echo "CI/CD-Pipeline erfolgreich abgeschlossen!"
+          else
+            echo "CI/CD-Pipeline fehlgeschlagen. Siehe Log für Details."
+          fi

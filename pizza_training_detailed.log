@@ -1,0 +1,1189 @@
+2025-05-05 01:12:27,131 - INFO - Verwende Gerät: cuda
+2025-05-05 01:12:27,131 - INFO - Analysiere Datensatz in data/augmented...
+2025-05-05 01:12:27,186 - INFO - Datensatzanalyse abgeschlossen:
+2025-05-05 01:12:27,186 - INFO - Gesamtzahl der Bilder: 57
+2025-05-05 01:12:27,186 - INFO - Klassenverteilung: {'progression': 0, 'mixed': 7, 'basic': 29, 'segment': 0, 'combined': 17, 'burnt': 4}
+2025-05-05 01:12:27,186 - INFO - Durchschnittliche Bildgröße: 224.0 x 224.0
+2025-05-05 01:12:27,186 - INFO - RGB-Mittelwerte: [0.4839, 0.4021, 0.3328]
+2025-05-05 01:12:27,186 - INFO - RGB-Standardabweichungen: [0.2349, 0.2528, 0.2663]
+2025-05-05 01:12:27,187 - INFO - Normalisierungsparameter aus Datensatz: mean=[0.484, 0.402, 0.333], std=[0.235, 0.253, 0.266]
+2025-05-05 01:12:27,188 - INFO - Klassenverteilung im Dataset:
+2025-05-05 01:12:27,188 - INFO -   basic: 105 Bilder
+2025-05-05 01:12:27,188 - INFO -   burnt: 70 Bilder
+2025-05-05 01:12:27,188 - INFO -   combined: 17 Bilder
+2025-05-05 01:12:27,188 - INFO -   mixed: 7 Bilder
+2025-05-05 01:12:27,188 - INFO - Klassengewichte für balanciertes Training:
+2025-05-05 01:12:27,188 - INFO -   basic: 0.32
+2025-05-05 01:12:27,188 - INFO -   burnt: 0.47
+2025-05-05 01:12:27,189 - INFO -   combined: 1.95
+2025-05-05 01:12:27,189 - INFO -   mixed: 4.74
+2025-05-05 01:12:27,189 - INFO -   progression: 1.00
+2025-05-05 01:12:27,189 - INFO -   segment: 1.00
+2025-05-05 01:12:27,189 - INFO - Datensatz geladen: 159 Trainingsbilder, 40 Validierungsbilder
+2025-05-05 01:12:27,189 - INFO - Erstelle MicroPizzaNet für 6 Klassen: ['basic', 'burnt', 'combined', 'mixed', 'progression', 'segment']
+2025-05-05 01:12:27,300 - INFO - Starte Training...
+2025-05-05 01:12:27,854 - INFO - Epoch 1/30: Train Loss: 1.7525, Train Acc: 27.67% - Val Loss: 1.7698, Val Acc: 47.50%
+2025-05-05 01:12:27,854 - INFO - Neues bestes Modell in Epoch 1 mit Validation Accuracy: 47.50%
+2025-05-05 01:12:27,981 - INFO - Epoch 2/30: Train Loss: 1.6976, Train Acc: 28.30% - Val Loss: 1.7330, Val Acc: 10.00%
+2025-05-05 01:12:28,110 - INFO - Epoch 3/30: Train Loss: 1.6368, Train Acc: 25.16% - Val Loss: 1.6744, Val Acc: 0.00%
+2025-05-05 01:12:28,233 - INFO - Epoch 4/30: Train Loss: 1.5800, Train Acc: 27.04% - Val Loss: 1.6261, Val Acc: 0.00%
+2025-05-05 01:12:28,367 - INFO - Epoch 5/30: Train Loss: 1.5268, Train Acc: 30.82% - Val Loss: 1.6041, Val Acc: 0.00%
+2025-05-05 01:12:28,490 - INFO - Epoch 6/30: Train Loss: 1.5023, Train Acc: 30.82% - Val Loss: 1.5737, Val Acc: 0.00%
+2025-05-05 01:12:28,622 - INFO - Epoch 7/30: Train Loss: 1.4757, Train Acc: 28.93% - Val Loss: 1.5378, Val Acc: 5.00%
+2025-05-05 01:12:28,747 - INFO - Epoch 8/30: Train Loss: 1.4116, Train Acc: 34.59% - Val Loss: 1.5122, Val Acc: 10.00%
+2025-05-05 01:12:28,876 - INFO - Epoch 9/30: Train Loss: 1.4156, Train Acc: 31.45% - Val Loss: 1.4939, Val Acc: 22.50%
+2025-05-05 01:12:28,999 - INFO - Epoch 10/30: Train Loss: 1.4263, Train Acc: 29.56% - Val Loss: 1.4662, Val Acc: 22.50%
+2025-05-05 01:12:29,127 - INFO - Epoch 11/30: Train Loss: 1.3572, Train Acc: 39.62% - Val Loss: 1.4616, Val Acc: 12.50%
+2025-05-05 01:12:29,127 - INFO - Early Stopping in Epoch 11
+2025-05-05 01:12:29,127 - INFO - Beste Modellgewichte aus Epoch 1 geladen
+2025-05-05 01:12:29,128 - INFO - Modell gespeichert unter output/models/pizza_model_new.pth
+2025-05-05 01:12:29,274 - INFO - Trainingshistorie gespeichert unter output/models/training_history.png
+2025-05-05 01:12:29,274 - INFO - 
+==================================================
+2025-05-05 01:12:29,274 - INFO - TRAINING ABGESCHLOSSEN
+2025-05-05 01:12:29,274 - INFO - ==================================================
+2025-05-05 01:12:29,274 - INFO - Beste Validation Accuracy: 47.50% in Epoch 1
+2025-05-05 01:12:29,274 - INFO - Modell gespeichert unter: output/models/pizza_model_new.pth
+2025-05-05 01:12:29,274 - INFO - Trainingsvisualisierung: output/models/training_history.png
+2025-05-05 12:35:25,280 - INFO - Starte Hyperparameter-Suche für Pizza Erkennung
+2025-05-05 12:35:25,285 - INFO - ================================================================================
+2025-05-05 12:35:25,285 - INFO - RP2040 PIZZA-ERKENNUNGSSYSTEM - DETAILLIERTE KONFIGURATION
+2025-05-05 12:35:25,285 - INFO - ================================================================================
+2025-05-05 12:35:25,285 - INFO - Hardware: RP2040 - 133MHz, 264KB RAM, 2048KB Flash
+2025-05-05 12:35:25,285 - INFO - Kamera: OV2640 - 320x240, 7 FPS
+2025-05-05 12:35:25,285 - INFO - Stromversorgung: CR123A - 1500mAh, 8.33h aktiv, 3000.00h standby
+2025-05-05 12:35:25,286 - INFO - Modellparameter: 48x48 Eingabegröße, 8-Bit Quantisierung
+2025-05-05 12:35:25,286 - INFO - Speicherbeschränkungen: Max. 180KB Modellgröße, 100KB Laufzeit-RAM
+2025-05-05 12:35:25,286 - INFO - ================================================================================
+2025-05-05 12:35:25,286 - INFO - Lade Datensatz aus data/augmented
+2025-05-05 12:35:25,287 - INFO - Analysiere Datensatz in data/augmented...
+2025-05-05 12:35:25,515 - INFO - Datensatzanalyse abgeschlossen:
+2025-05-05 12:35:25,515 - INFO - Gesamtzahl der Bilder: 57
+2025-05-05 12:35:25,516 - INFO - Klassenverteilung: {'progression': 0, 'mixed': 7, 'basic': 29, 'segment': 0, 'combined': 17, 'burnt': 4}
+2025-05-05 12:35:25,516 - INFO - Durchschnittliche Bildgröße: 224.0 x 224.0
+2025-05-05 12:35:25,516 - INFO - RGB-Mittelwerte: [0.4867, 0.4019, 0.3332]
+2025-05-05 12:35:25,516 - INFO - RGB-Standardabweichungen: [0.2342, 0.2538, 0.2688]
+2025-05-05 12:35:25,517 - INFO - Preparing optimized data loaders...
+2025-05-05 12:35:25,518 - INFO - Using dataset-specific normalization: mean=[0.4867387  0.40187253 0.33316298], std=[0.23419387 0.25375593 0.2688303 ]
+2025-05-05 12:35:25,523 - INFO - Data loaders created: 45 training images, 12 validation images
+2025-05-05 12:35:25,523 - INFO - Classes: ['basic', 'burnt', 'combined', 'mixed', 'progression', 'segment']
+2025-05-05 12:35:25,523 - INFO - Generiert: 12 Modellkonfigurationen für die Suche
+2025-05-05 12:35:25,524 - INFO - 
+==================================================
+Trainiere Modell 1/12: micro_d0.75_b2_ch8_sep_gpool
+==================================================
+2025-05-05 12:35:25,585 - INFO - Speicheranalyse:
+2025-05-05 12:35:25,585 - INFO -   Modellgröße (Float32): 1.82 KB
+2025-05-05 12:35:25,585 - INFO -   Modellgröße (Int8): 0.45 KB (0.0% des Flash)
+2025-05-05 12:35:25,585 - INFO -   Aktivierungsspeicher: 76.05 KB
+2025-05-05 12:35:25,585 - INFO -   Gesamter Laufzeitspeicher: 76.51 KB (29.0% des RAM)
+2025-05-05 12:35:25,586 - INFO - Modell hat 414 Parameter
+2025-05-05 12:35:25,586 - INFO - Geschätzte Modellgröße: 1.82 KB (float32), 0.45 KB (int8)
+2025-05-05 12:35:27,640 - INFO - Epoch 1/25 - Train Loss: 1.7891, Train Acc: 20.00% - Val Loss: 1.7957, Val Acc: 8.33%
+2025-05-05 12:35:28,259 - INFO - Epoch 2/25 - Train Loss: 1.7860, Train Acc: 31.11% - Val Loss: 1.7986, Val Acc: 8.33%
+2025-05-05 12:35:28,862 - INFO - Epoch 3/25 - Train Loss: 1.7832, Train Acc: 31.11% - Val Loss: 1.7997, Val Acc: 8.33%
+2025-05-05 12:35:29,399 - INFO - Epoch 4/25 - Train Loss: 1.7894, Train Acc: 24.44% - Val Loss: 1.7978, Val Acc: 8.33%
+2025-05-05 12:35:29,999 - INFO - Epoch 5/25 - Train Loss: 1.7687, Train Acc: 31.11% - Val Loss: 1.7937, Val Acc: 8.33%
+2025-05-05 12:35:30,643 - INFO - Epoch 6/25 - Train Loss: 1.7618, Train Acc: 22.22% - Val Loss: 1.7886, Val Acc: 8.33%
+2025-05-05 12:35:31,267 - INFO - Epoch 7/25 - Train Loss: 1.7452, Train Acc: 26.67% - Val Loss: 1.7810, Val Acc: 8.33%
+2025-05-05 12:35:31,802 - INFO - Epoch 8/25 - Train Loss: 1.7321, Train Acc: 24.44% - Val Loss: 1.7709, Val Acc: 8.33%
+2025-05-05 12:35:32,451 - INFO - Epoch 9/25 - Train Loss: 1.7110, Train Acc: 24.44% - Val Loss: 1.7594, Val Acc: 8.33%
+2025-05-05 12:35:33,099 - INFO - Epoch 10/25 - Train Loss: 1.6943, Train Acc: 28.89% - Val Loss: 1.7515, Val Acc: 8.33%
+2025-05-05 12:35:33,610 - INFO - Epoch 11/25 - Train Loss: 1.6767, Train Acc: 20.00% - Val Loss: 1.7414, Val Acc: 8.33%
+2025-05-05 12:35:34,176 - INFO - Epoch 12/25 - Train Loss: 1.6694, Train Acc: 17.78% - Val Loss: 1.7297, Val Acc: 8.33%
+2025-05-05 12:35:34,825 - INFO - Epoch 13/25 - Train Loss: 1.6457, Train Acc: 28.89% - Val Loss: 1.7179, Val Acc: 8.33%
+2025-05-05 12:35:35,372 - INFO - Epoch 14/25 - Train Loss: 1.6372, Train Acc: 13.33% - Val Loss: 1.7060, Val Acc: 8.33%
+2025-05-05 12:35:35,971 - INFO - Epoch 15/25 - Train Loss: 1.6195, Train Acc: 28.89% - Val Loss: 1.6957, Val Acc: 0.00%
+2025-05-05 12:35:36,626 - INFO - Epoch 16/25 - Train Loss: 1.6100, Train Acc: 35.56% - Val Loss: 1.6857, Val Acc: 0.00%
+2025-05-05 12:35:37,267 - INFO - Epoch 17/25 - Train Loss: 1.6052, Train Acc: 26.67% - Val Loss: 1.6770, Val Acc: 0.00%
+2025-05-05 12:35:37,873 - INFO - Epoch 18/25 - Train Loss: 1.5984, Train Acc: 28.89% - Val Loss: 1.6696, Val Acc: 0.00%
+2025-05-05 12:35:38,525 - INFO - Epoch 19/25 - Train Loss: 1.5880, Train Acc: 33.33% - Val Loss: 1.6638, Val Acc: 0.00%
+2025-05-05 12:35:39,074 - INFO - Epoch 20/25 - Train Loss: 1.5780, Train Acc: 40.00% - Val Loss: 1.6591, Val Acc: 0.00%
+2025-05-05 12:35:39,702 - INFO - Epoch 21/25 - Train Loss: 1.5709, Train Acc: 42.22% - Val Loss: 1.6558, Val Acc: 0.00%
+2025-05-05 12:35:40,322 - INFO - Epoch 22/25 - Train Loss: 1.5745, Train Acc: 31.11% - Val Loss: 1.6529, Val Acc: 0.00%
+2025-05-05 12:35:40,933 - INFO - Epoch 23/25 - Train Loss: 1.5812, Train Acc: 26.67% - Val Loss: 1.6498, Val Acc: 0.00%
+2025-05-05 12:35:41,475 - INFO - Epoch 24/25 - Train Loss: 1.5805, Train Acc: 33.33% - Val Loss: 1.6481, Val Acc: 0.00%
+2025-05-05 12:35:42,103 - INFO - Epoch 25/25 - Train Loss: 1.5676, Train Acc: 37.78% - Val Loss: 1.6462, Val Acc: 0.00%
+2025-05-05 12:35:42,108 - INFO - Beste Modellgewichte wiederhergestellt
+2025-05-05 12:35:42,443 - INFO - Modell gespeichert unter: output/hyperparameter_search/models/micro_d0.75_b2_ch8_sep_gpool.pth
+2025-05-05 12:35:44,363 - INFO - 
+==================================================
+Trainiere Modell 2/12: micro_d0.75_b2_ch16_sep_gpool
+==================================================
+2025-05-05 12:35:44,377 - INFO - Speicheranalyse:
+2025-05-05 12:35:44,378 - INFO -   Modellgröße (Float32): 4.16 KB
+2025-05-05 12:35:44,378 - INFO -   Modellgröße (Int8): 1.04 KB (0.1% des Flash)
+2025-05-05 12:35:44,378 - INFO -   Aktivierungsspeicher: 152.09 KB
+2025-05-05 12:35:44,378 - INFO -   Gesamter Laufzeitspeicher: 153.13 KB (58.0% des RAM)
+2025-05-05 12:35:44,378 - WARNING - Warnung: Laufzeitspeicher überschreitet RAM-Beschränkung (153.13KB > 100KB)
+2025-05-05 12:35:44,379 - INFO - Modell hat 966 Parameter
+2025-05-05 12:35:44,379 - INFO - Geschätzte Modellgröße: 4.16 KB (float32), 1.04 KB (int8)
+2025-05-05 12:35:45,110 - INFO - Epoch 1/25 - Train Loss: 1.7952, Train Acc: 22.22% - Val Loss: 1.7941, Val Acc: 8.33%
+2025-05-05 12:35:45,770 - INFO - Epoch 2/25 - Train Loss: 1.7970, Train Acc: 17.78% - Val Loss: 1.7899, Val Acc: 25.00%
+2025-05-05 12:35:46,432 - INFO - Epoch 3/25 - Train Loss: 1.7928, Train Acc: 33.33% - Val Loss: 1.7850, Val Acc: 50.00%
+2025-05-05 12:35:47,061 - INFO - Epoch 4/25 - Train Loss: 1.7828, Train Acc: 17.78% - Val Loss: 1.7781, Val Acc: 58.33%
+2025-05-05 12:35:47,690 - INFO - Epoch 5/25 - Train Loss: 1.7666, Train Acc: 24.44% - Val Loss: 1.7700, Val Acc: 50.00%
+2025-05-05 12:35:48,158 - INFO - Epoch 6/25 - Train Loss: 1.7482, Train Acc: 22.22% - Val Loss: 1.7623, Val Acc: 16.67%
+2025-05-05 12:35:48,793 - INFO - Epoch 7/25 - Train Loss: 1.7230, Train Acc: 26.67% - Val Loss: 1.7543, Val Acc: 0.00%
+2025-05-05 12:35:49,424 - INFO - Epoch 8/25 - Train Loss: 1.6797, Train Acc: 35.56% - Val Loss: 1.7451, Val Acc: 0.00%
+2025-05-05 12:35:50,064 - INFO - Epoch 9/25 - Train Loss: 1.6376, Train Acc: 40.00% - Val Loss: 1.7379, Val Acc: 0.00%
+2025-05-05 12:35:50,742 - INFO - Epoch 10/25 - Train Loss: 1.6326, Train Acc: 26.67% - Val Loss: 1.7312, Val Acc: 0.00%
+2025-05-05 12:35:51,407 - INFO - Epoch 11/25 - Train Loss: 1.5949, Train Acc: 26.67% - Val Loss: 1.7257, Val Acc: 0.00%
+2025-05-05 12:35:52,058 - INFO - Epoch 12/25 - Train Loss: 1.6218, Train Acc: 26.67% - Val Loss: 1.7125, Val Acc: 0.00%
+2025-05-05 12:35:52,591 - INFO - Epoch 13/25 - Train Loss: 1.5621, Train Acc: 28.89% - Val Loss: 1.6986, Val Acc: 0.00%
+2025-05-05 12:35:53,247 - INFO - Epoch 14/25 - Train Loss: 1.5340, Train Acc: 28.89% - Val Loss: 1.6895, Val Acc: 0.00%
+2025-05-05 12:35:53,909 - INFO - Epoch 15/25 - Train Loss: 1.5134, Train Acc: 33.33% - Val Loss: 1.6812, Val Acc: 16.67%
+2025-05-05 12:35:54,544 - INFO - Epoch 16/25 - Train Loss: 1.5076, Train Acc: 20.00% - Val Loss: 1.6775, Val Acc: 25.00%
+2025-05-05 12:35:55,175 - INFO - Epoch 17/25 - Train Loss: 1.4947, Train Acc: 40.00% - Val Loss: 1.6748, Val Acc: 25.00%
+2025-05-05 12:35:55,767 - INFO - Epoch 18/25 - Train Loss: 1.5068, Train Acc: 35.56% - Val Loss: 1.6716, Val Acc: 25.00%
+2025-05-05 12:35:56,350 - INFO - Epoch 19/25 - Train Loss: 1.5134, Train Acc: 28.89% - Val Loss: 1.6703, Val Acc: 25.00%
+2025-05-05 12:35:56,945 - INFO - Epoch 20/25 - Train Loss: 1.5302, Train Acc: 22.22% - Val Loss: 1.6670, Val Acc: 25.00%
+2025-05-05 12:35:57,421 - INFO - Epoch 21/25 - Train Loss: 1.5240, Train Acc: 26.67% - Val Loss: 1.6656, Val Acc: 25.00%
+2025-05-05 12:35:58,038 - INFO - Epoch 22/25 - Train Loss: 1.4665, Train Acc: 26.67% - Val Loss: 1.6634, Val Acc: 25.00%
+2025-05-05 12:35:58,695 - INFO - Epoch 23/25 - Train Loss: 1.4378, Train Acc: 40.00% - Val Loss: 1.6627, Val Acc: 25.00%
+2025-05-05 12:35:59,361 - INFO - Epoch 24/25 - Train Loss: 1.4830, Train Acc: 28.89% - Val Loss: 1.6625, Val Acc: 25.00%
+2025-05-05 12:35:59,949 - INFO - Epoch 25/25 - Train Loss: 1.4762, Train Acc: 31.11% - Val Loss: 1.6622, Val Acc: 25.00%
+2025-05-05 12:35:59,954 - INFO - Beste Modellgewichte wiederhergestellt
+2025-05-05 12:36:00,340 - INFO - Modell gespeichert unter: output/hyperparameter_search/models/micro_d0.75_b2_ch16_sep_gpool.pth
+2025-05-05 12:36:01,563 - INFO - 
+==================================================
+Trainiere Modell 3/12: micro_d0.75_b3_ch8_sep_gpool
+==================================================
+2025-05-05 12:36:01,575 - INFO - Speicheranalyse:
+2025-05-05 12:36:01,575 - INFO -   Modellgröße (Float32): 4.21 KB
+2025-05-05 12:36:01,575 - INFO -   Modellgröße (Int8): 1.05 KB (0.1% des Flash)
+2025-05-05 12:36:01,575 - INFO -   Aktivierungsspeicher: 92.18 KB
+2025-05-05 12:36:01,575 - INFO -   Gesamter Laufzeitspeicher: 93.23 KB (35.3% des RAM)
+2025-05-05 12:36:01,576 - INFO - Modell hat 954 Parameter
+2025-05-05 12:36:01,576 - INFO - Geschätzte Modellgröße: 4.21 KB (float32), 1.05 KB (int8)
+2025-05-05 12:36:02,238 - INFO - Epoch 1/25 - Train Loss: 1.7903, Train Acc: 26.67% - Val Loss: 1.7914, Val Acc: 0.00%
+2025-05-05 12:36:02,897 - INFO - Epoch 2/25 - Train Loss: 1.7949, Train Acc: 11.11% - Val Loss: 1.7901, Val Acc: 8.33%
+2025-05-05 12:36:03,466 - INFO - Epoch 3/25 - Train Loss: 1.7843, Train Acc: 22.22% - Val Loss: 1.7875, Val Acc: 25.00%
+2025-05-05 12:36:04,138 - INFO - Epoch 4/25 - Train Loss: 1.7660, Train Acc: 33.33% - Val Loss: 1.7827, Val Acc: 58.33%
+2025-05-05 12:36:04,775 - INFO - Epoch 5/25 - Train Loss: 1.7498, Train Acc: 35.56% - Val Loss: 1.7752, Val Acc: 66.67%
+2025-05-05 12:36:05,416 - INFO - Epoch 6/25 - Train Loss: 1.7297, Train Acc: 24.44% - Val Loss: 1.7642, Val Acc: 16.67%
+2025-05-05 12:36:06,043 - INFO - Epoch 7/25 - Train Loss: 1.7115, Train Acc: 24.44% - Val Loss: 1.7473, Val Acc: 33.33%
+2025-05-05 12:36:06,657 - INFO - Epoch 8/25 - Train Loss: 1.6751, Train Acc: 22.22% - Val Loss: 1.7285, Val Acc: 16.67%
+2025-05-05 12:36:07,301 - INFO - Epoch 9/25 - Train Loss: 1.6336, Train Acc: 42.22% - Val Loss: 1.7086, Val Acc: 8.33%
+2025-05-05 12:36:07,941 - INFO - Epoch 10/25 - Train Loss: 1.5854, Train Acc: 55.56% - Val Loss: 1.6949, Val Acc: 8.33%
+2025-05-05 12:36:08,591 - INFO - Epoch 11/25 - Train Loss: 1.5798, Train Acc: 46.67% - Val Loss: 1.6853, Val Acc: 8.33%
+2025-05-05 12:36:09,095 - INFO - Epoch 12/25 - Train Loss: 1.5490, Train Acc: 37.78% - Val Loss: 1.6759, Val Acc: 8.33%
+2025-05-05 12:36:09,653 - INFO - Epoch 13/25 - Train Loss: 1.5650, Train Acc: 24.44% - Val Loss: 1.6670, Val Acc: 8.33%
+2025-05-05 12:36:10,285 - INFO - Epoch 14/25 - Train Loss: 1.5604, Train Acc: 26.67% - Val Loss: 1.6547, Val Acc: 0.00%
+2025-05-05 12:36:10,956 - INFO - Epoch 15/25 - Train Loss: 1.4966, Train Acc: 33.33% - Val Loss: 1.6435, Val Acc: 0.00%
+2025-05-05 12:36:11,534 - INFO - Epoch 16/25 - Train Loss: 1.4564, Train Acc: 51.11% - Val Loss: 1.6391, Val Acc: 0.00%
+2025-05-05 12:36:12,221 - INFO - Epoch 17/25 - Train Loss: 1.4905, Train Acc: 28.89% - Val Loss: 1.6365, Val Acc: 0.00%
+2025-05-05 12:36:12,861 - INFO - Epoch 18/25 - Train Loss: 1.4810, Train Acc: 31.11% - Val Loss: 1.6340, Val Acc: 0.00%
+2025-05-05 12:36:13,536 - INFO - Epoch 19/25 - Train Loss: 1.5000, Train Acc: 22.22% - Val Loss: 1.6301, Val Acc: 0.00%
+2025-05-05 12:36:14,116 - INFO - Epoch 20/25 - Train Loss: 1.4579, Train Acc: 42.22% - Val Loss: 1.6261, Val Acc: 0.00%
+2025-05-05 12:36:14,745 - INFO - Epoch 21/25 - Train Loss: 1.4238, Train Acc: 46.67% - Val Loss: 1.6233, Val Acc: 0.00%
+2025-05-05 12:36:15,360 - INFO - Epoch 22/25 - Train Loss: 1.4558, Train Acc: 28.89% - Val Loss: 1.6216, Val Acc: 0.00%
+2025-05-05 12:36:15,887 - INFO - Epoch 23/25 - Train Loss: 1.4667, Train Acc: 28.89% - Val Loss: 1.6213, Val Acc: 0.00%
+2025-05-05 12:36:16,269 - INFO - Epoch 24/25 - Train Loss: 1.4783, Train Acc: 33.33% - Val Loss: 1.6208, Val Acc: 0.00%
+2025-05-05 12:36:16,925 - INFO - Epoch 25/25 - Train Loss: 1.4643, Train Acc: 26.67% - Val Loss: 1.6201, Val Acc: 0.00%
+2025-05-05 12:36:16,935 - INFO - Beste Modellgewichte wiederhergestellt
+2025-05-05 12:36:17,330 - INFO - Modell gespeichert unter: output/hyperparameter_search/models/micro_d0.75_b3_ch8_sep_gpool.pth
+2025-05-05 12:36:18,229 - INFO - 
+==================================================
+Trainiere Modell 4/12: micro_d0.75_b3_ch16_sep_gpool
+==================================================
+2025-05-05 12:36:18,237 - INFO - Speicheranalyse:
+2025-05-05 12:36:18,237 - INFO -   Modellgröße (Float32): 11.20 KB
+2025-05-05 12:36:18,237 - INFO -   Modellgröße (Int8): 2.80 KB (0.1% des Flash)
+2025-05-05 12:36:18,237 - INFO -   Aktivierungsspeicher: 184.34 KB
+2025-05-05 12:36:18,237 - INFO -   Gesamter Laufzeitspeicher: 187.14 KB (70.9% des RAM)
+2025-05-05 12:36:18,237 - WARNING - Warnung: Laufzeitspeicher überschreitet RAM-Beschränkung (187.14KB > 100KB)
+2025-05-05 12:36:18,238 - INFO - Modell hat 2,622 Parameter
+2025-05-05 12:36:18,238 - INFO - Geschätzte Modellgröße: 11.20 KB (float32), 2.80 KB (int8)
+2025-05-05 12:36:18,827 - INFO - Epoch 1/25 - Train Loss: 1.7915, Train Acc: 22.22% - Val Loss: 1.7925, Val Acc: 0.00%
+2025-05-05 12:36:19,506 - INFO - Epoch 2/25 - Train Loss: 1.7971, Train Acc: 22.22% - Val Loss: 1.7932, Val Acc: 0.00%
+2025-05-05 12:36:19,942 - INFO - Epoch 3/25 - Train Loss: 1.7779, Train Acc: 28.89% - Val Loss: 1.7931, Val Acc: 0.00%
+2025-05-05 12:36:20,603 - INFO - Epoch 4/25 - Train Loss: 1.7703, Train Acc: 22.22% - Val Loss: 1.7916, Val Acc: 0.00%
+2025-05-05 12:36:21,057 - INFO - Epoch 5/25 - Train Loss: 1.7280, Train Acc: 24.44% - Val Loss: 1.7865, Val Acc: 0.00%
+2025-05-05 12:36:21,466 - INFO - Epoch 6/25 - Train Loss: 1.6837, Train Acc: 37.78% - Val Loss: 1.7776, Val Acc: 0.00%
+2025-05-05 12:36:22,017 - INFO - Epoch 7/25 - Train Loss: 1.6392, Train Acc: 33.33% - Val Loss: 1.7626, Val Acc: 0.00%
+2025-05-05 12:36:22,574 - INFO - Epoch 8/25 - Train Loss: 1.5564, Train Acc: 35.56% - Val Loss: 1.7480, Val Acc: 0.00%
+2025-05-05 12:36:23,257 - INFO - Epoch 9/25 - Train Loss: 1.5651, Train Acc: 26.67% - Val Loss: 1.7309, Val Acc: 0.00%
+2025-05-05 12:36:23,932 - INFO - Epoch 10/25 - Train Loss: 1.5171, Train Acc: 35.56% - Val Loss: 1.7072, Val Acc: 8.33%
+2025-05-05 12:36:24,604 - INFO - Epoch 11/25 - Train Loss: 1.4685, Train Acc: 28.89% - Val Loss: 1.6834, Val Acc: 8.33%
+2025-05-05 12:36:25,202 - INFO - Epoch 12/25 - Train Loss: 1.4104, Train Acc: 42.22% - Val Loss: 1.6667, Val Acc: 8.33%
+2025-05-05 12:36:25,876 - INFO - Epoch 13/25 - Train Loss: 1.4376, Train Acc: 33.33% - Val Loss: 1.6533, Val Acc: 16.67%
+2025-05-05 12:36:26,555 - INFO - Epoch 14/25 - Train Loss: 1.4410, Train Acc: 20.00% - Val Loss: 1.6491, Val Acc: 8.33%
+2025-05-05 12:36:27,009 - INFO - Epoch 15/25 - Train Loss: 1.3951, Train Acc: 26.67% - Val Loss: 1.6491, Val Acc: 8.33%
+2025-05-05 12:36:27,686 - INFO - Epoch 16/25 - Train Loss: 1.4427, Train Acc: 26.67% - Val Loss: 1.6462, Val Acc: 8.33%
+2025-05-05 12:36:28,260 - INFO - Epoch 17/25 - Train Loss: 1.3202, Train Acc: 51.11% - Val Loss: 1.6481, Val Acc: 8.33%
+2025-05-05 12:36:28,890 - INFO - Epoch 18/25 - Train Loss: 1.3440, Train Acc: 40.00% - Val Loss: 1.6514, Val Acc: 8.33%
+2025-05-05 12:36:29,550 - INFO - Epoch 19/25 - Train Loss: 1.3283, Train Acc: 48.89% - Val Loss: 1.6551, Val Acc: 8.33%
+2025-05-05 12:36:30,128 - INFO - Epoch 20/25 - Train Loss: 1.4477, Train Acc: 35.56% - Val Loss: 1.6585, Val Acc: 8.33%
+2025-05-05 12:36:30,649 - INFO - Epoch 21/25 - Train Loss: 1.4091, Train Acc: 28.89% - Val Loss: 1.6617, Val Acc: 8.33%
+2025-05-05 12:36:30,650 - INFO - Early Stopping in Epoche 21
+2025-05-05 12:36:30,653 - INFO - Beste Modellgewichte wiederhergestellt
+2025-05-05 12:36:30,983 - INFO - Modell gespeichert unter: output/hyperparameter_search/models/micro_d0.75_b3_ch16_sep_gpool.pth
+2025-05-05 12:36:31,912 - INFO - 
+==================================================
+Trainiere Modell 5/12: micro_d1.0_b2_ch8_sep_gpool
+==================================================
+2025-05-05 12:36:31,918 - INFO - Speicheranalyse:
+2025-05-05 12:36:31,918 - INFO -   Modellgröße (Float32): 2.54 KB
+2025-05-05 12:36:31,918 - INFO -   Modellgröße (Int8): 0.63 KB (0.0% des Flash)
+2025-05-05 12:36:31,918 - INFO -   Aktivierungsspeicher: 101.40 KB
+2025-05-05 12:36:31,918 - INFO -   Gesamter Laufzeitspeicher: 102.03 KB (38.6% des RAM)
+2025-05-05 12:36:31,919 - WARNING - Warnung: Laufzeitspeicher überschreitet RAM-Beschränkung (102.03KB > 100KB)
+2025-05-05 12:36:31,919 - INFO - Modell hat 582 Parameter
+2025-05-05 12:36:31,919 - INFO - Geschätzte Modellgröße: 2.54 KB (float32), 0.63 KB (int8)
+2025-05-05 12:36:32,496 - INFO - Epoch 1/25 - Train Loss: 1.7901, Train Acc: 22.22% - Val Loss: 1.7797, Val Acc: 66.67%
+2025-05-05 12:36:33,091 - INFO - Epoch 2/25 - Train Loss: 1.7904, Train Acc: 24.44% - Val Loss: 1.7780, Val Acc: 66.67%
+2025-05-05 12:36:33,689 - INFO - Epoch 3/25 - Train Loss: 1.8022, Train Acc: 8.89% - Val Loss: 1.7761, Val Acc: 66.67%
+2025-05-05 12:36:34,233 - INFO - Epoch 4/25 - Train Loss: 1.7779, Train Acc: 24.44% - Val Loss: 1.7735, Val Acc: 66.67%
+2025-05-05 12:36:34,854 - INFO - Epoch 5/25 - Train Loss: 1.7710, Train Acc: 15.56% - Val Loss: 1.7706, Val Acc: 66.67%
+2025-05-05 12:36:35,416 - INFO - Epoch 6/25 - Train Loss: 1.7497, Train Acc: 28.89% - Val Loss: 1.7660, Val Acc: 66.67%
+2025-05-05 12:36:35,961 - INFO - Epoch 7/25 - Train Loss: 1.7324, Train Acc: 24.44% - Val Loss: 1.7579, Val Acc: 75.00%
+2025-05-05 12:36:36,581 - INFO - Epoch 8/25 - Train Loss: 1.7142, Train Acc: 17.78% - Val Loss: 1.7497, Val Acc: 25.00%
+2025-05-05 12:36:37,155 - INFO - Epoch 9/25 - Train Loss: 1.6901, Train Acc: 31.11% - Val Loss: 1.7420, Val Acc: 16.67%
+2025-05-05 12:36:37,735 - INFO - Epoch 10/25 - Train Loss: 1.6580, Train Acc: 33.33% - Val Loss: 1.7357, Val Acc: 16.67%
+2025-05-05 12:36:38,335 - INFO - Epoch 11/25 - Train Loss: 1.6501, Train Acc: 22.22% - Val Loss: 1.7294, Val Acc: 16.67%
+2025-05-05 12:36:38,963 - INFO - Epoch 12/25 - Train Loss: 1.6311, Train Acc: 28.89% - Val Loss: 1.7214, Val Acc: 16.67%
+2025-05-05 12:36:39,495 - INFO - Epoch 13/25 - Train Loss: 1.6017, Train Acc: 37.78% - Val Loss: 1.7134, Val Acc: 8.33%
+2025-05-05 12:36:40,054 - INFO - Epoch 14/25 - Train Loss: 1.5959, Train Acc: 33.33% - Val Loss: 1.7058, Val Acc: 8.33%
+2025-05-05 12:36:40,569 - INFO - Epoch 15/25 - Train Loss: 1.5906, Train Acc: 26.67% - Val Loss: 1.6973, Val Acc: 8.33%
+2025-05-05 12:36:41,111 - INFO - Epoch 16/25 - Train Loss: 1.5716, Train Acc: 26.67% - Val Loss: 1.6898, Val Acc: 8.33%
+2025-05-05 12:36:41,611 - INFO - Epoch 17/25 - Train Loss: 1.5576, Train Acc: 35.56% - Val Loss: 1.6844, Val Acc: 8.33%
+2025-05-05 12:36:42,140 - INFO - Epoch 18/25 - Train Loss: 1.5559, Train Acc: 44.44% - Val Loss: 1.6802, Val Acc: 8.33%
+2025-05-05 12:36:42,720 - INFO - Epoch 19/25 - Train Loss: 1.5748, Train Acc: 22.22% - Val Loss: 1.6768, Val Acc: 8.33%
+2025-05-05 12:36:43,234 - INFO - Epoch 20/25 - Train Loss: 1.5277, Train Acc: 35.56% - Val Loss: 1.6746, Val Acc: 8.33%
+2025-05-05 12:36:43,847 - INFO - Epoch 21/25 - Train Loss: 1.5596, Train Acc: 22.22% - Val Loss: 1.6720, Val Acc: 8.33%
+2025-05-05 12:36:44,432 - INFO - Epoch 22/25 - Train Loss: 1.5495, Train Acc: 33.33% - Val Loss: 1.6697, Val Acc: 8.33%
+2025-05-05 12:36:44,979 - INFO - Epoch 23/25 - Train Loss: 1.5509, Train Acc: 31.11% - Val Loss: 1.6676, Val Acc: 8.33%
+2025-05-05 12:36:45,591 - INFO - Epoch 24/25 - Train Loss: 1.5378, Train Acc: 37.78% - Val Loss: 1.6659, Val Acc: 8.33%
+2025-05-05 12:36:46,118 - INFO - Epoch 25/25 - Train Loss: 1.5528, Train Acc: 28.89% - Val Loss: 1.6636, Val Acc: 8.33%
+2025-05-05 12:36:46,123 - INFO - Beste Modellgewichte wiederhergestellt
+2025-05-05 12:36:46,346 - INFO - Modell gespeichert unter: output/hyperparameter_search/models/micro_d1.0_b2_ch8_sep_gpool.pth
+2025-05-05 12:36:46,879 - INFO - 
+==================================================
+Trainiere Modell 6/12: micro_d1.0_b2_ch16_sep_gpool
+==================================================
+2025-05-05 12:36:46,882 - INFO - Speicheranalyse:
+2025-05-05 12:36:46,882 - INFO -   Modellgröße (Float32): 6.04 KB
+2025-05-05 12:36:46,882 - INFO -   Modellgröße (Int8): 1.51 KB (0.1% des Flash)
+2025-05-05 12:36:46,882 - INFO -   Aktivierungsspeicher: 202.77 KB
+2025-05-05 12:36:46,882 - INFO -   Gesamter Laufzeitspeicher: 204.28 KB (77.4% des RAM)
+2025-05-05 12:36:46,882 - WARNING - Warnung: Laufzeitspeicher überschreitet RAM-Beschränkung (204.28KB > 100KB)
+2025-05-05 12:36:46,882 - INFO - Modell hat 1,414 Parameter
+2025-05-05 12:36:46,882 - INFO - Geschätzte Modellgröße: 6.04 KB (float32), 1.51 KB (int8)
+2025-05-05 12:36:47,441 - INFO - Epoch 1/25 - Train Loss: 1.7765, Train Acc: 15.56% - Val Loss: 1.7890, Val Acc: 0.00%
+2025-05-05 12:36:48,066 - INFO - Epoch 2/25 - Train Loss: 1.7718, Train Acc: 28.89% - Val Loss: 1.7891, Val Acc: 0.00%
+2025-05-05 12:36:48,618 - INFO - Epoch 3/25 - Train Loss: 1.7621, Train Acc: 24.44% - Val Loss: 1.7885, Val Acc: 0.00%
+2025-05-05 12:36:49,116 - INFO - Epoch 4/25 - Train Loss: 1.7490, Train Acc: 28.89% - Val Loss: 1.7855, Val Acc: 0.00%
+2025-05-05 12:36:49,676 - INFO - Epoch 5/25 - Train Loss: 1.7340, Train Acc: 24.44% - Val Loss: 1.7801, Val Acc: 0.00%
+2025-05-05 12:36:50,220 - INFO - Epoch 6/25 - Train Loss: 1.7075, Train Acc: 24.44% - Val Loss: 1.7709, Val Acc: 8.33%
+2025-05-05 12:36:50,597 - INFO - Epoch 7/25 - Train Loss: 1.6644, Train Acc: 31.11% - Val Loss: 1.7597, Val Acc: 8.33%
+2025-05-05 12:36:51,113 - INFO - Epoch 8/25 - Train Loss: 1.6396, Train Acc: 26.67% - Val Loss: 1.7438, Val Acc: 16.67%
+2025-05-05 12:36:51,564 - INFO - Epoch 9/25 - Train Loss: 1.5888, Train Acc: 28.89% - Val Loss: 1.7281, Val Acc: 25.00%
+2025-05-05 12:36:52,079 - INFO - Epoch 10/25 - Train Loss: 1.5806, Train Acc: 22.22% - Val Loss: 1.7083, Val Acc: 25.00%
+2025-05-05 12:36:52,519 - INFO - Epoch 11/25 - Train Loss: 1.5405, Train Acc: 28.89% - Val Loss: 1.6886, Val Acc: 25.00%
+2025-05-05 12:36:53,052 - INFO - Epoch 12/25 - Train Loss: 1.5372, Train Acc: 20.00% - Val Loss: 1.6716, Val Acc: 16.67%
+2025-05-05 12:36:53,655 - INFO - Epoch 13/25 - Train Loss: 1.4874, Train Acc: 31.11% - Val Loss: 1.6568, Val Acc: 8.33%
+2025-05-05 12:36:54,228 - INFO - Epoch 14/25 - Train Loss: 1.5099, Train Acc: 26.67% - Val Loss: 1.6434, Val Acc: 8.33%
+2025-05-05 12:36:54,809 - INFO - Epoch 15/25 - Train Loss: 1.4651, Train Acc: 26.67% - Val Loss: 1.6322, Val Acc: 8.33%
+2025-05-05 12:36:55,380 - INFO - Epoch 16/25 - Train Loss: 1.4726, Train Acc: 22.22% - Val Loss: 1.6264, Val Acc: 8.33%
+2025-05-05 12:36:55,679 - INFO - Epoch 17/25 - Train Loss: 1.5197, Train Acc: 13.33% - Val Loss: 1.6234, Val Acc: 8.33%
+2025-05-05 12:36:56,165 - INFO - Epoch 18/25 - Train Loss: 1.5236, Train Acc: 20.00% - Val Loss: 1.6220, Val Acc: 8.33%
+2025-05-05 12:36:56,735 - INFO - Epoch 19/25 - Train Loss: 1.4379, Train Acc: 40.00% - Val Loss: 1.6215, Val Acc: 8.33%
+2025-05-05 12:36:57,309 - INFO - Epoch 20/25 - Train Loss: 1.4183, Train Acc: 42.22% - Val Loss: 1.6209, Val Acc: 8.33%
+2025-05-05 12:36:57,901 - INFO - Epoch 21/25 - Train Loss: 1.4469, Train Acc: 35.56% - Val Loss: 1.6200, Val Acc: 8.33%
+2025-05-05 12:36:58,295 - INFO - Epoch 22/25 - Train Loss: 1.4655, Train Acc: 22.22% - Val Loss: 1.6190, Val Acc: 8.33%
+2025-05-05 12:36:58,763 - INFO - Epoch 23/25 - Train Loss: 1.4256, Train Acc: 37.78% - Val Loss: 1.6172, Val Acc: 8.33%
+2025-05-05 12:36:59,302 - INFO - Epoch 24/25 - Train Loss: 1.4289, Train Acc: 35.56% - Val Loss: 1.6151, Val Acc: 8.33%
+2025-05-05 12:36:59,905 - INFO - Epoch 25/25 - Train Loss: 1.4286, Train Acc: 40.00% - Val Loss: 1.6155, Val Acc: 8.33%
+2025-05-05 12:36:59,909 - INFO - Beste Modellgewichte wiederhergestellt
+2025-05-05 12:37:00,257 - INFO - Modell gespeichert unter: output/hyperparameter_search/models/micro_d1.0_b2_ch16_sep_gpool.pth
+2025-05-05 12:37:00,762 - INFO - 
+==================================================
+Trainiere Modell 7/12: micro_d1.0_b3_ch8_sep_gpool
+==================================================
+2025-05-05 12:37:00,770 - INFO - Speicheranalyse:
+2025-05-05 12:37:00,770 - INFO -   Modellgröße (Float32): 6.23 KB
+2025-05-05 12:37:00,770 - INFO -   Modellgröße (Int8): 1.56 KB (0.1% des Flash)
+2025-05-05 12:37:00,770 - INFO -   Aktivierungsspeicher: 122.90 KB
+2025-05-05 12:37:00,770 - INFO -   Gesamter Laufzeitspeicher: 124.46 KB (47.1% des RAM)
+2025-05-05 12:37:00,770 - WARNING - Warnung: Laufzeitspeicher überschreitet RAM-Beschränkung (124.46KB > 100KB)
+2025-05-05 12:37:00,770 - INFO - Modell hat 1,430 Parameter
+2025-05-05 12:37:00,770 - INFO - Geschätzte Modellgröße: 6.23 KB (float32), 1.56 KB (int8)
+2025-05-05 12:37:01,324 - INFO - Epoch 1/25 - Train Loss: 1.8038, Train Acc: 4.44% - Val Loss: 1.7939, Val Acc: 0.00%
+2025-05-05 12:37:01,923 - INFO - Epoch 2/25 - Train Loss: 1.7966, Train Acc: 4.44% - Val Loss: 1.7938, Val Acc: 0.00%
+2025-05-05 12:37:02,398 - INFO - Epoch 3/25 - Train Loss: 1.7774, Train Acc: 22.22% - Val Loss: 1.7918, Val Acc: 0.00%
+2025-05-05 12:37:03,029 - INFO - Epoch 4/25 - Train Loss: 1.7806, Train Acc: 20.00% - Val Loss: 1.7878, Val Acc: 0.00%
+2025-05-05 12:37:03,603 - INFO - Epoch 5/25 - Train Loss: 1.7506, Train Acc: 37.78% - Val Loss: 1.7799, Val Acc: 0.00%
+2025-05-05 12:37:04,232 - INFO - Epoch 6/25 - Train Loss: 1.7214, Train Acc: 31.11% - Val Loss: 1.7674, Val Acc: 8.33%
+2025-05-05 12:37:04,664 - INFO - Epoch 7/25 - Train Loss: 1.6792, Train Acc: 33.33% - Val Loss: 1.7569, Val Acc: 0.00%
+2025-05-05 12:37:05,049 - INFO - Epoch 8/25 - Train Loss: 1.6393, Train Acc: 40.00% - Val Loss: 1.7472, Val Acc: 0.00%
+2025-05-05 12:37:05,647 - INFO - Epoch 9/25 - Train Loss: 1.5909, Train Acc: 26.67% - Val Loss: 1.7393, Val Acc: 0.00%
+2025-05-05 12:37:06,213 - INFO - Epoch 10/25 - Train Loss: 1.5827, Train Acc: 31.11% - Val Loss: 1.7308, Val Acc: 8.33%
+2025-05-05 12:37:06,655 - INFO - Epoch 11/25 - Train Loss: 1.5229, Train Acc: 44.44% - Val Loss: 1.7251, Val Acc: 8.33%
+2025-05-05 12:37:07,158 - INFO - Epoch 12/25 - Train Loss: 1.5153, Train Acc: 35.56% - Val Loss: 1.7209, Val Acc: 0.00%
+2025-05-05 12:37:07,737 - INFO - Epoch 13/25 - Train Loss: 1.5026, Train Acc: 35.56% - Val Loss: 1.7158, Val Acc: 0.00%
+2025-05-05 12:37:08,355 - INFO - Epoch 14/25 - Train Loss: 1.4744, Train Acc: 31.11% - Val Loss: 1.7075, Val Acc: 0.00%
+2025-05-05 12:37:08,882 - INFO - Epoch 15/25 - Train Loss: 1.4888, Train Acc: 24.44% - Val Loss: 1.7020, Val Acc: 0.00%
+2025-05-05 12:37:09,556 - INFO - Epoch 16/25 - Train Loss: 1.4691, Train Acc: 20.00% - Val Loss: 1.6957, Val Acc: 0.00%
+2025-05-05 12:37:10,184 - INFO - Epoch 17/25 - Train Loss: 1.5185, Train Acc: 31.11% - Val Loss: 1.6846, Val Acc: 0.00%
+2025-05-05 12:37:10,760 - INFO - Epoch 18/25 - Train Loss: 1.4978, Train Acc: 22.22% - Val Loss: 1.6761, Val Acc: 0.00%
+2025-05-05 12:37:11,384 - INFO - Epoch 19/25 - Train Loss: 1.5102, Train Acc: 20.00% - Val Loss: 1.6665, Val Acc: 0.00%
+2025-05-05 12:37:11,971 - INFO - Epoch 20/25 - Train Loss: 1.4700, Train Acc: 37.78% - Val Loss: 1.6586, Val Acc: 0.00%
+2025-05-05 12:37:12,490 - INFO - Epoch 21/25 - Train Loss: 1.4764, Train Acc: 15.56% - Val Loss: 1.6532, Val Acc: 0.00%
+2025-05-05 12:37:13,094 - INFO - Epoch 22/25 - Train Loss: 1.4403, Train Acc: 42.22% - Val Loss: 1.6501, Val Acc: 0.00%
+2025-05-05 12:37:13,715 - INFO - Epoch 23/25 - Train Loss: 1.4819, Train Acc: 24.44% - Val Loss: 1.6508, Val Acc: 0.00%
+2025-05-05 12:37:14,341 - INFO - Epoch 24/25 - Train Loss: 1.4370, Train Acc: 33.33% - Val Loss: 1.6558, Val Acc: 0.00%
+2025-05-05 12:37:14,886 - INFO - Epoch 25/25 - Train Loss: 1.4835, Train Acc: 26.67% - Val Loss: 1.6573, Val Acc: 0.00%
+2025-05-05 12:37:14,890 - INFO - Beste Modellgewichte wiederhergestellt
+2025-05-05 12:37:15,276 - INFO - Modell gespeichert unter: output/hyperparameter_search/models/micro_d1.0_b3_ch8_sep_gpool.pth
+2025-05-05 12:37:15,778 - INFO - 
+==================================================
+Trainiere Modell 8/12: micro_d1.0_b3_ch16_sep_gpool
+==================================================
+2025-05-05 12:37:15,782 - INFO - Speicheranalyse:
+2025-05-05 12:37:15,782 - INFO -   Modellgröße (Float32): 17.42 KB
+2025-05-05 12:37:15,782 - INFO -   Modellgröße (Int8): 4.35 KB (0.2% des Flash)
+2025-05-05 12:37:15,782 - INFO -   Aktivierungsspeicher: 245.77 KB
+2025-05-05 12:37:15,782 - INFO -   Gesamter Laufzeitspeicher: 250.13 KB (94.7% des RAM)
+2025-05-05 12:37:15,782 - WARNING - Warnung: Laufzeitspeicher überschreitet RAM-Beschränkung (250.13KB > 100KB)
+2025-05-05 12:37:15,782 - INFO - Modell hat 4,134 Parameter
+2025-05-05 12:37:15,782 - INFO - Geschätzte Modellgröße: 17.42 KB (float32), 4.35 KB (int8)
+2025-05-05 12:37:16,290 - INFO - Epoch 1/25 - Train Loss: 1.7691, Train Acc: 20.00% - Val Loss: 1.7853, Val Acc: 66.67%
+2025-05-05 12:37:16,863 - INFO - Epoch 2/25 - Train Loss: 1.7634, Train Acc: 17.78% - Val Loss: 1.7811, Val Acc: 66.67%
+2025-05-05 12:37:17,412 - INFO - Epoch 3/25 - Train Loss: 1.7470, Train Acc: 20.00% - Val Loss: 1.7757, Val Acc: 66.67%
+2025-05-05 12:37:22,932 - INFO - Epoch 4/25 - Train Loss: 1.7279, Train Acc: 26.67% - Val Loss: 1.7699, Val Acc: 66.67%
+2025-05-05 12:37:23,540 - INFO - Epoch 5/25 - Train Loss: 1.6804, Train Acc: 37.78% - Val Loss: 1.7650, Val Acc: 8.33%
+2025-05-05 12:37:24,160 - INFO - Epoch 6/25 - Train Loss: 1.6387, Train Acc: 22.22% - Val Loss: 1.7549, Val Acc: 8.33%
+2025-05-05 12:37:24,557 - INFO - Epoch 7/25 - Train Loss: 1.5795, Train Acc: 28.89% - Val Loss: 1.7373, Val Acc: 8.33%
+2025-05-05 12:37:25,181 - INFO - Epoch 8/25 - Train Loss: 1.5527, Train Acc: 24.44% - Val Loss: 1.7138, Val Acc: 8.33%
+2025-05-05 12:37:25,733 - INFO - Epoch 9/25 - Train Loss: 1.4932, Train Acc: 28.89% - Val Loss: 1.6972, Val Acc: 8.33%
+2025-05-05 12:37:26,321 - INFO - Epoch 10/25 - Train Loss: 1.4683, Train Acc: 33.33% - Val Loss: 1.6848, Val Acc: 8.33%
+2025-05-05 12:37:26,901 - INFO - Epoch 11/25 - Train Loss: 1.4188, Train Acc: 33.33% - Val Loss: 1.6666, Val Acc: 8.33%
+2025-05-05 12:37:27,496 - INFO - Epoch 12/25 - Train Loss: 1.5085, Train Acc: 22.22% - Val Loss: 1.6457, Val Acc: 8.33%
+2025-05-05 12:37:27,935 - INFO - Epoch 13/25 - Train Loss: 1.5416, Train Acc: 20.00% - Val Loss: 1.6282, Val Acc: 8.33%
+2025-05-05 12:37:28,538 - INFO - Epoch 14/25 - Train Loss: 1.3908, Train Acc: 26.67% - Val Loss: 1.6136, Val Acc: 8.33%
+2025-05-05 12:37:29,208 - INFO - Epoch 15/25 - Train Loss: 1.4184, Train Acc: 22.22% - Val Loss: 1.5954, Val Acc: 0.00%
+2025-05-05 12:37:29,793 - INFO - Epoch 16/25 - Train Loss: 1.4061, Train Acc: 33.33% - Val Loss: 1.5766, Val Acc: 0.00%
+2025-05-05 12:37:30,053 - INFO - Epoch 17/25 - Train Loss: 1.4181, Train Acc: 33.33% - Val Loss: 1.5611, Val Acc: 0.00%
+2025-05-05 12:37:30,605 - INFO - Epoch 18/25 - Train Loss: 1.3409, Train Acc: 40.00% - Val Loss: 1.5468, Val Acc: 0.00%
+2025-05-05 12:37:31,212 - INFO - Epoch 19/25 - Train Loss: 1.3789, Train Acc: 26.67% - Val Loss: 1.5326, Val Acc: 0.00%
+2025-05-05 12:37:31,605 - INFO - Epoch 20/25 - Train Loss: 1.3911, Train Acc: 22.22% - Val Loss: 1.5237, Val Acc: 0.00%
+2025-05-05 12:37:32,148 - INFO - Epoch 21/25 - Train Loss: 1.3959, Train Acc: 26.67% - Val Loss: 1.5202, Val Acc: 0.00%
+2025-05-05 12:37:32,712 - INFO - Epoch 22/25 - Train Loss: 1.3728, Train Acc: 35.56% - Val Loss: 1.5113, Val Acc: 0.00%
+2025-05-05 12:37:33,256 - INFO - Epoch 23/25 - Train Loss: 1.3936, Train Acc: 31.11% - Val Loss: 1.5049, Val Acc: 0.00%
+2025-05-05 12:37:33,700 - INFO - Epoch 24/25 - Train Loss: 1.3696, Train Acc: 37.78% - Val Loss: 1.5004, Val Acc: 0.00%
+2025-05-05 12:37:34,332 - INFO - Epoch 25/25 - Train Loss: 1.3546, Train Acc: 42.22% - Val Loss: 1.4935, Val Acc: 0.00%
+2025-05-05 12:37:34,338 - INFO - Beste Modellgewichte wiederhergestellt
+2025-05-05 12:37:34,674 - INFO - Modell gespeichert unter: output/hyperparameter_search/models/micro_d1.0_b3_ch16_sep_gpool.pth
+2025-05-05 12:37:35,296 - INFO - 
+==================================================
+Trainiere Modell 9/12: micro_d1.25_b2_ch8_sep_gpool
+==================================================
+2025-05-05 12:37:35,302 - INFO - Speicheranalyse:
+2025-05-05 12:37:35,302 - INFO -   Modellgröße (Float32): 3.32 KB
+2025-05-05 12:37:35,302 - INFO -   Modellgröße (Int8): 0.83 KB (0.0% des Flash)
+2025-05-05 12:37:35,302 - INFO -   Aktivierungsspeicher: 126.74 KB
+2025-05-05 12:37:35,302 - INFO -   Gesamter Laufzeitspeicher: 127.57 KB (48.3% des RAM)
+2025-05-05 12:37:35,302 - WARNING - Warnung: Laufzeitspeicher überschreitet RAM-Beschränkung (127.57KB > 100KB)
+2025-05-05 12:37:35,302 - INFO - Modell hat 766 Parameter
+2025-05-05 12:37:35,303 - INFO - Geschätzte Modellgröße: 3.32 KB (float32), 0.83 KB (int8)
+2025-05-05 12:37:35,836 - INFO - Epoch 1/25 - Train Loss: 1.7788, Train Acc: 40.00% - Val Loss: 1.7986, Val Acc: 0.00%
+2025-05-05 12:37:36,324 - INFO - Epoch 2/25 - Train Loss: 1.7897, Train Acc: 28.89% - Val Loss: 1.7992, Val Acc: 0.00%
+2025-05-05 12:37:36,874 - INFO - Epoch 3/25 - Train Loss: 1.7803, Train Acc: 28.89% - Val Loss: 1.7978, Val Acc: 0.00%
+2025-05-05 12:37:37,498 - INFO - Epoch 4/25 - Train Loss: 1.7764, Train Acc: 26.67% - Val Loss: 1.7937, Val Acc: 0.00%
+2025-05-05 12:37:38,083 - INFO - Epoch 5/25 - Train Loss: 1.7624, Train Acc: 24.44% - Val Loss: 1.7848, Val Acc: 0.00%
+2025-05-05 12:37:38,620 - INFO - Epoch 6/25 - Train Loss: 1.7515, Train Acc: 15.56% - Val Loss: 1.7701, Val Acc: 16.67%
+2025-05-05 12:37:39,242 - INFO - Epoch 7/25 - Train Loss: 1.7197, Train Acc: 31.11% - Val Loss: 1.7523, Val Acc: 16.67%
+2025-05-05 12:40:12,378 - INFO - Starte Hyperparameter-Suche für Pizza Erkennung
+2025-05-05 12:40:12,378 - INFO - ================================================================================
+2025-05-05 12:40:12,378 - INFO - RP2040 PIZZA-ERKENNUNGSSYSTEM - DETAILLIERTE KONFIGURATION
+2025-05-05 12:40:12,378 - INFO - ================================================================================
+2025-05-05 12:40:12,378 - INFO - Hardware: RP2040 - 133MHz, 264KB RAM, 2048KB Flash
+2025-05-05 12:40:12,379 - INFO - Kamera: OV2640 - 320x240, 7 FPS
+2025-05-05 12:40:12,379 - INFO - Stromversorgung: CR123A - 1500mAh, 8.33h aktiv, 3000.00h standby
+2025-05-05 12:40:12,379 - INFO - Modellparameter: 48x48 Eingabegröße, 8-Bit Quantisierung
+2025-05-05 12:40:12,379 - INFO - Speicherbeschränkungen: Max. 180KB Modellgröße, 100KB Laufzeit-RAM
+2025-05-05 12:40:12,379 - INFO - ================================================================================
+2025-05-05 12:40:12,379 - INFO - Lade Datensatz aus data/augmented
+2025-05-05 12:40:12,379 - INFO - Analysiere Datensatz in data/augmented...
+2025-05-05 12:40:12,412 - INFO - Datensatzanalyse abgeschlossen:
+2025-05-05 12:40:12,412 - INFO - Gesamtzahl der Bilder: 57
+2025-05-05 12:40:12,412 - INFO - Klassenverteilung: {'progression': 0, 'mixed': 7, 'basic': 29, 'segment': 0, 'combined': 17, 'burnt': 4}
+2025-05-05 12:40:12,412 - INFO - Durchschnittliche Bildgröße: 224.0 x 224.0
+2025-05-05 12:40:12,412 - INFO - RGB-Mittelwerte: [0.4847, 0.4025, 0.3333]
+2025-05-05 12:40:12,412 - INFO - RGB-Standardabweichungen: [0.2399, 0.2575, 0.2710]
+2025-05-05 12:40:12,412 - INFO - Preparing optimized data loaders...
+2025-05-05 12:40:12,412 - INFO - Using dataset-specific normalization: mean=[0.48468599 0.4025237  0.33328085], std=[0.23994533 0.25754207 0.27102478]
+2025-05-05 12:40:12,413 - INFO - Data loaders created: 45 training images, 12 validation images
+2025-05-05 12:40:12,413 - INFO - Classes: ['basic', 'burnt', 'combined', 'mixed', 'progression', 'segment']
+2025-05-05 12:40:12,413 - INFO - Generiert: 12 Modellkonfigurationen für die Suche
+2025-05-05 12:40:12,414 - INFO - 
+==================================================
+Trainiere Modell 1/12: micro_d0.75_b2_ch8_sep_gpool
+==================================================
+2025-05-05 12:40:12,417 - INFO - Speicheranalyse:
+2025-05-05 12:40:12,417 - INFO -   Modellgröße (Float32): 1.82 KB
+2025-05-05 12:40:12,417 - INFO -   Modellgröße (Int8): 0.45 KB (0.0% des Flash)
+2025-05-05 12:40:12,417 - INFO -   Aktivierungsspeicher: 76.05 KB
+2025-05-05 12:40:12,417 - INFO -   Gesamter Laufzeitspeicher: 76.51 KB (29.0% des RAM)
+2025-05-05 12:40:12,417 - INFO - Modell hat 414 Parameter
+2025-05-05 12:40:12,417 - INFO - Geschätzte Modellgröße: 1.82 KB (float32), 0.45 KB (int8)
+2025-05-05 12:40:13,374 - INFO - Epoch 1/15 - Train Loss: 1.7930, Train Acc: 20.00% - Val Loss: 1.7917, Val Acc: 25.00%
+2025-05-05 12:40:13,787 - INFO - Epoch 2/15 - Train Loss: 1.7959, Train Acc: 20.00% - Val Loss: 1.7910, Val Acc: 25.00%
+2025-05-05 12:40:14,395 - INFO - Epoch 3/15 - Train Loss: 1.7835, Train Acc: 20.00% - Val Loss: 1.7889, Val Acc: 25.00%
+2025-05-05 12:40:14,913 - INFO - Epoch 4/15 - Train Loss: 1.7728, Train Acc: 22.22% - Val Loss: 1.7846, Val Acc: 25.00%
+2025-05-05 12:40:15,366 - INFO - Epoch 5/15 - Train Loss: 1.7547, Train Acc: 35.56% - Val Loss: 1.7768, Val Acc: 25.00%
+2025-05-05 12:40:15,819 - INFO - Epoch 6/15 - Train Loss: 1.7423, Train Acc: 24.44% - Val Loss: 1.7678, Val Acc: 25.00%
+2025-05-05 12:40:16,097 - INFO - Epoch 7/15 - Train Loss: 1.7243, Train Acc: 17.78% - Val Loss: 1.7601, Val Acc: 25.00%
+2025-05-05 12:40:16,607 - INFO - Epoch 8/15 - Train Loss: 1.7165, Train Acc: 17.78% - Val Loss: 1.7514, Val Acc: 25.00%
+2025-05-05 12:40:17,172 - INFO - Epoch 9/15 - Train Loss: 1.6920, Train Acc: 17.78% - Val Loss: 1.7430, Val Acc: 25.00%
+2025-05-05 12:40:17,729 - INFO - Epoch 10/15 - Train Loss: 1.6865, Train Acc: 26.67% - Val Loss: 1.7358, Val Acc: 25.00%
+2025-05-05 12:40:18,281 - INFO - Epoch 11/15 - Train Loss: 1.6720, Train Acc: 37.78% - Val Loss: 1.7297, Val Acc: 25.00%
+2025-05-05 12:40:18,711 - INFO - Epoch 12/15 - Train Loss: 1.6616, Train Acc: 37.78% - Val Loss: 1.7251, Val Acc: 25.00%
+2025-05-05 12:40:19,276 - INFO - Epoch 13/15 - Train Loss: 1.6541, Train Acc: 44.44% - Val Loss: 1.7211, Val Acc: 25.00%
+2025-05-05 12:40:19,863 - INFO - Epoch 14/15 - Train Loss: 1.6627, Train Acc: 28.89% - Val Loss: 1.7180, Val Acc: 25.00%
+2025-05-05 12:40:20,377 - INFO - Epoch 15/15 - Train Loss: 1.6479, Train Acc: 35.56% - Val Loss: 1.7158, Val Acc: 16.67%
+2025-05-05 12:40:20,383 - INFO - Beste Modellgewichte wiederhergestellt
+2025-05-05 12:40:20,693 - INFO - Modell gespeichert unter: output/hyperparameter_search/models/micro_d0.75_b2_ch8_sep_gpool.pth
+2025-05-05 12:40:21,278 - INFO - 
+==================================================
+Trainiere Modell 2/12: micro_d0.75_b2_ch16_sep_gpool
+==================================================
+2025-05-05 12:40:21,281 - INFO - Speicheranalyse:
+2025-05-05 12:40:21,281 - INFO -   Modellgröße (Float32): 4.16 KB
+2025-05-05 12:40:21,281 - INFO -   Modellgröße (Int8): 1.04 KB (0.1% des Flash)
+2025-05-05 12:40:21,281 - INFO -   Aktivierungsspeicher: 152.09 KB
+2025-05-05 12:40:21,281 - INFO -   Gesamter Laufzeitspeicher: 153.13 KB (58.0% des RAM)
+2025-05-05 12:40:21,281 - WARNING - Warnung: Laufzeitspeicher überschreitet RAM-Beschränkung (153.13KB > 100KB)
+2025-05-05 12:40:21,281 - INFO - Modell hat 966 Parameter
+2025-05-05 12:40:21,281 - INFO - Geschätzte Modellgröße: 4.16 KB (float32), 1.04 KB (int8)
+2025-05-05 12:40:21,798 - INFO - Epoch 1/15 - Train Loss: 1.7814, Train Acc: 17.78% - Val Loss: 1.7896, Val Acc: 8.33%
+2025-05-05 12:40:22,348 - INFO - Epoch 2/15 - Train Loss: 1.7825, Train Acc: 17.78% - Val Loss: 1.7864, Val Acc: 8.33%
+2025-05-05 12:40:22,778 - INFO - Epoch 3/15 - Train Loss: 1.7680, Train Acc: 26.67% - Val Loss: 1.7810, Val Acc: 0.00%
+2025-05-05 12:40:23,201 - INFO - Epoch 4/15 - Train Loss: 1.7399, Train Acc: 33.33% - Val Loss: 1.7723, Val Acc: 8.33%
+2025-05-05 12:40:23,778 - INFO - Epoch 5/15 - Train Loss: 1.7166, Train Acc: 28.89% - Val Loss: 1.7656, Val Acc: 0.00%
+2025-05-05 12:40:24,306 - INFO - Epoch 6/15 - Train Loss: 1.6906, Train Acc: 40.00% - Val Loss: 1.7600, Val Acc: 0.00%
+2025-05-05 12:40:24,912 - INFO - Epoch 7/15 - Train Loss: 1.6550, Train Acc: 37.78% - Val Loss: 1.7557, Val Acc: 0.00%
+2025-05-05 12:40:25,359 - INFO - Epoch 8/15 - Train Loss: 1.6368, Train Acc: 28.89% - Val Loss: 1.7515, Val Acc: 0.00%
+2025-05-05 12:40:25,884 - INFO - Epoch 9/15 - Train Loss: 1.5914, Train Acc: 42.22% - Val Loss: 1.7473, Val Acc: 0.00%
+2025-05-05 12:40:26,448 - INFO - Epoch 10/15 - Train Loss: 1.5702, Train Acc: 37.78% - Val Loss: 1.7434, Val Acc: 0.00%
+2025-05-05 12:40:26,953 - INFO - Epoch 11/15 - Train Loss: 1.5911, Train Acc: 26.67% - Val Loss: 1.7398, Val Acc: 0.00%
+2025-05-05 12:40:27,559 - INFO - Epoch 12/15 - Train Loss: 1.6101, Train Acc: 26.67% - Val Loss: 1.7354, Val Acc: 0.00%
+2025-05-05 12:40:28,153 - INFO - Epoch 13/15 - Train Loss: 1.5727, Train Acc: 28.89% - Val Loss: 1.7307, Val Acc: 0.00%
+2025-05-05 12:40:28,645 - INFO - Epoch 14/15 - Train Loss: 1.5633, Train Acc: 35.56% - Val Loss: 1.7278, Val Acc: 0.00%
+2025-05-05 12:40:29,219 - INFO - Epoch 15/15 - Train Loss: 1.5720, Train Acc: 33.33% - Val Loss: 1.7244, Val Acc: 0.00%
+2025-05-05 12:40:29,224 - INFO - Beste Modellgewichte wiederhergestellt
+2025-05-05 12:40:29,573 - INFO - Modell gespeichert unter: output/hyperparameter_search/models/micro_d0.75_b2_ch16_sep_gpool.pth
+2025-05-05 12:40:30,128 - INFO - 
+==================================================
+Trainiere Modell 3/12: micro_d0.75_b3_ch8_sep_gpool
+==================================================
+2025-05-05 12:40:30,136 - INFO - Speicheranalyse:
+2025-05-05 12:40:30,136 - INFO -   Modellgröße (Float32): 4.21 KB
+2025-05-05 12:40:30,137 - INFO -   Modellgröße (Int8): 1.05 KB (0.1% des Flash)
+2025-05-05 12:40:30,137 - INFO -   Aktivierungsspeicher: 92.18 KB
+2025-05-05 12:40:30,137 - INFO -   Gesamter Laufzeitspeicher: 93.23 KB (35.3% des RAM)
+2025-05-05 12:40:30,137 - INFO - Modell hat 954 Parameter
+2025-05-05 12:40:30,137 - INFO - Geschätzte Modellgröße: 4.21 KB (float32), 1.05 KB (int8)
+2025-05-05 12:40:30,687 - INFO - Epoch 1/15 - Train Loss: 1.7920, Train Acc: 13.33% - Val Loss: 1.7907, Val Acc: 0.00%
+2025-05-05 12:40:31,182 - INFO - Epoch 2/15 - Train Loss: 1.7880, Train Acc: 22.22% - Val Loss: 1.7881, Val Acc: 66.67%
+2025-05-05 12:40:31,616 - INFO - Epoch 3/15 - Train Loss: 1.7671, Train Acc: 37.78% - Val Loss: 1.7822, Val Acc: 66.67%
+2025-05-05 12:40:32,194 - INFO - Epoch 4/15 - Train Loss: 1.7455, Train Acc: 33.33% - Val Loss: 1.7750, Val Acc: 66.67%
+2025-05-05 12:40:32,708 - INFO - Epoch 5/15 - Train Loss: 1.7277, Train Acc: 22.22% - Val Loss: 1.7697, Val Acc: 0.00%
+2025-05-05 12:40:33,265 - INFO - Epoch 6/15 - Train Loss: 1.6818, Train Acc: 40.00% - Val Loss: 1.7654, Val Acc: 0.00%
+2025-05-05 12:40:33,797 - INFO - Epoch 7/15 - Train Loss: 1.6560, Train Acc: 33.33% - Val Loss: 1.7612, Val Acc: 0.00%
+2025-05-05 12:40:34,402 - INFO - Epoch 8/15 - Train Loss: 1.6345, Train Acc: 33.33% - Val Loss: 1.7569, Val Acc: 0.00%
+2025-05-05 12:40:35,023 - INFO - Epoch 9/15 - Train Loss: 1.6336, Train Acc: 28.89% - Val Loss: 1.7495, Val Acc: 0.00%
+2025-05-05 12:40:35,575 - INFO - Epoch 10/15 - Train Loss: 1.5952, Train Acc: 28.89% - Val Loss: 1.7407, Val Acc: 0.00%
+2025-05-05 12:40:36,112 - INFO - Epoch 11/15 - Train Loss: 1.6097, Train Acc: 17.78% - Val Loss: 1.7333, Val Acc: 0.00%
+2025-05-05 12:40:36,648 - INFO - Epoch 12/15 - Train Loss: 1.5893, Train Acc: 24.44% - Val Loss: 1.7275, Val Acc: 0.00%
+2025-05-05 12:40:37,180 - INFO - Epoch 13/15 - Train Loss: 1.5799, Train Acc: 31.11% - Val Loss: 1.7229, Val Acc: 0.00%
+2025-05-05 12:40:37,578 - INFO - Epoch 14/15 - Train Loss: 1.5719, Train Acc: 22.22% - Val Loss: 1.7202, Val Acc: 0.00%
+2025-05-05 12:40:38,084 - INFO - Epoch 15/15 - Train Loss: 1.5610, Train Acc: 28.89% - Val Loss: 1.7182, Val Acc: 0.00%
+2025-05-05 12:40:38,089 - INFO - Beste Modellgewichte wiederhergestellt
+2025-05-05 12:40:38,475 - INFO - Modell gespeichert unter: output/hyperparameter_search/models/micro_d0.75_b3_ch8_sep_gpool.pth
+2025-05-05 12:40:38,859 - INFO - 
+==================================================
+Trainiere Modell 4/12: micro_d0.75_b3_ch16_sep_gpool
+==================================================
+2025-05-05 12:40:38,862 - INFO - Speicheranalyse:
+2025-05-05 12:40:38,862 - INFO -   Modellgröße (Float32): 11.20 KB
+2025-05-05 12:40:38,862 - INFO -   Modellgröße (Int8): 2.80 KB (0.1% des Flash)
+2025-05-05 12:40:38,862 - INFO -   Aktivierungsspeicher: 184.34 KB
+2025-05-05 12:40:38,862 - INFO -   Gesamter Laufzeitspeicher: 187.14 KB (70.9% des RAM)
+2025-05-05 12:40:38,862 - WARNING - Warnung: Laufzeitspeicher überschreitet RAM-Beschränkung (187.14KB > 100KB)
+2025-05-05 12:40:38,862 - INFO - Modell hat 2,622 Parameter
+2025-05-05 12:40:38,862 - INFO - Geschätzte Modellgröße: 11.20 KB (float32), 2.80 KB (int8)
+2025-05-05 12:40:39,342 - INFO - Epoch 1/15 - Train Loss: 1.8062, Train Acc: 22.22% - Val Loss: 1.7947, Val Acc: 8.33%
+2025-05-05 12:40:39,953 - INFO - Epoch 2/15 - Train Loss: 1.8190, Train Acc: 15.56% - Val Loss: 1.7942, Val Acc: 8.33%
+2025-05-05 12:40:40,564 - INFO - Epoch 3/15 - Train Loss: 1.7450, Train Acc: 31.11% - Val Loss: 1.7903, Val Acc: 8.33%
+2025-05-05 12:40:41,151 - INFO - Epoch 4/15 - Train Loss: 1.7136, Train Acc: 26.67% - Val Loss: 1.7835, Val Acc: 0.00%
+2025-05-05 12:40:41,570 - INFO - Epoch 5/15 - Train Loss: 1.6577, Train Acc: 31.11% - Val Loss: 1.7705, Val Acc: 0.00%
+2025-05-05 12:40:42,173 - INFO - Epoch 6/15 - Train Loss: 1.5843, Train Acc: 37.78% - Val Loss: 1.7552, Val Acc: 0.00%
+2025-05-05 12:40:42,793 - INFO - Epoch 7/15 - Train Loss: 1.6067, Train Acc: 31.11% - Val Loss: 1.7405, Val Acc: 0.00%
+2025-05-05 12:40:43,298 - INFO - Epoch 8/15 - Train Loss: 1.5678, Train Acc: 26.67% - Val Loss: 1.7259, Val Acc: 0.00%
+2025-05-05 12:40:43,888 - INFO - Epoch 9/15 - Train Loss: 1.5118, Train Acc: 31.11% - Val Loss: 1.7134, Val Acc: 0.00%
+2025-05-05 12:40:44,501 - INFO - Epoch 10/15 - Train Loss: 1.5105, Train Acc: 28.89% - Val Loss: 1.7022, Val Acc: 0.00%
+2025-05-05 12:40:44,946 - INFO - Epoch 11/15 - Train Loss: 1.5124, Train Acc: 24.44% - Val Loss: 1.6931, Val Acc: 0.00%
+2025-05-05 12:40:45,524 - INFO - Epoch 12/15 - Train Loss: 1.4395, Train Acc: 33.33% - Val Loss: 1.6851, Val Acc: 0.00%
+2025-05-05 12:40:45,998 - INFO - Epoch 13/15 - Train Loss: 1.4638, Train Acc: 31.11% - Val Loss: 1.6782, Val Acc: 0.00%
+2025-05-05 12:40:46,479 - INFO - Epoch 14/15 - Train Loss: 1.4299, Train Acc: 33.33% - Val Loss: 1.6728, Val Acc: 0.00%
+2025-05-05 12:40:47,110 - INFO - Epoch 15/15 - Train Loss: 1.4447, Train Acc: 33.33% - Val Loss: 1.6668, Val Acc: 0.00%
+2025-05-05 12:40:47,116 - INFO - Beste Modellgewichte wiederhergestellt
+2025-05-05 12:40:47,314 - INFO - Modell gespeichert unter: output/hyperparameter_search/models/micro_d0.75_b3_ch16_sep_gpool.pth
+2025-05-05 12:40:47,659 - INFO - 
+==================================================
+Trainiere Modell 5/12: micro_d1.0_b2_ch8_sep_gpool
+==================================================
+2025-05-05 12:40:47,661 - INFO - Speicheranalyse:
+2025-05-05 12:40:47,661 - INFO -   Modellgröße (Float32): 2.54 KB
+2025-05-05 12:40:47,661 - INFO -   Modellgröße (Int8): 0.63 KB (0.0% des Flash)
+2025-05-05 12:40:47,661 - INFO -   Aktivierungsspeicher: 101.40 KB
+2025-05-05 12:40:47,661 - INFO -   Gesamter Laufzeitspeicher: 102.03 KB (38.6% des RAM)
+2025-05-05 12:40:47,661 - WARNING - Warnung: Laufzeitspeicher überschreitet RAM-Beschränkung (102.03KB > 100KB)
+2025-05-05 12:40:47,661 - INFO - Modell hat 582 Parameter
+2025-05-05 12:40:47,661 - INFO - Geschätzte Modellgröße: 2.54 KB (float32), 0.63 KB (int8)
+2025-05-05 12:40:48,117 - INFO - Epoch 1/15 - Train Loss: 1.7840, Train Acc: 15.56% - Val Loss: 1.7975, Val Acc: 8.33%
+2025-05-05 12:40:48,694 - INFO - Epoch 2/15 - Train Loss: 1.7788, Train Acc: 17.78% - Val Loss: 1.7954, Val Acc: 8.33%
+2025-05-05 12:40:49,307 - INFO - Epoch 3/15 - Train Loss: 1.7962, Train Acc: 17.78% - Val Loss: 1.7909, Val Acc: 8.33%
+2025-05-05 12:40:49,917 - INFO - Epoch 4/15 - Train Loss: 1.7777, Train Acc: 20.00% - Val Loss: 1.7843, Val Acc: 16.67%
+2025-05-05 12:40:50,547 - INFO - Epoch 5/15 - Train Loss: 1.7503, Train Acc: 20.00% - Val Loss: 1.7771, Val Acc: 25.00%
+2025-05-05 12:40:51,035 - INFO - Epoch 6/15 - Train Loss: 1.7308, Train Acc: 20.00% - Val Loss: 1.7689, Val Acc: 25.00%
+2025-05-05 12:40:51,617 - INFO - Epoch 7/15 - Train Loss: 1.7029, Train Acc: 26.67% - Val Loss: 1.7629, Val Acc: 25.00%
+2025-05-05 12:40:52,264 - INFO - Epoch 8/15 - Train Loss: 1.6918, Train Acc: 24.44% - Val Loss: 1.7566, Val Acc: 25.00%
+2025-05-05 12:40:52,900 - INFO - Epoch 9/15 - Train Loss: 1.6708, Train Acc: 15.56% - Val Loss: 1.7481, Val Acc: 16.67%
+2025-05-05 12:40:53,451 - INFO - Epoch 10/15 - Train Loss: 1.6562, Train Acc: 24.44% - Val Loss: 1.7398, Val Acc: 8.33%
+2025-05-05 12:40:54,070 - INFO - Epoch 11/15 - Train Loss: 1.6378, Train Acc: 33.33% - Val Loss: 1.7315, Val Acc: 8.33%
+2025-05-05 12:40:54,623 - INFO - Epoch 12/15 - Train Loss: 1.6515, Train Acc: 20.00% - Val Loss: 1.7240, Val Acc: 8.33%
+2025-05-05 12:40:55,115 - INFO - Epoch 13/15 - Train Loss: 1.6281, Train Acc: 33.33% - Val Loss: 1.7183, Val Acc: 8.33%
+2025-05-05 12:40:55,712 - INFO - Epoch 14/15 - Train Loss: 1.6278, Train Acc: 22.22% - Val Loss: 1.7145, Val Acc: 8.33%
+2025-05-05 12:40:56,261 - INFO - Epoch 15/15 - Train Loss: 1.6117, Train Acc: 40.00% - Val Loss: 1.7113, Val Acc: 8.33%
+2025-05-05 12:40:56,265 - INFO - Beste Modellgewichte wiederhergestellt
+2025-05-05 12:40:56,530 - INFO - Modell gespeichert unter: output/hyperparameter_search/models/micro_d1.0_b2_ch8_sep_gpool.pth
+2025-05-05 12:40:57,079 - INFO - 
+==================================================
+Trainiere Modell 6/12: micro_d1.0_b2_ch16_sep_gpool
+==================================================
+2025-05-05 12:40:57,081 - INFO - Speicheranalyse:
+2025-05-05 12:40:57,082 - INFO -   Modellgröße (Float32): 6.04 KB
+2025-05-05 12:40:57,082 - INFO -   Modellgröße (Int8): 1.51 KB (0.1% des Flash)
+2025-05-05 12:40:57,082 - INFO -   Aktivierungsspeicher: 202.77 KB
+2025-05-05 12:40:57,082 - INFO -   Gesamter Laufzeitspeicher: 204.28 KB (77.4% des RAM)
+2025-05-05 12:40:57,082 - WARNING - Warnung: Laufzeitspeicher überschreitet RAM-Beschränkung (204.28KB > 100KB)
+2025-05-05 12:40:57,082 - INFO - Modell hat 1,414 Parameter
+2025-05-05 12:40:57,082 - INFO - Geschätzte Modellgröße: 6.04 KB (float32), 1.51 KB (int8)
+2025-05-05 12:40:57,494 - INFO - Epoch 1/15 - Train Loss: 1.7654, Train Acc: 33.33% - Val Loss: 1.7925, Val Acc: 16.67%
+2025-05-05 12:40:58,021 - INFO - Epoch 2/15 - Train Loss: 1.7723, Train Acc: 26.67% - Val Loss: 1.7917, Val Acc: 16.67%
+2025-05-05 12:40:58,503 - INFO - Epoch 3/15 - Train Loss: 1.7514, Train Acc: 20.00% - Val Loss: 1.7880, Val Acc: 25.00%
+2025-05-05 12:40:59,110 - INFO - Epoch 4/15 - Train Loss: 1.7365, Train Acc: 28.89% - Val Loss: 1.7805, Val Acc: 25.00%
+2025-05-05 12:40:59,712 - INFO - Epoch 5/15 - Train Loss: 1.6981, Train Acc: 24.44% - Val Loss: 1.7713, Val Acc: 8.33%
+2025-05-05 12:41:00,265 - INFO - Epoch 6/15 - Train Loss: 1.6614, Train Acc: 33.33% - Val Loss: 1.7616, Val Acc: 0.00%
+2025-05-05 12:41:00,769 - INFO - Epoch 7/15 - Train Loss: 1.6190, Train Acc: 35.56% - Val Loss: 1.7505, Val Acc: 0.00%
+2025-05-05 12:41:01,322 - INFO - Epoch 8/15 - Train Loss: 1.5903, Train Acc: 40.00% - Val Loss: 1.7439, Val Acc: 0.00%
+2025-05-05 12:41:01,824 - INFO - Epoch 9/15 - Train Loss: 1.5837, Train Acc: 37.78% - Val Loss: 1.7333, Val Acc: 0.00%
+2025-05-05 12:41:02,031 - INFO - Epoch 10/15 - Train Loss: 1.5601, Train Acc: 28.89% - Val Loss: 1.7219, Val Acc: 0.00%
+2025-05-05 12:41:02,563 - INFO - Epoch 11/15 - Train Loss: 1.5196, Train Acc: 35.56% - Val Loss: 1.7112, Val Acc: 0.00%
+2025-05-05 12:41:03,133 - INFO - Epoch 12/15 - Train Loss: 1.5554, Train Acc: 20.00% - Val Loss: 1.7016, Val Acc: 0.00%
+2025-05-05 12:41:03,731 - INFO - Epoch 13/15 - Train Loss: 1.5237, Train Acc: 33.33% - Val Loss: 1.6928, Val Acc: 0.00%
+2025-05-05 12:41:04,350 - INFO - Epoch 14/15 - Train Loss: 1.5048, Train Acc: 40.00% - Val Loss: 1.6841, Val Acc: 0.00%
+2025-05-05 12:41:04,877 - INFO - Epoch 15/15 - Train Loss: 1.5127, Train Acc: 31.11% - Val Loss: 1.6775, Val Acc: 0.00%
+2025-05-05 12:41:04,879 - INFO - Beste Modellgewichte wiederhergestellt
+2025-05-05 12:41:04,991 - INFO - Modell gespeichert unter: output/hyperparameter_search/models/micro_d1.0_b2_ch16_sep_gpool.pth
+2025-05-05 12:41:05,329 - INFO - 
+==================================================
+Trainiere Modell 7/12: micro_d1.0_b3_ch8_sep_gpool
+==================================================
+2025-05-05 12:41:05,331 - INFO - Speicheranalyse:
+2025-05-05 12:41:05,331 - INFO -   Modellgröße (Float32): 6.23 KB
+2025-05-05 12:41:05,331 - INFO -   Modellgröße (Int8): 1.56 KB (0.1% des Flash)
+2025-05-05 12:41:05,331 - INFO -   Aktivierungsspeicher: 122.90 KB
+2025-05-05 12:41:05,331 - INFO -   Gesamter Laufzeitspeicher: 124.46 KB (47.1% des RAM)
+2025-05-05 12:41:05,331 - WARNING - Warnung: Laufzeitspeicher überschreitet RAM-Beschränkung (124.46KB > 100KB)
+2025-05-05 12:41:05,331 - INFO - Modell hat 1,430 Parameter
+2025-05-05 12:41:05,332 - INFO - Geschätzte Modellgröße: 6.23 KB (float32), 1.56 KB (int8)
+2025-05-05 12:41:05,701 - INFO - Epoch 1/15 - Train Loss: 1.7725, Train Acc: 33.33% - Val Loss: 1.7980, Val Acc: 8.33%
+2025-05-05 12:41:05,946 - INFO - Epoch 2/15 - Train Loss: 1.7929, Train Acc: 22.22% - Val Loss: 1.7997, Val Acc: 8.33%
+2025-05-05 12:41:06,191 - INFO - Epoch 3/15 - Train Loss: 1.7754, Train Acc: 22.22% - Val Loss: 1.7958, Val Acc: 8.33%
+2025-05-05 12:41:06,603 - INFO - Epoch 4/15 - Train Loss: 1.7369, Train Acc: 28.89% - Val Loss: 1.7864, Val Acc: 8.33%
+2025-05-05 12:41:07,167 - INFO - Epoch 5/15 - Train Loss: 1.6905, Train Acc: 26.67% - Val Loss: 1.7704, Val Acc: 8.33%
+2025-05-05 12:41:07,751 - INFO - Epoch 6/15 - Train Loss: 1.6448, Train Acc: 33.33% - Val Loss: 1.7505, Val Acc: 25.00%
+2025-05-05 12:41:08,413 - INFO - Epoch 7/15 - Train Loss: 1.5911, Train Acc: 37.78% - Val Loss: 1.7322, Val Acc: 25.00%
+2025-05-05 12:41:09,035 - INFO - Epoch 8/15 - Train Loss: 1.6110, Train Acc: 22.22% - Val Loss: 1.7153, Val Acc: 25.00%
+2025-05-05 12:41:09,614 - INFO - Epoch 9/15 - Train Loss: 1.5961, Train Acc: 13.33% - Val Loss: 1.7033, Val Acc: 25.00%
+2025-05-05 12:41:10,252 - INFO - Epoch 10/15 - Train Loss: 1.5634, Train Acc: 24.44% - Val Loss: 1.6903, Val Acc: 25.00%
+2025-05-05 12:41:10,878 - INFO - Epoch 11/15 - Train Loss: 1.5461, Train Acc: 20.00% - Val Loss: 1.6804, Val Acc: 25.00%
+2025-05-05 12:41:11,447 - INFO - Epoch 12/15 - Train Loss: 1.5046, Train Acc: 28.89% - Val Loss: 1.6727, Val Acc: 25.00%
+2025-05-05 12:41:12,027 - INFO - Epoch 13/15 - Train Loss: 1.5129, Train Acc: 31.11% - Val Loss: 1.6659, Val Acc: 8.33%
+2025-05-05 12:41:12,491 - INFO - Epoch 14/15 - Train Loss: 1.5075, Train Acc: 31.11% - Val Loss: 1.6605, Val Acc: 8.33%
+2025-05-05 12:41:13,108 - INFO - Epoch 15/15 - Train Loss: 1.5140, Train Acc: 31.11% - Val Loss: 1.6557, Val Acc: 8.33%
+2025-05-05 12:41:13,116 - INFO - Beste Modellgewichte wiederhergestellt
+2025-05-05 12:41:13,485 - INFO - Modell gespeichert unter: output/hyperparameter_search/models/micro_d1.0_b3_ch8_sep_gpool.pth
+2025-05-05 12:41:13,728 - INFO - 
+==================================================
+Trainiere Modell 8/12: micro_d1.0_b3_ch16_sep_gpool
+==================================================
+2025-05-05 12:41:13,730 - INFO - Speicheranalyse:
+2025-05-05 12:41:13,730 - INFO -   Modellgröße (Float32): 17.42 KB
+2025-05-05 12:41:13,730 - INFO -   Modellgröße (Int8): 4.35 KB (0.2% des Flash)
+2025-05-05 12:41:13,730 - INFO -   Aktivierungsspeicher: 245.77 KB
+2025-05-05 12:41:13,731 - INFO -   Gesamter Laufzeitspeicher: 250.13 KB (94.7% des RAM)
+2025-05-05 12:41:13,731 - WARNING - Warnung: Laufzeitspeicher überschreitet RAM-Beschränkung (250.13KB > 100KB)
+2025-05-05 12:41:13,731 - INFO - Modell hat 4,134 Parameter
+2025-05-05 12:41:13,731 - INFO - Geschätzte Modellgröße: 17.42 KB (float32), 4.35 KB (int8)
+2025-05-05 12:41:14,104 - INFO - Epoch 1/15 - Train Loss: 1.7694, Train Acc: 20.00% - Val Loss: 1.7916, Val Acc: 8.33%
+2025-05-05 12:41:14,624 - INFO - Epoch 2/15 - Train Loss: 1.7509, Train Acc: 35.56% - Val Loss: 1.7906, Val Acc: 8.33%
+2025-05-05 12:41:15,161 - INFO - Epoch 3/15 - Train Loss: 1.7311, Train Acc: 26.67% - Val Loss: 1.7885, Val Acc: 0.00%
+2025-05-05 12:41:15,733 - INFO - Epoch 4/15 - Train Loss: 1.6584, Train Acc: 42.22% - Val Loss: 1.7864, Val Acc: 0.00%
+2025-05-05 12:41:16,174 - INFO - Epoch 5/15 - Train Loss: 1.6162, Train Acc: 24.44% - Val Loss: 1.7796, Val Acc: 0.00%
+2025-05-05 12:41:16,726 - INFO - Epoch 6/15 - Train Loss: 1.5237, Train Acc: 35.56% - Val Loss: 1.7731, Val Acc: 0.00%
+2025-05-05 12:41:17,343 - INFO - Epoch 7/15 - Train Loss: 1.5379, Train Acc: 28.89% - Val Loss: 1.7655, Val Acc: 0.00%
+2025-05-05 12:41:17,755 - INFO - Epoch 8/15 - Train Loss: 1.4937, Train Acc: 22.22% - Val Loss: 1.7533, Val Acc: 0.00%
+2025-05-05 12:41:18,369 - INFO - Epoch 9/15 - Train Loss: 1.4502, Train Acc: 40.00% - Val Loss: 1.7422, Val Acc: 8.33%
+2025-05-05 12:41:18,996 - INFO - Epoch 10/15 - Train Loss: 1.4498, Train Acc: 35.56% - Val Loss: 1.7308, Val Acc: 8.33%
+2025-05-05 12:41:19,581 - INFO - Epoch 11/15 - Train Loss: 1.4592, Train Acc: 28.89% - Val Loss: 1.7193, Val Acc: 8.33%
+2025-05-05 12:41:20,140 - INFO - Epoch 12/15 - Train Loss: 1.4165, Train Acc: 31.11% - Val Loss: 1.7086, Val Acc: 8.33%
+2025-05-05 12:41:20,750 - INFO - Epoch 13/15 - Train Loss: 1.4776, Train Acc: 20.00% - Val Loss: 1.6979, Val Acc: 8.33%
+2025-05-05 12:41:21,200 - INFO - Epoch 14/15 - Train Loss: 1.3919, Train Acc: 48.89% - Val Loss: 1.6875, Val Acc: 8.33%
+2025-05-05 12:41:21,800 - INFO - Epoch 15/15 - Train Loss: 1.4386, Train Acc: 26.67% - Val Loss: 1.6771, Val Acc: 8.33%
+2025-05-05 12:41:21,805 - INFO - Beste Modellgewichte wiederhergestellt
+2025-05-05 12:41:22,166 - INFO - Modell gespeichert unter: output/hyperparameter_search/models/micro_d1.0_b3_ch16_sep_gpool.pth
+2025-05-05 12:41:22,722 - INFO - 
+==================================================
+Trainiere Modell 9/12: micro_d1.25_b2_ch8_sep_gpool
+==================================================
+2025-05-05 12:41:22,724 - INFO - Speicheranalyse:
+2025-05-05 12:41:22,724 - INFO -   Modellgröße (Float32): 3.32 KB
+2025-05-05 12:41:22,724 - INFO -   Modellgröße (Int8): 0.83 KB (0.0% des Flash)
+2025-05-05 12:41:22,724 - INFO -   Aktivierungsspeicher: 126.74 KB
+2025-05-05 12:41:22,724 - INFO -   Gesamter Laufzeitspeicher: 127.57 KB (48.3% des RAM)
+2025-05-05 12:41:22,724 - WARNING - Warnung: Laufzeitspeicher überschreitet RAM-Beschränkung (127.57KB > 100KB)
+2025-05-05 12:41:22,724 - INFO - Modell hat 766 Parameter
+2025-05-05 12:41:22,724 - INFO - Geschätzte Modellgröße: 3.32 KB (float32), 0.83 KB (int8)
+2025-05-05 12:41:23,258 - INFO - Epoch 1/15 - Train Loss: 1.7773, Train Acc: 17.78% - Val Loss: 1.7916, Val Acc: 8.33%
+2025-05-05 12:41:23,860 - INFO - Epoch 2/15 - Train Loss: 1.7645, Train Acc: 33.33% - Val Loss: 1.7915, Val Acc: 0.00%
+2025-05-05 12:41:24,423 - INFO - Epoch 3/15 - Train Loss: 1.7637, Train Acc: 20.00% - Val Loss: 1.7888, Val Acc: 0.00%
+2025-05-05 12:41:25,064 - INFO - Epoch 4/15 - Train Loss: 1.7409, Train Acc: 26.67% - Val Loss: 1.7852, Val Acc: 0.00%
+2025-05-05 12:41:25,676 - INFO - Epoch 5/15 - Train Loss: 1.7167, Train Acc: 31.11% - Val Loss: 1.7800, Val Acc: 0.00%
+2025-05-05 12:41:26,282 - INFO - Epoch 6/15 - Train Loss: 1.6958, Train Acc: 33.33% - Val Loss: 1.7712, Val Acc: 0.00%
+2025-05-05 12:41:26,856 - INFO - Epoch 7/15 - Train Loss: 1.6646, Train Acc: 26.67% - Val Loss: 1.7615, Val Acc: 0.00%
+2025-05-05 12:41:27,468 - INFO - Epoch 8/15 - Train Loss: 1.6659, Train Acc: 17.78% - Val Loss: 1.7516, Val Acc: 0.00%
+2025-05-05 12:41:28,069 - INFO - Epoch 9/15 - Train Loss: 1.6293, Train Acc: 28.89% - Val Loss: 1.7413, Val Acc: 0.00%
+2025-05-05 12:41:28,744 - INFO - Epoch 10/15 - Train Loss: 1.6137, Train Acc: 26.67% - Val Loss: 1.7313, Val Acc: 0.00%
+2025-05-05 12:41:29,345 - INFO - Epoch 11/15 - Train Loss: 1.5880, Train Acc: 33.33% - Val Loss: 1.7230, Val Acc: 0.00%
+2025-05-05 12:41:29,855 - INFO - Epoch 12/15 - Train Loss: 1.6157, Train Acc: 17.78% - Val Loss: 1.7157, Val Acc: 0.00%
+2025-05-05 12:41:30,412 - INFO - Epoch 13/15 - Train Loss: 1.5946, Train Acc: 17.78% - Val Loss: 1.7100, Val Acc: 0.00%
+2025-05-05 12:41:30,986 - INFO - Epoch 14/15 - Train Loss: 1.5662, Train Acc: 33.33% - Val Loss: 1.7054, Val Acc: 0.00%
+2025-05-05 12:41:31,612 - INFO - Epoch 15/15 - Train Loss: 1.5977, Train Acc: 20.00% - Val Loss: 1.7023, Val Acc: 0.00%
+2025-05-05 12:41:31,617 - INFO - Beste Modellgewichte wiederhergestellt
+2025-05-05 12:41:31,923 - INFO - Modell gespeichert unter: output/hyperparameter_search/models/micro_d1.25_b2_ch8_sep_gpool.pth
+2025-05-05 12:41:32,542 - INFO - 
+==================================================
+Trainiere Modell 10/12: micro_d1.25_b2_ch16_sep_gpool
+==================================================
+2025-05-05 12:41:32,544 - INFO - Speicheranalyse:
+2025-05-05 12:41:32,544 - INFO -   Modellgröße (Float32): 8.16 KB
+2025-05-05 12:41:32,544 - INFO -   Modellgröße (Int8): 2.04 KB (0.1% des Flash)
+2025-05-05 12:41:32,544 - INFO -   Aktivierungsspeicher: 253.46 KB
+2025-05-05 12:41:32,544 - INFO -   Gesamter Laufzeitspeicher: 255.50 KB (96.8% des RAM)
+2025-05-05 12:41:32,544 - WARNING - Warnung: Laufzeitspeicher überschreitet RAM-Beschränkung (255.50KB > 100KB)
+2025-05-05 12:41:32,544 - INFO - Modell hat 1,926 Parameter
+2025-05-05 12:41:32,544 - INFO - Geschätzte Modellgröße: 8.16 KB (float32), 2.04 KB (int8)
+2025-05-05 12:41:33,050 - INFO - Epoch 1/15 - Train Loss: 1.7483, Train Acc: 37.78% - Val Loss: 1.7993, Val Acc: 8.33%
+2025-05-05 12:41:33,691 - INFO - Epoch 2/15 - Train Loss: 1.7686, Train Acc: 24.44% - Val Loss: 1.7994, Val Acc: 8.33%
+2025-05-05 12:41:34,340 - INFO - Epoch 3/15 - Train Loss: 1.7488, Train Acc: 31.11% - Val Loss: 1.7954, Val Acc: 0.00%
+2025-05-05 12:41:34,930 - INFO - Epoch 4/15 - Train Loss: 1.7117, Train Acc: 35.56% - Val Loss: 1.7849, Val Acc: 0.00%
+2025-05-05 12:41:35,415 - INFO - Epoch 5/15 - Train Loss: 1.6754, Train Acc: 33.33% - Val Loss: 1.7676, Val Acc: 0.00%
+2025-05-05 12:41:35,898 - INFO - Epoch 6/15 - Train Loss: 1.6665, Train Acc: 15.56% - Val Loss: 1.7468, Val Acc: 0.00%
+2025-05-05 12:41:36,508 - INFO - Epoch 7/15 - Train Loss: 1.5892, Train Acc: 35.56% - Val Loss: 1.7282, Val Acc: 0.00%
+2025-05-05 12:41:37,026 - INFO - Epoch 8/15 - Train Loss: 1.5377, Train Acc: 42.22% - Val Loss: 1.7128, Val Acc: 0.00%
+2025-05-05 12:41:37,587 - INFO - Epoch 9/15 - Train Loss: 1.5468, Train Acc: 28.89% - Val Loss: 1.6969, Val Acc: 0.00%
+2025-05-05 12:41:38,215 - INFO - Epoch 10/15 - Train Loss: 1.5297, Train Acc: 24.44% - Val Loss: 1.6815, Val Acc: 0.00%
+2025-05-05 12:41:38,724 - INFO - Epoch 11/15 - Train Loss: 1.4664, Train Acc: 42.22% - Val Loss: 1.6699, Val Acc: 0.00%
+2025-05-05 12:41:39,301 - INFO - Epoch 12/15 - Train Loss: 1.5061, Train Acc: 24.44% - Val Loss: 1.6624, Val Acc: 0.00%
+2025-05-05 12:41:39,826 - INFO - Epoch 13/15 - Train Loss: 1.5084, Train Acc: 26.67% - Val Loss: 1.6556, Val Acc: 0.00%
+2025-05-05 12:41:40,318 - INFO - Epoch 14/15 - Train Loss: 1.4808, Train Acc: 31.11% - Val Loss: 1.6502, Val Acc: 0.00%
+2025-05-05 12:41:40,947 - INFO - Epoch 15/15 - Train Loss: 1.4699, Train Acc: 35.56% - Val Loss: 1.6457, Val Acc: 0.00%
+2025-05-05 12:41:40,952 - INFO - Beste Modellgewichte wiederhergestellt
+2025-05-05 12:41:41,294 - INFO - Modell gespeichert unter: output/hyperparameter_search/models/micro_d1.25_b2_ch16_sep_gpool.pth
+2025-05-05 12:41:41,813 - INFO - 
+==================================================
+Trainiere Modell 11/12: micro_d1.25_b3_ch8_sep_gpool
+==================================================
+2025-05-05 12:41:41,816 - INFO - Speicheranalyse:
+2025-05-05 12:41:41,816 - INFO -   Modellgröße (Float32): 8.56 KB
+2025-05-05 12:41:41,816 - INFO -   Modellgröße (Int8): 2.14 KB (0.1% des Flash)
+2025-05-05 12:41:41,816 - INFO -   Aktivierungsspeicher: 153.62 KB
+2025-05-05 12:41:41,816 - INFO -   Gesamter Laufzeitspeicher: 155.76 KB (59.0% des RAM)
+2025-05-05 12:41:41,816 - WARNING - Warnung: Laufzeitspeicher überschreitet RAM-Beschränkung (155.76KB > 100KB)
+2025-05-05 12:41:41,816 - INFO - Modell hat 1,986 Parameter
+2025-05-05 12:41:41,816 - INFO - Geschätzte Modellgröße: 8.56 KB (float32), 2.14 KB (int8)
+2025-05-05 12:41:42,477 - INFO - Epoch 1/15 - Train Loss: 1.7929, Train Acc: 20.00% - Val Loss: 1.7903, Val Acc: 25.00%
+2025-05-05 12:41:43,105 - INFO - Epoch 2/15 - Train Loss: 1.7868, Train Acc: 17.78% - Val Loss: 1.7876, Val Acc: 25.00%
+2025-05-05 12:41:43,602 - INFO - Epoch 3/15 - Train Loss: 1.7625, Train Acc: 17.78% - Val Loss: 1.7819, Val Acc: 16.67%
+2025-05-05 12:41:44,222 - INFO - Epoch 4/15 - Train Loss: 1.7362, Train Acc: 22.22% - Val Loss: 1.7708, Val Acc: 0.00%
+2025-05-05 12:41:44,817 - INFO - Epoch 5/15 - Train Loss: 1.6663, Train Acc: 40.00% - Val Loss: 1.7583, Val Acc: 8.33%
+2025-05-05 12:41:45,368 - INFO - Epoch 6/15 - Train Loss: 1.6316, Train Acc: 33.33% - Val Loss: 1.7438, Val Acc: 8.33%
+2025-05-05 12:41:45,894 - INFO - Epoch 7/15 - Train Loss: 1.5889, Train Acc: 28.89% - Val Loss: 1.7280, Val Acc: 8.33%
+2025-05-05 12:41:46,545 - INFO - Epoch 8/15 - Train Loss: 1.5561, Train Acc: 22.22% - Val Loss: 1.7142, Val Acc: 8.33%
+2025-05-05 12:41:47,117 - INFO - Epoch 9/15 - Train Loss: 1.5461, Train Acc: 22.22% - Val Loss: 1.7000, Val Acc: 8.33%
+2025-05-05 12:41:47,624 - INFO - Epoch 10/15 - Train Loss: 1.4962, Train Acc: 37.78% - Val Loss: 1.6881, Val Acc: 8.33%
+2025-05-05 12:41:48,246 - INFO - Epoch 11/15 - Train Loss: 1.4897, Train Acc: 28.89% - Val Loss: 1.6796, Val Acc: 0.00%
+2025-05-05 12:41:48,707 - INFO - Epoch 12/15 - Train Loss: 1.5131, Train Acc: 35.56% - Val Loss: 1.6723, Val Acc: 0.00%
+2025-05-05 12:41:49,337 - INFO - Epoch 13/15 - Train Loss: 1.4874, Train Acc: 40.00% - Val Loss: 1.6660, Val Acc: 0.00%
+2025-05-05 12:41:49,690 - INFO - Epoch 14/15 - Train Loss: 1.5052, Train Acc: 37.78% - Val Loss: 1.6603, Val Acc: 0.00%
+2025-05-05 12:41:50,195 - INFO - Epoch 15/15 - Train Loss: 1.4634, Train Acc: 42.22% - Val Loss: 1.6556, Val Acc: 0.00%
+2025-05-05 12:41:50,198 - INFO - Beste Modellgewichte wiederhergestellt
+2025-05-05 12:41:50,452 - INFO - Modell gespeichert unter: output/hyperparameter_search/models/micro_d1.25_b3_ch8_sep_gpool.pth
+2025-05-05 12:41:51,612 - INFO - 
+==================================================
+Trainiere Modell 12/12: micro_d1.25_b3_ch16_sep_gpool
+==================================================
+2025-05-05 12:41:51,616 - INFO - Speicheranalyse:
+2025-05-05 12:41:51,616 - INFO -   Modellgröße (Float32): 24.89 KB
+2025-05-05 12:41:51,616 - INFO -   Modellgröße (Int8): 6.22 KB (0.3% des Flash)
+2025-05-05 12:41:51,616 - INFO -   Aktivierungsspeicher: 307.21 KB
+2025-05-05 12:41:51,616 - INFO -   Gesamter Laufzeitspeicher: 313.43 KB (118.7% des RAM)
+2025-05-05 12:41:51,616 - WARNING - Warnung: Laufzeitspeicher überschreitet RAM-Beschränkung (313.43KB > 100KB)
+2025-05-05 12:41:51,616 - INFO - Modell hat 5,966 Parameter
+2025-05-05 12:41:51,616 - INFO - Geschätzte Modellgröße: 24.89 KB (float32), 6.22 KB (int8)
+2025-05-05 12:41:52,249 - INFO - Epoch 1/15 - Train Loss: 1.8728, Train Acc: 2.22% - Val Loss: 1.7947, Val Acc: 0.00%
+2025-05-05 12:41:52,891 - INFO - Epoch 2/15 - Train Loss: 1.8098, Train Acc: 11.11% - Val Loss: 1.7938, Val Acc: 0.00%
+2025-05-05 12:41:53,592 - INFO - Epoch 3/15 - Train Loss: 1.7664, Train Acc: 22.22% - Val Loss: 1.7851, Val Acc: 8.33%
+2025-05-05 12:41:54,248 - INFO - Epoch 4/15 - Train Loss: 1.7295, Train Acc: 24.44% - Val Loss: 1.7691, Val Acc: 0.00%
+2025-05-05 12:41:54,805 - INFO - Epoch 5/15 - Train Loss: 1.6473, Train Acc: 24.44% - Val Loss: 1.7560, Val Acc: 0.00%
+2025-05-05 12:41:55,406 - INFO - Epoch 6/15 - Train Loss: 1.5330, Train Acc: 44.44% - Val Loss: 1.7469, Val Acc: 0.00%
+2025-05-05 12:41:56,076 - INFO - Epoch 7/15 - Train Loss: 1.5129, Train Acc: 26.67% - Val Loss: 1.7351, Val Acc: 0.00%
+2025-05-05 12:41:56,587 - INFO - Epoch 8/15 - Train Loss: 1.4588, Train Acc: 31.11% - Val Loss: 1.7240, Val Acc: 0.00%
+2025-05-05 12:41:57,260 - INFO - Epoch 9/15 - Train Loss: 1.4389, Train Acc: 31.11% - Val Loss: 1.7169, Val Acc: 0.00%
+2025-05-05 12:41:57,903 - INFO - Epoch 10/15 - Train Loss: 1.4090, Train Acc: 33.33% - Val Loss: 1.7073, Val Acc: 0.00%
+2025-05-05 12:41:58,553 - INFO - Epoch 11/15 - Train Loss: 1.3833, Train Acc: 44.44% - Val Loss: 1.6967, Val Acc: 0.00%
+2025-05-05 12:41:59,162 - INFO - Epoch 12/15 - Train Loss: 1.3753, Train Acc: 40.00% - Val Loss: 1.6889, Val Acc: 8.33%
+2025-05-05 12:41:59,830 - INFO - Epoch 13/15 - Train Loss: 1.3476, Train Acc: 62.22% - Val Loss: 1.6822, Val Acc: 0.00%
+2025-05-05 12:42:00,516 - INFO - Epoch 14/15 - Train Loss: 1.3587, Train Acc: 46.67% - Val Loss: 1.6756, Val Acc: 0.00%
+2025-05-05 12:42:01,152 - INFO - Epoch 15/15 - Train Loss: 1.3775, Train Acc: 42.22% - Val Loss: 1.6679, Val Acc: 8.33%
+2025-05-05 12:42:01,159 - INFO - Beste Modellgewichte wiederhergestellt
+2025-05-05 12:42:01,547 - INFO - Modell gespeichert unter: output/hyperparameter_search/models/micro_d1.25_b3_ch16_sep_gpool.pth
+2025-05-05 12:44:46,093 - INFO - Starte Hyperparameter-Suche für Pizza Erkennung
+2025-05-05 12:44:46,093 - INFO - ================================================================================
+2025-05-05 12:44:46,093 - INFO - RP2040 PIZZA-ERKENNUNGSSYSTEM - DETAILLIERTE KONFIGURATION
+2025-05-05 12:44:46,093 - INFO - ================================================================================
+2025-05-05 12:44:46,093 - INFO - Hardware: RP2040 - 133MHz, 264KB RAM, 2048KB Flash
+2025-05-05 12:44:46,093 - INFO - Kamera: OV2640 - 320x240, 7 FPS
+2025-05-05 12:44:46,093 - INFO - Stromversorgung: CR123A - 1500mAh, 8.33h aktiv, 3000.00h standby
+2025-05-05 12:44:46,093 - INFO - Modellparameter: 48x48 Eingabegröße, 8-Bit Quantisierung
+2025-05-05 12:44:46,093 - INFO - Speicherbeschränkungen: Max. 180KB Modellgröße, 100KB Laufzeit-RAM
+2025-05-05 12:44:46,093 - INFO - ================================================================================
+2025-05-05 12:44:46,093 - INFO - Lade Datensatz aus data/augmented
+2025-05-05 12:44:46,093 - INFO - Analysiere Datensatz in data/augmented...
+2025-05-05 12:44:46,126 - INFO - Datensatzanalyse abgeschlossen:
+2025-05-05 12:44:46,126 - INFO - Gesamtzahl der Bilder: 57
+2025-05-05 12:44:46,126 - INFO - Klassenverteilung: {'progression': 0, 'mixed': 7, 'basic': 29, 'segment': 0, 'combined': 17, 'burnt': 4}
+2025-05-05 12:44:46,126 - INFO - Durchschnittliche Bildgröße: 224.0 x 224.0
+2025-05-05 12:44:46,126 - INFO - RGB-Mittelwerte: [0.4887, 0.4074, 0.3422]
+2025-05-05 12:44:46,126 - INFO - RGB-Standardabweichungen: [0.2379, 0.2558, 0.2714]
+2025-05-05 12:44:46,126 - INFO - Preparing optimized data loaders...
+2025-05-05 12:44:46,127 - INFO - Using dataset-specific normalization: mean=[0.48873176 0.40742488 0.34219451], std=[0.23793679 0.25583396 0.2714229 ]
+2025-05-05 12:44:46,128 - INFO - Data loaders created: 45 training images, 12 validation images
+2025-05-05 12:44:46,128 - INFO - Classes: ['basic', 'burnt', 'combined', 'mixed', 'progression', 'segment']
+2025-05-05 12:44:46,128 - INFO - Generiert: 12 Modellkonfigurationen für die Suche
+2025-05-05 12:44:46,128 - INFO - 
+==================================================
+Trainiere Modell 1/12: micro_d0.75_b2_ch8_sep_gpool
+==================================================
+2025-05-05 12:44:46,131 - INFO - Speicheranalyse:
+2025-05-05 12:44:46,131 - INFO -   Modellgröße (Float32): 1.82 KB
+2025-05-05 12:44:46,131 - INFO -   Modellgröße (Int8): 0.45 KB (0.0% des Flash)
+2025-05-05 12:44:46,131 - INFO -   Aktivierungsspeicher: 76.05 KB
+2025-05-05 12:44:46,131 - INFO -   Gesamter Laufzeitspeicher: 76.51 KB (29.0% des RAM)
+2025-05-05 12:44:46,131 - INFO - Modell hat 414 Parameter
+2025-05-05 12:44:46,131 - INFO - Geschätzte Modellgröße: 1.82 KB (float32), 0.45 KB (int8)
+2025-05-05 12:44:46,920 - INFO - Epoch 1/10 - Train Loss: 1.7734, Train Acc: 26.67% - Val Loss: 1.7804, Val Acc: 66.67%
+2025-05-05 12:44:47,359 - INFO - Epoch 2/10 - Train Loss: 1.7674, Train Acc: 26.67% - Val Loss: 1.7799, Val Acc: 75.00%
+2025-05-05 12:44:47,951 - INFO - Epoch 3/10 - Train Loss: 1.7570, Train Acc: 17.78% - Val Loss: 1.7752, Val Acc: 33.33%
+2025-05-05 12:44:48,508 - INFO - Epoch 4/10 - Train Loss: 1.7448, Train Acc: 26.67% - Val Loss: 1.7701, Val Acc: 25.00%
+2025-05-05 12:44:49,023 - INFO - Epoch 5/10 - Train Loss: 1.7247, Train Acc: 31.11% - Val Loss: 1.7648, Val Acc: 25.00%
+2025-05-05 12:44:49,234 - INFO - Epoch 6/10 - Train Loss: 1.7142, Train Acc: 31.11% - Val Loss: 1.7591, Val Acc: 25.00%
+2025-05-05 12:44:49,682 - INFO - Epoch 7/10 - Train Loss: 1.6993, Train Acc: 22.22% - Val Loss: 1.7541, Val Acc: 25.00%
+2025-05-05 12:44:50,205 - INFO - Epoch 8/10 - Train Loss: 1.6929, Train Acc: 20.00% - Val Loss: 1.7496, Val Acc: 25.00%
+2025-05-05 12:44:50,800 - INFO - Epoch 9/10 - Train Loss: 1.6923, Train Acc: 17.78% - Val Loss: 1.7452, Val Acc: 25.00%
+2025-05-05 12:44:51,355 - INFO - Epoch 10/10 - Train Loss: 1.6702, Train Acc: 40.00% - Val Loss: 1.7414, Val Acc: 25.00%
+2025-05-05 12:44:51,359 - INFO - Beste Modellgewichte wiederhergestellt
+2025-05-05 12:44:52,211 - INFO - 
+==================================================
+Trainiere Modell 2/12: micro_d0.75_b2_ch16_sep_gpool
+==================================================
+2025-05-05 12:44:52,214 - INFO - Speicheranalyse:
+2025-05-05 12:44:52,214 - INFO -   Modellgröße (Float32): 4.16 KB
+2025-05-05 12:44:52,214 - INFO -   Modellgröße (Int8): 1.04 KB (0.1% des Flash)
+2025-05-05 12:44:52,214 - INFO -   Aktivierungsspeicher: 152.09 KB
+2025-05-05 12:44:52,214 - INFO -   Gesamter Laufzeitspeicher: 153.13 KB (58.0% des RAM)
+2025-05-05 12:44:52,214 - WARNING - Warnung: Laufzeitspeicher überschreitet RAM-Beschränkung (153.13KB > 100KB)
+2025-05-05 12:44:52,214 - INFO - Modell hat 966 Parameter
+2025-05-05 12:44:52,214 - INFO - Geschätzte Modellgröße: 4.16 KB (float32), 1.04 KB (int8)
+2025-05-05 12:44:52,430 - INFO - Epoch 1/10 - Train Loss: 1.7966, Train Acc: 11.11% - Val Loss: 1.7935, Val Acc: 8.33%
+2025-05-05 12:44:52,614 - INFO - Epoch 2/10 - Train Loss: 1.7855, Train Acc: 13.33% - Val Loss: 1.7895, Val Acc: 25.00%
+2025-05-05 12:44:52,799 - INFO - Epoch 3/10 - Train Loss: 1.7726, Train Acc: 13.33% - Val Loss: 1.7854, Val Acc: 25.00%
+2025-05-05 12:44:53,291 - INFO - Epoch 4/10 - Train Loss: 1.7387, Train Acc: 24.44% - Val Loss: 1.7803, Val Acc: 25.00%
+2025-05-05 12:44:53,637 - INFO - Epoch 5/10 - Train Loss: 1.7092, Train Acc: 22.22% - Val Loss: 1.7728, Val Acc: 0.00%
+2025-05-05 12:44:53,957 - INFO - Epoch 6/10 - Train Loss: 1.6761, Train Acc: 24.44% - Val Loss: 1.7638, Val Acc: 25.00%
+2025-05-05 12:44:54,476 - INFO - Epoch 7/10 - Train Loss: 1.6643, Train Acc: 28.89% - Val Loss: 1.7549, Val Acc: 25.00%
+2025-05-05 12:44:55,000 - INFO - Epoch 8/10 - Train Loss: 1.6271, Train Acc: 33.33% - Val Loss: 1.7473, Val Acc: 25.00%
+2025-05-05 12:44:55,574 - INFO - Epoch 9/10 - Train Loss: 1.6247, Train Acc: 28.89% - Val Loss: 1.7413, Val Acc: 25.00%
+2025-05-05 12:44:55,910 - INFO - Epoch 10/10 - Train Loss: 1.6185, Train Acc: 31.11% - Val Loss: 1.7366, Val Acc: 25.00%
+2025-05-05 12:44:55,915 - INFO - Beste Modellgewichte wiederhergestellt
+2025-05-05 12:44:56,945 - INFO - 
+==================================================
+Trainiere Modell 3/12: micro_d0.75_b3_ch8_sep_gpool
+==================================================
+2025-05-05 12:44:56,947 - INFO - Speicheranalyse:
+2025-05-05 12:44:56,947 - INFO -   Modellgröße (Float32): 4.21 KB
+2025-05-05 12:44:56,947 - INFO -   Modellgröße (Int8): 1.05 KB (0.1% des Flash)
+2025-05-05 12:44:56,947 - INFO -   Aktivierungsspeicher: 92.18 KB
+2025-05-05 12:44:56,947 - INFO -   Gesamter Laufzeitspeicher: 93.23 KB (35.3% des RAM)
+2025-05-05 12:44:56,947 - INFO - Modell hat 954 Parameter
+2025-05-05 12:44:56,947 - INFO - Geschätzte Modellgröße: 4.21 KB (float32), 1.05 KB (int8)
+2025-05-05 12:44:57,366 - INFO - Epoch 1/10 - Train Loss: 1.8010, Train Acc: 6.67% - Val Loss: 1.7936, Val Acc: 8.33%
+2025-05-05 12:44:57,790 - INFO - Epoch 2/10 - Train Loss: 1.7821, Train Acc: 22.22% - Val Loss: 1.7922, Val Acc: 8.33%
+2025-05-05 12:44:58,191 - INFO - Epoch 3/10 - Train Loss: 1.7761, Train Acc: 13.33% - Val Loss: 1.7865, Val Acc: 8.33%
+2025-05-05 12:44:58,726 - INFO - Epoch 4/10 - Train Loss: 1.7325, Train Acc: 31.11% - Val Loss: 1.7777, Val Acc: 0.00%
+2025-05-05 12:44:59,135 - INFO - Epoch 5/10 - Train Loss: 1.6919, Train Acc: 28.89% - Val Loss: 1.7676, Val Acc: 0.00%
+2025-05-05 12:44:59,655 - INFO - Epoch 6/10 - Train Loss: 1.6743, Train Acc: 22.22% - Val Loss: 1.7570, Val Acc: 0.00%
+2025-05-05 12:45:00,240 - INFO - Epoch 7/10 - Train Loss: 1.6750, Train Acc: 11.11% - Val Loss: 1.7462, Val Acc: 0.00%
+2025-05-05 12:45:00,491 - INFO - Epoch 8/10 - Train Loss: 1.6363, Train Acc: 33.33% - Val Loss: 1.7369, Val Acc: 0.00%
+2025-05-05 12:45:01,159 - INFO - Epoch 9/10 - Train Loss: 1.6217, Train Acc: 33.33% - Val Loss: 1.7305, Val Acc: 0.00%
+2025-05-05 12:45:01,707 - INFO - Epoch 10/10 - Train Loss: 1.6235, Train Acc: 20.00% - Val Loss: 1.7249, Val Acc: 0.00%
+2025-05-05 12:45:01,716 - INFO - Beste Modellgewichte wiederhergestellt
+2025-05-05 12:45:02,846 - INFO - 
+==================================================
+Trainiere Modell 4/12: micro_d0.75_b3_ch16_sep_gpool
+==================================================
+2025-05-05 12:45:02,855 - INFO - Speicheranalyse:
+2025-05-05 12:45:02,855 - INFO -   Modellgröße (Float32): 11.20 KB
+2025-05-05 12:45:02,855 - INFO -   Modellgröße (Int8): 2.80 KB (0.1% des Flash)
+2025-05-05 12:45:02,855 - INFO -   Aktivierungsspeicher: 184.34 KB
+2025-05-05 12:45:02,855 - INFO -   Gesamter Laufzeitspeicher: 187.14 KB (70.9% des RAM)
+2025-05-05 12:45:02,855 - WARNING - Warnung: Laufzeitspeicher überschreitet RAM-Beschränkung (187.14KB > 100KB)
+2025-05-05 12:45:02,855 - INFO - Modell hat 2,622 Parameter
+2025-05-05 12:45:02,855 - INFO - Geschätzte Modellgröße: 11.20 KB (float32), 2.80 KB (int8)
+2025-05-05 12:45:03,503 - INFO - Epoch 1/10 - Train Loss: 1.8186, Train Acc: 6.67% - Val Loss: 1.7936, Val Acc: 16.67%
+2025-05-05 12:45:04,062 - INFO - Epoch 2/10 - Train Loss: 1.7898, Train Acc: 22.22% - Val Loss: 1.7914, Val Acc: 25.00%
+2025-05-05 12:45:04,732 - INFO - Epoch 3/10 - Train Loss: 1.7499, Train Acc: 22.22% - Val Loss: 1.7824, Val Acc: 8.33%
+2025-05-05 12:45:05,369 - INFO - Epoch 4/10 - Train Loss: 1.7125, Train Acc: 22.22% - Val Loss: 1.7707, Val Acc: 0.00%
+2025-05-05 12:45:05,849 - INFO - Epoch 5/10 - Train Loss: 1.6417, Train Acc: 33.33% - Val Loss: 1.7581, Val Acc: 0.00%
+2025-05-05 12:45:06,399 - INFO - Epoch 6/10 - Train Loss: 1.6059, Train Acc: 26.67% - Val Loss: 1.7452, Val Acc: 0.00%
+2025-05-05 12:45:07,050 - INFO - Epoch 7/10 - Train Loss: 1.5919, Train Acc: 24.44% - Val Loss: 1.7325, Val Acc: 0.00%
+2025-05-05 12:45:07,713 - INFO - Epoch 8/10 - Train Loss: 1.5776, Train Acc: 20.00% - Val Loss: 1.7214, Val Acc: 0.00%
+2025-05-05 12:45:08,304 - INFO - Epoch 9/10 - Train Loss: 1.5238, Train Acc: 35.56% - Val Loss: 1.7109, Val Acc: 0.00%
+2025-05-05 12:45:08,965 - INFO - Epoch 10/10 - Train Loss: 1.5370, Train Acc: 28.89% - Val Loss: 1.7022, Val Acc: 0.00%
+2025-05-05 12:45:08,972 - INFO - Beste Modellgewichte wiederhergestellt
+2025-05-05 12:45:10,313 - INFO - 
+==================================================
+Trainiere Modell 5/12: micro_d1.0_b2_ch8_sep_gpool
+==================================================
+2025-05-05 12:45:10,322 - INFO - Speicheranalyse:
+2025-05-05 12:45:10,322 - INFO -   Modellgröße (Float32): 2.54 KB
+2025-05-05 12:45:10,323 - INFO -   Modellgröße (Int8): 0.63 KB (0.0% des Flash)
+2025-05-05 12:45:10,323 - INFO -   Aktivierungsspeicher: 101.40 KB
+2025-05-05 12:45:10,323 - INFO -   Gesamter Laufzeitspeicher: 102.03 KB (38.6% des RAM)
+2025-05-05 12:45:10,323 - WARNING - Warnung: Laufzeitspeicher überschreitet RAM-Beschränkung (102.03KB > 100KB)
+2025-05-05 12:45:10,323 - INFO - Modell hat 582 Parameter
+2025-05-05 12:45:10,323 - INFO - Geschätzte Modellgröße: 2.54 KB (float32), 0.63 KB (int8)
+2025-05-05 12:45:11,001 - INFO - Epoch 1/10 - Train Loss: 1.7911, Train Acc: 22.22% - Val Loss: 1.7942, Val Acc: 0.00%
+2025-05-05 12:45:11,443 - INFO - Epoch 2/10 - Train Loss: 1.7891, Train Acc: 26.67% - Val Loss: 1.7926, Val Acc: 0.00%
+2025-05-05 12:45:12,121 - INFO - Epoch 3/10 - Train Loss: 1.7705, Train Acc: 44.44% - Val Loss: 1.7869, Val Acc: 0.00%
+2025-05-05 12:45:12,785 - INFO - Epoch 4/10 - Train Loss: 1.7515, Train Acc: 37.78% - Val Loss: 1.7821, Val Acc: 0.00%
+2025-05-05 12:45:13,386 - INFO - Epoch 5/10 - Train Loss: 1.7415, Train Acc: 22.22% - Val Loss: 1.7754, Val Acc: 0.00%
+2025-05-05 12:45:13,756 - INFO - Epoch 6/10 - Train Loss: 1.7067, Train Acc: 37.78% - Val Loss: 1.7693, Val Acc: 0.00%
+2025-05-05 12:45:14,250 - INFO - Epoch 7/10 - Train Loss: 1.6978, Train Acc: 37.78% - Val Loss: 1.7651, Val Acc: 0.00%
+2025-05-05 12:45:14,934 - INFO - Epoch 8/10 - Train Loss: 1.6697, Train Acc: 33.33% - Val Loss: 1.7627, Val Acc: 0.00%
+2025-05-05 12:45:15,613 - INFO - Epoch 9/10 - Train Loss: 1.6920, Train Acc: 37.78% - Val Loss: 1.7609, Val Acc: 0.00%
+2025-05-05 12:45:16,303 - INFO - Epoch 10/10 - Train Loss: 1.6805, Train Acc: 33.33% - Val Loss: 1.7599, Val Acc: 0.00%
+2025-05-05 12:45:16,310 - INFO - Beste Modellgewichte wiederhergestellt
+2025-05-05 12:45:17,495 - INFO - 
+==================================================
+Trainiere Modell 6/12: micro_d1.0_b2_ch16_sep_gpool
+==================================================
+2025-05-05 12:45:17,501 - INFO - Speicheranalyse:
+2025-05-05 12:45:17,501 - INFO -   Modellgröße (Float32): 6.04 KB
+2025-05-05 12:45:17,501 - INFO -   Modellgröße (Int8): 1.51 KB (0.1% des Flash)
+2025-05-05 12:45:17,501 - INFO -   Aktivierungsspeicher: 202.77 KB
+2025-05-05 12:45:17,502 - INFO -   Gesamter Laufzeitspeicher: 204.28 KB (77.4% des RAM)
+2025-05-05 12:45:17,502 - WARNING - Warnung: Laufzeitspeicher überschreitet RAM-Beschränkung (204.28KB > 100KB)
+2025-05-05 12:45:17,502 - INFO - Modell hat 1,414 Parameter
+2025-05-05 12:45:17,502 - INFO - Geschätzte Modellgröße: 6.04 KB (float32), 1.51 KB (int8)
+2025-05-05 12:45:17,897 - INFO - Epoch 1/10 - Train Loss: 1.7911, Train Acc: 17.78% - Val Loss: 1.7928, Val Acc: 0.00%
+2025-05-05 12:45:18,167 - INFO - Epoch 2/10 - Train Loss: 1.7839, Train Acc: 22.22% - Val Loss: 1.7906, Val Acc: 0.00%
+2025-05-05 12:45:18,572 - INFO - Epoch 3/10 - Train Loss: 1.7674, Train Acc: 20.00% - Val Loss: 1.7840, Val Acc: 0.00%
+2025-05-05 12:45:19,098 - INFO - Epoch 4/10 - Train Loss: 1.7138, Train Acc: 37.78% - Val Loss: 1.7730, Val Acc: 0.00%
+2025-05-05 12:45:19,698 - INFO - Epoch 5/10 - Train Loss: 1.6617, Train Acc: 51.11% - Val Loss: 1.7595, Val Acc: 0.00%
+2025-05-05 12:45:20,283 - INFO - Epoch 6/10 - Train Loss: 1.6489, Train Acc: 22.22% - Val Loss: 1.7444, Val Acc: 0.00%
+2025-05-05 12:45:20,894 - INFO - Epoch 7/10 - Train Loss: 1.6449, Train Acc: 22.22% - Val Loss: 1.7303, Val Acc: 0.00%
+2025-05-05 12:45:21,369 - INFO - Epoch 8/10 - Train Loss: 1.6526, Train Acc: 22.22% - Val Loss: 1.7191, Val Acc: 0.00%
+2025-05-05 12:45:21,987 - INFO - Epoch 9/10 - Train Loss: 1.5938, Train Acc: 46.67% - Val Loss: 1.7110, Val Acc: 0.00%
+2025-05-05 12:45:22,419 - INFO - Epoch 10/10 - Train Loss: 1.6487, Train Acc: 20.00% - Val Loss: 1.7047, Val Acc: 0.00%
+2025-05-05 12:45:22,423 - INFO - Beste Modellgewichte wiederhergestellt
+2025-05-05 12:45:23,378 - INFO - 
+==================================================
+Trainiere Modell 7/12: micro_d1.0_b3_ch8_sep_gpool
+==================================================
+2025-05-05 12:45:23,383 - INFO - Speicheranalyse:
+2025-05-05 12:45:23,383 - INFO -   Modellgröße (Float32): 6.23 KB
+2025-05-05 12:45:23,383 - INFO -   Modellgröße (Int8): 1.56 KB (0.1% des Flash)
+2025-05-05 12:45:23,383 - INFO -   Aktivierungsspeicher: 122.90 KB
+2025-05-05 12:45:23,383 - INFO -   Gesamter Laufzeitspeicher: 124.46 KB (47.1% des RAM)
+2025-05-05 12:45:23,383 - WARNING - Warnung: Laufzeitspeicher überschreitet RAM-Beschränkung (124.46KB > 100KB)
+2025-05-05 12:45:23,384 - INFO - Modell hat 1,430 Parameter
+2025-05-05 12:45:23,384 - INFO - Geschätzte Modellgröße: 6.23 KB (float32), 1.56 KB (int8)
+2025-05-05 12:45:23,683 - INFO - Epoch 1/10 - Train Loss: 1.7907, Train Acc: 17.78% - Val Loss: 1.7897, Val Acc: 41.67%
+2025-05-05 12:45:24,349 - INFO - Epoch 2/10 - Train Loss: 1.7791, Train Acc: 31.11% - Val Loss: 1.7853, Val Acc: 50.00%
+2025-05-05 12:45:24,948 - INFO - Epoch 3/10 - Train Loss: 1.7562, Train Acc: 20.00% - Val Loss: 1.7783, Val Acc: 0.00%
+2025-05-05 12:45:25,590 - INFO - Epoch 4/10 - Train Loss: 1.7100, Train Acc: 24.44% - Val Loss: 1.7701, Val Acc: 0.00%
+2025-05-05 12:45:26,220 - INFO - Epoch 5/10 - Train Loss: 1.6595, Train Acc: 42.22% - Val Loss: 1.7588, Val Acc: 0.00%
+2025-05-05 12:45:26,885 - INFO - Epoch 6/10 - Train Loss: 1.6315, Train Acc: 33.33% - Val Loss: 1.7477, Val Acc: 0.00%
+2025-05-05 12:45:27,563 - INFO - Epoch 7/10 - Train Loss: 1.6036, Train Acc: 42.22% - Val Loss: 1.7384, Val Acc: 0.00%
+2025-05-05 12:45:28,070 - INFO - Epoch 8/10 - Train Loss: 1.6061, Train Acc: 22.22% - Val Loss: 1.7307, Val Acc: 0.00%
+2025-05-05 12:45:28,623 - INFO - Epoch 9/10 - Train Loss: 1.5887, Train Acc: 35.56% - Val Loss: 1.7240, Val Acc: 0.00%
+2025-05-05 12:45:29,260 - INFO - Epoch 10/10 - Train Loss: 1.6031, Train Acc: 26.67% - Val Loss: 1.7179, Val Acc: 0.00%
+2025-05-05 12:45:29,269 - INFO - Beste Modellgewichte wiederhergestellt
+2025-05-05 12:45:30,446 - INFO - 
+==================================================
+Trainiere Modell 8/12: micro_d1.0_b3_ch16_sep_gpool
+==================================================
+2025-05-05 12:45:30,457 - INFO - Speicheranalyse:
+2025-05-05 12:45:30,457 - INFO -   Modellgröße (Float32): 17.42 KB
+2025-05-05 12:45:30,458 - INFO -   Modellgröße (Int8): 4.35 KB (0.2% des Flash)
+2025-05-05 12:45:30,458 - INFO -   Aktivierungsspeicher: 245.77 KB
+2025-05-05 12:45:30,458 - INFO -   Gesamter Laufzeitspeicher: 250.13 KB (94.7% des RAM)
+2025-05-05 12:45:30,458 - WARNING - Warnung: Laufzeitspeicher überschreitet RAM-Beschränkung (250.13KB > 100KB)
+2025-05-05 12:45:30,458 - INFO - Modell hat 4,134 Parameter
+2025-05-05 12:45:30,458 - INFO - Geschätzte Modellgröße: 17.42 KB (float32), 4.35 KB (int8)
+2025-05-05 12:45:31,149 - INFO - Epoch 1/10 - Train Loss: 1.8272, Train Acc: 0.00% - Val Loss: 1.7937, Val Acc: 0.00%
+2025-05-05 12:45:31,818 - INFO - Epoch 2/10 - Train Loss: 1.7872, Train Acc: 11.11% - Val Loss: 1.7929, Val Acc: 25.00%
+2025-05-05 12:45:32,522 - INFO - Epoch 3/10 - Train Loss: 1.7575, Train Acc: 28.89% - Val Loss: 1.7889, Val Acc: 0.00%
+2025-05-05 12:45:33,136 - INFO - Epoch 4/10 - Train Loss: 1.6656, Train Acc: 26.67% - Val Loss: 1.7797, Val Acc: 0.00%
+2025-05-05 12:45:33,766 - INFO - Epoch 5/10 - Train Loss: 1.5640, Train Acc: 46.67% - Val Loss: 1.7691, Val Acc: 0.00%
+2025-05-05 12:45:34,365 - INFO - Epoch 6/10 - Train Loss: 1.4997, Train Acc: 46.67% - Val Loss: 1.7581, Val Acc: 0.00%
+2025-05-05 12:45:34,908 - INFO - Epoch 7/10 - Train Loss: 1.5074, Train Acc: 37.78% - Val Loss: 1.7491, Val Acc: 0.00%
+2025-05-05 12:45:35,568 - INFO - Epoch 8/10 - Train Loss: 1.5507, Train Acc: 24.44% - Val Loss: 1.7403, Val Acc: 0.00%
+2025-05-05 12:45:36,141 - INFO - Epoch 9/10 - Train Loss: 1.5434, Train Acc: 33.33% - Val Loss: 1.7333, Val Acc: 8.33%
+2025-05-05 12:45:36,767 - INFO - Epoch 10/10 - Train Loss: 1.4821, Train Acc: 33.33% - Val Loss: 1.7277, Val Acc: 8.33%
+2025-05-05 12:45:36,774 - INFO - Beste Modellgewichte wiederhergestellt
+2025-05-05 12:45:38,278 - INFO - 
+==================================================
+Trainiere Modell 9/12: micro_d1.25_b2_ch8_sep_gpool
+==================================================
+2025-05-05 12:45:38,281 - INFO - Speicheranalyse:
+2025-05-05 12:45:38,282 - INFO -   Modellgröße (Float32): 3.32 KB
+2025-05-05 12:45:38,282 - INFO -   Modellgröße (Int8): 0.83 KB (0.0% des Flash)
+2025-05-05 12:45:38,282 - INFO -   Aktivierungsspeicher: 126.74 KB
+2025-05-05 12:45:38,282 - INFO -   Gesamter Laufzeitspeicher: 127.57 KB (48.3% des RAM)
+2025-05-05 12:45:38,282 - WARNING - Warnung: Laufzeitspeicher überschreitet RAM-Beschränkung (127.57KB > 100KB)
+2025-05-05 12:45:38,282 - INFO - Modell hat 766 Parameter
+2025-05-05 12:45:38,282 - INFO - Geschätzte Modellgröße: 3.32 KB (float32), 0.83 KB (int8)
+2025-05-05 12:45:38,626 - INFO - Epoch 1/10 - Train Loss: 1.7724, Train Acc: 28.89% - Val Loss: 1.7864, Val Acc: 58.33%
+2025-05-05 12:45:39,151 - INFO - Epoch 2/10 - Train Loss: 1.7700, Train Acc: 13.33% - Val Loss: 1.7830, Val Acc: 41.67%
+2025-05-05 12:45:39,797 - INFO - Epoch 3/10 - Train Loss: 1.7680, Train Acc: 22.22% - Val Loss: 1.7771, Val Acc: 33.33%
+2025-05-05 12:45:40,490 - INFO - Epoch 4/10 - Train Loss: 1.7342, Train Acc: 24.44% - Val Loss: 1.7724, Val Acc: 0.00%
+2025-05-05 12:45:40,920 - INFO - Epoch 5/10 - Train Loss: 1.7008, Train Acc: 44.44% - Val Loss: 1.7681, Val Acc: 0.00%
+2025-05-05 12:45:41,535 - INFO - Epoch 6/10 - Train Loss: 1.6790, Train Acc: 26.67% - Val Loss: 1.7616, Val Acc: 0.00%
+2025-05-05 12:45:42,220 - INFO - Epoch 7/10 - Train Loss: 1.6650, Train Acc: 24.44% - Val Loss: 1.7553, Val Acc: 0.00%
+2025-05-05 12:45:42,887 - INFO - Epoch 8/10 - Train Loss: 1.6605, Train Acc: 22.22% - Val Loss: 1.7498, Val Acc: 0.00%
+2025-05-05 12:45:43,421 - INFO - Epoch 9/10 - Train Loss: 1.6376, Train Acc: 26.67% - Val Loss: 1.7444, Val Acc: 0.00%
+2025-05-05 12:45:44,071 - INFO - Epoch 10/10 - Train Loss: 1.6489, Train Acc: 20.00% - Val Loss: 1.7398, Val Acc: 0.00%
+2025-05-05 12:45:44,076 - INFO - Beste Modellgewichte wiederhergestellt
+2025-05-05 12:45:45,246 - INFO - 
+==================================================
+Trainiere Modell 10/12: micro_d1.25_b2_ch16_sep_gpool
+==================================================
+2025-05-05 12:45:45,257 - INFO - Speicheranalyse:
+2025-05-05 12:45:45,258 - INFO -   Modellgröße (Float32): 8.16 KB
+2025-05-05 12:45:45,258 - INFO -   Modellgröße (Int8): 2.04 KB (0.1% des Flash)
+2025-05-05 12:45:45,258 - INFO -   Aktivierungsspeicher: 253.46 KB
+2025-05-05 12:45:45,259 - INFO -   Gesamter Laufzeitspeicher: 255.50 KB (96.8% des RAM)
+2025-05-05 12:45:45,259 - WARNING - Warnung: Laufzeitspeicher überschreitet RAM-Beschränkung (255.50KB > 100KB)
+2025-05-05 12:45:45,259 - INFO - Modell hat 1,926 Parameter
+2025-05-05 12:45:45,259 - INFO - Geschätzte Modellgröße: 8.16 KB (float32), 2.04 KB (int8)
+2025-05-05 12:45:45,963 - INFO - Epoch 1/10 - Train Loss: 1.8056, Train Acc: 20.00% - Val Loss: 1.7925, Val Acc: 0.00%
+2025-05-05 12:45:46,630 - INFO - Epoch 2/10 - Train Loss: 1.8087, Train Acc: 22.22% - Val Loss: 1.7882, Val Acc: 41.67%
+2025-05-05 12:45:47,090 - INFO - Epoch 3/10 - Train Loss: 1.7688, Train Acc: 24.44% - Val Loss: 1.7771, Val Acc: 0.00%
+2025-05-05 12:45:47,583 - INFO - Epoch 4/10 - Train Loss: 1.7332, Train Acc: 24.44% - Val Loss: 1.7647, Val Acc: 0.00%
+2025-05-05 12:45:48,166 - INFO - Epoch 5/10 - Train Loss: 1.6628, Train Acc: 33.33% - Val Loss: 1.7506, Val Acc: 0.00%
+2025-05-05 12:45:48,856 - INFO - Epoch 6/10 - Train Loss: 1.6351, Train Acc: 31.11% - Val Loss: 1.7399, Val Acc: 0.00%
+2025-05-05 12:45:49,511 - INFO - Epoch 7/10 - Train Loss: 1.6159, Train Acc: 24.44% - Val Loss: 1.7309, Val Acc: 0.00%
+2025-05-05 12:45:50,215 - INFO - Epoch 8/10 - Train Loss: 1.5836, Train Acc: 20.00% - Val Loss: 1.7219, Val Acc: 0.00%
+2025-05-05 12:45:50,848 - INFO - Epoch 9/10 - Train Loss: 1.5637, Train Acc: 26.67% - Val Loss: 1.7152, Val Acc: 0.00%
+2025-05-05 12:45:51,403 - INFO - Epoch 10/10 - Train Loss: 1.5451, Train Acc: 42.22% - Val Loss: 1.7096, Val Acc: 0.00%
+2025-05-05 12:45:51,404 - INFO - Beste Modellgewichte wiederhergestellt
+2025-05-05 12:45:52,362 - INFO - 
+==================================================
+Trainiere Modell 11/12: micro_d1.25_b3_ch8_sep_gpool
+==================================================
+2025-05-05 12:45:52,374 - INFO - Speicheranalyse:
+2025-05-05 12:45:52,374 - INFO -   Modellgröße (Float32): 8.56 KB
+2025-05-05 12:45:52,374 - INFO -   Modellgröße (Int8): 2.14 KB (0.1% des Flash)
+2025-05-05 12:45:52,374 - INFO -   Aktivierungsspeicher: 153.62 KB
+2025-05-05 12:45:52,375 - INFO -   Gesamter Laufzeitspeicher: 155.76 KB (59.0% des RAM)
+2025-05-05 12:45:52,375 - WARNING - Warnung: Laufzeitspeicher überschreitet RAM-Beschränkung (155.76KB > 100KB)
+2025-05-05 12:45:52,375 - INFO - Modell hat 1,986 Parameter
+2025-05-05 12:45:52,375 - INFO - Geschätzte Modellgröße: 8.56 KB (float32), 2.14 KB (int8)
+2025-05-05 12:45:53,107 - INFO - Epoch 1/10 - Train Loss: 1.7871, Train Acc: 15.56% - Val Loss: 1.7871, Val Acc: 25.00%
+2025-05-05 12:45:53,598 - INFO - Epoch 2/10 - Train Loss: 1.7705, Train Acc: 15.56% - Val Loss: 1.7839, Val Acc: 25.00%
+2025-05-05 12:45:54,238 - INFO - Epoch 3/10 - Train Loss: 1.7360, Train Acc: 20.00% - Val Loss: 1.7739, Val Acc: 25.00%
+2025-05-05 12:45:54,928 - INFO - Epoch 4/10 - Train Loss: 1.6946, Train Acc: 31.11% - Val Loss: 1.7652, Val Acc: 25.00%
+2025-05-05 12:45:55,594 - INFO - Epoch 5/10 - Train Loss: 1.6373, Train Acc: 37.78% - Val Loss: 1.7553, Val Acc: 25.00%
+2025-05-05 12:45:56,193 - INFO - Epoch 6/10 - Train Loss: 1.6070, Train Acc: 22.22% - Val Loss: 1.7424, Val Acc: 16.67%
+2025-05-05 12:45:56,838 - INFO - Epoch 7/10 - Train Loss: 1.5735, Train Acc: 28.89% - Val Loss: 1.7328, Val Acc: 16.67%
+2025-05-05 12:45:57,471 - INFO - Epoch 8/10 - Train Loss: 1.5732, Train Acc: 22.22% - Val Loss: 1.7253, Val Acc: 8.33%
+2025-05-05 12:45:58,148 - INFO - Epoch 9/10 - Train Loss: 1.5316, Train Acc: 37.78% - Val Loss: 1.7202, Val Acc: 0.00%
+2025-05-05 12:45:58,825 - INFO - Epoch 10/10 - Train Loss: 1.5237, Train Acc: 28.89% - Val Loss: 1.7152, Val Acc: 8.33%
+2025-05-05 12:45:58,832 - INFO - Beste Modellgewichte wiederhergestellt
+2025-05-05 12:46:00,179 - INFO - 
+==================================================
+Trainiere Modell 12/12: micro_d1.25_b3_ch16_sep_gpool
+==================================================
+2025-05-05 12:46:00,191 - INFO - Speicheranalyse:
+2025-05-05 12:46:00,191 - INFO -   Modellgröße (Float32): 24.89 KB
+2025-05-05 12:46:00,191 - INFO -   Modellgröße (Int8): 6.22 KB (0.3% des Flash)
+2025-05-05 12:46:00,192 - INFO -   Aktivierungsspeicher: 307.21 KB
+2025-05-05 12:46:00,192 - INFO -   Gesamter Laufzeitspeicher: 313.43 KB (118.7% des RAM)
+2025-05-05 12:46:00,192 - WARNING - Warnung: Laufzeitspeicher überschreitet RAM-Beschränkung (313.43KB > 100KB)
+2025-05-05 12:46:00,192 - INFO - Modell hat 5,966 Parameter
+2025-05-05 12:46:00,192 - INFO - Geschätzte Modellgröße: 24.89 KB (float32), 6.22 KB (int8)
+2025-05-05 12:46:00,795 - INFO - Epoch 1/10 - Train Loss: 1.7718, Train Acc: 20.00% - Val Loss: 1.7864, Val Acc: 25.00%
+2025-05-05 12:46:01,418 - INFO - Epoch 2/10 - Train Loss: 1.7120, Train Acc: 35.56% - Val Loss: 1.7746, Val Acc: 25.00%
+2025-05-05 12:46:02,113 - INFO - Epoch 3/10 - Train Loss: 1.6969, Train Acc: 20.00% - Val Loss: 1.7624, Val Acc: 25.00%
+2025-05-05 12:46:02,746 - INFO - Epoch 4/10 - Train Loss: 1.5820, Train Acc: 31.11% - Val Loss: 1.7557, Val Acc: 25.00%
+2025-05-05 12:46:03,174 - INFO - Epoch 5/10 - Train Loss: 1.5504, Train Acc: 28.89% - Val Loss: 1.7435, Val Acc: 8.33%
+2025-05-05 12:46:03,776 - INFO - Epoch 6/10 - Train Loss: 1.4659, Train Acc: 26.67% - Val Loss: 1.7330, Val Acc: 8.33%
+2025-05-05 12:46:04,359 - INFO - Epoch 7/10 - Train Loss: 1.4559, Train Acc: 24.44% - Val Loss: 1.7275, Val Acc: 8.33%
+2025-05-05 12:46:04,732 - INFO - Epoch 8/10 - Train Loss: 1.4264, Train Acc: 37.78% - Val Loss: 1.7221, Val Acc: 0.00%
+2025-05-05 12:46:05,353 - INFO - Epoch 9/10 - Train Loss: 1.4190, Train Acc: 37.78% - Val Loss: 1.7177, Val Acc: 0.00%
+2025-05-05 12:46:05,956 - INFO - Epoch 10/10 - Train Loss: 1.5209, Train Acc: 20.00% - Val Loss: 1.7141, Val Acc: 0.00%
+2025-05-05 12:46:05,963 - INFO - Beste Modellgewichte wiederhergestellt
+2025-05-05 12:46:08,411 - INFO - 
+==================================================
+2025-05-05 12:46:08,412 - INFO - ZUSAMMENFASSUNG DER HYPERPARAMETER-SUCHE
+2025-05-05 12:46:08,412 - INFO - ==================================================
+2025-05-05 12:46:08,412 - INFO - Analysierte Modelle: 12
+2025-05-05 12:46:08,412 - INFO - Pareto-optimale Modelle: 2
+2025-05-05 12:46:08,412 - INFO - 
+Top 5 Modelle nach Genauigkeit:
+2025-05-05 12:46:08,412 - INFO - 1. micro_d0.75_b2_ch8_sep_gpool: Acc=25.00%, Size=0.5KB, Time=8.2ms
+2025-05-05 12:46:08,412 - INFO - 2. micro_d0.75_b2_ch16_sep_gpool: Acc=25.00%, Size=1.0KB, Time=11.7ms
+2025-05-05 12:46:08,413 - INFO - 3. micro_d1.25_b3_ch8_sep_gpool: Acc=8.33%, Size=2.1KB, Time=15.0ms
+2025-05-05 12:46:08,413 - INFO - 4. micro_d1.0_b3_ch16_sep_gpool: Acc=8.33%, Size=4.4KB, Time=15.3ms
+2025-05-05 12:46:08,413 - INFO - 5. micro_d0.75_b3_ch16_sep_gpool: Acc=0.00%, Size=2.8KB, Time=20.4ms
+2025-05-05 12:46:08,414 - INFO - 
+Top 5 Modelle nach Speichereffizienz (Accuracy/KB):
+2025-05-05 12:46:08,414 - INFO - 1. micro_d0.75_b2_ch8_sep_gpool: Eff=55.05%/KB, Acc=25.00%, Size=0.5KB
+2025-05-05 12:46:08,414 - INFO - 2. micro_d0.75_b2_ch16_sep_gpool: Eff=24.04%/KB, Acc=25.00%, Size=1.0KB
+2025-05-05 12:46:08,415 - INFO - 3. micro_d1.25_b3_ch8_sep_gpool: Eff=3.89%/KB, Acc=8.33%, Size=2.1KB
+2025-05-05 12:46:08,415 - INFO - 4. micro_d1.0_b3_ch16_sep_gpool: Eff=1.91%/KB, Acc=8.33%, Size=4.4KB
+2025-05-05 12:46:08,415 - INFO - 5. micro_d0.75_b3_ch16_sep_gpool: Eff=0.00%/KB, Acc=0.00%, Size=2.8KB
+2025-05-05 12:46:08,415 - INFO - 
+Ergebnisse wurden gespeichert in:
+2025-05-05 12:46:08,415 - INFO - - CSV: output/hyperparameter_search/hyperparameter_results.csv
+2025-05-05 12:46:08,415 - INFO - - Excel: output/hyperparameter_search/hyperparameter_results.xlsx
+2025-05-05 12:46:08,415 - INFO - - Plots: output/hyperparameter_search/plots
+2025-05-05 15:32:51,345 - WARNING - Fehler beim Laden der Klassennamen: string indices must be integers, not 'str'
+2025-05-05 15:32:51,349 - INFO - Lade MicroPizzaNet Modell
+2025-05-05 15:32:51,352 - ERROR - Fehler beim Laden des Modells: Error(s) in loading state_dict for ModularMicroPizzaNet:
+	Missing key(s) in state_dict: "blocks.0.0.weight", "blocks.0.1.weight", "blocks.0.1.bias", "blocks.0.1.running_mean", "blocks.0.1.running_var", "blocks.1.0.weight", "blocks.1.1.weight", "blocks.1.1.bias", "blocks.1.1.running_mean", "blocks.1.1.running_var", "blocks.1.3.weight", "blocks.1.4.weight", "blocks.1.4.bias", "blocks.1.4.running_mean", "blocks.1.4.running_var", "blocks.2.0.weight", "blocks.2.1.weight", "blocks.2.1.bias", "blocks.2.1.running_mean", "blocks.2.1.running_var", "blocks.2.3.weight", "blocks.2.4.weight", "blocks.2.4.bias", "blocks.2.4.running_mean", "blocks.2.4.running_var", "classifier.1.weight", "classifier.1.bias". 
+	Unexpected key(s) in state_dict: "block1.0.weight", "block1.1.weight", "block1.1.bias", "block1.1.running_mean", "block1.1.running_var", "block1.1.num_batches_tracked", "block2.0.weight", "block2.1.weight", "block2.1.bias", "block2.1.running_mean", "block2.1.running_var", "block2.1.num_batches_tracked", "block2.3.weight", "block2.4.weight", "block2.4.bias", "block2.4.running_mean", "block2.4.running_var", "block2.4.num_batches_tracked", "classifier.2.weight", "classifier.2.bias". 
+2025-05-05 15:35:47,368 - WARNING - Fehler beim Laden der Klassennamen: string indices must be integers, not 'str'
+2025-05-05 15:35:47,368 - INFO - Lade MicroPizzaNet Modell
+2025-05-05 15:35:47,371 - ERROR - Fehler beim Laden des Modells: Error(s) in loading state_dict for ModularMicroPizzaNet:
+	Missing key(s) in state_dict: "blocks.0.0.weight", "blocks.0.1.weight", "blocks.0.1.bias", "blocks.0.1.running_mean", "blocks.0.1.running_var", "blocks.1.0.weight", "blocks.1.1.weight", "blocks.1.1.bias", "blocks.1.1.running_mean", "blocks.1.1.running_var", "blocks.1.3.weight", "blocks.1.4.weight", "blocks.1.4.bias", "blocks.1.4.running_mean", "blocks.1.4.running_var", "blocks.2.0.weight", "blocks.2.1.weight", "blocks.2.1.bias", "blocks.2.1.running_mean", "blocks.2.1.running_var", "blocks.2.3.weight", "blocks.2.4.weight", "blocks.2.4.bias", "blocks.2.4.running_mean", "blocks.2.4.running_var", "classifier.1.weight", "classifier.1.bias". 
+	Unexpected key(s) in state_dict: "block1.0.weight", "block1.1.weight", "block1.1.bias", "block1.1.running_mean", "block1.1.running_var", "block1.1.num_batches_tracked", "block2.0.weight", "block2.1.weight", "block2.1.bias", "block2.1.running_mean", "block2.1.running_var", "block2.1.num_batches_tracked", "block2.3.weight", "block2.4.weight", "block2.4.bias", "block2.4.running_mean", "block2.4.running_var", "block2.4.num_batches_tracked", "classifier.2.weight", "classifier.2.bias". 
+2025-05-05 15:43:00,262 - INFO - Klassen geladen: ['basic', 'burnt', 'combined', 'mixed', 'progression', 'segment']
+2025-05-05 15:43:00,262 - INFO - Lade MicroPizzaNet Modell
+2025-05-05 15:43:00,264 - ERROR - Fehler beim Laden des Modells: Error(s) in loading state_dict for OriginalMicroPizzaNet:
+	Missing key(s) in state_dict: "block1.0.bias", "block2.0.bias", "block2.3.bias". 
+	size mismatch for block2.0.weight: copying a param with shape torch.Size([8, 1, 3, 3]) from checkpoint, the shape in current model is torch.Size([16, 1, 3, 3]).
+	size mismatch for block2.1.weight: copying a param with shape torch.Size([8]) from checkpoint, the shape in current model is torch.Size([16]).
+	size mismatch for block2.1.bias: copying a param with shape torch.Size([8]) from checkpoint, the shape in current model is torch.Size([16]).
+	size mismatch for block2.1.running_mean: copying a param with shape torch.Size([8]) from checkpoint, the shape in current model is torch.Size([16]).
+	size mismatch for block2.1.running_var: copying a param with shape torch.Size([8]) from checkpoint, the shape in current model is torch.Size([16]).
+	size mismatch for block2.3.weight: copying a param with shape torch.Size([16, 8, 1, 1]) from checkpoint, the shape in current model is torch.Size([16, 16, 1, 1]).
+2025-05-05 15:44:24,660 - INFO - Klassen geladen: ['basic', 'burnt', 'combined', 'mixed', 'progression', 'segment']
+2025-05-05 15:44:24,661 - INFO - Lade MicroPizzaNet Modell
+2025-05-05 15:45:29,487 - INFO - Klassen geladen: ['basic', 'burnt', 'combined', 'mixed', 'progression', 'segment']
+2025-05-05 15:45:29,487 - INFO - Lade MicroPizzaNet Modell
+2025-05-05 15:45:29,490 - INFO - Modell aus models/micro_pizza_model.pth geladen
+2025-05-05 15:45:29,490 - INFO - ================================================================================
+2025-05-05 15:45:29,490 - INFO - RP2040 PIZZA-ERKENNUNGSSYSTEM - DETAILLIERTE KONFIGURATION
+2025-05-05 15:45:29,490 - INFO - ================================================================================
+2025-05-05 15:45:29,490 - INFO - Hardware: RP2040 - 133MHz, 264KB RAM, 2048KB Flash
+2025-05-05 15:45:29,490 - INFO - Kamera: OV2640 - 320x240, 7 FPS
+2025-05-05 15:45:29,490 - INFO - Stromversorgung: CR123A - 1500mAh, 8.33h aktiv, 3000.00h standby
+2025-05-05 15:45:29,490 - INFO - Modellparameter: 48x48 Eingabegröße, 8-Bit Quantisierung
+2025-05-05 15:45:29,490 - INFO - Speicherbeschränkungen: Max. 180KB Modellgröße, 100KB Laufzeit-RAM
+2025-05-05 15:45:29,490 - INFO - ================================================================================
+2025-05-05 15:45:29,490 - INFO - Preparing optimized data loaders...
+2025-05-05 15:46:57,432 - INFO - Klassen geladen: ['basic', 'burnt', 'combined', 'mixed', 'progression', 'segment']
+2025-05-05 15:46:57,432 - INFO - Lade MicroPizzaNet Modell
+2025-05-05 15:46:57,435 - INFO - Modell aus models/micro_pizza_model.pth geladen
+2025-05-05 15:46:57,435 - ERROR - Fehler beim Laden des Datensatzes: Found no valid file for the classes progression, segment. Supported extensions are: .jpg, .jpeg, .png, .ppm, .bmp, .pgm, .tif, .tiff, .webp
+2025-05-05 15:46:57,435 - ERROR - Erstelle einen Dummy-Datensatz für den Test
+2025-05-05 15:46:57,435 - WARNING - Verwende Dummy-Datensatz! Die Ergebnisse sind nicht repräsentativ.
+2025-05-05 15:46:57,440 - INFO - Automatisch ausgewählter Layer für Grad-CAM: Conv2d
+2025-05-05 15:48:45,696 - INFO - Klassen geladen: ['basic', 'burnt', 'combined', 'mixed', 'progression', 'segment']
+2025-05-05 15:48:45,696 - INFO - Lade MicroPizzaNet Modell
+2025-05-05 15:48:45,698 - INFO - Modell aus models/micro_pizza_model.pth geladen
+2025-05-05 15:48:45,699 - ERROR - Fehler beim Laden des Datensatzes: Found no valid file for the classes progression, segment. Supported extensions are: .jpg, .jpeg, .png, .ppm, .bmp, .pgm, .tif, .tiff, .webp
+2025-05-05 15:48:45,699 - ERROR - Erstelle einen Dummy-Datensatz für den Test
+2025-05-05 15:48:45,699 - WARNING - Verwende Dummy-Datensatz! Die Ergebnisse sind nicht repräsentativ.
+2025-05-05 15:48:45,699 - INFO - Automatisch ausgewählter Layer für Grad-CAM: Conv2d
+2025-05-05 15:48:45,758 - INFO - HTML-Bericht erstellt: output/gradcam_results/gradcam_report.html
+2025-05-05 15:48:50,799 - INFO - GradCAM-Visualisierung abgeschlossen!
+2025-05-05 15:48:50,800 - INFO - Ergebnisse gespeichert in: /home/emilio/Documents/ai/pizza/output/gradcam_results
+2025-05-05 21:46:22,382 - INFO - ================================================================================
+2025-05-05 21:46:22,382 - INFO - RP2040 PIZZA-ERKENNUNGSSYSTEM - DETAILLIERTE KONFIGURATION
+2025-05-05 21:46:22,382 - INFO - ================================================================================
+2025-05-05 21:46:22,382 - INFO - Hardware: RP2040 - 133MHz, 264KB RAM, 2048KB Flash
+2025-05-05 21:46:22,382 - INFO - Kamera: OV2640 - 320x240, 7 FPS
+2025-05-05 21:46:22,382 - INFO - Stromversorgung: CR123A - 1500mAh, 8.33h aktiv, 3000.00h standby
+2025-05-05 21:46:22,382 - INFO - Modellparameter: 48x48 Eingabegröße, 8-Bit Quantisierung
+2025-05-05 21:46:22,382 - INFO - Speicherbeschränkungen: Max. 180KB Modellgröße, 100KB Laufzeit-RAM
+2025-05-05 21:46:22,382 - INFO - ================================================================================
+2025-05-05 21:46:22,382 - INFO - Lade Datensatz aus data
+2025-05-05 21:46:22,382 - INFO - Analysiere Datensatz in data...
+2025-05-05 21:46:22,417 - INFO - Datensatzanalyse abgeschlossen:
+2025-05-05 21:46:22,418 - INFO - Gesamtzahl der Bilder: 1377
+2025-05-05 21:46:22,418 - INFO - Klassenverteilung: {'videos': 0, 'synthetic': 1223, 'augmented': 142, 'raw': 12, 'classified': 0, 'processed': 0}
+2025-05-05 21:46:22,418 - INFO - Durchschnittliche Bildgröße: 235.5 x 226.6
+2025-05-05 21:46:22,418 - INFO - RGB-Mittelwerte: [0.2902, 0.2409, 0.2006]
+2025-05-05 21:46:22,418 - INFO - RGB-Standardabweichungen: [0.3096, 0.2938, 0.2740]
+2025-05-05 21:46:22,418 - INFO - Preparing optimized data loaders...
+2025-05-05 21:46:22,418 - INFO - Using dataset-specific normalization: mean=[0.29017202 0.24085468 0.20059984], std=[0.3096061  0.29380828 0.27403119]
+2025-05-05 21:46:22,421 - INFO - Data loaders created: 1101 training images, 276 validation images
+2025-05-05 21:46:22,421 - INFO - Classes: ['augmented', 'classified', 'processed', 'raw', 'synthetic', 'videos']
+2025-05-05 21:46:22,421 - INFO - Datensatz geladen: 6 Klassen
+2025-05-05 21:46:22,421 - INFO - Erstelle Teacher-Modell (mobilenet)
+2025-05-05 21:46:44,960 - INFO - ================================================================================
+2025-05-05 21:46:44,960 - INFO - RP2040 PIZZA-ERKENNUNGSSYSTEM - DETAILLIERTE KONFIGURATION
+2025-05-05 21:46:44,960 - INFO - ================================================================================
+2025-05-05 21:46:44,960 - INFO - Hardware: RP2040 - 133MHz, 264KB RAM, 2048KB Flash
+2025-05-05 21:46:44,960 - INFO - Kamera: OV2640 - 320x240, 7 FPS
+2025-05-05 21:46:44,960 - INFO - Stromversorgung: CR123A - 1500mAh, 8.33h aktiv, 3000.00h standby
+2025-05-05 21:46:44,960 - INFO - Modellparameter: 48x48 Eingabegröße, 8-Bit Quantisierung
+2025-05-05 21:46:44,960 - INFO - Speicherbeschränkungen: Max. 180KB Modellgröße, 100KB Laufzeit-RAM
+2025-05-05 21:46:44,960 - INFO - ================================================================================
+2025-05-05 21:46:44,960 - INFO - Lade Datensatz aus data
+2025-05-05 21:46:44,961 - INFO - Analysiere Datensatz in data...
+2025-05-05 21:46:44,993 - INFO - Datensatzanalyse abgeschlossen:
+2025-05-05 21:46:44,993 - INFO - Gesamtzahl der Bilder: 1377
+2025-05-05 21:46:44,993 - INFO - Klassenverteilung: {'videos': 0, 'synthetic': 1223, 'augmented': 142, 'raw': 12, 'classified': 0, 'processed': 0}
+2025-05-05 21:46:44,993 - INFO - Durchschnittliche Bildgröße: 229.8 x 225.3
+2025-05-05 21:46:44,993 - INFO - RGB-Mittelwerte: [0.2797, 0.2303, 0.2099]
+2025-05-05 21:46:44,993 - INFO - RGB-Standardabweichungen: [0.2976, 0.2824, 0.2776]
+2025-05-05 21:46:44,993 - INFO - Preparing optimized data loaders...
+2025-05-05 21:46:44,993 - INFO - Using dataset-specific normalization: mean=[0.27969264 0.23033064 0.20986061], std=[0.29758076 0.28237676 0.27756683]
+2025-05-05 21:46:44,995 - INFO - Data loaders created: 1101 training images, 276 validation images
+2025-05-05 21:46:44,995 - INFO - Classes: ['augmented', 'classified', 'processed', 'raw', 'synthetic', 'videos']
+2025-05-05 21:46:44,995 - INFO - Datensatz geladen: 6 Klassen
+2025-05-05 21:46:44,995 - INFO - Erstelle Teacher-Modell (mobilenet)
+2025-05-05 21:46:44,998 - WARNING - Kein Checkpoint gefunden. Teacher-Modell wird mit Standardgewichten initialisiert.
+2025-05-05 21:46:44,998 - INFO - Erstelle Student-Modell (micropizza)
+2025-05-05 21:46:44,999 - INFO - Starte Training mit Knowledge Distillation
+2025-05-05 21:46:44,999 - INFO - Temperatur: 2.0, Alpha: 0.5

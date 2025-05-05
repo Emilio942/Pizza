@@ -33,11 +33,25 @@ logger = logging.getLogger(__name__)
 
 def calculate_metrics(y_true: np.ndarray, y_pred: np.ndarray) -> ModelMetrics:
     """Berechnet Leistungsmetriken für ein Modell."""
+    # Fehlerbehandlung für leere Arrays
+    if len(y_true) == 0 or len(y_pred) == 0:
+        raise ValueError("Eingabe-Arrays dürfen nicht leer sein")
+    
+    # Fehlerbehandlung für unterschiedliche Array-Längen
+    if len(y_true) != len(y_pred):
+        raise ValueError(f"Eingabe-Arrays müssen gleiche Länge haben: {len(y_true)} != {len(y_pred)}")
+    
+    # Überprüfe ungültige Klassenlabels
+    from .constants import NUM_CLASSES
+    if np.max(y_true) >= NUM_CLASSES or np.max(y_pred) >= NUM_CLASSES or np.min(y_true) < 0 or np.min(y_pred) < 0:
+        raise ValueError(f"Ungültige Klassenlabels: Muss zwischen 0 und {NUM_CLASSES-1} liegen")
+    
     precision, recall, f1, _ = precision_recall_fscore_support(
         y_true, y_pred, average='macro', zero_division=0
     )
     
-    conf_matrix = confusion_matrix(y_true, y_pred)
+    # Erstelle eine Konfusionsmatrix mit fester Größe NUM_CLASSES x NUM_CLASSES
+    conf_matrix = confusion_matrix(y_true, y_pred, labels=range(NUM_CLASSES))
     accuracy = (y_true == y_pred).mean()
     
     return {

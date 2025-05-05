@@ -66,20 +66,19 @@ def plot_inference_result(
     plt.close()
 
 def plot_confusion_matrix(
-    confusion_matrix: Dict[str, Dict[str, int]],
+    confusion_matrix: np.ndarray,
     output_path: Optional[Path] = None
 ) -> None:
     """
     Erstellt eine Konfusionsmatrix-Visualisierung.
+    
+    Parameters:
+        confusion_matrix: NumPy-Array der Konfusionsmatrix
+        output_path: Optionaler Pfad zum Speichern der Ausgabe
     """
-    matrix = np.zeros((len(CLASS_NAMES), len(CLASS_NAMES)))
-    for i, true_class in enumerate(CLASS_NAMES):
-        for j, pred_class in enumerate(CLASS_NAMES):
-            matrix[i, j] = confusion_matrix[true_class][pred_class]
-
     plt.figure(figsize=FIGURE_SIZE)
     sns.heatmap(
-        matrix,
+        confusion_matrix,
         annot=True,
         fmt='d',
         xticklabels=CLASS_NAMES,
@@ -236,7 +235,7 @@ def create_report(
     
     # Konfusionsmatrix
     plot_confusion_matrix(
-        model_metrics['confusion_matrix'],
+        model_metrics.confusion_matrix,  # Direkter Zugriff auf das Attribut
         report_dir / 'confusion_matrix.png'
     )
     
@@ -269,10 +268,10 @@ def create_report(
         
         <h2>Modellmetriken</h2>
         <div class="metric">
-            <p>Genauigkeit: {model_metrics['accuracy']:.2%}</p>
-            <p>Precision: {model_metrics['precision']:.2%}</p>
-            <p>Recall: {model_metrics['recall']:.2%}</p>
-            <p>F1-Score: {model_metrics['f1_score']:.2%}</p>
+            <p>Genauigkeit: {model_metrics.accuracy:.2%}</p>
+            <p>Precision: {model_metrics.precision:.2%}</p>
+            <p>Recall: {model_metrics.recall:.2%}</p>
+            <p>F1-Score: {model_metrics.f1_score:.2%}</p>
         </div>
         
         <h2>Konfusionsmatrix</h2>

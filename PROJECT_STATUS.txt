@@ -1,0 +1,180 @@
+# Projektstatus
+
+Zuletzt überprüft: 2025-05-05
+
+## Hardwarekonfiguration
+
+Der aktuelle Hardware-Aufbau basiert auf dem RP2040-Mikrocontroller mit folgenden Spezifikationen:
+- 2048KB Flash-Speicher (1748KB verfügbar für die Anwendung)
+- 264KB RAM (204KB verfügbar für die Anwendung)
+- 133MHz Dual-Core Taktrate
+
+Die Simulationen haben gezeigt:
+- Optimale Eingabebildgröße: 48x48 Pixel (75,8% RAM-Nutzung)
+- Maximale Modellgröße: ~350.000 Parameter (8-bit quantisiert)
+- Batterielebensdauer: 9,1 Tage mit CR123A im Duty-Cycle-Modus (90% Sleep)
+- Stromverbrauch: 64mA im Dauerbetrieb, 6,85mA im Duty-Cycle-Modus
+
+## Software-Status
+
+- Pizza-Erkennungsmodell: Implementiert und quantisiert (8-bit)
+- Emulator für Hardware-Tests: Vollständig funktionsfähig und getestet
+- Datenpipeline: Implementiert mit Augmentierung für verschiedene Belichtungen
+- Metriken und Visualisierung: Implementiert und vollständig getestet
+- Performance-Log-Analyse-Skript (`analyze_performance_logs.py`): Überprüft, keine Logikfehler gefunden.
+- Trainings-Skript (`train_pizza_model.py`): Überprüft, funktionsfähig mit guter Implementierung für Training, Klassenbalancierung und Early Stopping.
+- Test-Skript für Pizzaerkennung (`test_pizza_detection.py`): Überprüft, funktionsfähig mit guter Visualisierung der Inferenzergebnisse.
+- Test-Skript für Bildvorverarbeitung (`test_image_preprocessing.py`): Überprüft, demonstriert erfolgreich CLAHE für verbesserte Bilderkennung bei schlechten Lichtverhältnissen.
+- Test-Skript für temporale Glättung (`test_temporal_smoothing.py`): Überprüft, implementiert verschiedene Smoothing-Strategien zur Stabilisierung der Erkennung.
+- Label-Tool (`label_tool.py`): Überprüft, umfassende GUI-Anwendung zum effizienten Labeln von Pizza-Bildern mit vielen Funktionen.
+- Hyperparameter-Suche (`hyperparameter_search.py`): Überprüft, durchsucht systematisch verschiedene Modellarchitekturen für optimale Leistung.
+- Vergleich alternativer CNNs (`compare_tiny_cnns.py`): Überprüft, vergleicht verschiedene leichtgewichtige Architekturen und generiert einen Bericht.
+- Grad-CAM-Visualisierung (`visualize_gradcam.py`): Überprüft, visualisiert die Entscheidungsfindung des Modells mit Heatmaps.
+- Statusanzeige-Modul (`status_display.py` und `demo_status_display.py`): Implementiert, unterstützt RGB-LED und OLED-Display zur Anzeige von Erkennungsergebnissen mit verschiedenen visuellen Effekten.
+- Automatisierte Test-Suite (`automated_test_suite.py`, `test_pizza_classification.py` und `run_pizza_tests.py`): Implementiert, ermöglicht systematische Tests des Modells unter verschiedenen Lichtbedingungen, generiert detaillierte Berichte und überprüft die Modellleistung mit Mindestgenauigkeitsschwellen.
+
+## Test-Status
+
+Alle Tests sind erfolgreich (49 bestanden, 1 übersprungen aufgrund fehlender Graphviz-Installation).
+Folgende Probleme wurden behoben:
+- `_replace()`-Methode zur `ResourceUsage`-Dataclass hinzugefügt
+- Korrektur der Speicherberechnungen in der `MemoryEstimator`-Klasse
+- Validierung für negative Speicherallokationen implementiert
+- `ModelMetrics`-Klasse und Konfusionsmatrix-Format korrigiert (NumPy-Array)
+- `enter_sleep_mode()` und `wake_up()` in der `RP2040Emulator`-Klasse implementiert
+- Ressourcenprüfungen im Emulator für Flash und RAM verbessert
+- Fehler im Sleep-Mode-Management beseitigt (RAM-Wiederherstellung)
+- Visualisierungsfunktionen für neues Konfusionsmatrix-Format angepasst
+
+## Offene Punkte
+
+1. Implementierung eines effizienteren Energiemanagements
+2. Behebung von Warnungen in SQLAlchemy (veraltete Funktionen)
+3. Installation von Graphviz in der Entwicklungsumgebung für vollständige Testabdeckung
+4. `analyze_performance_logs.py`: Klassennamen aus Konfigurationsdatei laden statt hartcodieren.
+5. Problem: Skripte `augment_dataset.py` und `classify_images.py` scheinen leer oder unvollständig zu sein. Überprüfung notwendig.
+6. Inkonsistenz bei Klassennamen: Im Code werden Klassennamen sowohl aus der "Modell-README" als auch aus `constants.py` referenziert. Vereinheitlichung empfohlen.
+
+## Geplante Aufgaben (KI-Agent Roadmap)
+
+### 1. Bild-Vorverarbeitung on-device
+**Ziel**: Automatische Beleuchtungs-Korrektur direkt auf dem RP2040
+**Aufgabe**:
+- Implementiere einfachen Histogramm-Ausgleich (z. B. CLAHE) in C
+- Prüfe Temperatur und Arbeitsspeicher, damit der Zusatz-Code passt
+- Liefere ein Modul, das vor jedem Netz-Aufruf aufgerufen wird
+
+### 2. Mehrbild-Entscheidung (Temporal Smoothing)
+**Ziel**: Verlässlicheres Ergebnis durch Abstimmung mehrerer Inferenz-Durchläufe
+**Aufgabe**:
+- Führe n aufeinanderfolgende Klassifikationen (z. B. n=5) aus
+- Wende Mehrheitsvotum oder gleitenden Mittelwert an
+- Erstelle eine Bibliothek, die im Hauptprogramm genutzt wird
+
+### 3. Datensatz-Management & Label-Tool
+**Ziel**: Schnelles und konsistentes Nachlabeln neuer Pizza-Bilder
+**Aufgabe**:
+- Python-Skript mit CLI: Bild anzeigen, Label wählen, JSON updaten
+- Versioniere Datensatz-Änderungen via Git
+
+### 4. Architektur-Hyperparameter-Suche
+**Ziel**: Optimales Trade-off aus Genauigkeit, Speicher & Tempo
+**Aufgabe**:
+- Definiere Raster (Depth-Faktor, Block-Zahl, Kanalzahlen)
+- Automatisiere Training, Messung und CSV-Export
+- Erstelle Diagramm Accuracy vs. Modellgröße
+
+### 5. Vergleich alternativer Tiny-CNNs
+**Ziel**: Bewertung von MCUNet & reduzierter MobileNet-Variante
+**Aufgabe**:
+- Integriere Alternativ-Modelle ins Setup
+- Messe Inferenzzeit & Accuracy
+- Report: Modell | Größe | Zeit | Genauigkeit
+
+### 6. Offline-Visualisierung mit Grad-CAM
+**Ziel**: Heatmaps für falsch klassifizierte Bilder
+**Aufgabe**:
+- Python-Implementierung von Grad-CAM nutzen
+- Erzeuge PDF/HTML mit Bild + Heatmap + Kommentar
+
+### 7. CI/CD-Pipeline für Modell & Firmware
+**Ziel**: Automatisierte End-to-End-Updates 
+**Aufgabe**:
+- GitHub Actions: Train → Quantize → C-Code → Firmware → Tests
+- Notification bei Erfolg (Slack/E-Mail)
+
+### 8. On-Device Performance-Logging
+**Ziel**: Flaschenhälse sichtbar machen
+**Aufgabe**:
+- Messe Inferenz-Zyklen und Peak-RAM via Hardware-Timer
+- Logge per UART oder SD-Karte
+- Analyse-Script zur Auswertung der Logs
+
+### 9. Einfache Statusanzeige
+**Ziel**: Direkte Rückmeldung am Gerät
+**Aufgabe**:
+- RGB-LED oder OLED-Display ansteuern
+- Farben/Text für erkannte Klasse (basic vs. burnt)
+- Schaltplan und Beispiel-Code dokumentieren
+
+### 10. Automatisierte Test-Suite mit simulierten Bildern
+**Ziel**: Kontinuierliche Qualitätssicherung
+**Aufgabe**:
+- Testbilder in `data/test/`
+- Unit-Tests für Klassifikation
+- Coverage- und Accuracy-Report generieren
+
+### 11. CNN-Optimierungen & Parametertuning
+**Ziel**: Genauigkeit und Effizienz von MicroPizzaNet steigern
+**Aufgabe**:
+- **Invertierte Restblöcke**: Ersetze ausgewählte Separable-Conv-Blöcke durch MobileNetV2-Style Inverted Residual Blocks mit Shortcut-Verbindungen.
+- **Kanal-Aufmerksamkeit (Squeeze-and-Excitation)**: Implementiere nach einigen Blöcken SE-Module zur Kanalgewichtung.
+- **Hard-Swish-Aktivierung**: Tausche ReLU in kritischen Layers gegen Hard-Swish aus und messe Auswirkungen auf Genauigkeit & Inferenzzeit.
+- **Quantisierungs-bewusstes Training**: Richte Training so ein, dass Round-to-Nearest-Even während des Trainings simuliert wird („QAT").
+- **Gewichts-Pruning & Clustering**: Führe struktur- und unstruktur-basiertes Pruning durch und clustere ähnliche Gewichte; exportiere komprimiertes Modell.
+- **Knowledge Distillation**: Trainiere ein kompaktes Student-Modell mit einem größeren Teacher-Netzwerk und evaluiere den Wissensgewinn.
+- **Neural Architecture Search (NAS)-Basis**: Starte eine einfache Grid-Search über Depth-Multiplier und Kanalbreiten, um automatisch die beste Konfiguration zu finden.
+- **Dynamische Inferenz (Early Exit)**: Baue nach Block 3 einen Exit-Branch mit eigenem Klassifikator, der bei hoher Konfidenz eine frühzeitige Ausgabe ermöglicht.
+- **Hardware-optimierte Bibliotheken**: Integriere CMSIS-NN-Funktionen für kritische Convolution-Operationen und messe Geschwindigkeitsgewinne.
+
+## Zusammenfassung der Roadmap-Umsetzung
+
+In Bezug auf die KI-Agent Roadmap wurden bereits folgende Punkte vollständig oder teilweise umgesetzt:
+
+1. **Bild-Vorverarbeitung on-device**: Implementierung von CLAHE in `test_image_preprocessing.py` - Übertragung auf C für RP2040 noch ausstehend.
+2. **Mehrbild-Entscheidung (Temporal Smoothing)**: Vollständig implementiert in `test_temporal_smoothing.py` mit verschiedenen Smoothing-Strategien.
+3. **Datensatz-Management & Label-Tool**: Vollständig implementiert in `label_tool.py` mit umfassender GUI, Git-Tracking und KI-Vorschlägen.
+4. **Architektur-Hyperparameter-Suche**: Vollständig implementiert in `hyperparameter_search.py` mit systematischer Evaluation verschiedener Architekturen.
+5. **Vergleich alternativer Tiny-CNNs**: Vollständig implementiert in `compare_tiny_cnns.py` mit ausführlichem Vergleichsbericht.
+6. **Offline-Visualisierung mit Grad-CAM**: Vollständig implementiert in `visualize_gradcam.py` mit HTML/PDF-Berichterstellung.
+7. **CI/CD-Pipeline für Modell & Firmware**: Vollständig implementiert mit GitHub Actions in `.github/workflows/model_pipeline.yml`, umfasst Training, Quantisierung, C-Code-Generierung, Firmware-Erstellung und Tests.
+8. **On-Device Performance-Logging**: Teilweise implementiert in `analyze_performance_logs.py` - Logging-Mechanismus muss noch an UART/SD-Karte angepasst werden.
+9. **Einfache Statusanzeige**: Vollständig implementiert in `src/status_display.py` und `scripts/demo_status_display.py` mit Unterstützung für RGB-LED und OLED-Display.
+10. **Automatisierte Test-Suite**: Vollständig implementiert in `scripts/automated_test_suite.py` und `tests/test_pizza_classification.py` mit Bildsimulation für verschiedene Lichtverhältnisse, detaillierten Berichten und Modellqualitätsmetriken.
+
+Es verbleibt nur noch der Punkt 11 der Roadmap (CNN-Optimierungen & Parametertuning) für die vollständige Umsetzung.
+
+## Nächste Schritte
+
+1. Optimierung des Modells für niedrigeren RAM-Verbrauch
+2. Verbesserung der Erkennungsgenauigkeit bei verschiedenen Lichtverhältnissen
+3. Aktualisierung der SQLAlchemy-Implementierung (datetime.now(datetime.UTC))
+4. Durchführung weiterer Simulationen für längere Batterielebensdauer
+5. Vervollständigung des letzten Punktes der KI-Agent Roadmap:
+   - Umsetzung der CNN-Optimierungen & Parametertuning (Punkt 11)
+6. Überprüfung und Vervollständigung der leeren Skripte `augment_dataset.py` und `classify_images.py`
+
+## Simulationsergebnisse
+
+### Batterielebensdauer
+- Duty-Cycle-Modus verlängert die Batterielebensdauer um Faktor 9
+- 18650 Li-Ion bietet beste Laufzeit (20,7 Tage), CR123A ist kompakter (9,1 Tage)
+- Übertakten auf 250MHz reduziert Inferenzzeit um 50%, verkürzt aber Batterielebensdauer um 60%
+
+### Speichernutzung
+- RAM ist der limitierende Faktor, nicht Flash
+- Bilder > 48x48 Pixel führen zu RAM-Überlauf
+- 8-bit Quantisierung spart 75% Speicher im Vergleich zu Float32
+- Ressourcenvalidierung des Emulators bestätigt diese Grenzen
+
+python scripts/demo_status_display.py

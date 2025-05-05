@@ -1,0 +1,92 @@
+{
+  "battery_simulation": {
+    "battery_types": [
+      "CR123A",
+      "AA Alkaline",
+      "18650 Li-Ion",
+      "LiPo 500mAh"
+    ],
+    "continuous_runtime_hours": [
+      23.4375,
+      39.0625,
+      53.125,
+      7.8125
+    ],
+    "duty_cycle_runtime_hours": [
+      218.97810218978103,
+      364.9635036496351,
+      496.3503649635037,
+      72.99270072992701
+    ],
+    "weight_g": [
+      17,
+      23,
+      47,
+      10
+    ]
+  },
+  "clock_speed_simulation": {
+    "clock_speeds": [
+      50,
+      100,
+      133,
+      150,
+      200,
+      250
+    ],
+    "inference_times": [
+      400,
+      200,
+      150,
+      133,
+      100,
+      80
+    ],
+    "power_consumption": [
+      40,
+      70,
+      80,
+      90,
+      120,
+      150
+    ],
+    "battery_life": [
+      1965.0655021834061,
+      2050.113895216401,
+      2146.6905187835423,
+      2147.7919505530563,
+      2145.4112038140643,
+      2144.899904671115
+    ]
+  },
+  "power_profiles": {
+    "Sleep Mode": 0.5,
+    "Idle": 10,
+    "Active (133MHz)": 80,
+    "Active (250MHz)": 150,
+    "Camera Active": 40,
+    "Inference Running": 100
+  },
+  "battery_configs": [
+    {
+      "name": "CR123A",
+      "capacity_mah": 1500,
+      "weight_g": 17
+    },
+    {
+      "name": "AA Alkaline",
+      "capacity_mah": 2500,
+      "weight_g": 23
+    },
+    {
+      "name": "18650 Li-Ion",
+      "capacity_mah": 3400,
+      "weight_g": 47
+    },
+    {
+      "name": "LiPo 500mAh",
+      "capacity_mah": 500,
+      "weight_g": 10
+    }
+  ]
+}

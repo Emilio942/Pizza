@@ -5,6 +5,7 @@ Unit-Tests für das Metriken-Modul.
 import numpy as np
 import pytest
 from pathlib import Path
+import torch # Added missing import
 
 from src.metrics import (
     calculate_metrics,
@@ -13,7 +14,7 @@ from src.metrics import (
     format_inference_result,
     get_error_analysis
 )
-from src.types import InferenceResult, Metrics
+from src.types import InferenceResult, ModelMetrics # Changed metrics to ModelMetrics
 from src.constants import CLASS_NAMES
 from tests.conftest import assert_metrics_valid
 

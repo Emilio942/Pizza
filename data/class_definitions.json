@@ -1,0 +1,32 @@
+{
+  "basic": {
+    "description": "Roher Teig/Pizza-Grundzustand",
+    "shortcut": "b",
+    "color": "#5b9bd5"
+  },
+  "burnt": {
+    "description": "Pizza ist verbrannt oder stark angebrannt",
+    "shortcut": "v",
+    "color": "#ed7d31"
+  },
+  "combined": {
+    "description": "Kombinierte Pizza mit mehreren Zuständen",
+    "shortcut": "c",
+    "color": "#a5a5a5"
+  },
+  "mixed": {
+    "description": "Mischzustand zwischen roh und fertig",
+    "shortcut": "m",
+    "color": "#ffc000"
+  },
+  "progression": {
+    "description": "Prozessphase mit erkennbarem Übergang",
+    "shortcut": "p",
+    "color": "#70ad47"
+  },
+  "segment": {
+    "description": "Einzelnes Pizzasegment oder Stück",
+    "shortcut": "s",
+    "color": "#4472c4"
+  }
+}

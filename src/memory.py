@@ -26,6 +26,10 @@ class MemoryTracker:
     
     def allocate(self, size_bytes: int, description: str) -> None:
         """Simuliert Speicherallokation."""
+        # Überprüfe auf negative Größe
+        if size_bytes < 0:
+            raise ValueError(f"Negative Speicherallokation nicht erlaubt: {size_bytes} Bytes")
+            
         self.current_ram_usage += size_bytes
         self.peak_ram_usage = max(self.peak_ram_usage, self.current_ram_usage)
         self._stack.append((size_bytes, description))
@@ -69,7 +73,7 @@ class MemoryEstimator:
     @staticmethod
     def estimate_runtime_ram(
         model_size_kb: float,
-        input_size: Tuple[int, int] = (INPUT_SIZE, INPUT_SIZE),
+        input_size: Tuple[int, int] = INPUT_SIZE,  # Geändert: INPUT_SIZE direkt verwenden
         rgb: bool = True
     ) -> float:
         """Schätzt RAM-Bedarf während der Inferenz."""

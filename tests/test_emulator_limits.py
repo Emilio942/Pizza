@@ -50,6 +50,9 @@ def test_camera_edge_cases():
     """Testet Kamera-Grenzfälle."""
     camera = CameraEmulator()
     
+    # Kamera initialisieren, bevor sie verwendet wird
+    camera.initialize()
+    
     # Test: Extremes Bildformat
     camera.set_format(1, 1, rgb=True)
     frame = camera.capture_frame()

@@ -2,7 +2,7 @@
 Typdefinitionen für das Pizzaerkennungssystem.
 """
 
-from typing import List, Tuple, Dict, Any, Optional, Union, Callable, NamedTuple
+from typing import Dict, List, Tuple, Optional, Union, NamedTuple, Callable
 from pathlib import Path
 import numpy as np
 import torch
@@ -21,6 +21,7 @@ class InferenceResult:
     class_name: str
     confidence: float
     probabilities: Dict[str, float]
+    prediction: int  # Hinzugefügt: Klassen-ID als Integer
 
 # Metriken
 @dataclass
@@ -30,7 +31,7 @@ class ModelMetrics:
     precision: float
     recall: float
     f1_score: float
-    confusion_matrix: Optional[Dict[str, Dict[str, int]]] = None
+    confusion_matrix: Optional[np.ndarray] = None  # Geändert: NumPy-Array statt Dict
 
 # Trainingsfortschritt
 class TrainingProgress(NamedTuple):
@@ -52,6 +53,22 @@ class ResourceUsage:
     flash_used_kb: float
     cpu_usage_percent: float
     power_mw: float
+    
+    def _replace(self, **kwargs):
+        """Erstellt eine neue Instanz mit aktualisierten Werten (NamedTuple-Kompatibilität)."""
+        # Erstelle ein Dictionary mit den aktuellen Werten
+        current_values = {
+            'ram_used_kb': self.ram_used_kb,
+            'flash_used_kb': self.flash_used_kb,
+            'cpu_usage_percent': self.cpu_usage_percent,
+            'power_mw': self.power_mw
+        }
+        
+        # Aktualisiere mit den neuen Werten
+        current_values.update(kwargs)
+        
+        # Erstelle eine neue Instanz mit den aktualisierten Werten
+        return ResourceUsage(**current_values)
 
 # Kamerakonfiguration
 class CameraConfig(NamedTuple):
