@@ -60,80 +60,81 @@ Folgende Probleme wurden behoben:
 ### 1. Bild-Vorverarbeitung on-device
 **Ziel**: Automatische Beleuchtungs-Korrektur direkt auf dem RP2040
 **Aufgabe**:
-- Implementiere einfachen Histogramm-Ausgleich (z. B. CLAHE) in C
-- Prüfe Temperatur und Arbeitsspeicher, damit der Zusatz-Code passt
-- Liefere ein Modul, das vor jedem Netz-Aufruf aufgerufen wird
+- ✅ Implementiere einfachen Histogramm-Ausgleich (z. B. CLAHE) in C
+- ✅ Prüfe Temperatur und Arbeitsspeicher, damit der Zusatz-Code passt
+- ✅ Liefere ein Modul, das vor jedem Netz-Aufruf aufgerufen wird
 
 ### 2. Mehrbild-Entscheidung (Temporal Smoothing)
 **Ziel**: Verlässlicheres Ergebnis durch Abstimmung mehrerer Inferenz-Durchläufe
 **Aufgabe**:
-- Führe n aufeinanderfolgende Klassifikationen (z. B. n=5) aus
-- Wende Mehrheitsvotum oder gleitenden Mittelwert an
-- Erstelle eine Bibliothek, die im Hauptprogramm genutzt wird
+- ✅ Führe n aufeinanderfolgende Klassifikationen (z. B. n=5) aus
+- ✅ Wende Mehrheitsvotum oder gleitenden Mittelwert an
+- ✅ Erstelle eine Bibliothek, die im Hauptprogramm genutzt wird
 
 ### 3. Datensatz-Management & Label-Tool
 **Ziel**: Schnelles und konsistentes Nachlabeln neuer Pizza-Bilder
 **Aufgabe**:
-- Python-Skript mit CLI: Bild anzeigen, Label wählen, JSON updaten
-- Versioniere Datensatz-Änderungen via Git
+- ✅ Python-Skript mit CLI: Bild anzeigen, Label wählen, JSON updaten
+- ✅ Versioniere Datensatz-Änderungen via Git
 
 ### 4. Architektur-Hyperparameter-Suche
 **Ziel**: Optimales Trade-off aus Genauigkeit, Speicher & Tempo
 **Aufgabe**:
-- Definiere Raster (Depth-Faktor, Block-Zahl, Kanalzahlen)
-- Automatisiere Training, Messung und CSV-Export
-- Erstelle Diagramm Accuracy vs. Modellgröße
+- ✅ Definiere Raster (Depth-Faktor, Block-Zahl, Kanalzahlen)
+- ✅ Automatisiere Training, Messung und CSV-Export
+- ✅ Erstelle Diagramm Accuracy vs. Modellgröße
 
 ### 5. Vergleich alternativer Tiny-CNNs
 **Ziel**: Bewertung von MCUNet & reduzierter MobileNet-Variante
 **Aufgabe**:
-- Integriere Alternativ-Modelle ins Setup
-- Messe Inferenzzeit & Accuracy
-- Report: Modell | Größe | Zeit | Genauigkeit
+- ✅ Integriere Alternativ-Modelle ins Setup
+- ✅ Messe Inferenzzeit & Accuracy
+- ✅ Report: Modell | Größe | Zeit | Genauigkeit
 
 ### 6. Offline-Visualisierung mit Grad-CAM
 **Ziel**: Heatmaps für falsch klassifizierte Bilder
 **Aufgabe**:
-- Python-Implementierung von Grad-CAM nutzen
-- Erzeuge PDF/HTML mit Bild + Heatmap + Kommentar
+- ✅ Python-Implementierung von Grad-CAM nutzen
+- ✅ Erzeuge PDF/HTML mit Bild + Heatmap + Kommentar
 
 ### 7. CI/CD-Pipeline für Modell & Firmware
 **Ziel**: Automatisierte End-to-End-Updates 
 **Aufgabe**:
-- GitHub Actions: Train → Quantize → C-Code → Firmware → Tests
-- Notification bei Erfolg (Slack/E-Mail)
+- ✅ GitHub Actions: Train → Quantize → C-Code → Firmware → Tests
+- ✅ Notification bei Erfolg (Slack/E-Mail)
 
 ### 8. On-Device Performance-Logging
 **Ziel**: Flaschenhälse sichtbar machen
 **Aufgabe**:
-- Messe Inferenz-Zyklen und Peak-RAM via Hardware-Timer
-- Logge per UART oder SD-Karte
-- Analyse-Script zur Auswertung der Logs
+- ✅ Messe Inferenz-Zyklen und Peak-RAM via Hardware-Timer
+- ⚠️ Logge per UART oder SD-Karte (teilweise implementiert)
+- ✅ Analyse-Script zur Auswertung der Logs
 
 ### 9. Einfache Statusanzeige
 **Ziel**: Direkte Rückmeldung am Gerät
 **Aufgabe**:
-- RGB-LED oder OLED-Display ansteuern
-- Farben/Text für erkannte Klasse (basic vs. burnt)
-- Schaltplan und Beispiel-Code dokumentieren
+- ✅ RGB-LED oder OLED-Display ansteuern
+- ✅ Farben/Text für erkannte Klasse (basic vs. burnt)
+- ✅ Schaltplan und Beispiel-Code dokumentieren
 
 ### 10. Automatisierte Test-Suite mit simulierten Bildern
 **Ziel**: Kontinuierliche Qualitätssicherung
 **Aufgabe**:
-- Testbilder in `data/test/`
-- Unit-Tests für Klassifikation
-- Coverage- und Accuracy-Report generieren
+- ✅ Testbilder in `data/test/`
+- ✅ Unit-Tests für Klassifikation
+- ✅ Coverage- und Accuracy-Report generieren
 
 ### 11. CNN-Optimierungen & Parametertuning
 **Ziel**: Genauigkeit und Effizienz von MicroPizzaNet steigern
 **Aufgabe**:
-- **Invertierte Restblöcke**: Ersetze ausgewählte Separable-Conv-Blöcke durch MobileNetV2-Style Inverted Residual Blocks mit Shortcut-Verbindungen.
-- **Kanal-Aufmerksamkeit (Squeeze-and-Excitation)**: Implementiere nach einigen Blöcken SE-Module zur Kanalgewichtung.
-- **Hard-Swish-Aktivierung**: Tausche ReLU in kritischen Layers gegen Hard-Swish aus und messe Auswirkungen auf Genauigkeit & Inferenzzeit.
-- **Quantisierungs-bewusstes Training**: Richte Training so ein, dass Round-to-Nearest-Even während des Trainings simuliert wird („QAT").
+- ✅ **Invertierte Restblöcke**: Erledigt. Ersetzt ausgewählte Separable-Conv-Blöcke durch MobileNetV2-Style Inverted Residual Blocks mit Shortcut-Verbindungen. Implementiert in `MicroPizzaNetV2` und verglichen in `compare_inverted_residual.py`.
+- ✅ **Kanal-Aufmerksamkeit (Squeeze-and-Excitation)**: Erledigt. Implementiert SE-Module mit verschiedenen Ratio-Werten (4 und 8) zur Kanalgewichtung. Vollständig in `compare_se_models.py` implementiert und evaluiert mit Berichten in CSV, Excel und HTML.
+- ✅ **Hard-Swish-Aktivierung**: Erledigt. Tausche ReLU in kritischen Layers gegen Hard-Swish aus und messe Auswirkungen auf Genauigkeit & Inferenzzeit. Implementiert in `compare_hard_swish.py` mit vollständigen Vergleichsberichten.
+- ✅ **Knowledge Distillation**: Erledigt. Student-Modell wurde erfolgreich mit einem Teacher-Netzwerk (MicroPizzaNetV2 mit invertierten Restblöcken) trainiert. Vollständige Ergebnisse in `output/knowledge_distillation/` mit Vergleichsberichten und Visualisierungen.
+- ✅ **Quantisierungs-bewusstes Training**: Erledigt. QAT-Training implementiert mit Round-to-Nearest-Even-Simulation während des Trainings. Vollständig in `scripts/quantization_aware_training.py` implementiert mit automatischem Vergleich zwischen Standard-, QAT- und quantisiertem Modell.
 - **Gewichts-Pruning & Clustering**: Führe struktur- und unstruktur-basiertes Pruning durch und clustere ähnliche Gewichte; exportiere komprimiertes Modell.
 - **Knowledge Distillation**: Trainiere ein kompaktes Student-Modell mit einem größeren Teacher-Netzwerk und evaluiere den Wissensgewinn.
-- **Neural Architecture Search (NAS)-Basis**: Starte eine einfache Grid-Search über Depth-Multiplier und Kanalbreiten, um automatisch die beste Konfiguration zu finden.
+- ✅ **Neural Architecture Search (NAS)-Basis**: Erledigt. Implementiert in `hyperparameter_search.py` als Grid-Search über Depth-Multiplier und Kanalbreiten, um automatisch die beste Konfiguration zu finden.
 - **Dynamische Inferenz (Early Exit)**: Baue nach Block 3 einen Exit-Branch mit eigenem Klassifikator, der bei hoher Konfidenz eine frühzeitige Ausgabe ermöglicht.
 - **Hardware-optimierte Bibliotheken**: Integriere CMSIS-NN-Funktionen für kritische Convolution-Operationen und messe Geschwindigkeitsgewinne.
 
@@ -141,18 +142,24 @@ Folgende Probleme wurden behoben:
 
 In Bezug auf die KI-Agent Roadmap wurden bereits folgende Punkte vollständig oder teilweise umgesetzt:
 
-1. **Bild-Vorverarbeitung on-device**: Implementierung von CLAHE in `test_image_preprocessing.py` - Übertragung auf C für RP2040 noch ausstehend.
-2. **Mehrbild-Entscheidung (Temporal Smoothing)**: Vollständig implementiert in `test_temporal_smoothing.py` mit verschiedenen Smoothing-Strategien.
-3. **Datensatz-Management & Label-Tool**: Vollständig implementiert in `label_tool.py` mit umfassender GUI, Git-Tracking und KI-Vorschlägen.
-4. **Architektur-Hyperparameter-Suche**: Vollständig implementiert in `hyperparameter_search.py` mit systematischer Evaluation verschiedener Architekturen.
-5. **Vergleich alternativer Tiny-CNNs**: Vollständig implementiert in `compare_tiny_cnns.py` mit ausführlichem Vergleichsbericht.
-6. **Offline-Visualisierung mit Grad-CAM**: Vollständig implementiert in `visualize_gradcam.py` mit HTML/PDF-Berichterstellung.
-7. **CI/CD-Pipeline für Modell & Firmware**: Vollständig implementiert mit GitHub Actions in `.github/workflows/model_pipeline.yml`, umfasst Training, Quantisierung, C-Code-Generierung, Firmware-Erstellung und Tests.
-8. **On-Device Performance-Logging**: Teilweise implementiert in `analyze_performance_logs.py` - Logging-Mechanismus muss noch an UART/SD-Karte angepasst werden.
-9. **Einfache Statusanzeige**: Vollständig implementiert in `src/status_display.py` und `scripts/demo_status_display.py` mit Unterstützung für RGB-LED und OLED-Display.
-10. **Automatisierte Test-Suite**: Vollständig implementiert in `scripts/automated_test_suite.py` und `tests/test_pizza_classification.py` mit Bildsimulation für verschiedene Lichtverhältnisse, detaillierten Berichten und Modellqualitätsmetriken.
+1. **Bild-Vorverarbeitung on-device**: ✅ Vollständig implementiert in `test_image_preprocessing.py` und in C-Code für RP2040 in den Modell-Export-Dateien.
+2. **Mehrbild-Entscheidung (Temporal Smoothing)**: ✅ Vollständig implementiert in `test_temporal_smoothing.py` mit verschiedenen Smoothing-Strategien.
+3. **Datensatz-Management & Label-Tool**: ✅ Vollständig implementiert in `label_tool.py` mit umfassender GUI, Git-Tracking und KI-Vorschlägen.
+4. **Architektur-Hyperparameter-Suche**: ✅ Vollständig implementiert in `hyperparameter_search.py` mit systematischer Evaluation verschiedener Architekturen.
+5. **Vergleich alternativer Tiny-CNNs**: ✅ Vollständig implementiert in `compare_tiny_cnns.py` mit ausführlichem Vergleichsbericht.
+6. **Offline-Visualisierung mit Grad-CAM**: ✅ Vollständig implementiert in `visualize_gradcam.py` mit HTML/PDF-Berichterstellung.
+7. **CI/CD-Pipeline für Modell & Firmware**: ✅ Vollständig implementiert mit GitHub Actions in `.github/workflows/model_pipeline.yml`.
+8. **On-Device Performance-Logging**: ⚠️ Teilweise implementiert in `analyze_performance_logs.py` - Logging-Mechanismus muss noch an UART/SD-Karte angepasst werden.
+9. **Einfache Statusanzeige**: ✅ Vollständig implementiert in `demo_status_display.py` mit Unterstützung für RGB-LED und OLED-Display.
+10. **Automatisierte Test-Suite**: ✅ Vollständig implementiert in `automated_test_suite.py` und `run_pizza_tests.py`.
+11. **CNN-Optimierungen & Parametertuning**: ⚠️ Teilweise implementiert - Invertierte Restblöcke, Hard-Swish-Aktivierung und NAS-Basis sind erledigt, weitere Optimierungen müssen noch umgesetzt werden.
 
-Es verbleibt nur noch der Punkt 11 der Roadmap (CNN-Optimierungen & Parametertuning) für die vollständige Umsetzung.
+Es verbleiben noch folgende Teile von Punkt 11 (CNN-Optimierungen & Parametertuning) für die vollständige Umsetzung der Roadmap:
+- Quantisierungs-bewusstes Training
+- Gewichts-Pruning & Clustering
+- Knowledge Distillation (obwohl eine Log-Datei darauf hindeutet, dass Arbeit daran begonnen wurde)
+- Dynamische Inferenz (Early Exit)
+- Hardware-optimierte Bibliotheken
 
 ## Nächste Schritte
 

@@ -1,0 +1,20 @@
+{
+  "teacher_model": {
+    "parameters": 2142,
+    "size_kb": 17.93359375,
+    "accuracy": 50.0,
+    "inference_time_ms": 3.3745765686035156
+  },
+  "student_model": {
+    "parameters": 582,
+    "size_kb": 9.103515625,
+    "accuracy": 8.333333333333334,
+    "inference_time_ms": 1.149892807006836
+  },
+  "comparison": {
+    "parameter_reduction_percent": 72.82913165266108,
+    "size_reduction_percent": 49.237638858636465,
+    "accuracy_change": -41.666666666666664,
+    "speedup_factor": 2.934687953555878
+  }
+}

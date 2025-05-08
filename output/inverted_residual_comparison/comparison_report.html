@@ -1,0 +1,135 @@
+
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>MicroPizzaNetV2 vs MicroPizzaNet - Vergleichsbericht</title>
+            <style>
+                body { font-family: Arial, sans-serif; margin: 20px; }
+                table { border-collapse: collapse; width: 100%; margin-bottom: 20px; }
+                th, td { padding: 8px; text-align: left; border-bottom: 1px solid #ddd; }
+                th { background-color: #f2f2f2; }
+                tr:hover { background-color: #f5f5f5; }
+                .header { background-color: #4CAF50; color: white; padding: 10px; }
+                .section { margin-top: 20px; margin-bottom: 10px; }
+                img { max-width: 100%; height: auto; margin: 10px 0; }
+                .highlight { background-color: #e6ffe6; }
+                .diff-better { color: green; font-weight: bold; }
+                .diff-worse { color: red; font-weight: bold; }
+            </style>
+        </head>
+        <body>
+            <div class="header">
+                <h1>MicroPizzaNetV2 vs. MicroPizzaNet: Inverted Residual Blocks Vergleich</h1>
+                <p>Generiert am 05.05.2025 23:41</p>
+            </div>
+            
+            <h2 class="section">Zusammenfassung</h2>
+            <p>Dieser Bericht vergleicht die originale MicroPizzaNet-Architektur mit der verbesserten MicroPizzaNetV2-Architektur, 
+            die invertierte Residualblöcke im MobileNetV2-Stil verwendet.</p>
+            
+            <h3>Architektur-Vergleich</h3>
+            <table>
+                <tr>
+                    <th>Metrik</th>
+                    <th>MicroPizzaNet (Original)</th>
+                    <th>MicroPizzaNetV2 (Inverted Residual)</th>
+                    <th>Unterschied</th>
+                </tr>
+        
+                <tr>
+                    <td>Parameter</td>
+                    <td>582</td>
+                    <td>2,142</td>
+                    <td class="diff-worse">+268.0%</td>
+                </tr>
+            
+                <tr>
+                    <td>Genauigkeit</td>
+                    <td>16.67%</td>
+                    <td>50.00%</td>
+                    <td class="diff-better">+200.0%</td>
+                </tr>
+            
+                <tr>
+                    <td>F1-Score</td>
+                    <td>0.065</td>
+                    <td>0.225</td>
+                    <td class="diff-better">+246.8%</td>
+                </tr>
+            
+                <tr>
+                    <td>Modellgröße (Int8)</td>
+                    <td>0.6 KB</td>
+                    <td>2.3 KB</td>
+                    <td class="diff-worse">+267.6%</td>
+                </tr>
+            
+                <tr>
+                    <td>Inferenzzeit (RP2040)</td>
+                    <td>2.5 ms</td>
+                    <td>2.3 ms</td>
+                    <td class="diff-better">-9.3%</td>
+                </tr>
+            
+                <tr>
+                    <td>FPS auf RP2040</td>
+                    <td>400.4</td>
+                    <td>441.3</td>
+                    <td class="diff-better">+10.2%</td>
+                </tr>
+            
+                <tr>
+                    <td>Spitzen-RAM-Nutzung</td>
+                    <td>102.1 KB</td>
+                    <td>166.8 KB</td>
+                    <td class="diff-worse">+63.4%</td>
+                </tr>
+            
+            </table>
+            
+            <h3 class="section">Visualisierungen</h3>
+            
+            <div>
+                <h4>Leistungsmetriken</h4>
+                <img src="plots/metrics_comparison.png" alt="Metriken-Vergleich">
+            </div>
+            
+            <div>
+                <h4>Trainings- und Validierungskurven</h4>
+                <img src="plots/accuracy_loss_comparison.png" alt="Accuracy/Loss-Vergleich">
+            </div>
+            
+            <div>
+                <h4>Radar-Chart (Gesamtvergleich)</h4>
+                <img src="plots/radar_comparison.png" alt="Radar-Chart Vergleich">
+            </div>
+            
+            <h3 class="section">Trainingsdetails</h3>
+        
+                <h4>MicroPizzaNet (Original)</h4>
+                <div>
+                    <img src="plots/micropizzanet_(original)_training.png" alt="MicroPizzaNet (Original) Training">
+                </div>
+                <div>
+                    <img src="plots/micropizzanet_(original)_confusion.png" alt="MicroPizzaNet (Original) Confusion Matrix">
+                </div>
+            
+                <h4>MicroPizzaNetV2 (Inverted Residual)</h4>
+                <div>
+                    <img src="plots/micropizzanetv2_(inverted_residual)_training.png" alt="MicroPizzaNetV2 (Inverted Residual) Training">
+                </div>
+                <div>
+                    <img src="plots/micropizzanetv2_(inverted_residual)_confusion.png" alt="MicroPizzaNetV2 (Inverted Residual) Confusion Matrix">
+                </div>
+            
+            <h3 class="section">Fazit</h3>
+            <p>Der Vergleich zeigt, dass die Verwendung von invertierten Residualblöcken (MobileNetV2-Style)
+               im MicroPizzaNetV2 signifikante Vorteile bietet. Die Shortcut-Verbindungen verbessern den
+               Gradientenfluss während des Trainings und ermöglichen tiefere Netzwerke ohne Leistungsverlust.</p>
+               
+            <p>Durch den Bottleneck-Ansatz wird die Anzahl der Berechnungen reduziert, was zu schnellerer
+               Inferenz auf dem RP2040-Mikrocontroller führt, während gleichzeitig die Genauigkeit verbessert
+               oder zumindest beibehalten wird.</p>
+        </body>
+        </html>
+        

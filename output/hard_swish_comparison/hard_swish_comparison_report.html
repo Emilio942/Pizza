@@ -1,0 +1,235 @@
+
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>Hard-Swish vs. ReLU Aktivierungsfunktionen - Vergleich</title>
+            <style>
+                body { font-family: Arial, sans-serif; margin: 20px; }
+                table { border-collapse: collapse; width: 100%; margin-bottom: 20px; }
+                th, td { padding: 8px; text-align: left; border-bottom: 1px solid #ddd; }
+                th { background-color: #f2f2f2; }
+                tr:hover { background-color: #f5f5f5; }
+                .header { background-color: #4CAF50; color: white; padding: 20px; }
+                .section { margin-top: 30px; margin-bottom: 15px; }
+                img { max-width: 100%; height: auto; margin: 10px 0; }
+                .highlight { background-color: #e6ffe6; }
+                .flex-container { display: flex; flex-wrap: wrap; gap: 20px; }
+                .flex-item { flex: 1; min-width: 300px; }
+                .code { font-family: monospace; background-color: #f8f8f8; padding: 10px; border-radius: 5px; }
+            </style>
+        </head>
+        <body>
+            <div class="header">
+                <h1>MicroPizzaNet: Hard-Swish vs. ReLU Aktivierungsfunktionen</h1>
+                <p>Generiert am 06.05.2025 00:26</p>
+            </div>
+            
+            <h2 class="section">Übersicht</h2>
+            <p>
+                Dieser Bericht vergleicht die originale MicroPizzaNet-Architektur mit ReLU Aktivierungen
+                und eine angepasste Version, die Hard-Swish Aktivierungen verwendet.
+            </p>
+            
+            <div class="section">
+                <h3>Was ist Hard-Swish?</h3>
+                <p>
+                    Hard-Swish ist eine berechnungseffiziente Approximation der Swish-Aktivierungsfunktion, 
+                    die in MobileNetV3 eingeführt wurde. Sie ist definiert als:
+                </p>
+                <div class="code">
+                    <pre>Hard-Swish(x) = x * ReLU6(x + 3) / 6</pre>
+                </div>
+                <p>
+                    Im Vergleich zu ReLU bietet Hard-Swish einige potenzielle Vorteile:
+                </p>
+                <ul>
+                    <li>Glattere Aktivierungskurve, was bei Gradienten-basierten Optimierern hilfreich sein kann</li>
+                    <li>Verbesserte Modellgenauigkeit ohne signifikanten Rechenaufwand</li>
+                    <li>Kann "tote Neuronen" reduzieren, da Hard-Swish auch für leicht negative Inputs nicht verschwindet</li>
+                </ul>
+                
+                <div class="code">
+                <pre>
+class HardSwish(nn.Module):
+    def __init__(self, inplace=True):
+        super(HardSwish, self).__init__()
+        self.inplace = inplace
+        
+    def forward(self, x):
+        # x * min(max(0, x+3), 6) / 6
+        return x * torch.nn.functional.relu6(x + 3., inplace=self.inplace) / 6.
+                </pre>
+                </div>
+                
+                <p>
+                    Hard-Swish ist für Mikrocontroller besonders geeignet, da sie weniger rechenintensiv ist als
+                    die originale Swish-Funktion, die eine Exponentialfunktion erfordert. Hard-Swish kann mit
+                    grundlegenden arithmetischen Operationen implementiert werden.
+                </p>
+            </div>
+            
+            <h2 class="section">Vergleichsergebnisse</h2>
+            
+            <table>
+                <tr>
+                    <th>Modell</th>
+                    <th>Genauigkeit</th>
+                    <th>F1-Score</th>
+                    <th>Parameter</th>
+                    <th>Modellgröße (KB)</th>
+                    <th>RAM-Nutzung (KB)</th>
+                    <th>Inferenzzeit (ms)</th>
+                </tr>
+        
+                <tr class="highlight">
+                    <td>MicroPizzaNet (ReLU)</td>
+                    <td>8.33%</td>
+                    <td>0.0128</td>
+                    <td>582</td>
+                    <td>2.5</td>
+                    <td>102.1</td>
+                    <td>4.4</td>
+                </tr>
+            
+                <tr>
+                    <td>MicroPizzaNet (Hard-Swish)</td>
+                    <td>0.00%</td>
+                    <td>0.0000</td>
+                    <td>582</td>
+                    <td>2.5</td>
+                    <td>102.1</td>
+                    <td>6.1</td>
+                </tr>
+            
+            </table>
+            
+            <h2 class="section">Visualisierungen</h2>
+            
+            <div class="flex-container">
+        
+                    <div class="flex-item">
+                        <h3>Genauigkeit (%)</h3>
+                        <img src="plots/comparison_accuracy.png" alt="Genauigkeit (%)">
+                    </div>
+                
+                    <div class="flex-item">
+                        <h3>F1-Score</h3>
+                        <img src="plots/comparison_f1_score.png" alt="F1-Score">
+                    </div>
+                
+                    <div class="flex-item">
+                        <h3>Modellgröße (KB)</h3>
+                        <img src="plots/comparison_model_size_kb.png" alt="Modellgröße (KB)">
+                    </div>
+                
+                    <div class="flex-item">
+                        <h3>RAM-Nutzung (KB)</h3>
+                        <img src="plots/comparison_ram_usage_kb.png" alt="RAM-Nutzung (KB)">
+                    </div>
+                
+                    <div class="flex-item">
+                        <h3>Inferenzzeit auf RP2040 (ms)</h3>
+                        <img src="plots/comparison_estimated_rp2040_time_ms.png" alt="Inferenzzeit auf RP2040 (ms)">
+                    </div>
+                
+                    <div class="flex-item">
+                        <h3>Anzahl Parameter</h3>
+                        <img src="plots/comparison_params_count.png" alt="Anzahl Parameter">
+                    </div>
+                
+                <div class="flex-item" style="flex-basis: 100%;">
+                    <h3>Trainingsvergleich</h3>
+                    <img src="plots/training_comparison.png" alt="Training Comparison">
+                </div>
+            
+                        <div class="flex-item" style="flex-basis: 100%;">
+                            <h3>Feature Maps: MicroPizzaNet (ReLU)</h3>
+                            <p>Beispielhafte Feature-Maps zeigen, wie das Modell auf verschiedene Bildmerkmale reagiert.</p>
+                            <div class="flex-container">
+                    
+                                <div class="flex-item">
+                                    <img src="micropizzanet_(relu)/activations/feature_map_block1_0.png" alt="Feature Map">
+                                </div>
+                            
+                                <div class="flex-item">
+                                    <img src="micropizzanet_(relu)/activations/feature_map_block2_0.png" alt="Feature Map">
+                                </div>
+                            
+                                <div class="flex-item">
+                                    <img src="micropizzanet_(relu)/activations/feature_map_block2_3.png" alt="Feature Map">
+                                </div>
+                            
+                            </div>
+                        </div>
+                    
+                        <div class="flex-item" style="flex-basis: 100%;">
+                            <h3>Feature Maps: MicroPizzaNet (Hard-Swish)</h3>
+                            <p>Beispielhafte Feature-Maps zeigen, wie das Modell auf verschiedene Bildmerkmale reagiert.</p>
+                            <div class="flex-container">
+                    
+                                <div class="flex-item">
+                                    <img src="micropizzanet_(hard-swish)/activations/feature_map_block1_0.png" alt="Feature Map">
+                                </div>
+                            
+                                <div class="flex-item">
+                                    <img src="micropizzanet_(hard-swish)/activations/feature_map_block2_0.png" alt="Feature Map">
+                                </div>
+                            
+                                <div class="flex-item">
+                                    <img src="micropizzanet_(hard-swish)/activations/feature_map_block2_3.png" alt="Feature Map">
+                                </div>
+                            
+                            </div>
+                        </div>
+                    
+            </div>
+            
+            <h2 class="section">Erkenntnisse & Schlussfolgerung</h2>
+        
+            <p>
+                Die Untersuchung zeigt, dass der Einsatz von Hard-Swish anstelle von ReLU in MicroPizzaNet
+                zu einer <strong>Genauigkeitsveränderung von 0.00%</strong> führt.
+            </p>
+            
+            <p>
+                Das beste Modell ist <strong>MicroPizzaNet (ReLU)</strong> mit einer Genauigkeit von 8.33%.
+            </p>
+            
+            <p>
+                <strong>Wichtige Erkenntnisse:</strong>
+            </p>
+            <ul>
+                <li>Die Inferenzzeit mit Hard-Swish steigt um 38.1% im Vergleich zu ReLU</li>
+                <li>Die Modellgröße bleibt praktisch unverändert, da beide Aktivierungsfunktionen keine trainierbaren Parameter haben</li>
+                <li>Hard-Swish kann besonders bei tieferen Netzwerken Vorteile bieten</li>
+                <li>Bei bestimmten Bildmerkmalen erzeugt Hard-Swish unterschiedliche Aktivierungsmuster</li>
+            </ul>
+            
+            <div class="section">
+                <h3>Mathematischer Vergleich der Aktivierungen</h3>
+                <p>
+                    <strong>ReLU:</strong> f(x) = max(0, x)<br>
+                    <strong>Hard-Swish:</strong> f(x) = x * min(max(0, x+3), 6) / 6
+                </p>
+                <p>
+                    Im Vergleich zu ReLU bietet Hard-Swish:
+                </p>
+                <ul>
+                    <li>Eine glattere Kurve ohne harte Knickstelle bei x=0</li>
+                    <li>Geringe Aktivierung für leicht negative Eingabewerte, was Gradienten erhält</li>
+                    <li>Sättigung bei großen positiven Werten, was zur Regularisierung beitragen kann</li>
+                </ul>
+            </div>
+            
+            <div class="section">
+                <h3>Nächste Schritte</h3>
+                <ol>
+                    <li>C-Implementierung der Hard-Swish Funktion für RP2040 optimieren</li>
+                    <li>Experimente mit selektiver Anwendung von Hard-Swish nur in bestimmten Schichten</li>
+                    <li>Kombination mit anderen Optimierungstechniken wie Pruning und Quantisierung</li>
+                    <li>Tests auf realer Hardware zur Validierung der Leistungsschätzungen</li>
+                </ol>
+            </div>
+        </body>
+        </html>
+        

@@ -2,204 +2,165 @@ Okay, hier ist ein detaillierter Fehler- und Analysebericht für die bereitgeste
 
 Fehler- und Analysebericht: RP2040 Pizza-Erkennung - Python Codebasis
 
-Datum: 2023-10-27
-Analysierte Dateien: emulator-test.py, enhanced_pizza_augmentation.py
+Datum: 2023-10-27 (Aktualisiert am 2025-05-07)
+Analysierte Dateien: emulator-test.py, enhanced_pizza_augmentation.py (augmentation.py), augmentation_optimized.py
 Projektkontext: Entwicklung eines optimierten Bildklassifizierungsmodells für RP2040 (Dual M0+, 264KB RAM, 2MB Flash) zur Erkennung von Pizzabackphasen mit einer OV2640 Kamera (320x240). Starke Ressourcenbeschränkungen (Modell < 180KB, Laufzeit-RAM < 100KB).
 
 Zusammenfassende Einschätzung:
 
-Die Codebasis zeigt einen ambitionierten Ansatz, sowohl bei der Simulation des Zielsystems (emulator-test.py) als auch bei der Generierung von Trainingsdaten (enhanced_pizza_augmentation.py). Die Augmentierungs-Pipeline ist besonders hervorzuheben, da sie sehr fortgeschritten und spezifisch auf das Problem zugeschnitten ist, was entscheidend für die Leistung eines kleinen Modells sein kann.
+Die Codebasis zeigt einen ambitionierten Ansatz, sowohl bei der Simulation des Zielsystems (emulator-test.py) als auch bei der Generierung von Trainingsdaten (enhanced_pizza_augmentation.py und augmentation_optimized.py). Die Augmentierungs-Pipelines sind besonders hervorzuheben, da sie sehr fortgeschritten und spezifisch auf das Problem zugeschnitten sind, was entscheidend für die Leistung eines kleinen Modells sein kann.
 
-Der Emulator (emulator-test.py) leidet jedoch unter einer kritischen Schwachstelle: Er unterschätzt den tatsächlichen RAM-Bedarf auf dem RP2040 erheblich, da er den Speicher für den Kamera-Framebuffer ignoriert. Dies macht seine Machbarkeitsanalysen bezüglich RAM potenziell irreführend und gefährlich optimistisch. Weitere Schätzungen (Modell-RAM, Inferenzzeit) sind ebenfalls sehr grob.
+Der Emulator (emulator-test.py) leidet jedoch weiterhin unter einer kritischen Schwachstelle bezüglich der RAM-Schätzung, die bereits identifiziert wurde: Er unterschätzt den tatsächlichen RAM-Bedarf auf dem RP2040 erheblich, da er den Speicher für den Kamera-Framebuffer ignoriert. Dies macht seine Machbarkeitsanalysen bezüglich RAM potenziell irreführend und gefährlich optimistisch. Weitere Schätzungen (Modell-RAM, Inferenzzeit) sind ebenfalls sehr grob.
 
-Die Augmentierungs-Pipeline (enhanced_pizza_augmentation.py) ist mächtig, erfordert aber sorgfältige Integration in den Trainingsworkflow (korrekte Bildgrößen) und visuelle Qualitätskontrolle.
+Die Augmentierungs-Pipeline in `enhanced_pizza_augmentation.py` (augmentation.py) ist sehr mächtig und flexibel, erfordert aber sorgfältige Integration in den Trainingsworkflow und visuelle Qualitätskontrolle. `augmentation_optimized.py` bietet einen speichereffizienteren Ansatz, ist dafür aber in den Effekten etwas einfacher gehalten.
 
 Detaillierte Befunde:
 
-I. Emulator & Workflow (emulator-test.py)
-
-Struktur: Enthält Klassen ModelConverter, FirmwareBuilder, RP2040Emulator, EmulationWorkflow. Simuliert Konvertierung, Build und Ausführung.
-
-Eindruck: Gute Idee zur Simulation des Gesamtprozesses, um frühzeitig Probleme zu erkennen. Die Implementierung der Kernsimulationen (RAM, Zeit) ist jedoch zu vereinfacht für verlässliche Aussagen im Kontext der strengen RP2040-Limits.
-
-Fehler/Probleme/Potenzielle Schwachstellen:
-
-EMU-01 (Kritisch): Fehlende Simulation des Kamera-Framebuffers im RAM
-
-Ort: RP2040Emulator.load_firmware
-
-Beschreibung: Die Methode prüft den RAM-Bedarf basierend auf firmware['ram_usage_bytes'] (geschätzter Modell-RAM / Tensor Arena) und self.system_ram_overhead. Sie berücksichtigt nicht den Speicher, der benötigt wird, um das Rohbild von der OV2640 Kamera (320x240) zwischenzuspeichern, bevor es für das Modell vorverarbeitet (z.B. auf 96x96 skaliert) wird.
-
-Berechnung: Ein 320x240 Graustufenbild (1 Byte pro Pixel) benötigt 320 * 240 = 76,800 Bytes (~75 KB). Ein 320x240 RGB565 Bild (2 Bytes pro Pixel) benötigt 153,600 Bytes (~150 KB).
-
-Impact: Der tatsächliche Spitzen-RAM-Bedarf auf dem RP2040 ist Tensor Arena + System Overhead + Framebuffer. Der Emulator unterschätzt dies massiv. Beispiel: Modell braucht 90KB Arena, System 20KB. Emulator sagt 110KB < 264KB (OK). Realität mit Graustufen-Framebuffer: 110KB + 75KB = 185KB (knapp, aber OK). Realität mit RGB565-Framebuffer: 110KB + 150KB = 260KB (Extrem knapp, wahrscheinlich Absturz oder Fehlfunktion!). Die 100KB-Grenze für den Modell-Laufzeit-RAM ist separat von diesem Gesamt-RAM-Problem zu sehen.
-
-Empfehlung:
-
-Füge einen Parameter framebuffer_ram_bytes zur RP2040Emulator-Klasse hinzu (konfigurierbar für Graustufen/RGB565).
-
-Modifiziere load_firmware, sodass die Prüfung lautet: if total_ram_needed + self.framebuffer_ram_bytes > self.ram_size_bytes:.
-
-Dokumentiere diese Annahme klar.
-
-EMU-02 (Hoch): Ungenaue Schätzung des Modell-RAM-Bedarfs (Tensor Arena)
-
-Ort: ModelConverter.estimate_model_size
-
-Beschreibung: Der RAM-Bedarf (ram_usage_bytes) wird als fester Prozentsatz (20% für INT8, 50% für FLOAT32) der Dateigröße des Modells geschätzt. Der tatsächliche RAM-Bedarf für die Inferenz (Tensor Arena) hängt jedoch primär von der Größe der größten Aktivierungs-Tensoren während der Inferenz ab, was stark von der Modellarchitektur (Layer-Typen, Reihenfolge, Filtergrößen) beeinflusst wird, nicht nur von der Gesamtgröße der Gewichte.
-
-Impact: Die Schätzung kann stark von der Realität abweichen, sowohl nach oben als auch nach unten, meistens jedoch zu optimistisch sein. Ein kleines Modell mit einem großen Fully-Connected-Layer am Ende könnte z.B. trotz kleiner Dateigröße einen großen Tensor Arena benötigen.
-
-Empfehlung:
-
-Behalte die Schätzung als sehr groben Richtwert bei.
-
-Wichtig: Füge einen deutlichen Warnhinweis in die Ausgabe und Dokumentation ein, dass dieser Wert ungenau ist und durch Profiling mit TFLM auf der Zielhardware (oder genaueren Simulatoren) ermittelt werden muss.
-
-Optional: Entwickle komplexere Heuristiken (z.B. basierend auf Layer-Typen, falls die Architektur bekannt ist), aber das ist aufwändig. Der beste Weg ist Messung.
-
-EMU-03 (Mittel): Ungenaue Schätzung der Inferenzzeit
-
-Ort: RP2040Emulator.calculate_inference_time
-
-Beschreibung: Die Inferenzzeit wird basierend auf einer einfachen Formel (linear abhängig von der Modellgröße, Faktor für Quantisierung) + Zufallsvarianz geschätzt. Die tatsächliche Inferenzzeit auf dem RP2040 (Cortex M0+) hängt stark ab von:
-
-Den spezifischen Operationen im Modell (manche sind auf M0+ sehr langsam).
-
-Der Effizienz der TFLM-Kernel-Implementierungen für M0+.
-
-Cache-Effekten, Speicherzugriffsmustern.
-
-Der tatsächlichen CPU-Taktfrequenz (die im Emulator fix ist, aber real variieren kann).
-
-Impact: Die simulierte Zeit kann stark von der realen Zeit abweichen und ist für präzise Energieberechnungen oder Echtzeitanforderungen unzuverlässig.
-
-Empfehlung:
-
-Behalte die Schätzung als groben Indikator.
-
-Füge einen Warnhinweis hinzu, dass dies nur eine Schätzung ist.
-
-Die einzige verlässliche Methode ist das Benchmarking auf dem RP2040 selbst.
-
-EMU-04 (Mittel): Fehlende Simulation der Bildvorverarbeitungskosten
-
-Ort: RP2040Emulator.preprocess_image
-
-Beschreibung: Die Funktion simuliert zwar logisch die Vorverarbeitung (Graustufen, Skalierung), aber sie berücksichtigt weder die Zeit, die dieser Schritt auf dem RP2040 benötigt, noch den potenziellen zusätzlichen RAM-Bedarf (falls z.B. temporäre Puffer für die Skalierung nötig sind). Das Skalieren eines 320x240 Bildes auf z.B. 96x96 kann auf einem M0+ ohne FPU/DSP-Instruktionen durchaus merkliche Zeit (~zig bis hunderte Millisekunden) kosten.
-
-Impact: Die Gesamtlatenz pro Zyklus (Aufwachen -> Bild -> Vorverarbeitung -> Inferenz -> Schlaf) wird unterschätzt. Der Energieverbrauch im aktiven Zustand wird ebenfalls unterschätzt. Der Spitzen-RAM könnte kurzzeitig höher sein als nur Arena + System + Framebuffer.
-
-Empfehlung:
-
-Füge eine (konfigurierbare) geschätzte Zeit für preprocess_image hinzu, die zur Gesamtzeit und zum Batterieverbrauch addiert wird.
-
-Analysiere den tatsächlichen C-Code der Vorverarbeitung auf dem RP2040: Benötigt er zusätzliche Puffer? Wenn ja, muss dies in der RAM-Prüfung berücksichtigt werden (ggf. als Teil des system_ram_overhead oder separat).
-
-EMU-05 (Niedrig): Abhängigkeit der Konvertierungsschätzung von .pth-Dateigröße
-
-Ort: ModelConverter.convert_pytorch_to_tflite
-
-Beschreibung: Die Schätzung der TFLite-Größe basiert direkt auf der Dateigröße des PyTorch-Modells (.pth). Diese Korrelation ist oft schwach. Ein .pth-Modell enthält neben Gewichten auch Metadaten, Optimizer-Zustände etc. (je nachdem wie es gespeichert wurde). Die finale TFLite-Größe hängt von der Struktur und der Quantisierung ab.
-
-Impact: Die geschätzte Flash-Belegung kann ungenau sein.
-
-Empfehlung:
-
-Wenn möglich, führe die tatsächliche TFLite-Konvertierung durch und übergib die echte Größe an den Emulator/Builder.
-
-Wenn nur die Simulation gewünscht ist, behalte es bei, aber sei dir der Ungenauigkeit bewusst.
-
-EMU-06 (Anregung): Hardcodierte Werte
-
-Ort: Diverse Stellen in RP2040Emulator (z.B. system_ram_overhead, active_current_ma, standby_current_ma).
-
-Beschreibung: Einige wichtige Systemparameter sind fest im Code verankert.
-
-Impact: Erschwert die Anpassung der Simulation an leicht geänderte Hardware oder Software-Konfigurationen.
-
-Empfehlung: Mache diese Werte zu Parametern im Konstruktor oder lade sie aus einer Konfigurationsdatei, um die Flexibilität zu erhöhen.
-
-II. Erweiterte Augmentierung (enhanced_pizza_augmentation.py)
-
-Struktur: Sehr umfangreich, nutzt PyTorch, GPU-Beschleunigung. Implementiert Basis-Augmentierungen, Verbrennungs-, Ofen-, Segment-, Mix-, Progressions- und Kombinations-Effekte. Enthält Dataset-Klasse, Statistik-Tracking, Utility-Funktionen.
-
-Eindruck: Technisch sehr ausgereift und problem-spezifisch. Bietet großes Potenzial zur Generierung eines vielfältigen und robusten Trainingsdatensatzes. Die Komplexität erfordert aber sorgfältige Handhabung.
-
-Fehler/Probleme/Potenzielle Schwachstellen:
-
-AUG-01 (Hoch): Potenzielle Diskrepanz bei Bildgröße
-
-Ort: save_augmented_images, Trainingspipeline (nicht gezeigt)
-
-Beschreibung: Die Funktion save_augmented_images skaliert Bilder auf eine feste TARGET_SIZE = 224. Das neuronale Netz auf dem RP2040 wird jedoch eine deutlich kleinere Eingabe erwarten (z.B. 96x96, 48x48, etc., um in die Ressourcenlimits zu passen). Es ist unklar, ob die Trainingspipeline, die diese augmentierten Bilder verwendet, sie vor dem Training korrekt auf die tatsächliche Modell-Eingabegröße herunterskaliert. Wenn das Modell auf 224x224 trainiert wird, ist es für den RP2040 unbrauchbar. Wenn auf 96x96 trainiert wird, aber die Augmentierung bei 224x224 stattfand und danach skaliert wird, könnten einige feine Augmentierungseffekte (z.B. dünne Brandstreifen) durch das Herunterskalieren verloren gehen oder verändert werden.
-
-Impact: Modell könnte auf falschen Dimensionen trainiert werden (unbrauchbar). Oder die Effektivität der Augmentierung wird durch nachträgliches, starkes Herunterskalieren reduziert.
-
-Empfehlung:
-
-Option A (Bevorzugt): Modifiziere die Augmentierungs-Pipeline (enhanced_pizza_augmentation.py) so, dass die TARGET_SIZE der finalen Modell-Eingabegröße entspricht (z.B. 96x96). Passe ggf. Kernelgrößen und Parameter in den Effekten an die kleinere Auflösung an.
-
-Option B: Stelle absolut sicher, dass die Trainingspipeline die 224x224 Bilder als ersten Schritt auf die Zielgröße des Modells (z.B. 96x96) skaliert, bevor sie dem Modell zugeführt werden. Überprüfe visuell, ob die Augmentierungseffekte nach dem Skalieren noch sinnvoll aussehen.
-
-AUG-02 (Mittel): Realismus und Artefakte der Augmentierung
-
-Ort: Alle Enhanced*Effect-Klassen und Kombinationsfunktionen.
-
-Beschreibung: Die Effekte sind sehr komplex (z.B. Wirbel im Dampf, verschiedene Brandmuster, CopyPaste mit Segmentierung). Während dies Vielfalt erzeugt, besteht die Gefahr, dass:
-
-Einige Effekte oder Kombinationen unrealistisch wirken (z.B. zu scharfe Kanten bei CutMix, unnatürliche Farbverschiebungen).
-
-Artefakte entstehen, die das Modell lernt, anstatt die relevanten Pizza-Merkmale.
-
-Impact: Könnte die Modellleistung auf echten Daten verschlechtern, wenn die Augmentierungen zu weit von der Realität abweichen.
-
-Empfehlung:
-
-Führe eine gründliche visuelle Inspektion vieler generierter Beispielbilder für jede Augmentierungsart und insbesondere für die kombinierten Effekte durch.
-
-Passe die Parameter (Intensitäten, Wahrscheinlichkeiten, Radien, etc.) in den Effekt-Klassen an, um den Realismus zu verbessern, falls nötig.
-
-Erwäge, die Stärke oder Wahrscheinlichkeit einiger der komplexesten Effekte zu reduzieren, wenn sie problematisch erscheinen.
-
-AUG-03 (Niedrig/Info): Hoher Rechenaufwand
-
-Ort: Gesamtes Skript enhanced_pizza_augmentation.py.
-
-Beschreibung: Das Skript nutzt zwar GPU, aber die vielen komplexen Operationen (mehrfache Faltungen, bedingte Logik, evtl. CPU-Transfers für SciPy) für eine große Anzahl von Bildern (img_per_original=40) werden trotzdem signifikante Rechenzeit benötigen.
-
-Impact: Die Generierung des Datensatzes kann lange dauern.
-
-Empfehlung: Plane ausreichend Zeit für die Datensatzgenerierung ein. Überwache die GPU-Auslastung und den Speicherverbrauch während der Ausführung. Stelle sicher, dass genügend Speicherplatz für die vielen Ausgabebilder vorhanden ist.
-
-AUG-04 (Anregung): Parameter-Management
-
-Ort: Diverse Stellen in den Effekt-Klassen.
-
-Beschreibung: Viele Parameter für die Augmentierungen sind direkt im Code (hardcoded) oder werden mit random.uniform etc. generiert.
-
-Impact: Erschwert systematisches Experimentieren und Tuning der Augmentierungsparameter. Macht die Reproduzierbarkeit schwieriger (obwohl der seed hilft).
-
-Empfehlung: Erwäge, wichtige Parameter (z.B. Intensitätsbereiche, Wahrscheinlichkeiten für Effekte) in eine separate Konfigurationsdatei (z.B. YAML oder JSON) auszulagern. Dies erleichtert das Anpassen und Nachverfolgen von Experimenten.
-
-AUG-05 (Niedrig/Info): SciPy-Abhängigkeit
-
-Ort: EnhancedOvenEffect._apply_gaussian_blur
-
-Beschreibung: Das Skript prüft auf SciPy und verwendet scipy.ndimage.gaussian_filter wenn verfügbar, andernfalls eine PyTorch-Alternative. Die SciPy-Version kann bei großen Kerneln effizienter sein, erfordert aber potenziell einen CPU-Transfer.
-
-Impact: Gering. Stellt sicher, dass das Skript auch ohne SciPy läuft. Wenn SciPy verwendet wird, könnten minimale Performance-Unterschiede und CPU-Last auftreten.
-
-Empfehlung: Stelle sicher, dass die Umgebung, in der das Skript ausgeführt wird, SciPy installiert hat, wenn die potenziell effizientere (oder qualitativ leicht andere) Filterung gewünscht ist. Ansonsten ist die PyTorch-Alternative ausreichend.
-
-Gesamtempfehlungen:
-
-Emulator dringend korrigieren (EMU-01): Die Simulation des Framebuffer-RAMs ist nicht optional, sondern essenziell für jede realistische Machbarkeitsprüfung auf dem RP2040.
-
-Emulator-Grenzen anerkennen: Nutze den Emulator für frühe Vergleiche und Workflow-Tests, aber verlasse dich nicht auf seine absoluten RAM- und Zeitschätzungen. Plane frühes Testen auf der realen RP2040-Hardware ein, um tatsächliche Ressourcenlimits zu ermitteln.
-
-Augmentierungs-Pipeline integrieren: Stelle sicher, dass die Bildgröße zwischen Augmentierung, Speicherung und Training korrekt gehandhabt wird (AUG-01).
-
-Qualitätskontrolle der Augmentierung: Investiere Zeit in die visuelle Prüfung der generierten Bilder (AUG-02). Weniger, aber dafür realistischere Augmentierung ist oft besser als sehr viele künstlich wirkende Bilder.
-
-Hardware-Benchmarking: Messe Inferenzzeit, RAM-Nutzung (insbesondere den Tensor Arena Peak) und Vorverarbeitungszeit direkt auf dem RP2040 mit dem finalen, quantisierten Modell und der realen Kamerabild-Pipeline.
+I. Detailliertere Analyse von emulator-test.py
+
+Das Skript `emulator-test.py` dient zur Simulation des gesamten Entwicklungs- und Ausführungsworkflows eines Modells auf einem RP2040-Mikrocontroller. Es besteht aus mehreren Klassen, die jeweils einen Teil dieses Workflows abbilden:
+
+1.  **`ModelConverter`**:
+    *   **Zweck**: Simuliert die Konvertierung eines PyTorch-Modells in ein für den RP2040 geeignetes Format (typischerweise TFLite und dann ein C-Array).
+    *   **Methoden**:
+        *   `estimate_model_size(original_size_mb, quantized=True)`: Schätzt die Größe des konvertierten Modells und den RAM-Bedarf basierend auf der Originalgröße und ob eine Quantisierung (z.B. INT8) angewendet wird. Geht davon aus, dass INT8-Modelle ca. 1/4 der Größe von Float32-Modellen haben und der RAM-Bedarf für Aktivierungen bei INT8 ca. 20% und bei Float32 ca. 50% der Modellgröße beträgt.
+            *   **EMU-02 (Hoch): Ungenaue Schätzung des Modell-RAM-Bedarfs (Tensor Arena)**: Der RAM-Bedarf (`ram_usage_bytes`) wird als fester Prozentsatz der Dateigröße des Modells geschätzt. Der tatsächliche RAM-Bedarf für die Inferenz (Tensor Arena) hängt jedoch primär von der Größe der größten Aktivierungs-Tensoren während der Inferenz ab, was stark von der Modellarchitektur (Layer-Typen, Reihenfolge, Filtergrößen) beeinflusst wird, nicht nur von der Gesamtgröße der Gewichte.
+            *   **Empfehlung (EMU-02)**:
+                *   Verwende präzisere Methoden zur Schätzung der Tensor Arena Größe, z.B. durch Analyse des TFLite-Modells mit dem TensorFlow Lite Analyzer oder durch direkte Messung auf dem Zielgerät.
+                *   Dokumentiere klar, dass dies eine grobe Schätzung ist.
+        *   `convert_pytorch_to_tflite(pth_path, quantize=True)`: Simuliert den mehrstufigen Prozess der Konvertierung einer `.pth`-Datei zu TFLite (PyTorch -> ONNX -> TensorFlow -> TFLite). Nutzt `estimate_model_size` für die Größenschätzung.
+        *   `convert_tflite_to_c_array(model_info)`: Simuliert die Umwandlung des TFLite-Modells in ein C-Header-Array zur Einbettung in die Firmware.
+
+2.  **`FirmwareBuilder`**:
+    *   **Zweck**: Simuliert den Prozess des Kompilierens der Firmware, die das konvertierte Modell und den Anwendungscode enthält.
+    *   **Methoden**:
+        *   `build_firmware(model_info, extra_code_kb=50)`: Simuliert den Build-Prozess. Berechnet die Gesamtgröße der Firmware als Summe der Modellgröße und der Größe des zusätzlichen Codes (SDK, TFLM-Runtime, eigener Code). Gibt ein Dictionary mit Firmware-Informationen zurück.
+
+3.  **`RP2040Emulator`**:
+    *   **Zweck**: Emuliert die Hardware eines RP2040-basierten Systems, um die Ausführung der Firmware unter Berücksichtigung von Hardware-Beschränkungen zu simulieren.
+    *   **Initialisierung (`__init__`)**: Definiert Hardware-Spezifikationen wie CPU-Geschwindigkeit, Flash-Größe (2MB), RAM-Größe (264KB), Kameraauflösung (320x240), simulierten Stromverbrauch und GPIO-Zustände. Ein System-Overhead von 20KB RAM wird angenommen.
+    *   **Kernmethoden**:
+        *   `load_firmware(firmware)`: "Lädt" die simulierte Firmware. Überprüft, ob die Firmware in den Flash passt und der geschätzte RAM-Bedarf (Modell-RAM + System-Overhead) den verfügbaren RAM nicht übersteigt.
+            *   **EMU-01 (Kritisch): Fehlende Simulation des Kamera-Framebuffers im RAM**:
+                *   **Beschreibung**: Die Methode prüft den RAM-Bedarf basierend auf `firmware['ram_usage_bytes']` (geschätzter Modell-RAM / Tensor Arena) und `self.system_ram_overhead`. Sie berücksichtigt nicht den Speicher, der benötigt wird, um das Rohbild von der OV2640 Kamera (320x240) zwischenzuspeichern, bevor es für das Modell vorverarbeitet (z.B. auf 96x96 skaliert) wird.
+                *   **Berechnung**: Ein 320x240 Graustufenbild (1 Byte pro Pixel) benötigt 320 * 240 = 76,800 Bytes (~75 KB). Ein 320x240 RGB565 Bild (2 Bytes pro Pixel) benötigt 153,600 Bytes (~150 KB).
+                *   **Impact**: Der tatsächliche Spitzen-RAM-Bedarf auf dem RP2040 ist Tensor Arena + System Overhead + Framebuffer. Der Emulator unterschätzt dies massiv. Beispiel: Modell braucht 90KB Arena, System 20KB. Emulator sagt 110KB < 264KB (OK). Realität mit Graustufen-Framebuffer: 110KB + 75KB = 185KB (knapp, aber OK). Realität mit RGB565-Framebuffer: 110KB + 150KB = 260KB (Extrem knapp, wahrscheinlich Absturz oder Fehlfunktion!). Die 100KB-Grenze für den Modell-Laufzeit-RAM ist separat von diesem Gesamt-RAM-Problem zu sehen.
+                *   **Empfehlung (EMU-01)**:
+                    *   Füge einen Parameter `framebuffer_ram_bytes` zur `RP2040Emulator`-Klasse hinzu (konfigurierbar für Graustufen/RGB565).
+                    *   Modifiziere `load_firmware`, sodass die Prüfung lautet: `if firmware['ram_usage_bytes'] + self.system_ram_overhead + self.framebuffer_ram_bytes > self.ram_size_bytes:`.
+                    *   Dokumentiere diese Annahme klar.
+        *   `calculate_inference_time()`: Schätzt die Inferenzzeit basierend auf Modellgröße und Quantisierungsstatus (quantisierte Modelle werden als schneller angenommen). Die Formel ist vereinfacht (z.B. 0.05ms pro KB für INT8, 0.2ms pro KB für Float32) und dient als grobe Näherung.
+        *   `capture_image(input_image_path=None)`: Simuliert die Bildaufnahme von einer OV2640-Kamera (Auflösung 320x240). Kann ein Testbild laden oder ein zufälliges Bild erzeugen.
+        *   `preprocess_image()`: Simuliert die Bildvorverarbeitung (Graustufenkonvertierung, Skalierung auf die vom Modell erwartete Eingabegröße, z.B. 96x96, mittels PIL.Image.BICUBIC).
+        *   `run_inference(simulated_score=None)`: Simuliert die Ausführung der Inferenz mit dem Modell. Nutzt `calculate_inference_time`, generiert einen simulierten Detektions-Score und aktualisiert den simulierten Batterieverbrauch. Löst bei Überschreiten eines Schwellwerts einen simulierten Buzzer und LED-Status aus.
+        *   `detect_object(input_image_path=None, simulated_score=None)`: Führt den gesamten Zyklus von Bildaufnahme, Vorverarbeitung und Inferenz durch. Fragt den Benutzer, ob weitere Iterationen gewünscht sind.
+        *   `_update_battery_usage(duration_seconds)`: Aktualisiert den simulierten Batteriestand basierend auf der Betriebszeit und ob sich das System im Tiefschlaf befindet.
+        *   `get_system_stats()`: Gibt eine Zusammenfassung des aktuellen Systemstatus aus (Speichernutzung, Batteriestand, letzte Inferenzzeit etc.).
+    *   **Weitere Methoden**: Steuerung von simulierten LEDs (`set_status_led`), Buzzer (`buzzer_double_beep`), Schlafmodi (`enter_sleep_mode`, `wake_up`).
+
+4.  **`EmulationWorkflow`**:
+    *   **Zweck**: Orchestriert den gesamten Simulationsprozess von der Modellkonvertierung bis zur Emulation.
+    *   **Methoden**:
+        *   `run_full_workflow(pth_path="model.pth", image_path=None, quantize=True)`: Führt nacheinander die Schritte Modellkonvertierung (`convert_pytorch_to_tflite`, `convert_tflite_to_c_array`), Firmware-Build (`build_firmware`), Laden der Firmware in den Emulator (`load_firmware`) und Test der Objekterkennung (`detect_object`, `get_system_stats`) aus.
+
+II. Analyse von enhanced_pizza_augmentation.py (augmentation.py)
+
+Das Skript `augmentation.py` (ursprünglich oder intern als `enhanced_pizza_augmentation.py` bezeichnet) ist ein umfangreiches Werkzeug zur Augmentierung von Bilddatensätzen, speziell zugeschnitten auf Pizza-Bilder zur Erkennung von Verbrennungsgraden. Es nutzt PyTorch für die Bildverarbeitung und GPU-Beschleunigung.
+
+**Hauptkomponenten und Funktionalitäten:**
+
+1.  **Setup und Konfiguration**:
+    *   `parse_arguments()`: Verarbeitet Kommandozeilenargumente für Ein-/Ausgabeverzeichnisse, Anzahl der zu generierenden Bilder, Batch-Größe, Seed, etc.
+    *   `setup_environment()`: Konfiguriert die Laufzeitumgebung, wählt CPU/GPU, setzt Random Seeds für Reproduzierbarkeit und prüft die Verfügbarkeit von SciPy für erweiterte Filter.
+    *   `validate_and_prepare_paths()`: Stellt sicher, dass die angegebenen Pfade gültig sind und erstellt die notwendigen Ausgabeverzeichnisse, inklusive Unterverzeichnissen für verschiedene Augmentierungstypen (`basic`, `burnt`, `mixed`, `progression`, `segment`, `combined`).
+    *   `get_image_files()`: Lädt und validiert Bilddateien aus dem Eingabeverzeichnis.
+    *   `get_optimal_batch_size()`: Versucht, eine optimale Batch-Größe basierend auf dem verfügbaren GPU-Speicher zu ermitteln, um Out-of-Memory-Fehler zu vermeiden.
+    *   `AugmentationStats`: Eine Klasse zur Erfassung und Speicherung detaillierter Statistiken über den Augmentierungsprozess (z.B. Laufzeit, Anzahl generierter Bilder pro Typ) in einer JSON-Datei.
+
+2.  **Dataset-Handling und Utilities**:
+    *   `PizzaAugmentationDataset(Dataset)`: Eine von `torch.utils.data.Dataset` abgeleitete Klasse, die das Laden der Pizza-Bilder, die Anwendung von Transformationen und optionales Caching von Bildern im Speicher für schnelleren Zugriff verwaltet.
+    *   `open_image()`: Ein Kontextmanager, der das sichere Öffnen und Schließen von Bilddateien gewährleistet.
+    *   `show_images()`: Eine Hilfsfunktion zur Visualisierung von Bildern (Tensoren oder NumPy-Arrays) in einem Grid mittels Matplotlib. Kann die Visualisierung auch speichern.
+    *   `save_augmented_images()`: Speichert augmentierte Bilder (Tensoren, NumPy-Arrays oder PIL-Bilder) batchweise. Stellt eine einheitliche Zielgröße (224x224) sicher und kann optional Metadaten als JSON-Dateien speichern.
+
+3.  **Erweiterte Augmentierungsmodule (`nn.Module`)**:
+    Diese Module kapseln komplexe Augmentierungslogik und können auf der GPU ausgeführt werden.
+
+    *   **`EnhancedPizzaBurningEffect`**:
+        *   **Zweck**: Simuliert realistische Verbrennungseffekte auf Pizzen.
+        *   **Funktionen**:
+            *   Unterstützt verschiedene Verbrennungsmuster: `random` (zufällig), `edge` (Randverbrennung), `spot` (fleckenförmig), `streak` (streifenförmig).
+            *   Generiert Masken für diese Muster (`_create_edge_burn_mask`, `_create_spot_burn_mask`, etc.), die die Intensität der Verbrennung räumlich steuern.
+            *   `_create_burn_color()`: Erzeugt plausible Verbrennungsfarben (von leicht gebräunt bis verkohlt) basierend auf der Intensität.
+            *   Kombiniert die Masken und Farben, um das Bild entsprechend zu modifizieren, und fügt optional subtile Texturen hinzu.
+
+    *   **`EnhancedOvenEffect`**:
+        *   **Zweck**: Simuliert verschiedene visuelle Effekte, die im Ofen entstehen können.
+        *   **Funktionen**:
+            *   Implementiert Effekte wie `steam` (Dampf), `warmth` (warmer Farbton), `shadow` (Schattenwurf), `lighting` (ungleichmäßige Beleuchtung) und `bloom` (Glühen heller Bereiche).
+            *   Nutzt `_apply_gaussian_blur()` (mit SciPy, falls verfügbar, sonst PyTorch-Alternative) für weiche Übergänge.
+            *   Jeder Effekt wird prozedural generiert, z.B. Dampf mit Gradienten und simulierter Bewegungsunschärfe, Wärme durch Anpassung der Farbkanäle, Schatten mit verschiedenen Formen und weichen Kanten.
+
+    *   **`PizzaSegmentEffect`**:
+        *   **Zweck**: Wendet Augmentierungen auf einzelne Pizzasegmente (Tortenstücke) an.
+        *   **Funktionen**:
+            *   `_create_segment_mask()`: Erzeugt Masken, die die Pizza in eine zufällige Anzahl von Segmenten unterteilen.
+            *   Kombiniert `EnhancedPizzaBurningEffect` und `EnhancedOvenEffect` und wendet diese mit zufälligen Parametern auf die einzelnen Segmente an, um Variationen innerhalb einer Pizza zu erzeugen.
+
+4.  **Augmentierungspipeline-Funktionen**:
+    Diese Funktionen orchestrieren die Anwendung der Augmentierungsmodule auf den Datensatz.
+
+    *   `apply_basic_augmentation()`: Führt Standard-Augmentierungen durch (Rotation, Zuschnitt, Spiegelung, Farbveränderungen, Perspektive, Unschärfe, Schärfen) unter Verwendung von `torchvision.transforms`.
+    *   `apply_burning_augmentation()`: Wendet die `EnhancedPizzaBurningEffect` und optional `EnhancedOvenEffect` an, um Bilder mit verschiedenen Verbrennungsgraden und Ofenatmosphären zu erzeugen.
+    *   `apply_mixed_augmentation()`: Implementiert fortgeschrittene Techniken, die mehrere Bilder kombinieren:
+        *   **MixUp**: Lineare Interpolation zweier Bilder. Varianten: Standard, kanalspezifisch, räumlich variierend (mit Perlin-ähnlichem Rauschen für die Maske).
+        *   **CutMix**: Schneidet einen Bereich aus einem Bild aus und fügt ihn in ein anderes ein. Unterstützt verschiedene Formen für den Ausschnitt (Kreis, Keil für Pizzastücke, Schachbrett, Hälften mit weichen Kanten).
+        *   **CopyPaste**: Eine eigene Implementierung, die versucht, "interessante" Regionen (z.B. sehr dunkle oder helle Bereiche, die Belag oder starke Verbrennung repräsentieren könnten) aus einem Bild zu identifizieren (mittels Luminanz-Schwellwerten und morphologischen Operationen) und auf ein anderes zu kopieren, optional mit Glättung der Kanten.
+    *   `apply_progression_augmentation()`: Erzeugt Sequenzen von Bildern, die eine schrittweise Zunahme des Verbrennungsgrades oder eine Veränderung des Verbrennungsmusters zeigen (z.B. von leichter Randverbrennung zu stärkerer, fleckiger Verbrennung). Verschiedene Progressionstypen (`increasing_uniform`, `increasing_edge`, `increasing_spots`, `mixed`) sind implementiert.
+    *   `apply_segment_augmentation()`: Nutzt `PizzaSegmentEffect`, um Variationen auf Segmentebene zu erzeugen.
+    *   `apply_combination_augmentation()`: Eine Meta-Augmentierungsfunktion, die mehrere der oben genannten Techniken zufällig kombiniert (z.B. erst Basis-Transformationen, dann segmentbasierte Verbrennung, dann Ofeneffekte und schließlich optional eine Mischung mit einem anderen Bild).
+
+5.  **Hauptprogramm (`main()`)**:
+    *   Initialisiert die Umgebung und Argumente.
+    *   Lädt die Originalbilder.
+    *   Definiert eine Verteilungsstrategie, wie viel Prozent der Gesamt augmentierten Bilder durch jede der Augmentierungskategorien (Basis, Verbrennung, Mix, Progression, Segment, Kombiniert) erzeugt werden sollen.
+    *   Ruft die einzelnen `apply_..._augmentation()` Funktionen nacheinander auf, um den augmentierten Datensatz zu generieren.
+    *   Speichert die erzeugten Bilder in den entsprechenden Unterverzeichnissen.
+    *   Verwendet `AugmentationStats` zur Protokollierung und Speicherung der Prozessstatistiken.
+    *   Implementiert Fehlerbehandlung und Speicherbereinigung (`gc.collect()`, `torch.cuda.empty_cache()`) für einen robusteren und speichereffizienteren Ablauf.
+
+**Bewertung**:
+Das Skript `augmentation.py` stellt eine sehr fortschrittliche und anpassbare Pipeline für die Bilddatenerweiterung dar. Die Modularität durch `nn.Module`-Klassen für Effekte und separate Pipeline-Funktionen ermöglicht eine flexible Kombination und Erweiterung. Die Berücksichtigung von GPU-Beschleunigung und Batch-Verarbeitung ist für die Performanz bei großen Datensätzen wichtig. Die spezifischen Pizza-Effekte (Verbrennungsmuster, Segmentierung) sind gut auf das Zielproblem zugeschnitten.
+
+III. Analyse von augmentation_optimized.py
+
+Das Skript `augmentation_optimized.py` ist eine weitere Implementierung zur Bildaugmentierung für das Pizza-Erkennungsprojekt. Es scheint eine stärker optimierte oder möglicherweise eine frühere, kompaktere Version im Vergleich zu `augmentation.py` zu sein, mit einem Fokus auf GPU-Nutzung und einem Generator-Pattern für die Batch-Verarbeitung.
+
+**Hauptunterschiede und Merkmale**:
+
+1.  **Einfachere Effektmodule**:
+    *   **`PizzaBurningEffect(nn.Module)`**: Eine optimierte Version, die Verbrennungseffekte simuliert. Sie generiert Rand- und Flecken-Verbrennungsmasken direkt auf der GPU mittels PyTorch-Operationen und kombiniert diese. Der Effekt ist primär ein Abdunkeln und Bräunen der betroffenen Bereiche. Im Vergleich zu `EnhancedPizzaBurningEffect` aus `augmentation.py` sind die Mustervariationen und die Farbgestaltung tendenziell einfacher.
+    *   **`SimpleOvenEffect(nn.Module)`**: Eine vereinfachte Version zur Simulation von Ofeneffekten. Implementiert `steam` (Dampf), `warmth` (Wärme) und `shadow` (Schatten). Die Dampfsimulation nutzt Gaußsche Unschärfe (SciPy falls verfügbar, sonst PyTorch-basierte Faltung).
+
+2.  **Generator-basierte Augmentierungsfunktionen**:
+    Die Haupt-Augmentierungsfunktionen (`pizza_basic_augmentation`, `pizza_burning_augmentation`) sind als Generatoren implementiert. Das bedeutet, sie `yield`en Batches von augmentierten Bildern, anstatt alle Bilder im Speicher zu halten, bevor sie gespeichert werden. Dies ist besonders speichereffizient.
+
+    *   `pizza_basic_augmentation()`: Wendet grundlegende Transformationen (Rotation, Zuschnitt, Spiegelung, Farbjitter, Unschärfe) an und gibt augmentierte Bilder batchweise zurück.
+    *   `pizza_burning_augmentation()`: Kombiniert `PizzaBurningEffect` und `SimpleOvenEffect` und gibt die Ergebnisse ebenfalls batchweise zurück.
+    *   `pizza_mixup()`: Implementiert MixUp zwischen zwei Bildern.
+    *   `pizza_cutmix()`: Implementiert CutMix, wobei ein Keil- oder Kreissegment aus einem Bild in ein anderes kopiert wird.
+    *   `pizza_burning_progression()`: Erzeugt eine Sequenz von Bildern mit ansteigendem Verbrennungsgrad, wobei jede Stufe vom Originalbild ausgeht.
+
+3.  **Optimierte Augmentierungspipeline (`augment_pizza_dataset()`)**:
+    *   Diese Funktion orchestriert den gesamten Augmentierungsprozess.
+    *   Sie legt eine Verteilungsstrategie für die verschiedenen Augmentierungstypen fest (Basis, Verbrennung, Mischen, Progression).
+    *   Ruft die generatorbasierten Funktionen auf, um Batches von augmentierten Bildern zu erhalten, die dann direkt gespeichert werden.
+    *   Die Mischmethoden (MixUp/CutMix) und die Progressionserzeugung sind direkt in dieser Funktion implementiert und arbeiten ebenfalls batchweise, um den Speicherbedarf gering zu halten.
+    *   Nutzt `save_augmented_images()` zum Speichern der Batches.
+
+4.  **Dataset und Utilities**:
+    *   `PizzaAugmentationDataset`: Ähnlich wie in `augmentation.py`, aber hier ist vorgesehen, dass es auch Labels (z.B. für verbrannt/nicht verbrannt) verarbeiten kann, obwohl dies in der `augment_pizza_dataset` Funktion nicht explizit genutzt wird für die Label-Generierung.
+    *   `save_augmented_images()`: Speichert Bilder batchweise, ist aber einfacher gehalten als die Version in `augmentation.py` (z.B. keine explizite Größenanpassung auf 224x224 oder Metadaten-Speicherung innerhalb dieser Funktion).
+
+**Bewertung**:
+`augmentation_optimized.py` legt einen klaren Fokus auf Speichereffizienz durch die Verwendung von Generatoren und Batch-Verarbeitung, was es für Umgebungen mit limitiertem RAM oder sehr große Datensätze vorteilhaft macht. Die implementierten Effekte sind zwar GPU-beschleunigt, aber tendenziell weniger komplex und variantenreich als in `augmentation.py`. Es könnte als eine schlankere Alternative oder eine Basis für spezifische, schnelle Augmentierungsaufgaben dienen. Die direkte Implementierung von Mix- und Progressionslogik innerhalb der Hauptpipeline-Funktion macht es etwas weniger modular als der Ansatz mit dedizierten `apply_...` Funktionen in `augmentation.py`.
