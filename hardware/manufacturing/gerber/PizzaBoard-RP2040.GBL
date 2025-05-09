@@ -1,0 +1,17 @@
+; GERBER RS-274X EXPORT - Bottom Layer
+; Date: 2025-05-08 14:59:37
+; Project: RP2040 Pizza Detection System
+; Generated from SVG layout using PCB Export Tool
+
+%FSLAX46Y46*%
+%MOMM*%
+%LPD*%
+%TF.GenerationSoftware,PizzaBoard,PCBExporter,1.0*%
+%TF.SameCoordinates,Original*%
+%TF.FileFunction,Copper,L2,Bot*%
+%TF.FilePolarity,Positive*%
+G01*
+G75*%
+%ADD10C,0.1*%
+%ADD11R,1X1*%
+M02*

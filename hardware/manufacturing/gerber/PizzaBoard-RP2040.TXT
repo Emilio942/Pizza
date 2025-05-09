@@ -1,0 +1,30 @@
+; GERBER RS-274X EXPORT - NC Drill File
+; Date: 2025-05-08 14:59:37
+; Project: RP2040 Pizza Detection System
+; Generated from SVG layout using PCB Export Tool
+
+%FSLAX46Y46*%
+%MOMM*%
+%LPD*%
+%TF.GenerationSoftware,PizzaBoard,PCBExporter,1.0*%
+%TF.SameCoordinates,Original*%
+%TF.FileFunction,Drill*%
+%TF.FilePolarity,Positive*%
+G01*
+G75*%
+%ADD10C,0.1*%
+%ADD11R,1X1*%
+M48
+METRIC,TZ
+T1C0.8
+%
+T1
+X000300Y000300
+X009700Y000300
+X000300Y009700
+X009700Y009700
+X020000Y020000
+X020000Y020000
+X020000Y020000
+X028500Y018000
+M30

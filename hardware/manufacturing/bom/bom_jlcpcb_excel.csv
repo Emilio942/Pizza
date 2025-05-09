@@ -1,0 +1,7 @@
+Designator,Quantity,Value,Package,Type,Manufacturer,Part Number,Supplier,LCSC Part Number
+"RP2040ObjectDetectionv10_1, RP2040ObjectDetectionv10_2, RP2040_1",3,RP2040,QFN-56,MCU,Raspberry Pi,SC0915,LCSC,C2040
+FLASH_1,1,W25Q16JVUXIQ,SOIC-8,Flash Memory,Winbond,W25Q16JVUXIQ,LCSC,C127086
+TP4056_1,1,TP4056,SOP-8,Battery Charger,NanJing Extension Microelectronics,TP4056,LCSC,C16581
+MCP1700_1,1,MCP1700T-3302E/TT,SOT-23,Voltage Regulator,Microchip,MCP1700T-3302E/TT,LCSC,C9164
+XTAL_1,1,12MHz,SMD-3225,Crystal,Murata,XRCGB12M000F2F01R0,LCSC,C321487
+DRIVER_1,1,PAM8302,SOP-8,Audio Amplifier,Diodes Inc,PAM8302AADCR,LCSC,C150725
