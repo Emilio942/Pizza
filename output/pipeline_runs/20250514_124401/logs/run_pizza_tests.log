@@ -1,0 +1,2 @@
+usage: run_pizza_tests.py [-h] [--detailed]
+run_pizza_tests.py: error: unrecognized arguments: --output-dir=/home/emilio/Documents/ai/pizza/output/pipeline_runs/20250514_124401/test_results

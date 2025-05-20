@@ -1,0 +1,23 @@
+{
+  "evaluation_date": "2025-05-18",
+  "model_type": "int4_direct",
+  "original_model": {
+    "model_path": "models/pizza_model_float32.pth",
+    "model_size_kb": 0,
+    "accuracy": 0.0,
+    "inference_time_ms": 0.0
+  },
+  "int4_model": {
+    "model_path": "output/evaluation/int4_quantized/int4_model.pth",
+    "model_size_kb": 0.78515625,
+    "accuracy": 0.0,
+    "inference_time_ms": 0.2701997756958008,
+    "compression_ratio": 0.6902927580893683
+  },
+  "comparison": {
+    "size_reduction": 0.6902927580893683,
+    "accuracy_diff": 0.0,
+    "execution_time_s": 1.8497905731201172
+  },
+  "conclusion": "Direct Int4 quantization achieved a 69.03% reduction in model size with an accuracy change of 0.00%. This provides a baseline for comparing with other optimization techniques like clustering and pruning combined with Int4 quantization."
+}

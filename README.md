@@ -57,10 +57,23 @@ pip install -r requirements.txt
 
 1. Datenaufbereitung und Augmentierung:
 ```bash
-python src/augmentation/enhanced_pizza_augmentation.py --input-dir data/raw --output-dir data/augmented
+# Standard augmentation pipeline
+python scripts/standard_augmentation.py path/to/sample_image.jpg  # Visualize augmentations
+
+# Full dataset augmentation
+python scripts/augment_dataset.py --input-dir data/raw --output-dir data/augmented --aug-types all
 ```
 
-2. Modell trainieren:
+2. Modell trainieren (mit standard Augmentierungspipeline):
+```bash
+# Train with standard augmentation pipeline (medium intensity)
+python scripts/train_with_augmentation.py --data-dir data/classified --aug-intensity medium
+
+# Train with high intensity augmentations
+python scripts/train_with_augmentation.py --data-dir data/classified --aug-intensity high
+```
+
+3. Oder das Modell mit dem ursprünglichen Trainingsskript trainieren:
 ```bash
 python src/pizza_detector.py train
 ```
@@ -75,6 +88,13 @@ python src/pizza_detector.py export
 python src/emulation/emulator.py
 ```
 
+5. Temperaturmessungs-Test ausführen:
+```bash
+python -m tests.test_temperature_logging
+```
+
+Die Temperaturmessung simuliert die Erfassung und Aufzeichnung von Temperaturdaten im RP2040. Die Logs werden im CSV-Format und über UART gespeichert und können für die Analyse der Temperaturentwicklung unter verschiedenen Lastbedingungen verwendet werden. Weitere Details finden Sie in der [Temperaturmessung-Dokumentation](docs/temperature_monitoring.md).
+
 ## Hardware-Anforderungen
 
 - RP2040 Mikrocontroller (z.B. Raspberry Pi Pico)
@@ -82,3 +102,9 @@ python src/emulation/emulator.py
 - CR123A Batterie mit LDO-Regler
 
 Weitere Details finden Sie in der [ausführlichen Dokumentation](docs/RP2040%20Pizza-Erkennungssystem%20Dokumentation.pdf).
+
+## Dokumentation
+
+- [Standard Augmentierungspipeline](docs/standard_augmentation_pipeline.md) - Detaillierte Beschreibung der implementierten Augmentierungstechniken und Parameter
+- [RP2040 Hardware-Integration](docs/hardware-integration.md) - Hardware-Integrationsanleitung
+- [Temperaturmessung](docs/temperature_monitoring.md) - Informationen zur Temperaturerfassung und -analyse

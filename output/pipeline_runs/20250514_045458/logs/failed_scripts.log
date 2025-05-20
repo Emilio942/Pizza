@@ -1,0 +1,1 @@
+/home/emilio/Documents/ai/pizza/scripts/analyze_performance_logs.py --input /home/emilio/Documents/ai/pizza/output/pipeline_runs/20250514_045458/logs/pipeline.log --output-dir /home/emilio/Documents/ai/pizza/output/pipeline_runs/20250514_045458/reports

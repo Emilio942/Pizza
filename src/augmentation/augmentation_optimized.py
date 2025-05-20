@@ -12,6 +12,7 @@ import random
 import gc
 from contextlib import contextmanager
 from tqdm import tqdm
+from pathlib import Path
 
 # Gerät für Berechnungen festlegen - GPU wenn verfügbar
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -508,9 +509,28 @@ def pizza_burning_progression(img, num_steps=5):
 # 6. Optimierte Augmentierungspipeline mit GPU-Unterstützung und Generator-Pattern
 def augment_pizza_dataset(input_dir, output_dir, img_per_original=20, batch_size=16):
     """Erzeugt einen erweiterten Datensatz für Pizza-Verbrennungserkennung mit GPU-Beschleunigung"""
-    # Sammle alle Bilddateien
-    image_files = [os.path.join(input_dir, f) for f in os.listdir(input_dir) 
-                  if f.lower().endswith(('.png', '.jpg', '.jpeg'))]
+    # Sammle alle Bilddateien aus Unterverzeichnissen
+    image_files = []
+    input_path = Path(input_dir)
+    
+    # Check if input_dir exists
+    if not os.path.exists(input_dir):
+        print(f"Eingabeverzeichnis {input_dir} existiert nicht!")
+        return
+        
+    # Check if input_dir has subdirectories (class folders)
+    class_dirs = [d for d in input_path.iterdir() if d.is_dir()]
+    
+    if class_dirs:
+        # If we have class directories, collect images from each
+        for class_dir in class_dirs:
+            class_images = list(class_dir.glob("*.jpg")) + list(class_dir.glob("*.jpeg")) + list(class_dir.glob("*.png"))
+            image_files.extend([str(img_path) for img_path in class_images])
+    else:
+        # If no subdirectories, get images directly from input_dir
+        image_files = [str(f) for f in input_path.glob("*.jpg")] + \
+                      [str(f) for f in input_path.glob("*.jpeg")] + \
+                      [str(f) for f in input_path.glob("*.png")]
     
     if not image_files:
         print("Keine Bilder gefunden!")
@@ -671,8 +691,8 @@ def main():
     if torch.cuda.is_available():
         print(f"GPU: {torch.cuda.get_device_name(0)}")
     
-    input_dir = "/home/emilio/Documents/ai/pizza/img-pizza/"  # Verzeichnis mit Original-Pizza-Bildern
-    output_dir = "augmented_pizza"  # Ausgabeverzeichnis
+    input_dir = "augmented_pizza"  # Updated directory path
+    output_dir = "augmented_pizza_output"  # Ausgabeverzeichnis
     
     # Konfiguration
     img_per_original = 20  # Anzahl generierter Bilder pro Original

@@ -1,0 +1,5 @@
+usage: compare_hard_swish.py [-h] [--data-dir DATA_DIR]
+                             [--output-dir OUTPUT_DIR] [--epochs EPOCHS]
+                             [--batch-size BATCH_SIZE] [--early-stopping]
+                             [--save-models] [--visualize]
+compare_hard_swish.py: error: unrecognized arguments: --output_dir=output/optimization/model_comparison

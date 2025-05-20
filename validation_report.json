@@ -1,0 +1,1473 @@
+{
+  "summary": {
+    "total_scripts": 72,
+    "passed": 15,
+    "warnings": 57,
+    "failed": 0,
+    "pass_rate": 20.83,
+    "timestamp": "2025-05-13T22:18:40.207350"
+  },
+  "results": [
+    {
+      "file_path": "/home/emilio/Documents/ai/pizza/scripts/cleanup.py",
+      "file_name": "cleanup.py",
+      "status": "passed",
+      "errors": [],
+      "warnings": [],
+      "metadata": {
+        "has_docstring": true,
+        "docstring": "Hilfsskript zur Bereinigung tempor\u00e4rer Dateien und Wartung des Projekts.",
+        "author": null,
+        "date": null
+      },
+      "dependencies": []
+    },
+    {
+      "file_path": "/home/emilio/Documents/ai/pizza/scripts/filter_dataset.py",
+      "file_name": "filter_dataset.py",
+      "status": "warning",
+      "errors": [],
+      "warnings": [
+        "Missing or incomplete docstring"
+      ],
+      "metadata": {
+        "has_docstring": false,
+        "docstring": null,
+        "author": null,
+        "date": null
+      },
+      "dependencies": []
+    },
+    {
+      "file_path": "/home/emilio/Documents/ai/pizza/scripts/label_tool.py",
+      "file_name": "label_tool.py",
+      "status": "passed",
+      "errors": [],
+      "warnings": [],
+      "metadata": {
+        "has_docstring": true,
+        "docstring": "Pizza Labeling Tool - Erweiterte Version\n\nEin fortschrittliches Tool zum schnellen und konsistenten Labeln von Pizza-Bildern.\nBietet eine verbesserte Benutzeroberfl\u00e4che mit Zoom, Histogramm, Batch-Processing,\nKI-Vorschl\u00e4gen und automatischem Git-Tracking.\n\nVerwendung:\n    python label_tool.py [--source-dir DIR] [--output-dir DIR] [--class-file FILE]\n\nOptionen:\n    --source-dir: Verzeichnis mit unklassifizierten Bildern (Standard: data/raw)\n    --output-dir: Verzeichnis f\u00fcr sortierte Bilder (Standard: data/classified)\n    --class-file: JSON-Datei mit Klassendefinitionen (Standard: data/class_definitions.json)\n    --stats-file: JSON-Datei f\u00fcr Label-Statistiken (Standard: data/classified/classification_stats.json)\n    --git-track: Versioniere \u00c4nderungen mit Git (Standard: True)\n    --batch-size: Anzahl der gleichzeitig anzuzeigenden Bilder f\u00fcr Batch-Labeling (Standard: 4)\n    --review-mode: Starte im Review-Modus f\u00fcr bereits klassifizierte Bilder (Standard: False)\n    --model-predict: Verwende vortrainiertes Modell f\u00fcr Label-Vorschl\u00e4ge (Standard: True)",
+        "author": null,
+        "date": null
+      },
+      "dependencies": [
+        "PIL",
+        "matplotlib",
+        "numpy"
+      ]
+    },
+    {
+      "file_path": "/home/emilio/Documents/ai/pizza/scripts/framebuffer_demo.py",
+      "file_name": "framebuffer_demo.py",
+      "status": "warning",
+      "errors": [],
+      "warnings": [
+        "Missing dependencies: tabulate",
+        "Execution test issue: Execution failed with error: Traceback (most recent call last):\n  File \"/home/emilio/Documents/ai/pizza/scripts/framebuffer_demo.py\", line 11, in <module>\n    from tabulate import tabulate\nModuleNotFoundError: No module named 'tabulate'\n"
+      ],
+      "metadata": {
+        "has_docstring": true,
+        "docstring": "Demonstriert die Auswirkung verschiedener Framebuffer-Konfigurationen auf den RAM-Verbrauch.\nDieses Skript zeigt die EMU-01 Framebuilder-Korrektur in Aktion.",
+        "author": null,
+        "date": null
+      },
+      "dependencies": [
+        "tabulate"
+      ]
+    },
+    {
+      "file_path": "/home/emilio/Documents/ai/pizza/scripts/compare_inverted_residual.py",
+      "file_name": "compare_inverted_residual.py",
+      "status": "passed",
+      "errors": [],
+      "warnings": [],
+      "metadata": {
+        "has_docstring": true,
+        "docstring": "Vergleich zwischen MicroPizzaNet und MicroPizzaNetV2 mit inverted residual blocks.\n\nDieses Skript vergleicht die urspr\u00fcngliche MicroPizzaNet-Architektur mit der \nverbesserten MicroPizzaNetV2-Architektur, die invertierte Residualbl\u00f6cke im MobileNetV2-Stil \nverwendet. Es misst und vergleicht:\n- Modellgr\u00f6\u00dfe (Float32 und Int8)\n- Genauigkeit und F1-Score auf dem Validierungsdatensatz\n- Inferenzzeit auf der CPU und gesch\u00e4tzt f\u00fcr den RP2040\n- RAM-Nutzung und Aktivierungsgr\u00f6\u00dfen\n\nAusgabe ist ein Vergleichsbericht mit detaillierten Metriken und Visualisierungen\nzur Verbesserung der Modellarchitektur.\n\nVerwendung:\n    python compare_inverted_residual.py [--data-dir DIR] [--output-dir DIR] [--epochs N]",
+        "author": null,
+        "date": null
+      },
+      "dependencies": [
+        "numpy",
+        "torch",
+        "pandas",
+        "matplotlib",
+        "seaborn",
+        "tqdm"
+      ]
+    },
+    {
+      "file_path": "/home/emilio/Documents/ai/pizza/scripts/test_temporal_smoothing.py",
+      "file_name": "test_temporal_smoothing.py",
+      "status": "passed",
+      "errors": [],
+      "warnings": [],
+      "metadata": {
+        "has_docstring": true,
+        "docstring": "Test-Skript f\u00fcr Temporal Smoothing bei der Pizza-Erkennung.\nDemonstriert die Verbesserung der Stabilitit\u00e4t bei verrauschten Inferenz-Ergebnissen.",
+        "author": null,
+        "date": null
+      },
+      "dependencies": [
+        "matplotlib",
+        "numpy"
+      ]
+    },
+    {
+      "file_path": "/home/emilio/Documents/ai/pizza/scripts/knowledge_distillation.py",
+      "file_name": "knowledge_distillation.py",
+      "status": "passed",
+      "errors": [],
+      "warnings": [],
+      "metadata": {
+        "has_docstring": true,
+        "docstring": "Knowledge Distillation f\u00fcr Pizza-Erkennungsmodell.\n\nDieses Skript implementiert Knowledge Distillation, bei der ein kleineres 'Student'-Modell\nvon einem gr\u00f6\u00dferen, vortrainierten 'Teacher'-Modell lernt. Das Student-Modell lernt sowohl\nvon den harten Labels als auch von den \"soften\" Wahrscheinlichkeitsverteilungen des\nTeacher-Modells, was zu einem kompakteren, aber effektiveren Modell f\u00fchren kann.",
+        "author": null,
+        "date": null
+      },
+      "dependencies": [
+        "matplotlib",
+        "tqdm",
+        "torch",
+        "numpy"
+      ]
+    },
+    {
+      "file_path": "/home/emilio/Documents/ai/pizza/scripts/visualize_gradcam.py",
+      "file_name": "visualize_gradcam.py",
+      "status": "warning",
+      "errors": [],
+      "warnings": [
+        "Missing dependencies: fpdf, scripts",
+        "Execution test issue: Execution failed with error: Traceback (most recent call last):\n  File \"/home/emilio/Documents/ai/pizza/scripts/visualize_gradcam.py\", line 52, in <module>\n    from scripts.compare_tiny_cnns import MCUNet, MobilePizzaNet\n  File \"/home/emilio/Documents/ai/pizza/scripts/compare_tiny_cnns.py\", line 52, in <module>\n    from src.metrics import ModelMetrics\nModuleNotFoundError: No module named 'src.metrics'\n"
+      ],
+      "metadata": {
+        "has_docstring": true,
+        "docstring": "Offline-Visualisierung mit Grad-CAM f\u00fcr das Pizza-Erkennungssystem\n\nDieses Skript generiert Grad-CAM-Heatmaps f\u00fcr falsch klassifizierte Bilder,\num die Entscheidungsgrundlage des Netzes besser zu verstehen.\n\nVerwendung:\n    python visualize_gradcam.py [--model-path PATH] [--data-dir DIR] [--output-dir DIR]\n                                [--target-layer LAYER] [--num-samples N] [--all]\n\nOptionen:\n    --model-path: Pfad zum trainierten Modell (Standard: models/micro_pizza_model.pth)\n    --data-dir: Verzeichnis mit dem Validierungsdatensatz (Standard: data/augmented)\n    --output-dir: Verzeichnis f\u00fcr die Ausgabe (Standard: output/gradcam)\n    --target-layer: Ziel-Layer f\u00fcr Grad-CAM (Standard: auto)\n    --num-samples: Anzahl der zu visualisierenden Bilder (Standard: 20)\n    --all: Visualisiere alle Bilder, nicht nur falsch klassifizierte\n    --format: Ausgabeformat (html, pdf oder beide, Standard: html)\n    --class-names: Pfad zur JSON-Datei mit Klassennamen (Standard: data/class_definitions.json)",
+        "author": null,
+        "date": null
+      },
+      "dependencies": [
+        "fpdf",
+        "numpy",
+        "PIL",
+        "torchvision",
+        "torch",
+        "cv2",
+        "scripts",
+        "matplotlib",
+        "jinja2",
+        "tqdm"
+      ]
+    },
+    {
+      "file_path": "/home/emilio/Documents/ai/pizza/scripts/classify_images.py",
+      "file_name": "classify_images.py",
+      "status": "warning",
+      "errors": [],
+      "warnings": [
+        "Missing or incomplete docstring"
+      ],
+      "metadata": {
+        "has_docstring": false,
+        "docstring": null,
+        "author": null,
+        "date": null
+      },
+      "dependencies": []
+    },
+    {
+      "file_path": "/home/emilio/Documents/ai/pizza/scripts/visualize_pruning.py",
+      "file_name": "visualize_pruning.py",
+      "status": "passed",
+      "errors": [],
+      "warnings": [],
+      "metadata": {
+        "has_docstring": true,
+        "docstring": "Pizza Model Visualization: Pruning & Clustering\n-----------------------------------------------\nDieses Skript erstellt visualisierungen f\u00fcr die Auswirkungen von\nPruning und Clustering auf die Modellgewichte des Pizza-Erkennungsmodells.\n\nVerwendung:\n    python visualize_pruning.py --model_path models/micro_pizza_model.pth --pruned_model_path models/pruned_model/pruned_pizza_model.pth\n\nDie Visualisierung zeigt:\n1. Gewichtsverteilung vor und nach Pruning/Clustering\n2. Heatmaps der Gewichtsmatrizen\n3. Auswirkungen auf Parameterreduktion und Modellgr\u00f6\u00dfe",
+        "author": null,
+        "date": null
+      },
+      "dependencies": [
+        "seaborn",
+        "matplotlib",
+        "torch",
+        "numpy"
+      ]
+    },
+    {
+      "file_path": "/home/emilio/Documents/ai/pizza/scripts/compare_tiny_cnns.py",
+      "file_name": "compare_tiny_cnns.py",
+      "status": "warning",
+      "errors": [],
+      "warnings": [
+        "Missing dependencies: scripts",
+        "Execution test issue: Execution failed with error: Traceback (most recent call last):\n  File \"/home/emilio/Documents/ai/pizza/scripts/compare_tiny_cnns.py\", line 52, in <module>\n    from src.metrics import ModelMetrics\nModuleNotFoundError: No module named 'src.metrics'\n"
+      ],
+      "metadata": {
+        "has_docstring": true,
+        "docstring": "Vergleich alternativer Tiny-CNNs f\u00fcr das Pizza-Erkennungssystem\n\nDieses Skript vergleicht verschiedene leichtgewichtige CNN-Architekturen\nf\u00fcr die Verwendung auf dem RP2040-Mikrocontroller, darunter:\n1. MicroPizzaNet (die aktuelle Baseline)\n2. MCUNet (eine f\u00fcr Mikrocontroller optimierte Architektur)\n3. MobilePizzaNet (eine reduzierte MobileNetV2-Variante)\n\nAusgabe ist ein Vergleichsbericht mit Metriken wie:\n- Modellgr\u00f6\u00dfe (Float32 und Int8)\n- Accuracy\n- F1-Score\n- Inferenzzeit\n- RAM-Nutzung\n\nVerwendung:\n    python compare_tiny_cnns.py [--data-dir DIR] [--output-dir DIR] [--epochs N]\n\nOptionen:\n    --data-dir: Verzeichnis mit dem Bilddatensatz (Standard: data/augmented)\n    --output-dir: Verzeichnis f\u00fcr die Ergebnisse (Standard: output/tiny_cnn_comparison)\n    --epochs: Anzahl der Trainingsepochen pro Modell (Standard: 30)\n    --batch-size: Batch-Gr\u00f6\u00dfe f\u00fcr das Training (Standard: 32)\n    --early-stopping: Fr\u00fches Beenden bei Stagnation (Standard: True)\n    --visualize: Visualisierungen erstellen (Standard: True)",
+        "author": null,
+        "date": null
+      },
+      "dependencies": [
+        "numpy",
+        "torch",
+        "pandas",
+        "sklearn",
+        "matplotlib",
+        "scripts",
+        "seaborn",
+        "tqdm"
+      ]
+    },
+    {
+      "file_path": "/home/emilio/Documents/ai/pizza/scripts/compare_se_models.py",
+      "file_name": "compare_se_models.py",
+      "status": "passed",
+      "errors": [],
+      "warnings": [],
+      "metadata": {
+        "has_docstring": true,
+        "docstring": "Vergleich von MicroPizzaNet mit Squeeze-and-Excitation Modulen\n\nDieses Skript vergleicht die originale MicroPizzaNet-Architektur mit einer\nerweiterten Version, die Squeeze-and-Excitation (SE) Module zur Kanalgewichtung verwendet.\n\nSE-Module verbessern die Ausdruckskraft des Modells bei minimalem Parameteranstieg,\nindem sie lernen, welche Feature-Maps am wichtigsten sind.\n\nAusgabe ist ein Vergleichsbericht mit Metriken wie:\n- Modellgr\u00f6\u00dfe (Float32 und Int8)\n- Accuracy\n- F1-Score\n- Inferenzzeit\n- RAM-Nutzung\n- Visualisierungen der Aktivierungen\n\nVerwendung:\n    python compare_se_models.py [--data-dir DIR] [--output-dir DIR] [--epochs N]\n\nOptionen:\n    --data-dir: Verzeichnis mit dem Bilddatensatz (Standard: data/augmented)\n    --output-dir: Verzeichnis f\u00fcr die Ergebnisse (Standard: output/se_comparison)\n    --epochs: Anzahl der Trainingsepochen pro Modell (Standard: 30)\n    --batch-size: Batch-Gr\u00f6\u00dfe f\u00fcr das Training (Standard: 32)\n    --early-stopping: Fr\u00fches Beenden bei Stagnation (Standard: True)\n    --visualize: Visualisierungen erstellen (Standard: True)",
+        "author": null,
+        "date": null
+      },
+      "dependencies": [
+        "numpy",
+        "torch",
+        "pandas",
+        "sklearn",
+        "matplotlib",
+        "seaborn",
+        "tqdm"
+      ]
+    },
+    {
+      "file_path": "/home/emilio/Documents/ai/pizza/scripts/automated_test_suite.py",
+      "file_name": "automated_test_suite.py",
+      "status": "warning",
+      "errors": [],
+      "warnings": [
+        "Execution test issue: Execution failed with error: Traceback (most recent call last):\n  File \"/home/emilio/Documents/ai/pizza/scripts/automated_test_suite.py\", line 53, in <module>\n    from src.pizza_detector import (\nImportError: cannot import name 'load_model' from 'src.pizza_detector' (/home/emilio/Documents/ai/pizza/src/pizza_detector.py)\n"
+      ],
+      "metadata": {
+        "has_docstring": true,
+        "docstring": "Automatisierte Test-Suite f\u00fcr das Pizza-Erkennungssystem\n\nDieses Skript f\u00fchrt Tests mit simulierten und echten Pizza-Bildern durch,\num die Genauigkeit des Klassifikationsmodells zu pr\u00fcfen und Regressionstests \nzu erm\u00f6glichen.\n\nEs generiert einen detaillierten Bericht \u00fcber die Genauigkeit und \nTestabdeckung f\u00fcr verschiedene Klassen und Bedingungen.\n\nVerwendung:\n    python scripts/automated_test_suite.py [--data-dir DIR] [--model-path FILE] \n                                          [--output-dir DIR] [--generate-images]\n                                          [--num-test-images N] [--detailed-report]\n\nOptionen:\n    --data-dir: Verzeichnis mit Testdaten (Standard: data/test)\n    --model-path: Pfad zum trainierten Modell (Standard: models/pizza_model_int8.pth)\n    --output-dir: Verzeichnis f\u00fcr Testergebnisse (Standard: output/test_results)\n    --generate-images: Testbilder automatisch generieren, wenn sie nicht existieren\n    --num-test-images: Anzahl der zu generierenden Testbilder pro Klasse\n    --detailed-report: Generiert einen ausf\u00fchrlichen HTML-Report mit Beispielbildern",
+        "author": null,
+        "date": null
+      },
+      "dependencies": [
+        "numpy",
+        "PIL",
+        "torch",
+        "cv2",
+        "sklearn",
+        "matplotlib",
+        "tqdm"
+      ]
+    },
+    {
+      "file_path": "/home/emilio/Documents/ai/pizza/scripts/compare_hard_swish.py",
+      "file_name": "compare_hard_swish.py",
+      "status": "passed",
+      "errors": [],
+      "warnings": [],
+      "metadata": {
+        "has_docstring": true,
+        "docstring": "Vergleich von ReLU und Hard-Swish Aktivierungsfunktionen im MicroPizzaNet\n\nDieses Skript vergleicht die originale MicroPizzaNet-Architektur mit einer\nVariante, die ReLU-Aktivierungen durch Hard-Swish ersetzt.\n\nHard-Swish ist eine effiziente Approximation der Swish-Aktivierungsfunktion:\nHard-Swish(x) = x * ReLU6(x + 3) / 6\n\nBekannt aus MobileNetV3, kann Hard-Swish die Modellgenauigkeit ohne signifikante\nSteigerung der Rechenkosten verbessern.\n\nAusgabe ist ein Vergleichsbericht mit Metriken wie:\n- Modellgr\u00f6\u00dfe (Float32 und Int8)\n- Accuracy\n- F1-Score\n- Inferenzzeit\n- RAM-Nutzung\n- Visualisierungen der Aktivierungen\n\nVerwendung:\n    python compare_hard_swish.py [--data-dir DIR] [--output-dir DIR] [--epochs N]\n\nOptionen:\n    --data-dir: Verzeichnis mit dem Bilddatensatz (Standard: data/augmented)\n    --output-dir: Verzeichnis f\u00fcr die Ergebnisse (Standard: output/hard_swish_comparison)\n    --epochs: Anzahl der Trainingsepochen pro Modell (Standard: 30)\n    --batch-size: Batch-Gr\u00f6\u00dfe f\u00fcr das Training (Standard: 32)\n    --early-stopping: Fr\u00fches Beenden bei Stagnation (Standard: True)\n    --visualize: Visualisierungen erstellen (Standard: True)",
+        "author": null,
+        "date": null
+      },
+      "dependencies": [
+        "numpy",
+        "torch",
+        "pandas",
+        "sklearn",
+        "matplotlib",
+        "seaborn",
+        "tqdm"
+      ]
+    },
+    {
+      "file_path": "/home/emilio/Documents/ai/pizza/scripts/demo_status_display.py",
+      "file_name": "demo_status_display.py",
+      "status": "warning",
+      "errors": [],
+      "warnings": [
+        "Execution test issue: Execution failed with error: Traceback (most recent call last):\n  File \"/home/emilio/Documents/ai/pizza/scripts/demo_status_display.py\", line 38, in <module>\n    from src.status_display import (\nModuleNotFoundError: No module named 'src.status_display'\n"
+      ],
+      "metadata": {
+        "has_docstring": true,
+        "docstring": "Demo-Skript f\u00fcr die Statusanzeige des Pizza-Erkennungssystems\n\nDieses Skript demonstriert die Verwendung der Statusanzeige (RGB-LED oder OLED)\nw\u00e4hrend eines simulierten Pizza-Erkennungsprozesses.\n\nVerwendung:\n    python scripts/demo_status_display.py [--display-type TYPE] [--hardware]\n\nOptionen:\n    --display-type: Typ der Anzeige ('rgb_led', 'oled', 'simulated', 'auto')\n    --hardware: Bei Verwendung echter Hardware-Pins (sonst Simulation)\n    --red-pin: GPIO-Pin f\u00fcr rote LED-Komponente (Standard: 16)\n    --green-pin: GPIO-Pin f\u00fcr gr\u00fcne LED-Komponente (Standard: 17)\n    --blue-pin: GPIO-Pin f\u00fcr blaue LED-Komponente (Standard: 18)\n    --common-anode: Verwende LED mit gemeinsamer Anode (Standard: True)\n    --i2c-id: I2C-Bus-ID f\u00fcr OLED (Standard: 0)\n    --sda-pin: SDA-Pin f\u00fcr OLED (Standard: 0)\n    --scl-pin: SCL-Pin f\u00fcr OLED (Standard: 1)",
+        "author": null,
+        "date": null
+      },
+      "dependencies": []
+    },
+    {
+      "file_path": "/home/emilio/Documents/ai/pizza/scripts/test_image_preprocessing.py",
+      "file_name": "test_image_preprocessing.py",
+      "status": "warning",
+      "errors": [],
+      "warnings": [
+        "Execution test issue: Execution failed with error: Traceback (most recent call last):\n  File \"/home/emilio/Documents/ai/pizza/scripts/test_image_preprocessing.py\", line 22, in <module>\n    from src.constants import INPUT_SIZE\nModuleNotFoundError: No module named 'src.constants'\n"
+      ],
+      "metadata": {
+        "has_docstring": true,
+        "docstring": "Test-Skript f\u00fcr die CLAHE-Bildvorverarbeitung.\nDemonstriert die Verbesserung der Bildqualit\u00e4t unter schwierigen Beleuchtungsbedingungen.",
+        "author": null,
+        "date": null
+      },
+      "dependencies": [
+        "PIL",
+        "matplotlib",
+        "numpy",
+        "cv2"
+      ]
+    },
+    {
+      "file_path": "/home/emilio/Documents/ai/pizza/scripts/test_pizza_detection.py",
+      "file_name": "test_pizza_detection.py",
+      "status": "warning",
+      "errors": [],
+      "warnings": [
+        "Execution test issue: Execution failed with error: Traceback (most recent call last):\n  File \"/home/emilio/Documents/ai/pizza/scripts/test_pizza_detection.py\", line 26, in <module>\n    from src.constants import INPUT_SIZE, IMAGE_MEAN, IMAGE_STD\nModuleNotFoundError: No module named 'src.constants'\n"
+      ],
+      "metadata": {
+        "has_docstring": true,
+        "docstring": "Test-Skript f\u00fcr das Pizza-Erkennungsmodell.\nL\u00e4dt das vortrainierte Modell und f\u00fchrt Inferenzen mit einigen Testbildern durch.",
+        "author": null,
+        "date": null
+      },
+      "dependencies": [
+        "numpy",
+        "PIL",
+        "torchvision",
+        "torch",
+        "cv2",
+        "matplotlib"
+      ]
+    },
+    {
+      "file_path": "/home/emilio/Documents/ai/pizza/scripts/demo_power_management.py",
+      "file_name": "demo_power_management.py",
+      "status": "warning",
+      "errors": [],
+      "warnings": [
+        "Execution test issue: Execution failed with error: Traceback (most recent call last):\n  File \"/home/emilio/Documents/ai/pizza/scripts/demo_power_management.py\", line 19, in <module>\n    from src.emulator import RP2040Emulator\nModuleNotFoundError: No module named 'src.emulator'\n"
+      ],
+      "metadata": {
+        "has_docstring": true,
+        "docstring": "Demo-Skript f\u00fcr das erweiterte adaptive Energiemanagement im RP2040 Emulator.\nDemonstriert temperaturbasierte und kontextabh\u00e4ngige Optimierungen sowie verbesserte Statistiken.",
+        "author": null,
+        "date": null
+      },
+      "dependencies": [
+        "matplotlib",
+        "numpy"
+      ]
+    },
+    {
+      "file_path": "/home/emilio/Documents/ai/pizza/scripts/analyze_performance_logs.py",
+      "file_name": "analyze_performance_logs.py",
+      "status": "warning",
+      "errors": [],
+      "warnings": [
+        "Missing dependencies: serial",
+        "Execution test issue: Execution failed with error: Traceback (most recent call last):\n  File \"/home/emilio/Documents/ai/pizza/scripts/analyze_performance_logs.py\", line 27, in <module>\n    import serial\nModuleNotFoundError: No module named 'serial'\n"
+      ],
+      "metadata": {
+        "has_docstring": true,
+        "docstring": "Performance-Log-Analyzer f\u00fcr das Pizza-Erkennungssystem\n\nDieses Skript analysiert die Performance-Logs, die vom RP2040 \n\u00fcber UART oder SD-Karte ausgegeben werden, und erstellt \ninformative Visualisierungen und Berichte.\n\nNutzung:\n    python analyze_performance_logs.py --input <Pfad-zur-Log-Datei> --output <Ausgabe-Verzeichnis>\n\nAutor: Pizza Detection Team\nDatum: 2025-05-05",
+        "author": "Pizza Detection Team",
+        "date": "2025-05-05"
+      },
+      "dependencies": [
+        "numpy",
+        "pandas",
+        "matplotlib",
+        "seaborn",
+        "serial"
+      ]
+    },
+    {
+      "file_path": "/home/emilio/Documents/ai/pizza/scripts/simulate_memory_constraints.py",
+      "file_name": "simulate_memory_constraints.py",
+      "status": "warning",
+      "errors": [],
+      "warnings": [
+        "Execution test issue: Execution failed with error: Traceback (most recent call last):\n  File \"/home/emilio/Documents/ai/pizza/scripts/simulate_memory_constraints.py\", line 17, in <module>\n    from src.constants import (\nModuleNotFoundError: No module named 'src.constants'\n"
+      ],
+      "metadata": {
+        "has_docstring": true,
+        "docstring": "Simulation der Speichernutzung f\u00fcr Modellkomplexit\u00e4t und Eingabebildgr\u00f6\u00dfen auf dem RP2040.",
+        "author": null,
+        "date": null
+      },
+      "dependencies": [
+        "matplotlib",
+        "numpy"
+      ]
+    },
+    {
+      "file_path": "/home/emilio/Documents/ai/pizza/scripts/simulate_clahe_resources.py",
+      "file_name": "simulate_clahe_resources.py",
+      "status": "warning",
+      "errors": [],
+      "warnings": [
+        "Execution test issue: Execution failed with error: Traceback (most recent call last):\n  File \"/home/emilio/Documents/ai/pizza/scripts/simulate_clahe_resources.py\", line 22, in <module>\n    from src.constants import INPUT_SIZE\nModuleNotFoundError: No module named 'src.constants'\n"
+      ],
+      "metadata": {
+        "has_docstring": true,
+        "docstring": "Simuliert und analysiert die Ressourcenanforderungen der CLAHE-Bildvorverarbeitung f\u00fcr RP2040.\n\nDieses Skript simuliert die Ausf\u00fchrung der CLAHE-Implementierung auf dem RP2040-Mikrocontroller\nund generiert einen Bericht \u00fcber Speichernutzung, Verarbeitungszeit und Temperatur.",
+        "author": null,
+        "date": null
+      },
+      "dependencies": [
+        "matplotlib",
+        "numpy"
+      ]
+    },
+    {
+      "file_path": "/home/emilio/Documents/ai/pizza/scripts/run_pizza_tests.py",
+      "file_name": "run_pizza_tests.py",
+      "status": "passed",
+      "errors": [],
+      "warnings": [],
+      "metadata": {
+        "has_docstring": true,
+        "docstring": "Test-Wrapper f\u00fcr die automatisierte Pizza-Erkennungs-Test-Suite\n\nEin einfaches Skript zum Ausf\u00fchren der Pizza-Erkennungs-Tests mit\nautomatischer Berichterstellung f\u00fcr die kontinuierliche Integration.\n\nVerwendung:\n    python scripts/run_pizza_tests.py [--detailed]\n\nOptionen:\n    --detailed: Erstellt einen detaillierten HTML-Bericht",
+        "author": null,
+        "date": null
+      },
+      "dependencies": []
+    },
+    {
+      "file_path": "/home/emilio/Documents/ai/pizza/scripts/run_pruning_clustering.py",
+      "file_name": "run_pruning_clustering.py",
+      "status": "warning",
+      "errors": [],
+      "warnings": [
+        "Missing dependencies: config, scripts"
+      ],
+      "metadata": {
+        "has_docstring": true,
+        "docstring": "Pizza Model Optimization: Pruning & Clustering\n----------------------------------------------\nDieses Skript f\u00fchrt eine komplette Optimierung des Pizza-Erkennungsmodells durch,\nindem es Gewichts-Pruning und Clustering kombiniert, um die Modellgr\u00f6\u00dfe zu reduzieren\nund die Inferenzgeschwindigkeit zu verbessern, w\u00e4hrend die Genauigkeit erhalten bleibt.\n\nVerwendung:\n    python run_pruning_clustering.py --model_path models/micro_pizza_model.pth --output_dir models/pruned\n\nDie Optimierung umfasst:\n1. Unstrukturiertes Pruning: Entfernt unwichtige Gewichte basierend auf ihrer Magnitude\n2. Strukturelles Pruning: Entfernt ganze Kan\u00e4le/Filter basierend auf ihrer Wichtigkeit\n3. Gewichts-Clustering: Fasst \u00e4hnliche Gewichtswerte zusammen\n4. Fine-Tuning: Trainiert das optimierte Modell nach, um die Genauigkeit wiederherzustellen",
+        "author": null,
+        "date": null
+      },
+      "dependencies": [
+        "tqdm",
+        "torch",
+        "config",
+        "scripts"
+      ]
+    },
+    {
+      "file_path": "/home/emilio/Documents/ai/pizza/scripts/augment_dataset.py",
+      "file_name": "augment_dataset.py",
+      "status": "warning",
+      "errors": [],
+      "warnings": [
+        "Missing or incomplete docstring"
+      ],
+      "metadata": {
+        "has_docstring": false,
+        "docstring": null,
+        "author": null,
+        "date": null
+      },
+      "dependencies": []
+    },
+    {
+      "file_path": "/home/emilio/Documents/ai/pizza/scripts/train_pizza_model.py",
+      "file_name": "train_pizza_model.py",
+      "status": "warning",
+      "errors": [],
+      "warnings": [
+        "Execution test issue: Execution failed with error: Traceback (most recent call last):\n  File \"/home/emilio/Documents/ai/pizza/scripts/train_pizza_model.py\", line 28, in <module>\n    from src.constants import INPUT_SIZE, IMAGE_MEAN, IMAGE_STD\nModuleNotFoundError: No module named 'src.constants'\n"
+      ],
+      "metadata": {
+        "has_docstring": true,
+        "docstring": "Trainingsscript f\u00fcr das Pizza-Erkennungsmodell.\nTrainiert ein MicroPizzaNet-Modell mit den verf\u00fcgbaren Daten.",
+        "author": null,
+        "date": null
+      },
+      "dependencies": [
+        "numpy",
+        "PIL",
+        "torchvision",
+        "torch",
+        "matplotlib"
+      ]
+    },
+    {
+      "file_path": "/home/emilio/Documents/ai/pizza/scripts/simulate_lighting_conditions.py",
+      "file_name": "simulate_lighting_conditions.py",
+      "status": "warning",
+      "errors": [],
+      "warnings": [
+        "Execution test issue: Execution failed with error: Traceback (most recent call last):\n  File \"/home/emilio/Documents/ai/pizza/scripts/simulate_lighting_conditions.py\", line 17, in <module>\n    from src.emulator import RP2040Emulator\nModuleNotFoundError: No module named 'src.emulator'\n"
+      ],
+      "metadata": {
+        "has_docstring": true,
+        "docstring": "Simulation der Pizza-Erkennung unter verschiedenen Lichtverh\u00e4ltnissen.",
+        "author": null,
+        "date": null
+      },
+      "dependencies": [
+        "matplotlib",
+        "numpy"
+      ]
+    },
+    {
+      "file_path": "/home/emilio/Documents/ai/pizza/scripts/quantization_aware_training.py",
+      "file_name": "quantization_aware_training.py",
+      "status": "passed",
+      "errors": [],
+      "warnings": [],
+      "metadata": {
+        "has_docstring": true,
+        "docstring": "Quantization-Aware Training (QAT) f\u00fcr das Pizza-Erkennungsmodell.\n\nDieses Skript implementiert Quantization-Aware Training f\u00fcr das MicroPizzaNet,\nbei dem w\u00e4hrend des Trainings die Effekte der Int8-Quantisierung (round-to-nearest-even)\nsimuliert werden. Dies verbessert die Genauigkeit des quantisierten Modells bei der\nBereitstellung auf dem RP2040-Mikrocontroller.",
+        "author": null,
+        "date": null
+      },
+      "dependencies": [
+        "matplotlib",
+        "tqdm",
+        "torch",
+        "numpy"
+      ]
+    },
+    {
+      "file_path": "/home/emilio/Documents/ai/pizza/scripts/simulate_power_consumption.py",
+      "file_name": "simulate_power_consumption.py",
+      "status": "warning",
+      "errors": [],
+      "warnings": [
+        "Execution test issue: Execution failed with error: Traceback (most recent call last):\n  File \"/home/emilio/Documents/ai/pizza/scripts/simulate_power_consumption.py\", line 18, in <module>\n    from src.constants import (\nModuleNotFoundError: No module named 'src.constants'\n"
+      ],
+      "metadata": {
+        "has_docstring": true,
+        "docstring": "Simulation der Batterielebensdauer unter verschiedenen Betriebsbedingungen f\u00fcr das RP2040-basierte Pizza-Erkennungssystem.",
+        "author": null,
+        "date": null
+      },
+      "dependencies": [
+        "matplotlib",
+        "numpy"
+      ]
+    },
+    {
+      "file_path": "/home/emilio/Documents/ai/pizza/scripts/generate_pizza_dataset.py",
+      "file_name": "generate_pizza_dataset.py",
+      "status": "warning",
+      "errors": [],
+      "warnings": [
+        "Execution test issue: Execution failed with error:   File \"/home/emilio/Documents/ai/pizza/scripts/generate_pizza_dataset.py\", line 253\n    image_size=args.image_size,\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^\nSyntaxError: keyword argument repeated: image_size\n"
+      ],
+      "metadata": {
+        "has_docstring": true,
+        "docstring": "Generate Pizza Cooking Dataset with Diffusion Models\n\nThis script is the main entry point for generating a high-quality synthetic\ndataset of pizza cooking images using state-of-the-art diffusion models.\nIt handles dataset configuration, model selection, and runs the generation\nprocess with advanced quality control.\n\nAuthor: GitHub Copilot (2025-05-10)",
+        "author": "GitHub Copilot (2025-05-10)",
+        "date": null
+      },
+      "dependencies": [
+        "accelerate",
+        "diffusers",
+        "torch",
+        "transformers"
+      ]
+    },
+    {
+      "file_path": "/home/emilio/Documents/ai/pizza/scripts/hyperparameter_search.py",
+      "file_name": "hyperparameter_search.py",
+      "status": "warning",
+      "errors": [],
+      "warnings": [
+        "Execution test issue: Execution failed with error: Traceback (most recent call last):\n  File \"/home/emilio/Documents/ai/pizza/scripts/hyperparameter_search.py\", line 45, in <module>\n    from src.metrics import ModelMetrics\nModuleNotFoundError: No module named 'src.metrics'\n"
+      ],
+      "metadata": {
+        "has_docstring": true,
+        "docstring": "Architektur-Hyperparameter-Suche f\u00fcr das Pizza-Erkennungssystem\n\nDieses Skript f\u00fchrt eine systematische Suche \u00fcber verschiedene Modellarchitekturen durch,\num die optimale Balance zwischen Genauigkeit, Modellgr\u00f6\u00dfe und Inferenzgeschwindigkeit\nauf dem RP2040-Mikrocontroller zu finden.\n\nVerwendung:\n    python hyperparameter_search.py [--data-dir DIR] [--output-dir DIR] [--epochs N]\n\nOptionen:\n    --data-dir: Verzeichnis mit dem Bilddatensatz (Standard: data/augmented)\n    --output-dir: Verzeichnis f\u00fcr die Ergebnisse (Standard: output/hyperparameter_search)\n    --epochs: Anzahl der Trainingsepochen pro Modell (Standard: 25)\n    --batch-size: Batch-Gr\u00f6\u00dfe f\u00fcr das Training (Standard: 32)\n    --search-size: Anzahl der zu testenden Konfigurationen (small/medium/full, Standard: medium)\n    --early-stopping: Fr\u00fches Beenden bei Stagnation (Standard: True)\n    --visualize: Visualisierungen erstellen (Standard: True)",
+        "author": null,
+        "date": null
+      },
+      "dependencies": [
+        "numpy",
+        "torch",
+        "pandas",
+        "sklearn",
+        "matplotlib",
+        "seaborn",
+        "tqdm"
+      ]
+    },
+    {
+      "file_path": "/home/emilio/Documents/ai/pizza/scripts/extract_frames.py",
+      "file_name": "extract_frames.py",
+      "status": "warning",
+      "errors": [],
+      "warnings": [
+        "Missing or incomplete docstring"
+      ],
+      "metadata": {
+        "has_docstring": false,
+        "docstring": null,
+        "author": null,
+        "date": null
+      },
+      "dependencies": []
+    },
+    {
+      "file_path": "/home/emilio/Documents/ai/pizza/scripts/ci/validate_integration.py",
+      "file_name": "validate_integration.py",
+      "status": "passed",
+      "errors": [],
+      "warnings": [],
+      "metadata": {
+        "has_docstring": true,
+        "docstring": "Integration Validation Tool for the Pizza Detection CI/CD Pipeline\n\nThis script analyzes the relationships between scripts and verifies that they \nproperly integrate with each other in the pipeline.\n\nUsage:\n    python validate_integration.py --output REPORT_FILE --status-file STATUS_FILE [--log-dir LOG_DIR]",
+        "author": null,
+        "date": null
+      },
+      "dependencies": []
+    },
+    {
+      "file_path": "/home/emilio/Documents/ai/pizza/scripts/ci/validate_scripts.py",
+      "file_name": "validate_scripts.py",
+      "status": "passed",
+      "errors": [],
+      "warnings": [],
+      "metadata": {
+        "has_docstring": true,
+        "docstring": "Script Validation Tool for the Pizza Detection CI/CD Pipeline\n\nThis script validates all Python scripts in the specified directory:\n- Checks for syntax errors\n- Verifies required dependencies are installed\n- Tests basic execution\n- Validates script metadata (docstrings, etc.)\n\nUsage:\n    python validate_scripts.py --output REPORT_FILE --scripts-dir SCRIPTS_DIR [--log-dir LOG_DIR]",
+        "author": null,
+        "date": null
+      },
+      "dependencies": [
+        "pkg_resources"
+      ]
+    },
+    {
+      "file_path": "/home/emilio/Documents/ai/pizza/scripts/ci/generate_pipeline_report.py",
+      "file_name": "generate_pipeline_report.py",
+      "status": "warning",
+      "errors": [],
+      "warnings": [
+        "Missing or incomplete docstring"
+      ],
+      "metadata": {
+        "has_docstring": false,
+        "docstring": null,
+        "author": null,
+        "date": null
+      },
+      "dependencies": []
+    },
+    {
+      "file_path": "/home/emilio/Documents/ai/pizza/scripts/model_optimization/weight_pruning.py",
+      "file_name": "weight_pruning.py",
+      "status": "warning",
+      "errors": [],
+      "warnings": [
+        "Missing dependencies: config"
+      ],
+      "metadata": {
+        "has_docstring": true,
+        "docstring": "Weight Pruning & Clustering f\u00fcr MicroPizzaNet\n---------------------------------------------\nImplementiert strukturelle und unstrukturelle Pruning-Techniken sowie\nWeight-Clustering zur Optimierung des Modells f\u00fcr RP2040.\n\nDie Strategie umfasst:\n1. Unstructured Pruning: Entfernt individuelle unwichtige Gewichte (kleiner Magnitude)\n2. Structured Pruning: Entfernt ganze Kan\u00e4le/Filter basierend auf ihrer Wichtigkeit\n3. Weight Clustering: Gruppiert \u00e4hnliche Gewichte, um die Parameter-Redundanz zu reduzieren\n\nKombiniert f\u00fchren diese Techniken zu kleineren Modellen mit schnellerer Inferenz\nbei minimalem Genauigkeitsverlust.",
+        "author": null,
+        "date": null
+      },
+      "dependencies": [
+        "config",
+        "numpy",
+        "torch",
+        "sklearn",
+        "matplotlib",
+        "tqdm"
+      ]
+    },
+    {
+      "file_path": "/home/emilio/Documents/ai/pizza/scripts/early_exit/micropizzanet_early_exit.py",
+      "file_name": "micropizzanet_early_exit.py",
+      "status": "passed",
+      "errors": [],
+      "warnings": [],
+      "metadata": {
+        "has_docstring": true,
+        "docstring": "MicroPizzaNet mit Early Exit Branch nach Block 3\nImplementiert dynamische Inferenz f\u00fcr RP2040 zur Stromeinsparung\n\nDiese Implementierung f\u00fcgt einen Early-Exit-Branch nach dem zweiten Block\nder MicroPizzaNet-Architektur hinzu, der bei hoher Konfidenzschwelle \neine fr\u00fchzeitige Klassifizierung erm\u00f6glicht, um Rechenzeit zu sparen.",
+        "author": null,
+        "date": null
+      },
+      "dependencies": [
+        "matplotlib",
+        "tqdm",
+        "torch",
+        "numpy"
+      ]
+    },
+    {
+      "file_path": "/home/emilio/Documents/ai/pizza/models/rp2040_export/verify_model.py",
+      "file_name": "verify_model.py",
+      "status": "warning",
+      "errors": [
+        "Syntax error: Syntax error at line 52: invalid syntax. Perhaps you forgot a comma?"
+      ],
+      "warnings": [
+        "Missing or incomplete docstring"
+      ],
+      "metadata": {
+        "error": "invalid syntax. Perhaps you forgot a comma? (<unknown>, line 52)"
+      },
+      "dependencies": []
+    },
+    {
+      "file_path": "/home/emilio/Documents/ai/pizza/src/pizza-baking-detection-final.py",
+      "file_name": "pizza-baking-detection-final.py",
+      "status": "warning",
+      "errors": [],
+      "warnings": [
+        "Missing dependencies: onnx_tf",
+        "Execution test issue: Execution failed with error: 2025-05-13 22:18:15,289 - INFO - ================================================================================\n2025-05-13 22:18:15,289 - INFO - RP2040 PIZZA-ERKENNUNGSSYSTEM - DETAILLIERTE KONFIGURATION\n2025-05-13 22:18:15,289 - INFO - ================================================================================\n2025-05-13 22:18:15,289 - INFO - Hardware: RP2040 - 133MHz, 264KB RAM, 2048KB Flash\n2025-05-13 22:18:15,289 - INFO - Kamera: OV2640 - 320x240, 7 FPS\n2025-05-13 22:18:15,289 - INFO - Stromversorgung: CR123A - 1500mAh, 8.33h aktiv, 3000.00h standby\n2025-05-13 22:18:15,289 - INFO - Modellparameter: 48x48 Eingabegr\u00f6\u00dfe, 8-Bit Quantisierung\n2025-05-13 22:18:15,289 - INFO - Speicherbeschr\u00e4nkungen: Max. 180KB Modellgr\u00f6\u00dfe, 100KB Laufzeit-RAM\n2025-05-13 22:18:15,289 - INFO - ================================================================================\n2025-05-13 22:18:15,289 - ERROR - Fehler im Optimierungsprozess: [Errno 2] No such file or directory: 'augmented_pizza'\nTraceback (most recent call last):\n  File \"/home/emilio/Documents/ai/pizza/src/pizza-baking-detection-final.py\", line 2230, in main\n    analyzer = PizzaDatasetAnalysis(config.DATA_DIR)\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/emilio/Documents/ai/pizza/src/pizza-baking-detection-final.py\", line 107, in __init__\n    self.class_dirs = [d for d in os.listdir(data_dir)\n                                 ^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: 'augmented_pizza'\nTraceback (most recent call last):\n  File \"/home/emilio/Documents/ai/pizza/src/pizza-baking-detection-final.py\", line 2302, in <module>\n    main()\n  File \"/home/emilio/Documents/ai/pizza/src/pizza-baking-detection-final.py\", line 2230, in main\n    analyzer = PizzaDatasetAnalysis(config.DATA_DIR)\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/emilio/Documents/ai/pizza/src/pizza-baking-detection-final.py\", line 107, in __init__\n    self.class_dirs = [d for d in os.listdir(data_dir) \n                                  ^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: 'augmented_pizza'\n",
+        "Missing or incomplete docstring"
+      ],
+      "metadata": {
+        "has_docstring": false,
+        "docstring": null,
+        "author": null,
+        "date": null
+      },
+      "dependencies": [
+        "numpy",
+        "PIL",
+        "torchvision",
+        "torch",
+        "onnx",
+        "matplotlib",
+        "onnx_tf",
+        "tensorflow",
+        "tqdm"
+      ]
+    },
+    {
+      "file_path": "/home/emilio/Documents/ai/pizza/src/__init__.py",
+      "file_name": "__init__.py",
+      "status": "warning",
+      "errors": [],
+      "warnings": [
+        "Missing or incomplete docstring"
+      ],
+      "metadata": {
+        "has_docstring": false,
+        "docstring": null,
+        "author": null,
+        "date": null
+      },
+      "dependencies": []
+    },
+    {
+      "file_path": "/home/emilio/Documents/ai/pizza/src/pizza_detector.py",
+      "file_name": "pizza_detector.py",
+      "status": "warning",
+      "errors": [],
+      "warnings": [
+        "Missing dependencies: onnx_tf",
+        "Execution test issue: Execution failed with error: 2025-05-13 22:18:17,426 - INFO - ================================================================================\n2025-05-13 22:18:17,426 - INFO - RP2040 PIZZA-ERKENNUNGSSYSTEM - DETAILLIERTE KONFIGURATION\n2025-05-13 22:18:17,426 - INFO - ================================================================================\n2025-05-13 22:18:17,426 - INFO - Hardware: RP2040 - 133MHz, 264KB RAM, 2048KB Flash\n2025-05-13 22:18:17,426 - INFO - Kamera: OV2640 - 320x240, 7 FPS\n2025-05-13 22:18:17,426 - INFO - Stromversorgung: CR123A - 1500mAh, 8.33h aktiv, 3000.00h standby\n2025-05-13 22:18:17,426 - INFO - Modellparameter: 48x48 Eingabegr\u00f6\u00dfe, 8-Bit Quantisierung\n2025-05-13 22:18:17,426 - INFO - Speicherbeschr\u00e4nkungen: Max. 180KB Modellgr\u00f6\u00dfe, 100KB Laufzeit-RAM\n2025-05-13 22:18:17,426 - INFO - ================================================================================\n2025-05-13 22:18:17,426 - ERROR - Fehler im Optimierungsprozess: [Errno 2] No such file or directory: 'augmented_pizza'\nTraceback (most recent call last):\n  File \"/home/emilio/Documents/ai/pizza/src/pizza_detector.py\", line 2475, in main\n    analyzer = PizzaDatasetAnalysis(config.DATA_DIR)\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/emilio/Documents/ai/pizza/src/pizza_detector.py\", line 107, in __init__\n    self.class_dirs = [d for d in os.listdir(data_dir)\n                                 ^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: 'augmented_pizza'\nTraceback (most recent call last):\n  File \"/home/emilio/Documents/ai/pizza/src/pizza_detector.py\", line 2547, in <module>\n    main()\n  File \"/home/emilio/Documents/ai/pizza/src/pizza_detector.py\", line 2475, in main\n    analyzer = PizzaDatasetAnalysis(config.DATA_DIR)\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/emilio/Documents/ai/pizza/src/pizza_detector.py\", line 107, in __init__\n    self.class_dirs = [d for d in os.listdir(data_dir) \n                                  ^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: 'augmented_pizza'\n",
+        "Missing or incomplete docstring"
+      ],
+      "metadata": {
+        "has_docstring": false,
+        "docstring": null,
+        "author": null,
+        "date": null
+      },
+      "dependencies": [
+        "numpy",
+        "PIL",
+        "torchvision",
+        "torch",
+        "onnx",
+        "matplotlib",
+        "onnx_tf",
+        "tensorflow",
+        "tqdm"
+      ]
+    },
+    {
+      "file_path": "/home/emilio/Documents/ai/pizza/src/emulation/test_frame_buffer.py",
+      "file_name": "test_frame_buffer.py",
+      "status": "warning",
+      "errors": [],
+      "warnings": [
+        "Missing dependencies: frame_buffer"
+      ],
+      "metadata": {
+        "has_docstring": true,
+        "docstring": "Tests f\u00fcr die Framebuffer-Implementierung.",
+        "author": null,
+        "date": null
+      },
+      "dependencies": [
+        "frame_buffer",
+        "numpy"
+      ]
+    },
+    {
+      "file_path": "/home/emilio/Documents/ai/pizza/src/emulation/emulator-test.py",
+      "file_name": "emulator-test.py",
+      "status": "warning",
+      "errors": [],
+      "warnings": [
+        "Missing or incomplete docstring"
+      ],
+      "metadata": {
+        "has_docstring": false,
+        "docstring": null,
+        "author": null,
+        "date": null
+      },
+      "dependencies": [
+        "PIL",
+        "numpy"
+      ]
+    },
+    {
+      "file_path": "/home/emilio/Documents/ai/pizza/src/emulation/emulator.py",
+      "file_name": "emulator.py",
+      "status": "warning",
+      "errors": [],
+      "warnings": [
+        "Missing dependencies: constants, exceptions, frame_buffer, power_manager",
+        "Execution test issue: Execution failed with error: Traceback (most recent call last):\n  File \"/home/emilio/Documents/ai/pizza/src/emulation/emulator.py\", line 12, in <module>\n    from .constants import (\nImportError: attempted relative import with no known parent package\n"
+      ],
+      "metadata": {
+        "has_docstring": true,
+        "docstring": "Hardware-Emulator f\u00fcr RP2040 und OV2040 Kamera.",
+        "author": null,
+        "date": null
+      },
+      "dependencies": [
+        "numpy",
+        "constants",
+        "exceptions",
+        "frame_buffer",
+        "power_manager"
+      ]
+    },
+    {
+      "file_path": "/home/emilio/Documents/ai/pizza/src/emulation/frame_buffer.py",
+      "file_name": "frame_buffer.py",
+      "status": "passed",
+      "errors": [],
+      "warnings": [],
+      "metadata": {
+        "has_docstring": true,
+        "docstring": "Frame Buffer Simulator f\u00fcr OV2640 Kamera auf RP2040.\n\nImplementiert eine pr\u00e4zise Simulation des Kamera-Framebuffers im RAM,\nmit korrekter Speicherausrichtung, Padding und Unterst\u00fctzung f\u00fcr verschiedene Pixelformate.",
+        "author": null,
+        "date": null
+      },
+      "dependencies": [
+        "numpy"
+      ]
+    },
+    {
+      "file_path": "/home/emilio/Documents/ai/pizza/src/analysis/metrics.py",
+      "file_name": "metrics.py",
+      "status": "warning",
+      "errors": [],
+      "warnings": [
+        "Missing dependencies: constants, exceptions",
+        "Execution test issue: Execution failed with error: Traceback (most recent call last):\n  File \"/home/emilio/Documents/ai/pizza/src/analysis/metrics.py\", line 16, in <module>\n    from .types import (\nImportError: attempted relative import with no known parent package\n"
+      ],
+      "metadata": {
+        "has_docstring": true,
+        "docstring": "Leistungsmetriken und Evaluierungswerkzeuge.",
+        "author": null,
+        "date": null
+      },
+      "dependencies": [
+        "numpy",
+        "constants",
+        "exceptions",
+        "torch",
+        "sklearn"
+      ]
+    },
+    {
+      "file_path": "/home/emilio/Documents/ai/pizza/src/chatlist_ki/models.py",
+      "file_name": "models.py",
+      "status": "warning",
+      "errors": [],
+      "warnings": [
+        "Missing or incomplete docstring"
+      ],
+      "metadata": {
+        "has_docstring": false,
+        "docstring": null,
+        "author": null,
+        "date": null
+      },
+      "dependencies": [
+        "sqlalchemy"
+      ]
+    },
+    {
+      "file_path": "/home/emilio/Documents/ai/pizza/src/chatlist_ki/__main__.py",
+      "file_name": "__main__.py",
+      "status": "warning",
+      "errors": [],
+      "warnings": [
+        "Missing dependencies: database, chat_interface, models",
+        "Execution test issue: Execution failed with error: Traceback (most recent call last):\n  File \"/home/emilio/Documents/ai/pizza/src/chatlist_ki/__main__.py\", line 1, in <module>\n    from .chat_interface import ChatInterface\nImportError: attempted relative import with no known parent package\n",
+        "Missing or incomplete docstring"
+      ],
+      "metadata": {
+        "has_docstring": false,
+        "docstring": null,
+        "author": null,
+        "date": null
+      },
+      "dependencies": [
+        "database",
+        "chat_interface",
+        "models"
+      ]
+    },
+    {
+      "file_path": "/home/emilio/Documents/ai/pizza/src/chatlist_ki/__init__.py",
+      "file_name": "__init__.py",
+      "status": "warning",
+      "errors": [],
+      "warnings": [
+        "Missing dependencies: models, database, chat_interface",
+        "Execution test issue: Execution failed with error: Traceback (most recent call last):\n  File \"/home/emilio/Documents/ai/pizza/src/chatlist_ki/__init__.py\", line 1, in <module>\n    from .models import Task, TaskStatus\nImportError: attempted relative import with no known parent package\n",
+        "Missing or incomplete docstring"
+      ],
+      "metadata": {
+        "has_docstring": false,
+        "docstring": null,
+        "author": null,
+        "date": null
+      },
+      "dependencies": [
+        "models",
+        "database",
+        "chat_interface"
+      ]
+    },
+    {
+      "file_path": "/home/emilio/Documents/ai/pizza/src/chatlist_ki/api.py",
+      "file_name": "api.py",
+      "status": "warning",
+      "errors": [],
+      "warnings": [
+        "Missing dependencies: database, models",
+        "Execution test issue: Execution failed with error: Traceback (most recent call last):\n  File \"/home/emilio/Documents/ai/pizza/src/chatlist_ki/api.py\", line 5, in <module>\n    from .database import Database, TaskManager\nImportError: attempted relative import with no known parent package\n",
+        "Missing or incomplete docstring"
+      ],
+      "metadata": {
+        "has_docstring": false,
+        "docstring": null,
+        "author": null,
+        "date": null
+      },
+      "dependencies": [
+        "database",
+        "fastapi",
+        "pydantic",
+        "models"
+      ]
+    },
+    {
+      "file_path": "/home/emilio/Documents/ai/pizza/src/chatlist_ki/database.py",
+      "file_name": "database.py",
+      "status": "warning",
+      "errors": [],
+      "warnings": [
+        "Missing dependencies: models",
+        "Execution test issue: Execution failed with error: Traceback (most recent call last):\n  File \"/home/emilio/Documents/ai/pizza/src/chatlist_ki/database.py\", line 4, in <module>\n    from .models import Base, Task, TaskStatus\nImportError: attempted relative import with no known parent package\n",
+        "Missing or incomplete docstring"
+      ],
+      "metadata": {
+        "has_docstring": false,
+        "docstring": null,
+        "author": null,
+        "date": null
+      },
+      "dependencies": [
+        "sqlalchemy",
+        "dotenv",
+        "models"
+      ]
+    },
+    {
+      "file_path": "/home/emilio/Documents/ai/pizza/src/chatlist_ki/chat_interface.py",
+      "file_name": "chat_interface.py",
+      "status": "warning",
+      "errors": [],
+      "warnings": [
+        "Missing dependencies: database, models",
+        "Execution test issue: Execution failed with error: Traceback (most recent call last):\n  File \"/home/emilio/Documents/ai/pizza/src/chatlist_ki/chat_interface.py\", line 2, in <module>\n    from .database import TaskManager, Database\nImportError: attempted relative import with no known parent package\n",
+        "Missing or incomplete docstring"
+      ],
+      "metadata": {
+        "has_docstring": false,
+        "docstring": null,
+        "author": null,
+        "date": null
+      },
+      "dependencies": [
+        "database",
+        "models"
+      ]
+    },
+    {
+      "file_path": "/home/emilio/Documents/ai/pizza/src/visualization/status_display.py",
+      "file_name": "status_display.py",
+      "status": "warning",
+      "errors": [],
+      "warnings": [
+        "Missing dependencies: machine, ssd1306",
+        "Execution test issue: Execution failed with error: Traceback (most recent call last):\n  File \"/home/emilio/Documents/ai/pizza/src/visualization/status_display.py\", line 22, in <module>\n    from src.types import InferenceResult\nModuleNotFoundError: No module named 'src'\n"
+      ],
+      "metadata": {
+        "has_docstring": true,
+        "docstring": "Status-Anzeige f\u00fcr das Pizza-Erkennungssystem\n\nDieses Modul erm\u00f6glicht die Ansteuerung einer RGB-LED oder eines OLED-Displays\nzur Anzeige von Status-Informationen des Pizza-Erkennungssystems.\n\nEs unterst\u00fctzt sowohl Software-Simulation f\u00fcr Testzwecke als auch\ndie direkte Hardwareansteuerung auf dem RP2040.\n\nAutor: Pizza Detection Team\nDatum: 2025-05-05",
+        "author": "Pizza Detection Team",
+        "date": "2025-05-05"
+      },
+      "dependencies": [
+        "machine",
+        "ssd1306"
+      ]
+    },
+    {
+      "file_path": "/home/emilio/Documents/ai/pizza/src/visualization/visualization.py",
+      "file_name": "visualization.py",
+      "status": "warning",
+      "errors": [],
+      "warnings": [
+        "Missing dependencies: constants",
+        "Execution test issue: Execution failed with error: Traceback (most recent call last):\n  File \"/home/emilio/Documents/ai/pizza/src/visualization/visualization.py\", line 15, in <module>\n    from .types import (\nImportError: attempted relative import with no known parent package\n"
+      ],
+      "metadata": {
+        "has_docstring": true,
+        "docstring": "Visualisierungsfunktionen f\u00fcr das Pizzaerkennungssystem.",
+        "author": null,
+        "date": null
+      },
+      "dependencies": [
+        "numpy",
+        "constants",
+        "torchviz",
+        "torch",
+        "cv2",
+        "matplotlib",
+        "seaborn"
+      ]
+    },
+    {
+      "file_path": "/home/emilio/Documents/ai/pizza/src/utils/exceptions.py",
+      "file_name": "exceptions.py",
+      "status": "passed",
+      "errors": [],
+      "warnings": [],
+      "metadata": {
+        "has_docstring": true,
+        "docstring": "Benutzerdefinierte Ausnahmen f\u00fcr das Pizza-Erkennungssystem.",
+        "author": null,
+        "date": null
+      },
+      "dependencies": []
+    },
+    {
+      "file_path": "/home/emilio/Documents/ai/pizza/src/utils/types.py",
+      "file_name": "types.py",
+      "status": "warning",
+      "errors": [],
+      "warnings": [
+        "Execution test issue: Execution failed with error: Traceback (most recent call last):\n  File \"/home/emilio/Documents/ai/pizza/src/utils/types.py\", line 5, in <module>\n    from typing import Dict, List, Tuple, Optional, Union, NamedTuple, Callable\n  File \"/usr/lib/python3.12/typing.py\", line 27, in <module>\n    import contextlib\n  File \"/usr/lib/python3.12/contextlib.py\", line 7, in <module>\n    from functools import wraps\n  File \"/usr/lib/python3.12/functools.py\", line 22, in <module>\n    from types import GenericAlias\n  File \"/home/emilio/Documents/ai/pizza/src/utils/types.py\", line 5, in <module>\n    from typing import Dict, List, Tuple, Optional, Union, NamedTuple, Callable\nImportError: cannot import name 'Dict' from partially initialized module 'typing' (most likely due to a circular import) (/usr/lib/python3.12/typing.py)\n"
+      ],
+      "metadata": {
+        "has_docstring": true,
+        "docstring": "Typdefinitionen f\u00fcr das Pizzaerkennungssystem.",
+        "author": null,
+        "date": null
+      },
+      "dependencies": [
+        "torch",
+        "numpy"
+      ]
+    },
+    {
+      "file_path": "/home/emilio/Documents/ai/pizza/src/utils/power_manager.py",
+      "file_name": "power_manager.py",
+      "status": "warning",
+      "errors": [],
+      "warnings": [
+        "Missing dependencies: devices, constants, metrics",
+        "Execution test issue: Execution failed with error: Traceback (most recent call last):\n  File \"/home/emilio/Documents/ai/pizza/src/utils/power_manager.py\", line 7, in <module>\n    import logging\n  File \"/usr/lib/python3.12/logging/__init__.py\", line 26, in <module>\n    import sys, os, time, io, re, traceback, warnings, weakref, collections.abc\n  File \"/usr/lib/python3.12/re/__init__.py\", line 124, in <module>\n    import enum\n  File \"/usr/lib/python3.12/enum.py\", line 3, in <module>\n    from types import MappingProxyType, DynamicClassAttribute\n  File \"/home/emilio/Documents/ai/pizza/src/utils/types.py\", line 5, in <module>\n    from typing import Dict, List, Tuple, Optional, Union, NamedTuple, Callable\n  File \"/usr/lib/python3.12/typing.py\", line 27, in <module>\n    import contextlib\n  File \"/usr/lib/python3.12/contextlib.py\", line 7, in <module>\n    from functools import wraps\n  File \"/usr/lib/python3.12/functools.py\", line 22, in <module>\n    from types import GenericAlias\nImportError: cannot import name 'GenericAlias' from partially initialized module 'types' (most likely due to a circular import) (/home/emilio/Documents/ai/pizza/src/utils/types.py)\n"
+      ],
+      "metadata": {
+        "has_docstring": true,
+        "docstring": "Intelligentes Energiemanagement f\u00fcr das RP2040-basierte Pizza-Erkennungssystem.\nImplementiert adaptive Abtastraten und optimierte Duty-Cycles f\u00fcr verbesserte Batterielebensdauer.",
+        "author": null,
+        "date": null
+      },
+      "dependencies": [
+        "devices",
+        "numpy",
+        "constants",
+        "metrics"
+      ]
+    },
+    {
+      "file_path": "/home/emilio/Documents/ai/pizza/src/utils/devices.py",
+      "file_name": "devices.py",
+      "status": "warning",
+      "errors": [],
+      "warnings": [
+        "Missing dependencies: constants, exceptions",
+        "Execution test issue: Execution failed with error: Traceback (most recent call last):\n  File \"/home/emilio/Documents/ai/pizza/src/utils/devices.py\", line 6, in <module>\n    import logging\n  File \"/usr/lib/python3.12/logging/__init__.py\", line 26, in <module>\n    import sys, os, time, io, re, traceback, warnings, weakref, collections.abc\n  File \"/usr/lib/python3.12/re/__init__.py\", line 124, in <module>\n    import enum\n  File \"/usr/lib/python3.12/enum.py\", line 3, in <module>\n    from types import MappingProxyType, DynamicClassAttribute\n  File \"/home/emilio/Documents/ai/pizza/src/utils/types.py\", line 5, in <module>\n    from typing import Dict, List, Tuple, Optional, Union, NamedTuple, Callable\n  File \"/usr/lib/python3.12/typing.py\", line 27, in <module>\n    import contextlib\n  File \"/usr/lib/python3.12/contextlib.py\", line 7, in <module>\n    from functools import wraps\n  File \"/usr/lib/python3.12/functools.py\", line 22, in <module>\n    from types import GenericAlias\nImportError: cannot import name 'GenericAlias' from partially initialized module 'types' (most likely due to a circular import) (/home/emilio/Documents/ai/pizza/src/utils/types.py)\n"
+      ],
+      "metadata": {
+        "has_docstring": true,
+        "docstring": "Hardware-Management f\u00fcr RP2040 und OV2640 Kamera.",
+        "author": null,
+        "date": null
+      },
+      "dependencies": [
+        "numpy",
+        "constants",
+        "exceptions"
+      ]
+    },
+    {
+      "file_path": "/home/emilio/Documents/ai/pizza/src/utils/validation.py",
+      "file_name": "validation.py",
+      "status": "warning",
+      "errors": [],
+      "warnings": [
+        "Missing dependencies: constants, exceptions",
+        "Execution test issue: Execution failed with error: Traceback (most recent call last):\n  File \"/home/emilio/Documents/ai/pizza/src/utils/validation.py\", line 6, in <module>\n    import json\n  File \"/usr/lib/python3.12/json/__init__.py\", line 106, in <module>\n    from .decoder import JSONDecoder, JSONDecodeError\n  File \"/usr/lib/python3.12/json/decoder.py\", line 3, in <module>\n    import re\n  File \"/usr/lib/python3.12/re/__init__.py\", line 124, in <module>\n    import enum\n  File \"/usr/lib/python3.12/enum.py\", line 3, in <module>\n    from types import MappingProxyType, DynamicClassAttribute\n  File \"/home/emilio/Documents/ai/pizza/src/utils/types.py\", line 5, in <module>\n    from typing import Dict, List, Tuple, Optional, Union, NamedTuple, Callable\n  File \"/usr/lib/python3.12/typing.py\", line 27, in <module>\n    import contextlib\n  File \"/usr/lib/python3.12/contextlib.py\", line 7, in <module>\n    from functools import wraps\n  File \"/usr/lib/python3.12/functools.py\", line 22, in <module>\n    from types import GenericAlias\nImportError: cannot import name 'GenericAlias' from partially initialized module 'types' (most likely due to a circular import) (/home/emilio/Documents/ai/pizza/src/utils/types.py)\n"
+      ],
+      "metadata": {
+        "has_docstring": true,
+        "docstring": "Validierungsfunktionen f\u00fcr Eingaben, Konfigurationen und Systemstatus.",
+        "author": null,
+        "date": null
+      },
+      "dependencies": [
+        "psutil",
+        "numpy",
+        "constants",
+        "exceptions",
+        "torch"
+      ]
+    },
+    {
+      "file_path": "/home/emilio/Documents/ai/pizza/src/utils/memory.py",
+      "file_name": "memory.py",
+      "status": "warning",
+      "errors": [],
+      "warnings": [
+        "Missing dependencies: constants, exceptions",
+        "Execution test issue: Execution failed with error: Traceback (most recent call last):\n  File \"/home/emilio/Documents/ai/pizza/src/utils/memory.py\", line 5, in <module>\n    import torch\n  File \"/home/emilio/Documents/ai/pizza/.venv/lib/python3.12/site-packages/torch/__init__.py\", line 14, in <module>\n    import ctypes\n  File \"/usr/lib/python3.12/ctypes/__init__.py\", line 4, in <module>\n    import types as _types\n  File \"/home/emilio/Documents/ai/pizza/src/utils/types.py\", line 5, in <module>\n    from typing import Dict, List, Tuple, Optional, Union, NamedTuple, Callable\n  File \"/usr/lib/python3.12/typing.py\", line 27, in <module>\n    import contextlib\n  File \"/usr/lib/python3.12/contextlib.py\", line 7, in <module>\n    from functools import wraps\n  File \"/usr/lib/python3.12/functools.py\", line 22, in <module>\n    from types import GenericAlias\nImportError: cannot import name 'GenericAlias' from partially initialized module 'types' (most likely due to a circular import) (/home/emilio/Documents/ai/pizza/src/utils/types.py)\n"
+      ],
+      "metadata": {
+        "has_docstring": true,
+        "docstring": "Speichermanagement und Ressourcensch\u00e4tzung f\u00fcr RP2040-Deployment.",
+        "author": null,
+        "date": null
+      },
+      "dependencies": [
+        "torch",
+        "numpy",
+        "constants",
+        "exceptions"
+      ]
+    },
+    {
+      "file_path": "/home/emilio/Documents/ai/pizza/src/utils/temporal_smoother.py",
+      "file_name": "temporal_smoother.py",
+      "status": "warning",
+      "errors": [],
+      "warnings": [
+        "Execution test issue: Execution failed with error: Traceback (most recent call last):\n  File \"/home/emilio/Documents/ai/pizza/src/utils/temporal_smoother.py\", line 9, in <module>\n    import numpy as np\n  File \"/home/emilio/Documents/ai/pizza/.venv/lib/python3.12/site-packages/numpy/__init__.py\", line 92, in <module>\n    from ._globals import _NoValue, _CopyMode\n  File \"/home/emilio/Documents/ai/pizza/.venv/lib/python3.12/site-packages/numpy/_globals.py\", line 18, in <module>\n    import enum\n  File \"/usr/lib/python3.12/enum.py\", line 3, in <module>\n    from types import MappingProxyType, DynamicClassAttribute\n  File \"/home/emilio/Documents/ai/pizza/src/utils/types.py\", line 5, in <module>\n    from typing import Dict, List, Tuple, Optional, Union, NamedTuple, Callable\n  File \"/usr/lib/python3.12/typing.py\", line 27, in <module>\n    import contextlib\n  File \"/usr/lib/python3.12/contextlib.py\", line 7, in <module>\n    from functools import wraps\n  File \"/usr/lib/python3.12/functools.py\", line 22, in <module>\n    from types import GenericAlias\nImportError: cannot import name 'GenericAlias' from partially initialized module 'types' (most likely due to a circular import) (/home/emilio/Documents/ai/pizza/src/utils/types.py)\n"
+      ],
+      "metadata": {
+        "has_docstring": true,
+        "docstring": "Temporal Smoothing f\u00fcr Mehrbild-Entscheidung in der Pizza-Erkennung.\n\nDieses Modul implementiert verschiedene Strategien f\u00fcr die Kombination mehrerer\naufeinanderfolgender Inferenz-Ergebnisse, um die Genauigkeit und Robustheit\nder Pizza-Erkennung zu erh\u00f6hen.",
+        "author": null,
+        "date": null
+      },
+      "dependencies": [
+        "torch",
+        "numpy"
+      ]
+    },
+    {
+      "file_path": "/home/emilio/Documents/ai/pizza/src/utils/utils.py",
+      "file_name": "utils.py",
+      "status": "warning",
+      "errors": [],
+      "warnings": [
+        "Execution test issue: Execution failed with error: Traceback (most recent call last):\n  File \"/home/emilio/Documents/ai/pizza/src/utils/utils.py\", line 6, in <module>\n    import logging\n  File \"/usr/lib/python3.12/logging/__init__.py\", line 26, in <module>\n    import sys, os, time, io, re, traceback, warnings, weakref, collections.abc\n  File \"/usr/lib/python3.12/re/__init__.py\", line 124, in <module>\n    import enum\n  File \"/usr/lib/python3.12/enum.py\", line 3, in <module>\n    from types import MappingProxyType, DynamicClassAttribute\n  File \"/home/emilio/Documents/ai/pizza/src/utils/types.py\", line 5, in <module>\n    from typing import Dict, List, Tuple, Optional, Union, NamedTuple, Callable\n  File \"/usr/lib/python3.12/typing.py\", line 27, in <module>\n    import contextlib\n  File \"/usr/lib/python3.12/contextlib.py\", line 7, in <module>\n    from functools import wraps\n  File \"/usr/lib/python3.12/functools.py\", line 22, in <module>\n    from types import GenericAlias\nImportError: cannot import name 'GenericAlias' from partially initialized module 'types' (most likely due to a circular import) (/home/emilio/Documents/ai/pizza/src/utils/types.py)\n"
+      ],
+      "metadata": {
+        "has_docstring": true,
+        "docstring": "Gemeinsam genutzte Hilfsfunktionen f\u00fcr das Pizza-Erkennungssystem.",
+        "author": null,
+        "date": null
+      },
+      "dependencies": [
+        "torch",
+        "numpy"
+      ]
+    },
+    {
+      "file_path": "/home/emilio/Documents/ai/pizza/src/utils/constants.py",
+      "file_name": "constants.py",
+      "status": "warning",
+      "errors": [],
+      "warnings": [
+        "Execution test issue: Execution failed with error: Traceback (most recent call last):\n  File \"/home/emilio/Documents/ai/pizza/src/utils/constants.py\", line 5, in <module>\n    from pathlib import Path\n  File \"/usr/lib/python3.12/pathlib.py\", line 8, in <module>\n    import fnmatch\n  File \"/usr/lib/python3.12/fnmatch.py\", line 14, in <module>\n    import re\n  File \"/usr/lib/python3.12/re/__init__.py\", line 124, in <module>\n    import enum\n  File \"/usr/lib/python3.12/enum.py\", line 3, in <module>\n    from types import MappingProxyType, DynamicClassAttribute\n  File \"/home/emilio/Documents/ai/pizza/src/utils/types.py\", line 5, in <module>\n    from typing import Dict, List, Tuple, Optional, Union, NamedTuple, Callable\n  File \"/usr/lib/python3.12/typing.py\", line 27, in <module>\n    import contextlib\n  File \"/usr/lib/python3.12/contextlib.py\", line 7, in <module>\n    from functools import wraps\n  File \"/usr/lib/python3.12/functools.py\", line 22, in <module>\n    from types import GenericAlias\nImportError: cannot import name 'GenericAlias' from partially initialized module 'types' (most likely due to a circular import) (/home/emilio/Documents/ai/pizza/src/utils/types.py)\n"
+      ],
+      "metadata": {
+        "has_docstring": true,
+        "docstring": "Konstanten f\u00fcr das Pizzaerkennungssystem.",
+        "author": null,
+        "date": null
+      },
+      "dependencies": []
+    },
+    {
+      "file_path": "/home/emilio/Documents/ai/pizza/src/augmentation/enhanced_pizza_augmentation.py",
+      "file_name": "enhanced_pizza_augmentation.py",
+      "status": "warning",
+      "errors": [],
+      "warnings": [
+        "Execution test issue: Execution failed with error: ",
+        "Missing or incomplete docstring"
+      ],
+      "metadata": {
+        "has_docstring": false,
+        "docstring": null,
+        "author": null,
+        "date": null
+      },
+      "dependencies": [
+        "numpy",
+        "scipy",
+        "PIL",
+        "torchvision",
+        "torch",
+        "matplotlib",
+        "tqdm"
+      ]
+    },
+    {
+      "file_path": "/home/emilio/Documents/ai/pizza/src/augmentation/augmentation_optimized.py",
+      "file_name": "augmentation_optimized.py",
+      "status": "warning",
+      "errors": [],
+      "warnings": [
+        "Execution test issue: Execution failed with error: Traceback (most recent call last):\n  File \"/home/emilio/Documents/ai/pizza/src/augmentation/augmentation_optimized.py\", line 698, in <module>\n    main()\n  File \"/home/emilio/Documents/ai/pizza/src/augmentation/augmentation_optimized.py\", line 688, in main\n    augment_pizza_dataset(input_dir, output_dir, img_per_original=img_per_original, batch_size=batch_size)\n  File \"/home/emilio/Documents/ai/pizza/src/augmentation/augmentation_optimized.py\", line 512, in augment_pizza_dataset\n    image_files = [os.path.join(input_dir, f) for f in os.listdir(input_dir) \n                                                       ^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: '/home/emilio/Documents/ai/pizza/img-pizza/'\n",
+        "Missing or incomplete docstring"
+      ],
+      "metadata": {
+        "has_docstring": false,
+        "docstring": null,
+        "author": null,
+        "date": null
+      },
+      "dependencies": [
+        "numpy",
+        "scipy",
+        "PIL",
+        "torchvision",
+        "torch",
+        "matplotlib",
+        "tqdm"
+      ]
+    },
+    {
+      "file_path": "/home/emilio/Documents/ai/pizza/src/augmentation/diffusion_pizza_generator.py",
+      "file_name": "diffusion_pizza_generator.py",
+      "status": "warning",
+      "errors": [
+        "Syntax error: Syntax error at line 164: parameter without a default follows parameter with a default"
+      ],
+      "warnings": [
+        "Missing or incomplete docstring"
+      ],
+      "metadata": {
+        "error": "parameter without a default follows parameter with a default (<unknown>, line 164)"
+      },
+      "dependencies": []
+    },
+    {
+      "file_path": "/home/emilio/Documents/ai/pizza/src/augmentation/augmentation.py",
+      "file_name": "augmentation.py",
+      "status": "warning",
+      "errors": [],
+      "warnings": [
+        "Execution test issue: Execution failed with error: ",
+        "Missing or incomplete docstring"
+      ],
+      "metadata": {
+        "has_docstring": false,
+        "docstring": null,
+        "author": null,
+        "date": null
+      },
+      "dependencies": [
+        "numpy",
+        "scipy",
+        "PIL",
+        "torchvision",
+        "torch",
+        "matplotlib",
+        "tqdm"
+      ]
+    },
+    {
+      "file_path": "/home/emilio/Documents/ai/pizza/src/augmentation/advanced_pizza_diffusion_control.py",
+      "file_name": "advanced_pizza_diffusion_control.py",
+      "status": "warning",
+      "errors": [
+        "Syntax error: Syntax error at line 117: parameter without a default follows parameter with a default"
+      ],
+      "warnings": [
+        "Missing or incomplete docstring"
+      ],
+      "metadata": {
+        "error": "parameter without a default follows parameter with a default (<unknown>, line 117)"
+      },
+      "dependencies": []
+    },
+    {
+      "file_path": "/home/emilio/Documents/ai/pizza/src/augmentation/optimized-pizza-augmentation.py",
+      "file_name": "optimized-pizza-augmentation.py",
+      "status": "warning",
+      "errors": [],
+      "warnings": [
+        "Execution test issue: Execution failed with error: Traceback (most recent call last):\n  File \"/home/emilio/Documents/ai/pizza/src/augmentation/optimized-pizza-augmentation.py\", line 698, in <module>\n    main()\n  File \"/home/emilio/Documents/ai/pizza/src/augmentation/optimized-pizza-augmentation.py\", line 688, in main\n    augment_pizza_dataset(input_dir, output_dir, img_per_original=img_per_original, batch_size=batch_size)\n  File \"/home/emilio/Documents/ai/pizza/src/augmentation/optimized-pizza-augmentation.py\", line 512, in augment_pizza_dataset\n    image_files = [os.path.join(input_dir, f) for f in os.listdir(input_dir) \n                                                       ^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: '/home/emilio/Documents/ai/pizza/img-pizza/'\n",
+        "Missing or incomplete docstring"
+      ],
+      "metadata": {
+        "has_docstring": false,
+        "docstring": null,
+        "author": null,
+        "date": null
+      },
+      "dependencies": [
+        "numpy",
+        "scipy",
+        "PIL",
+        "torchvision",
+        "torch",
+        "matplotlib",
+        "tqdm"
+      ]
+    },
+    {
+      "file_path": "/home/emilio/Documents/ai/pizza/src/legacy/augment_legacy.py",
+      "file_name": "augment_legacy.py",
+      "status": "warning",
+      "errors": [],
+      "warnings": [
+        "Execution test issue: Execution failed with error: Traceback (most recent call last):\n  File \"/home/emilio/Documents/ai/pizza/src/legacy/augment_legacy.py\", line 176, in <module>\n    augment_pizza(input_dir, output_dir, num_images, batch_size) \n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/emilio/Documents/ai/pizza/src/legacy/augment_legacy.py\", line 131, in augment_pizza\n    image_files = [os.path.join(input_dir, f) for f in os.listdir(input_dir) \n                                                       ^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: 'img-pizza'\n",
+        "Missing or incomplete docstring"
+      ],
+      "metadata": {
+        "has_docstring": false,
+        "docstring": null,
+        "author": null,
+        "date": null
+      },
+      "dependencies": [
+        "numpy",
+        "PIL",
+        "torchvision",
+        "torch",
+        "matplotlib",
+        "tqdm"
+      ]
+    },
+    {
+      "file_path": "/home/emilio/Documents/ai/pizza/src/integration/diffusion_data_agent.py",
+      "file_name": "diffusion_data_agent.py",
+      "status": "warning",
+      "errors": [],
+      "warnings": [
+        "Missing dependencies: cleanfid"
+      ],
+      "metadata": {
+        "has_docstring": true,
+        "docstring": "Diffusion Model Data Reliability Agent\n\nThis agent automates and improves the reliability of data generation, processing,\nand quality assessment for diffusion models used in the pizza detection project.\n\nIt provides the following capabilities:\n1. Batch generation control\n2. Metadata tracking\n3. Automated quality checking\n4. Metric calculation\n5. Data filtering\n6. Resource management\n7. Reporting and logging",
+        "author": null,
+        "date": null
+      },
+      "dependencies": [
+        "numpy",
+        "PIL",
+        "torchvision",
+        "cleanfid",
+        "torch",
+        "cv2",
+        "tqdm"
+      ]
+    },
+    {
+      "file_path": "/home/emilio/Documents/ai/pizza/src/integration/pizza_diffusion_integration.py",
+      "file_name": "pizza_diffusion_integration.py",
+      "status": "warning",
+      "errors": [],
+      "warnings": [
+        "Missing dependencies: optimized_pizza_augmentation, diffusion_data_agent, enhanced_pizza_augmentation",
+        "Execution test issue: Execution failed with error: Traceback (most recent call last):\n  File \"/home/emilio/Documents/ai/pizza/src/integration/pizza_diffusion_integration.py\", line 29, in <module>\n    from enhanced_pizza_augmentation import (\nModuleNotFoundError: No module named 'enhanced_pizza_augmentation'\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/home/emilio/Documents/ai/pizza/src/integration/pizza_diffusion_integration.py\", line 40, in <module>\n    from optimized_pizza_augmentation import (\nModuleNotFoundError: No module named 'optimized_pizza_augmentation'\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/home/emilio/Documents/ai/pizza/src/integration/pizza_diffusion_integration.py\", line 49, in <module>\n    from test import (\nImportError: cannot import name 'PizzaBurningEffect' from 'test' (/usr/lib/python3.12/test/__init__.py)\n"
+      ],
+      "metadata": {
+        "has_docstring": true,
+        "docstring": "Pizza Diffusion Integration Script\n\nThis script integrates the DiffusionDataAgent with the existing pizza augmentation\nsystem to improve reliability and quality of synthetic pizza data generation.",
+        "author": null,
+        "date": null
+      },
+      "dependencies": [
+        "optimized_pizza_augmentation",
+        "diffusion_data_agent",
+        "PIL",
+        "torchvision",
+        "torch",
+        "enhanced_pizza_augmentation",
+        "test",
+        "tqdm"
+      ]
+    },
+    {
+      "file_path": "/home/emilio/Documents/ai/pizza/src/integration/diffusion_training_integration.py",
+      "file_name": "diffusion_training_integration.py",
+      "status": "warning",
+      "errors": [],
+      "warnings": [
+        "Execution test issue: Execution failed with error: Traceback (most recent call last):\n  File \"/home/emilio/Documents/ai/pizza/src/integration/diffusion_training_integration.py\", line 41, in <module>\n    from src.augmentation.diffusion_pizza_generator import PizzaDiffusionGenerator, PIZZA_STAGES\n  File \"/home/emilio/Documents/ai/pizza/src/augmentation/diffusion_pizza_generator.py\", line 164\n    self, \n    ^^^^\nSyntaxError: parameter without a default follows parameter with a default\n"
+      ],
+      "metadata": {
+        "has_docstring": true,
+        "docstring": "Pizza Diffusion Model Integration Training Pipeline\n\nThis script integrates the advanced diffusion-generated synthetic data\nwith the existing pizza recognition training pipeline. It provides:\n\n1. Balanced dataset creation with both real and synthetic data\n2. Comparative evaluation of model performance with and without synthetic data\n3. Automated hyperparameter search for optimal synthetic/real data ratio\n4. Visualization and reporting of improvements from synthetic data\n\nAuthor: GitHub Copilot (2025-05-10)",
+        "author": "GitHub Copilot (2025-05-10)",
+        "date": null
+      },
+      "dependencies": [
+        "numpy",
+        "torchvision",
+        "PIL",
+        "torch",
+        "matplotlib"
+      ]
+    }
+  ]
+}

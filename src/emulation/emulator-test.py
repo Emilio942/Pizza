@@ -4,6 +4,22 @@ import numpy as np
 from PIL import Image
 import argparse
 
+"""
+Emulator für den RP2040-basierten Pizza-Detektor
+
+Dieses Modul simuliert den Betrieb und die Ressourcennutzung des RP2040-Mikrocontrollers
+für die Pizza-Erkennungsanwendung. Es beinhaltet:
+
+- Modellkonvertierung: Simulation der Umwandlung eines PyTorch-Modells in TFLite
+- Firmware-Erstellung: Simulation des Build-Prozesses der Firmware
+- RP2040-Emulation: Simulation des Betriebs auf dem Mikrocontroller
+
+Update (EMU-02-Korrektur): Die Tensor-Arena-Größenberechnung wurde verbessert, um eine
+genauere Schätzung des RAM-Bedarfs für die Modellausführung zu liefern. Die neue Methode
+berücksichtigt die Modellgröße, Quantisierung und Input-Größe, um eine realistischere
+Abschätzung der benötigten Arbeitsspeichergröße zu erhalten.
+"""
+
 class ModelConverter:
     """
     Konvertiert ein PyTorch-Modell in ein Format für RP2040
@@ -13,6 +29,50 @@ class ModelConverter:
         self.ram_usage_bytes = 0
         self.quantized = False
         self.model_input_size = (96, 96)  # Standardgröße, kann überschrieben werden
+        
+    def simplified_tensor_arena_estimate(self, model_size_bytes, is_quantized, input_size=(3, 96, 96)):
+        """
+        Verbesserte Schätzung der Tensor-Arena-Größe basierend auf Modellgröße.
+        
+        Args:
+            model_size_bytes: Größe des Modells in Bytes
+            is_quantized: Ob das Modell quantisiert ist
+            input_size: Die Eingabegröße als (Kanäle, Höhe, Breite)
+            
+        Returns:
+            int: Geschätzte Tensor-Arena-Größe in Bytes
+        """
+        # Schätze die maximale Anzahl von Feature-Maps basierend auf der Modellgröße
+        # Typischerweise haben kleine Modelle (~2-5KB) ca. 8-16 Feature-Maps
+        # Mittlere Modelle (~5-20KB) ca. 16-32 Feature-Maps
+        # Große Modelle (>20KB) ca. 32-64 Feature-Maps
+        
+        if model_size_bytes < 5 * 1024:  # <5KB
+            max_feature_maps = 16
+        elif model_size_bytes < 20 * 1024:  # <20KB
+            max_feature_maps = 32
+        else:
+            max_feature_maps = 64
+        
+        # Nehme standardmäßig 3 Kanäle für RGB-Bilder an
+        channels = input_size[0] if len(input_size) == 3 else 3
+        # Verwende die Breite und Höhe aus input_size oder default zu Standardwerten
+        if len(input_size) == 3:
+            height, width = input_size[1], input_size[2]
+        else:
+            height, width = input_size
+            
+        bytes_per_value = 1 if is_quantized else 4
+        
+        # Aktivierungen werden meist auf halber Auflösung des Eingabebildes gespeichert
+        # (aufgrund der Pooling-Schichten)
+        activation_size = max_feature_maps * (height//2) * (width//2) * bytes_per_value
+        
+        # Overhead für den TFLite-Interpreter
+        overhead_factor = 1.2
+        tensor_arena_size = int(activation_size * overhead_factor)
+        
+        return tensor_arena_size
         
     def estimate_model_size(self, original_size_mb, quantized=True):
         """
@@ -43,12 +103,15 @@ class ModelConverter:
             self.model_size_bytes = original_size_bytes
             self.quantized = False
             
-        # Schätze RAM-Bedarf (für Aktivierungen während Inferenz)
-        # Bei int8-Quantisierung ca. 20% der Modellgröße, bei float32 ca. 50%
-        if quantized:
-            self.ram_usage_bytes = int(self.model_size_bytes * 0.2)
-        else:
-            self.ram_usage_bytes = int(self.model_size_bytes * 0.5)
+        # Verwende die verbesserte Methode zur Schätzung des RAM-Bedarfs für Tensor-Arena
+        # Nehme an, dass das Input-Bild 3 Kanäle hat (RGB)
+        input_channels = 3
+        input_size = (input_channels, self.model_input_size[0], self.model_input_size[1])
+        self.ram_usage_bytes = self.simplified_tensor_arena_estimate(
+            self.model_size_bytes, 
+            is_quantized=quantized,
+            input_size=input_size
+        )
             
         return {
             "model_size_bytes": self.model_size_bytes,

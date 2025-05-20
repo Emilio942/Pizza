@@ -1,0 +1,73 @@
+{
+  "class_counts": {
+    "basic": 28,
+    "burnt": 32,
+    "combined": 44,
+    "mixed": 44,
+    "progression": 44,
+    "segment": 44
+  },
+  "challenging_conditions": {
+    "combined": {
+      "basic": 3,
+      "burnt": 2,
+      "combined": 1,
+      "mixed": 1,
+      "progression": 2,
+      "segment": 2
+    },
+    "normal": {
+      "basic": 11,
+      "burnt": 15,
+      "combined": 27,
+      "mixed": 27,
+      "progression": 27,
+      "segment": 27
+    },
+    "bright": {
+      "basic": 1,
+      "burnt": 2,
+      "combined": 2,
+      "progression": 3
+    },
+    "perspective": {
+      "basic": 7,
+      "burnt": 2,
+      "combined": 2,
+      "mixed": 5,
+      "segment": 2
+    },
+    "low_contrast": {
+      "basic": 3,
+      "burnt": 4,
+      "combined": 1,
+      "mixed": 4,
+      "progression": 4,
+      "segment": 4
+    },
+    "dark": {
+      "basic": 1,
+      "burnt": 4,
+      "combined": 2,
+      "mixed": 3,
+      "progression": 2,
+      "segment": 4
+    },
+    "blur": {
+      "basic": 1,
+      "combined": 5,
+      "mixed": 2,
+      "progression": 3,
+      "segment": 1
+    },
+    "noise": {
+      "basic": 1,
+      "burnt": 3,
+      "combined": 4,
+      "mixed": 2,
+      "progression": 3,
+      "segment": 4
+    }
+  },
+  "total_images": 236
+}

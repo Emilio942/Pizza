@@ -1,0 +1,38 @@
+=== Temporal Smoothing Ergebnisbericht ===
+
+Testkonfiguration:
+- Anzahl der Frames: 100
+- Smoothing-Fenstergröße: 5
+
+Rohvorhersagen:
+- Genauigkeit: 15.00%
+- Anzahl der Klassenwechsel: 83
+
+Ergebnisse nach Strategie:
+
+MAJORITY_VOTE:
+- Genauigkeit: 12.00%
+- Verbesserung: -3.00%
+- Anzahl der Klassenwechsel: 36
+
+MOVING_AVERAGE:
+- Genauigkeit: 57.00%
+- Verbesserung: 42.00%
+- Anzahl der Klassenwechsel: 31
+
+EXPONENTIAL_MA:
+- Genauigkeit: 50.00%
+- Verbesserung: 35.00%
+- Anzahl der Klassenwechsel: 40
+
+CONFIDENCE_WEIGHTED:
+- Genauigkeit: 59.00%
+- Verbesserung: 44.00%
+- Anzahl der Klassenwechsel: 29
+
+
+Empfehlung:
+Die beste Strategie für diesen Datensatz ist CONFIDENCE_WEIGHTED mit einer Genauigkeit von 59.00% (Verbesserung um 44.00%).
+Die stabilste Strategie ist CONFIDENCE_WEIGHTED mit nur 29 Klassenwechseln.
+
+Hinweis: Die optimale Strategie kann je nach Anwendungsfall variieren. Wenn Stabilität wichtiger ist als Genauigkeit, könnte eine andere Strategie bevorzugt werden.

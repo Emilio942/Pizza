@@ -1,0 +1,34 @@
+kibot:
+  version: 1
+
+outputs:
+  - name: gerbers
+    comment: "Gerber files for JLCPCB"
+    type: gerber
+    dir: /home/emilio/Documents/ai/pizza/hardware/manufacturing/output/jlcpcb/gerber
+    options:
+      exclude_edge_layer: true
+      exclude_pads_from_silkscreen: true
+      plot_sheet_reference: false
+      plot_footprint_refs: true
+      plot_footprint_values: true
+      force_plot_invisible_refs_vals: false
+      tent_vias: true
+      line_width: 0.1
+    layers:
+      - F.Cu
+      - B.Cu
+      - F.SilkS
+      - B.SilkS
+      - F.Mask
+      - B.Mask
+      - F.Paste
+      - B.Paste
+      - Edge.Cuts
+
+  - name: drill
+    comment: "Drill files for JLCPCB"
+    type: excellon
+    dir: /home/emilio/Documents/ai/pizza/hardware/manufacturing/output/jlcpcb/gerber
+    options:
+      map: true

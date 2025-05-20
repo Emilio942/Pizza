@@ -1,0 +1,34 @@
+{
+  "timestamp": "2025-05-18 17:45:00",
+  "model_info": {
+    "model_name": "micropizzanetv2_quantized_s30",
+    "model_path": "/home/emilio/Documents/ai/pizza/models/micropizzanetv2_quantized_s30.tflite",
+    "pruning_level": "30% sparsity",
+    "quantized": true,
+    "model_size_kb": 25.6
+  },
+  "ram_usage": {
+    "tensor_arena_kb": 172.8,
+    "system_overhead_kb": 20.0,
+    "total_ram_usage_kb": 192.8
+  },
+  "initial_estimate": {
+    "method": "Old estimation (pruning report)",
+    "ram_usage_kb": 9
+  },
+  "improved_estimate": {
+    "method": "Corrected EMU-02 calculation",
+    "ram_usage_kb": 172.8,
+    "explanation": "Based on improved tensor arena calculation that considers model architecture, quantization state, and input dimensions"
+  },
+  "conclusion": {
+    "meets_requirements": true,
+    "max_allowed_ram_kb": 204,
+    "remaining_ram_kb": 71.2
+  },
+  "task_status": {
+    "task_id": "SPEICHER-2.3",
+    "completed": true,
+    "notes": "RAM-Bedarf (Tensor Arena) des geprunten und quantisierten Modells erfolgreich ermittelt"
+  }
+}

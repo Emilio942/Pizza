@@ -1,0 +1,17 @@
+{
+  "timestamp": "2025-05-19 21:49:30",
+  "duration_seconds": 6.315056562423706,
+  "input_images": 9,
+  "output_images": 18,
+  "augmentation_types": {
+    "basic": {
+      "count": 18,
+      "metadata": {
+        "batch_idx": 0,
+        "img_idx": 8,
+        "aug_type": "basic"
+      }
+    }
+  },
+  "images_per_original": 2.0
+}

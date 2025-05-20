@@ -1,0 +1,30 @@
+Input directory: augmented_pizza
+Output directory: /home/emilio/Documents/ai/pizza/output/pipeline_runs/20250514_042654/augmented_data
+Augmentations per image: 5
+Found 9 class directories
+Processing class: progression
+Found 1 images in progression
+Augmenting progression:   0%|          | 0/1 [00:00<?, ?it/s]Augmenting progression: 100%|██████████| 1/1 [00:00<00:00, 48.51it/s]
+Processing class: mixed
+Found 1 images in mixed
+Augmenting mixed:   0%|          | 0/1 [00:00<?, ?it/s]Augmenting mixed: 100%|██████████| 1/1 [00:00<00:00, 77.76it/s]
+Processing class: synthetic
+No images found in augmented_pizza/synthetic
+Processing class: basic
+Found 1 images in basic
+Augmenting basic:   0%|          | 0/1 [00:00<?, ?it/s]Augmenting basic: 100%|██████████| 1/1 [00:00<00:00, 85.94it/s]
+Processing class: raw
+Found 1 images in raw
+Augmenting raw:   0%|          | 0/1 [00:00<?, ?it/s]Augmenting raw: 100%|██████████| 1/1 [00:00<00:00,  8.61it/s]Augmenting raw: 100%|██████████| 1/1 [00:00<00:00,  8.61it/s]
+Processing class: segment
+Found 1 images in segment
+Augmenting segment:   0%|          | 0/1 [00:00<?, ?it/s]Augmenting segment: 100%|██████████| 1/1 [00:00<00:00, 81.62it/s]
+Processing class: combined
+Found 1 images in combined
+Augmenting combined:   0%|          | 0/1 [00:00<?, ?it/s]Augmenting combined: 100%|██████████| 1/1 [00:00<00:00, 80.74it/s]
+Processing class: processed
+No images found in augmented_pizza/processed
+Processing class: burnt
+Found 1 images in burnt
+Augmenting burnt:   0%|          | 0/1 [00:00<?, ?it/s]Augmenting burnt: 100%|██████████| 1/1 [00:00<00:00, 85.79it/s]
+Augmentation complete. Augmented images saved to /home/emilio/Documents/ai/pizza/output/pipeline_runs/20250514_042654/augmented_data

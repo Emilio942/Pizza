@@ -1,0 +1,3 @@
+usage: analyze_performance_logs.py [-h] --input INPUT [--output OUTPUT]
+                                   [--list-ports]
+analyze_performance_logs.py: error: unrecognized arguments: --output-dir /home/emilio/Documents/ai/pizza/output/pipeline_runs/20250514_043746/reports

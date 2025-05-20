@@ -2,35 +2,14 @@
   "accuracy": 50.0,
   "confusion_matrix": [
     [
-      4,
-      0,
-      2,
-      2,
-      0,
-      0
-    ],
-    [
-      0,
-      0,
-      0,
-      0,
-      0,
-      0
-    ],
-    [
-      1,
-      0,
-      1,
-      1,
-      0,
-      0
-    ],
-    [
-      0,
       0,
       0,
       1,
       0,
+      0,
+      0,
+      0,
+      0,
       0
     ],
     [
@@ -39,9 +18,81 @@
       0,
       0,
       0,
+      0,
+      0,
+      0,
       0
     ],
     [
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
       0,
       0,
       0,
@@ -53,13 +104,13 @@
   "class_metrics": [
     {
       "class": "basic",
-      "tp": 4,
-      "fp": 1,
-      "fn": 4,
-      "precision": 0.8,
-      "recall": 0.5,
-      "f1": 0.6153846153846154,
-      "support": 8
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "precision": 0,
+      "recall": 0.0,
+      "f1": 0,
+      "support": 1
     },
     {
       "class": "burnt",
@@ -74,25 +125,45 @@
     {
       "class": "combined",
       "tp": 1,
-      "fp": 2,
-      "fn": 2,
-      "precision": 0.3333333333333333,
-      "recall": 0.3333333333333333,
-      "f1": 0.3333333333333333,
-      "support": 3
-    },
-    {
-      "class": "mixed",
-      "tp": 1,
-      "fp": 3,
+      "fp": 1,
       "fn": 0,
-      "precision": 0.25,
+      "precision": 0.5,
       "recall": 1.0,
-      "f1": 0.4,
+      "f1": 0.6666666666666666,
       "support": 1
     },
     {
+      "class": "mixed",
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "precision": 0,
+      "recall": 0,
+      "f1": 0,
+      "support": 0
+    },
+    {
+      "class": "processed",
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "precision": 0,
+      "recall": 0,
+      "f1": 0,
+      "support": 0
+    },
+    {
       "class": "progression",
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "precision": 0,
+      "recall": 0,
+      "f1": 0,
+      "support": 0
+    },
+    {
+      "class": "raw",
       "tp": 0,
       "fp": 0,
       "fn": 0,
@@ -110,72 +181,32 @@
       "recall": 0,
       "f1": 0,
       "support": 0
+    },
+    {
+      "class": "synthetic",
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "precision": 0,
+      "recall": 0,
+      "f1": 0,
+      "support": 0
     }
   ],
-  "macro_precision": 0.23055555555555554,
-  "macro_recall": 0.3055555555555555,
-  "macro_f1": 0.2247863247863248,
+  "macro_precision": 0.05555555555555555,
+  "macro_recall": 0.1111111111111111,
+  "macro_f1": 0.07407407407407407,
   "micro_f1": 0.5,
   "errors": [
     {
       "batch": 0,
-      "sample": 1,
-      "true": 0,
-      "pred": 3,
-      "true_class": "basic",
-      "pred_class": "mixed",
-      "confidence": 0.16998502612113953,
-      "true_confidence": 0.1677234172821045
-    },
-    {
-      "batch": 0,
-      "sample": 2,
-      "true": 2,
-      "pred": 0,
-      "true_class": "combined",
-      "pred_class": "basic",
-      "confidence": 0.17369772493839264,
-      "true_confidence": 0.16861358284950256
-    },
-    {
-      "batch": 0,
-      "sample": 3,
-      "true": 0,
-      "pred": 3,
-      "true_class": "basic",
-      "pred_class": "mixed",
-      "confidence": 0.17071789503097534,
-      "true_confidence": 0.1686474233865738
-    },
-    {
-      "batch": 0,
-      "sample": 4,
+      "sample": 0,
       "true": 0,
       "pred": 2,
       "true_class": "basic",
       "pred_class": "combined",
-      "confidence": 0.16964027285575867,
-      "true_confidence": 0.16922512650489807
-    },
-    {
-      "batch": 0,
-      "sample": 6,
-      "true": 0,
-      "pred": 2,
-      "true_class": "basic",
-      "pred_class": "combined",
-      "confidence": 0.17654681205749512,
-      "true_confidence": 0.17174768447875977
-    },
-    {
-      "batch": 0,
-      "sample": 9,
-      "true": 2,
-      "pred": 3,
-      "true_class": "combined",
-      "pred_class": "mixed",
-      "confidence": 0.17063914239406586,
-      "true_confidence": 0.16519255936145782
+      "confidence": 0.11216974258422852,
+      "true_confidence": 0.11137367784976959
     }
   ]
 }

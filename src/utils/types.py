@@ -1,54 +1,65 @@
 """
-Typdefinitionen für das Pizzaerkennungssystem.
+Type definitions for the pizza detection system.
 """
 
-from typing import Dict, List, Tuple, Optional, Union, NamedTuple, Callable
+# Use individual imports instead of bulk imports to avoid circular import issues
+from typing import Dict as Dict
+from typing import List as List
+from typing import Tuple as Tuple
+from typing import Optional as Optional
+from typing import Union as Union
+from typing import NamedTuple as NamedTuple
+from typing import Callable as Callable
 from pathlib import Path
 import numpy as np
-import torch
 from dataclasses import dataclass
 
-# Hardware-Spezifikationen
+# Avoid importing torch here as it causes circular import issues
+# through other modules
+# Define type aliases for hardware specs and configs first
+
+# Hardware specifications
 HardwareSpecs = Dict[str, Union[int, float]]
 
-# Modellkonfiguration
+# Model configuration
 ModelConfig = Dict[str, Union[int, float]]
 
-# Inferenz-Ergebnis
+# Inference result
 @dataclass
 class InferenceResult:
-    """Ergebnis einer einzelnen Inferenz."""
+    """Result of a single inference."""
     class_name: str
     confidence: float
     probabilities: Dict[str, float]
-    prediction: int  # Hinzugefügt: Klassen-ID als Integer
+    prediction: int  # Class ID as integer
 
-# Metriken
+# Metrics
 @dataclass
 class ModelMetrics:
-    """Modellleistungsmetriken."""
+    """Model performance metrics."""
     accuracy: float
     precision: float
     recall: float
     f1_score: float
-    confusion_matrix: Optional[np.ndarray] = None  # Geändert: NumPy-Array statt Dict
+    confusion_matrix: Optional[np.ndarray] = None  # Changed to NumPy array
 
-# Trainingsfortschritt
+# Training progress
 class TrainingProgress(NamedTuple):
-    """Fortschritt während des Trainings."""
+    """Progress during training."""
     epoch: int
     batch: int
     loss: float
     metrics: Dict[str, float]
     learning_rate: float
 
-# Bildvorverarbeitung
-ImageTransform = Callable[[np.ndarray], Union[np.ndarray, torch.Tensor]]
+# Image preprocessing
+# Use np.ndarray instead of torch.Tensor to avoid circular imports
+ImageTransform = Callable[[np.ndarray], np.ndarray]
 
-# Ressourcennutzung
+# Resource usage
 @dataclass
 class ResourceUsage:
-    """Momentane Ressourcennutzung."""
+    """Current resource usage."""
     ram_used_kb: float
     flash_used_kb: float
     cpu_usage_percent: float

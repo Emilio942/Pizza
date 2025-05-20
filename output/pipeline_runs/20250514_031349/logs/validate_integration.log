@@ -1,0 +1,5 @@
+[2025-05-14 03:17:14,309] [INFO] Analyzing script relationships from status file: /home/emilio/Documents/ai/pizza/output/pipeline_runs/20250514_031349/reports/script_status.json
+[2025-05-14 03:17:14,309] [WARNING] Category 'preprocessing' has a success rate of only 50.0%
+[2025-05-14 03:17:14,309] [WARNING] Category 'unknown' has a success rate of only 0.0%
+[2025-05-14 03:17:14,309] [INFO] Integration validation complete. Found 2 potential issues.
+[2025-05-14 03:17:14,309] [INFO] Report written to /home/emilio/Documents/ai/pizza/output/pipeline_runs/20250514_031349/reports/integration_report.json

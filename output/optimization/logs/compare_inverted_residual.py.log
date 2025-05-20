@@ -1,0 +1,4 @@
+usage: compare_inverted_residual.py [-h] [--data-dir DATA_DIR]
+                                    [--output-dir OUTPUT_DIR]
+                                    [--epochs EPOCHS] [--force_cpu]
+compare_inverted_residual.py: error: unrecognized arguments: --output_dir=output/optimization/model_comparison

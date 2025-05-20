@@ -1,5 +1,5 @@
 """
-Hardware-Emulator für RP2040 und OV2640 Kamera.
+Hardware-Emulator für RP2040 und OV2040 Kamera.
 """
 
 import time
@@ -8,8 +8,10 @@ import logging
 import numpy as np
 from pathlib import Path
 from typing import Dict, Optional, Tuple, Union
+from enum import Enum
 
-from .constants import (
+# Import from utils
+from src.utils.constants import (
     RP2040_FLASH_SIZE_KB,
     RP2040_RAM_SIZE_KB,
     RP2040_CLOCK_SPEED_MHZ,
@@ -17,9 +19,26 @@ from .constants import (
     CAMERA_HEIGHT,
     INPUT_SIZE
 )
-from .exceptions import HardwareError, ResourceError
-from .types import HardwareSpecs
-from .power_manager import PowerManager, PowerUsage, AdaptiveMode
+# Use our simplified PowerManager instead of the original implementation
+# from src.utils.power_manager import PowerManager, PowerUsage, AdaptiveMode
+from .simple_power_manager import PowerManager, PowerUsage, AdaptiveMode
+
+# Local imports
+from .frame_buffer import FrameBuffer, PixelFormat
+from .temperature_sensor import TemperatureSensor, SensorType
+from .uart_emulator import UARTEmulator
+from .logging_system import LoggingSystem, LogLevel, LogType
+
+logger = logging.getLogger(__name__)
+
+# Define these classes here since we can't import them
+class ResourceError(Exception):
+    """Fehler bei Ressourcenüberschreitung (RAM, Flash)."""
+    pass
+
+class HardwareError(Exception):
+    """Fehler bei der Hardware-Emulation."""
+    pass
 
 logger = logging.getLogger(__name__)
 
@@ -35,6 +54,16 @@ class CameraEmulator:
         self.startup_time = 0.1  # 100ms Startup-Zeit
         self.frame_time = 1.0 / 7  # ~7 FPS
         self.last_capture = 0
+        
+        # Erstelle einen Framebuffer mit dem richtigen Format
+        pixel_format = PixelFormat.RGB888 if self.rgb else PixelFormat.GRAYSCALE
+        self.frame_buffer = FrameBuffer(self.width, self.height, pixel_format)
+        
+        logger.info(
+            f"Kamera-Emulator initialisiert: {self.width}x{self.height}, "
+            f"{'RGB' if self.rgb else 'Grayscale'}, {1000/self.frame_time:.1f} ms/Frame, "
+            f"Framebuffer-Größe: {self.frame_buffer.total_size_bytes/1024:.1f} KB"
+        )
     
     def initialize(self) -> bool:
         """Emuliert Kamera-Initialisierung."""
@@ -58,15 +87,39 @@ class CameraEmulator:
         channels = 3 if self.rgb else 1
         frame = np.random.randint(0, 256, (self.height, self.width, channels), dtype=np.uint8)
         
+        # Schreibe das Bild in den Framebuffer
+        self.frame_buffer.begin_frame_write()
+        self.frame_buffer.write_pixel_data(frame)
+        self.frame_buffer.end_frame_write()
+        
         self.frames_captured += 1
         self.last_capture = time.time()
-        return frame
+        
+        # Lese das Bild aus dem Framebuffer zurück
+        return self.frame_buffer.get_frame_as_numpy()
     
     def set_format(self, width: int, height: int, rgb: bool = True) -> None:
         """Konfiguriert Bildformat."""
         self.width = width
         self.height = height
         self.rgb = rgb
+        
+        # Aktualisiere den Framebuffer mit dem neuen Format
+        pixel_format = PixelFormat.RGB888 if rgb else PixelFormat.GRAYSCALE
+        self.frame_buffer = FrameBuffer(width, height, pixel_format)
+        
+        logger.info(
+            f"Kameraformat geändert: {width}x{height}, {'RGB' if rgb else 'Grayscale'}, "
+            f"Framebuffer-Größe: {self.frame_buffer.total_size_bytes/1024:.1f} KB"
+        )
+    
+    def get_frame_buffer_size_bytes(self) -> int:
+        """Liefert die Größe des Framebuffers in Bytes."""
+        return self.frame_buffer.total_size_bytes
+    
+    def get_frame_buffer_stats(self) -> Dict:
+        """Liefert Statistiken über den Framebuffer."""
+        return self.frame_buffer.get_statistics()
 
 class RP2040Emulator:
     """Emuliert RP2040 Mikrocontroller."""
@@ -81,7 +134,11 @@ class RP2040Emulator:
         self.flash_used = 0
         self.system_ram_overhead = 40 * 1024  # 40KB System-Overhead
         
+        # Erstelle die Kamera mit Framebuffer
         self.camera = CameraEmulator()
+        
+        # Frame Buffer RAM wird jetzt explizit verfolgt
+        self.framebuffer_ram_bytes = self.camera.get_frame_buffer_size_bytes()
         
         self.start_time = time.time()
         self.firmware = None
@@ -95,8 +152,31 @@ class RP2040Emulator:
         self.sleep_start_time = 0
         self.total_sleep_time = 0
         
-        # Simulation der Systemtemperatur
-        self.current_temperature_c = 25.0  # Startwert: Raumtemperatur
+        # Initialisiere UART für Logging
+        self.uart = UARTEmulator(log_to_file=True, log_dir="output/emulator_logs")
+        self.uart.initialize(baudrate=115200)
+        
+        # Initialisiere Temperatursensor
+        self.temperature_sensor = TemperatureSensor(
+            sensor_type=SensorType.INTERNAL,  # Internen Sensor des RP2040 verwenden
+            accuracy=0.5,                    # Genauigkeit in °C
+            update_interval=1.0,             # Minimales Intervall in Sekunden
+            noise_level=0.1                  # Rauschen in den Messwerten
+        )
+        self.temperature_sensor.initialize()
+        self.current_temperature_c = self.temperature_sensor.read_temperature()
+        
+        # Initialisiere Logging-System
+        self.logging_system = LoggingSystem(
+            uart=self.uart, 
+            log_to_file=True,
+            log_dir="output/emulator_logs"
+        )
+        self.logging_system.log("RP2040 Emulator initialized", LogLevel.INFO, LogType.SYSTEM)
+        
+        # Aktiviere periodisches Temperaturlogging
+        self.last_temp_log_time = time.time()
+        self.temp_log_interval = 60.0  # Log temperature every 60 seconds
         
         # Inizialisierung des Power Managers
         self.power_usage = PowerUsage(
@@ -125,6 +205,7 @@ class RP2040Emulator:
         logger.info(f"Flash: {self.flash_size_bytes/1024:.0f}KB")
         logger.info(f"RAM: {self.ram_size_bytes/1024:.0f}KB")
         logger.info(f"CPU: {self.cores} Cores @ {self.cpu_speed_mhz}MHz")
+        logger.info(f"Framebuffer-Größe: {self.framebuffer_ram_bytes/1024:.1f}KB")
         logger.info(f"Energiemanagement-Modus: {adaptive_mode.value}")
         logger.info(f"Geschätzte Batterielebensdauer: {self.power_manager.estimated_runtime_hours:.1f} Stunden")
     
@@ -139,10 +220,15 @@ class RP2040Emulator:
                 f"Flash-Überlauf: {firmware['total_size_bytes']/1024:.1f}KB > {self.flash_size_bytes/1024:.1f}KB"
             )
         
-        # Prüfe, ob der RAM-Bedarf erfüllt werden kann (inklusive System-Overhead)
-        total_ram_needed = firmware['ram_usage_bytes'] + self.system_ram_overhead
+        # Prüfe, ob der RAM-Bedarf erfüllt werden kann (inklusive System-Overhead und Framebuffer)
+        total_ram_needed = firmware['ram_usage_bytes'] + self.system_ram_overhead + self.framebuffer_ram_bytes
         if total_ram_needed > self.ram_size_bytes:
-            logger.error(f"RAM-Überlauf: {total_ram_needed/1024:.1f}KB > {self.ram_size_bytes/1024:.1f}KB")
+            logger.error(
+                f"RAM-Überlauf: {total_ram_needed/1024:.1f}KB > {self.ram_size_bytes/1024:.1f}KB "
+                f"(Modell: {firmware['ram_usage_bytes']/1024:.1f}KB, "
+                f"System: {self.system_ram_overhead/1024:.1f}KB, "
+                f"Framebuffer: {self.framebuffer_ram_bytes/1024:.1f}KB)"
+            )
             raise ResourceError(
                 f"RAM-Überlauf: {total_ram_needed/1024:.1f}KB > {self.ram_size_bytes/1024:.1f}KB"
             )
@@ -216,14 +302,18 @@ class RP2040Emulator:
     def get_ram_usage(self) -> int:
         """Liefert simulierte RAM-Nutzung."""
         if not self.firmware_loaded:
-            return self.system_ram_overhead
+            # Nur System-Overhead und Framebuffer
+            return self.system_ram_overhead + self.framebuffer_ram_bytes
         
-        # Verwende die Werte, die in load_firmware gesetzt wurden
-        base_ram = self.ram_used + self.system_ram_overhead
+        # Verwende die Werte, die in load_firmware gesetzt wurden, plus Framebuffer
+        base_ram = self.ram_used + self.system_ram_overhead + self.framebuffer_ram_bytes
         
-        # Wenn im Sleep-Mode, reduziere RAM-Nutzung
+        # Wenn im Sleep-Mode, reduziere RAM-Nutzung (außer Framebuffer)
         if self.sleep_mode:
-            return int(base_ram * (1 - self.sleep_ram_reduction))
+            # Framebuffer-Größe bleibt, andere RAM-Nutzung wird reduziert
+            reduced_ram = (self.ram_used + self.system_ram_overhead) * (1 - self.sleep_ram_reduction)
+            return int(reduced_ram + self.framebuffer_ram_bytes)
+        
         return base_ram
     
     def get_flash_usage(self) -> int:
@@ -238,8 +328,18 @@ class RP2040Emulator:
         flash_usage = self.get_flash_usage()
         
         if ram_usage > self.ram_size_bytes:
+            # Detaillierte RAM-Aufschlüsselung für Debugging
+            model_ram = self.ram_used if self.firmware_loaded else 0
+            framebuffer_kb = self.framebuffer_ram_bytes / 1024
+            system_overhead_kb = self.system_ram_overhead / 1024
+            model_ram_kb = model_ram / 1024
+            total_kb = ram_usage / 1024
+            
             raise ResourceError(
-                f"RAM-Überlauf: {ram_usage/1024:.1f}KB > {self.ram_size_bytes/1024:.1f}KB"
+                f"RAM-Überlauf: {total_kb:.1f}KB > {self.ram_size_bytes/1024:.1f}KB\n"
+                f"Aufschlüsselung: Modell {model_ram_kb:.1f}KB + "
+                f"System {system_overhead_kb:.1f}KB + "
+                f"Framebuffer {framebuffer_kb:.1f}KB"
             )
         
         if flash_usage > self.flash_size_bytes:
@@ -252,19 +352,52 @@ class RP2040Emulator:
         ram_usage = self.get_ram_usage()
         flash_usage = self.get_flash_usage()
         
+        # Berechne RAM-Aufschlüsselung
+        model_ram = self.ram_used if self.firmware_loaded else 0
+        system_ram = self.system_ram_overhead
+        framebuffer_ram = self.framebuffer_ram_bytes
+        
+        # Aktualisiere Temperatur
+        current_temperature = self.read_temperature()
+        
         # Basisstatistiken
         stats = {
             'uptime_seconds': time.time() - self.start_time,
             'ram_used_kb': ram_usage / 1024,
             'ram_free_kb': (self.ram_size_bytes - ram_usage) / 1024,
+            'model_ram_kb': model_ram / 1024,
+            'system_ram_kb': system_ram / 1024,
+            'framebuffer_ram_kb': framebuffer_ram / 1024,
             'flash_used_kb': flash_usage / 1024,
             'flash_free_kb': (self.flash_size_bytes - flash_usage) / 1024,
             'firmware_loaded': self.firmware_loaded,
             'last_inference_ms': self.inference_time * 1000,
             'camera_frames': self.camera.frames_captured,
             'sleep_mode': self.sleep_mode,
-            'total_sleep_time': self.total_sleep_time
+            'total_sleep_time': self.total_sleep_time,
+            'current_temperature_c': current_temperature
         }
+        
+        # Füge Kamera-Framebuffer-Statistiken hinzu
+        framebuffer_stats = self.camera.get_frame_buffer_stats()
+        stats.update({
+            'camera_width': self.camera.width,
+            'camera_height': self.camera.height,
+            'camera_pixel_format': framebuffer_stats['pixel_format'],
+            'framebuffer_total_size_kb': framebuffer_stats['total_size_kb'],
+            'framebuffer_frames_processed': framebuffer_stats['frames_processed'],
+            'framebuffer_frames_dropped': framebuffer_stats['frames_dropped']
+        })
+        
+        # Füge Temperatur-Sensorstatistiken hinzu
+        temp_stats = self.temperature_sensor.get_stats()
+        stats.update({
+            'temperature_sensor_type': temp_stats['sensor_type'],
+            'temperature_readings_count': temp_stats['readings_count'],
+            'temperature_min_c': temp_stats['min_temperature'],
+            'temperature_max_c': temp_stats['max_temperature'],
+            'temperature_avg_c': temp_stats['avg_temperature']
+        })
         
         # Füge Energiemanagement-Statistiken hinzu
         power_stats = self.power_manager.get_power_statistics()
@@ -381,3 +514,201 @@ class RP2040Emulator:
     def temperature(self):
         """Liefert die aktuelle simulierte Temperatur in Grad Celsius."""
         return self.current_temperature_c
+    
+    def set_camera_format(self, width: int, height: int, pixel_format: PixelFormat = PixelFormat.RGB888) -> None:
+        """
+        Konfiguriert das Kameraformat und aktualisiert den Framebuffer.
+        
+        Args:
+            width: Kamerabreite in Pixeln
+            height: Kamerahöhe in Pixeln
+            pixel_format: Pixelformat (RGB888, RGB565, GRAYSCALE, YUV422)
+        """
+        # Aktualisiere Kamera und Framebuffer
+        is_rgb = pixel_format in (PixelFormat.RGB888, PixelFormat.RGB565)
+        self.camera.set_format(width, height, is_rgb)
+        
+        # Aktualisiere Framebuffer-Größe im Speichermanagement
+        old_framebuffer_size = self.framebuffer_ram_bytes
+        self.framebuffer_ram_bytes = self.camera.get_frame_buffer_size_bytes()
+        
+        logger.info(
+            f"Kameraformat geändert auf {width}x{height} ({pixel_format.name}). "
+            f"Framebuffer-Größe: {self.framebuffer_ram_bytes/1024:.1f}KB "
+            f"(vorher: {old_framebuffer_size/1024:.1f}KB)"
+        )
+        
+        # Prüfe, ob die neue Framebuffer-Größe zu einem RAM-Überlauf führen würde
+        if self.firmware_loaded:
+            total_ram_needed = self.ram_used + self.system_ram_overhead + self.framebuffer_ram_bytes
+            if total_ram_needed > self.ram_size_bytes:
+                logger.warning(
+                    f"WARNUNG: Neues Kameraformat könnte RAM-Überlauf verursachen: "
+                    f"{total_ram_needed/1024:.1f}KB > {self.ram_size_bytes/1024:.1f}KB"
+                )
+    
+    def set_camera_pixel_format(self, pixel_format: PixelFormat) -> None:
+        """
+        Ändert das Pixelformat des Kamera-Framebuffers.
+        
+        Args:
+            pixel_format: Neues Pixelformat (RGB888, RGB565, GRAYSCALE, YUV422)
+        """
+        # Speichere aktuelle Dimensionen
+        width = self.camera.width
+        height = self.camera.height
+        
+        # Setze Kameraformat mit neuem Pixelformat
+        is_rgb = pixel_format in (PixelFormat.RGB888, PixelFormat.RGB565)
+        
+        # Erstelle einen neuen Framebuffer mit dem neuen Format
+        old_buffer = self.camera.frame_buffer
+        self.camera.frame_buffer = FrameBuffer(width, height, pixel_format)
+        
+        # Aktualisiere RGB-Flag für die Kamera basierend auf dem Format
+        self.camera.rgb = is_rgb
+        
+        # Aktualisiere die Framebuffer-Größe im Speichermanagement
+        old_framebuffer_size = self.framebuffer_ram_bytes
+        self.framebuffer_ram_bytes = self.camera.get_frame_buffer_size_bytes()
+        
+        logger.info(
+            f"Kamera-Pixelformat geändert auf {pixel_format.name}. "
+            f"Framebuffer-Größe: {self.framebuffer_ram_bytes/1024:.1f}KB "
+            f"(vorher: {old_framebuffer_size/1024:.1f}KB)"
+        )
+        
+        # Überprüfe Speichernutzung nach Formatänderung
+        self.validate_resources()
+        
+        # Gib Statistiken über den alten und neuen Framebuffer aus
+        old_stats = old_buffer.get_memory_layout()
+        new_stats = self.camera.frame_buffer.get_memory_layout()
+        
+        logger.debug(
+            f"Speicherlayout-Änderung:\n"
+            f"Alt: {old_stats['total_size_bytes']} Bytes, {old_stats['aligned_row_bytes']} Bytes/Zeile\n"
+            f"Neu: {new_stats['total_size_bytes']} Bytes, {new_stats['aligned_row_bytes']} Bytes/Zeile"
+        )
+    
+    def read_temperature(self) -> float:
+        """
+        Liest die aktuelle Temperatur vom Sensor.
+        Diese Methode wird von der Firmware aufgerufen, um die Temperatur auszulesen.
+        
+        Returns:
+            Die aktuelle Temperatur in Grad Celsius
+        """
+        try:
+            # Lese den Temperatursensor aus
+            temperature = self.temperature_sensor.read_temperature()
+            
+            # Aktualisiere die interne Temperatur
+            self.current_temperature_c = temperature
+            
+            # Aktualisiere PowerManager
+            self.power_manager.update_temperature(temperature)
+            
+            # Überprüfe, ob ein Temperaturlogging fällig ist
+            current_time = time.time()
+            if current_time - self.last_temp_log_time >= self.temp_log_interval:
+                self.log_temperature()
+                self.last_temp_log_time = current_time
+            
+            return temperature
+        
+        except Exception as e:
+            logger.error(f"Fehler beim Lesen der Temperatur: {e}")
+            # Bei Fehler, gib den letzten bekannten Wert zurück
+            return self.current_temperature_c
+    
+    def log_temperature(self) -> None:
+        """
+        Loggt die aktuelle Temperatur sowohl über das Logging-System als auch über UART.
+        """
+        temperature = self.current_temperature_c
+        sensor_type = self.temperature_sensor.sensor_type.value
+        
+        # Logge Temperatur über das Logging-System
+        self.logging_system.log_temperature(temperature, sensor_type)
+        
+        # Logge auch Gesamtstatistik für Temperatursensor
+        sensor_stats = self.temperature_sensor.get_stats()
+        if sensor_stats["readings_count"] > 0:
+            stats_msg = (
+                f"Temperatur-Statistik: "
+                f"Min {sensor_stats['min_temperature']:.1f}°C, "
+                f"Max {sensor_stats['max_temperature']:.1f}°C, "
+                f"Avg {sensor_stats['avg_temperature']:.1f}°C, "
+                f"Messungen: {sensor_stats['readings_count']}"
+            )
+            self.logging_system.log(stats_msg, LogLevel.DEBUG, LogType.TEMPERATURE)
+    
+    def set_temperature_log_interval(self, interval_seconds: float) -> None:
+        """
+        Setzt das Intervall für periodisches Temperaturlogging.
+        
+        Args:
+            interval_seconds: Intervall in Sekunden (0 = deaktiviert)
+        """
+        self.temp_log_interval = max(0.0, interval_seconds)
+        logger.info(f"Temperatur-Log-Intervall auf {self.temp_log_interval:.1f}s gesetzt")
+        
+        if self.temp_log_interval > 0:
+            self.logging_system.log(
+                f"Temperatur-Logging aktiviert (Intervall: {self.temp_log_interval:.1f}s)",
+                LogLevel.INFO,
+                LogType.SYSTEM
+            )
+        else:
+            self.logging_system.log("Periodisches Temperatur-Logging deaktiviert", LogLevel.INFO, LogType.SYSTEM)
+    
+    def inject_temperature_spike(self, delta: float, duration: float = 60.0) -> None:
+        """
+        Injiziert einen künstlichen Temperaturanstieg für Testzwecke.
+        
+        Args:
+            delta: Temperaturanstieg in °C
+            duration: Ungefähre Dauer des Anstiegs in Sekunden
+        """
+        self.temperature_sensor.inject_temperature_spike(delta, duration)
+        self.logging_system.log(
+            f"Temperatur-Spike: +{delta:.1f}°C für ~{duration:.0f}s injiziert",
+            LogLevel.WARNING,
+            LogType.SYSTEM
+        )
+    
+    def close(self) -> None:
+        """
+        Schließt den Emulator und gibt alle Ressourcen frei.
+        Diese Methode sollte aufgerufen werden, wenn der Emulator nicht mehr benötigt wird.
+        """
+        if hasattr(self, 'uart') and self.uart:
+            self.uart.close()
+        
+        if hasattr(self, 'logging_system') and self.logging_system:
+            self.logging_system.close()
+        
+        # Logge Abschlussinformationen
+        logger.info(f"RP2040 Emulator wird beendet. Laufzeit: {(time.time() - self.start_time):.1f}s")
+        
+        if self.sleep_mode:
+            # Wenn im Sleep-Modus, wecke zuerst auf, um korrekte Statistiken zu bekommen
+            self.wake_up()
+        
+        # Logge abschließende Statistiken
+        stats = self.get_system_stats()
+        
+        logger.info(f"Abschlussstatistiken:")
+        logger.info(f"  Temperatur: {stats['current_temperature_c']:.1f}°C")
+        logger.info(f"  RAM-Nutzung: {stats['ram_used_kb']:.1f}KB / {self.ram_size_bytes/1024:.1f}KB")
+        logger.info(f"  Flash-Nutzung: {stats['flash_used_kb']:.1f}KB / {self.flash_size_bytes/1024:.1f}KB")
+        logger.info(f"  Verarbeitete Frames: {stats['camera_frames']}")
+        logger.info(f"  Energieverbrauch: {stats['energy_consumed_mah']:.2f}mAh")
+        logger.info(f"  Schlafzeit: {self.total_sleep_time:.1f}s")
+        
+        # Speichere Temperaturverlauf in separatem Log
+        if hasattr(self, 'temperature_sensor') and self.temperature_sensor:
+            temp_history = [(t, temp) for t, temp in self.temperature_sensor.reading_history]
+            if temp_history:
+                logger.info(f"Temperaturverlauf: {len(temp_history)} Messwerte erfasst")

@@ -170,22 +170,41 @@ class PizzaDatasetAnalysis:
             all_rgb = np.vstack(rgb_values)
             self.stats['mean_rgb'] = np.mean(all_rgb, axis=0)
             self.stats['std_rgb'] = np.std(all_rgb, axis=0)
+        else:
+            # Fallback-Werte, wenn keine gültigen RGB-Werte gefunden wurden
+            logger.warning("Keine gültigen Bilder für RGB-Analyse gefunden. Verwende Standardwerte.")
+            self.stats['mean_rgb'] = np.array([0.5, 0.5, 0.5])  # Neutrale Werte
+            self.stats['std_rgb'] = np.array([0.25, 0.25, 0.25])
         
         # Berechne durchschnittliche Bildgröße
-        widths, heights = zip(*self.stats['image_sizes'])
-        self.stats['avg_width'] = sum(widths) / len(widths)
-        self.stats['avg_height'] = sum(heights) / len(heights)
-        self.stats['median_width'] = sorted(widths)[len(widths)//2]
-        self.stats['median_height'] = sorted(heights)[len(heights)//2]
+        if self.stats['image_sizes']:
+            widths, heights = zip(*self.stats['image_sizes'])
+            self.stats['avg_width'] = sum(widths) / len(widths)
+            self.stats['avg_height'] = sum(heights) / len(heights)
+            self.stats['median_width'] = sorted(widths)[len(widths)//2]
+            self.stats['median_height'] = sorted(heights)[len(heights)//2]
+        else:
+            # Fallback-Werte, wenn keine gültigen Bilder gefunden wurden
+            logger.warning("Keine gültigen Bilder für die Größenanalyse gefunden. Verwende Standardwerte.")
+            self.stats['avg_width'] = 320
+            self.stats['avg_height'] = 240
+            self.stats['median_width'] = 320
+            self.stats['median_height'] = 240
         
         # Klassenverteilung und -gewichtung
-        total = sum(self.stats['class_counts'].values())
-        self.stats['class_distribution'] = {cls: count/total for cls, count in self.stats['class_counts'].items()}
-        
-        # Klassengewichte für Balancierung (inverses Verhältnis zur Häufigkeit)
-        max_count = max(self.stats['class_counts'].values())
-        self.stats['class_weights'] = {cls: max_count/count if count > 0 else 0.0 
-                              for cls, count in self.stats['class_counts'].items()}
+        if self.stats['class_counts']:
+            total = sum(self.stats['class_counts'].values())
+            self.stats['class_distribution'] = {cls: count/total for cls, count in self.stats['class_counts'].items()}
+            
+            # Klassengewichte für Balancierung (inverses Verhältnis zur Häufigkeit)
+            max_count = max(self.stats['class_counts'].values())
+            self.stats['class_weights'] = {cls: max_count/count if count > 0 else 0.0 
+                                for cls, count in self.stats['class_counts'].items()}
+        else:
+            # Fallback-Werte, wenn keine Klassen gefunden wurden
+            logger.warning("Keine Klassen gefunden. Verwende Standardwerte.")
+            self.stats['class_distribution'] = {'unknown': 1.0}
+            self.stats['class_weights'] = {'unknown': 1.0}
         
         # Ausgabe der Ergebnisse
         logger.info("Datensatzanalyse abgeschlossen:")
@@ -220,11 +239,42 @@ class MemoryEstimator:
     """Schätzt Speicherverbrauch von Modellen und Operationen für RP2040"""
     
     @staticmethod
-    def estimate_model_size(model, bits=32):
-        """Schätzt die Modellgröße in KB"""
+    def estimate_model_size(model, bits=32, custom_bits=None):
+        """
+        Schätzt die Modellgröße in KB
+        
+        Args:
+            model: PyTorch-Modell
+            bits: Standard-Bitbreite für Parameter (8, 16, 32)
+            custom_bits: Dictionary mit spezifischen Bitbreiten für bestimmte Layer, z.B.
+                        {'int4_layers': 4} für INT4-quantisierte Layer
+        """
         param_size = 0
-        for param in model.parameters():
-            param_size += param.nelement() * (bits / 8)  # Größe in Bytes
+        
+        # Wenn spezifische Layer mit eigener Bitbreite angegeben sind
+        if custom_bits and 'int4_layers' in custom_bits:
+            int4_bit_width = custom_bits.get('int4_layers', 4)
+            
+            # Für jedes benannte Modul prüfen, ob es ein INT4-Layer ist
+            for name, module in model.named_modules():
+                if isinstance(module, (nn.Conv2d, nn.Linear)):
+                    # Für Gewichte die reduzierte Bitbreite verwenden
+                    weight_param = getattr(module, 'weight', None)
+                    if weight_param is not None:
+                        param_size += weight_param.nelement() * (int4_bit_width / 8)
+                    
+                    # Für Bias die Standardbitbreite verwenden
+                    bias_param = getattr(module, 'bias', None)
+                    if bias_param is not None:
+                        param_size += bias_param.nelement() * (bits / 8)
+                else:
+                    # Für alle anderen Module die Standardparameter verwenden
+                    for param in module.parameters(recurse=False):
+                        param_size += param.nelement() * (bits / 8)
+        else:
+            # Standardschätzung für alle Parameter
+            for param in model.parameters():
+                param_size += param.nelement() * (bits / 8)  # Größe in Bytes
         
         buffer_size = 0
         for buffer in model.buffers():

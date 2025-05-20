@@ -180,12 +180,14 @@ def optimize_model(model_path, output_dir, prune_ratio=0.3, structured_ratio=0.2
         # Konfigurationsobjekt für den Export erweitern
         config_dict = {k: getattr(config, k) for k in dir(config) if not k.startswith('__')}
         
+        # Set export directory in config instead of passing directly
+        config_dict['MODEL_DIR'] = os.path.join(output_dir, "rp2040_export")
+        
         export_info = export_to_microcontroller(
             model=model,
             config=types.SimpleNamespace(**config_dict),
             class_names=class_names,
-            preprocess_params=preprocessing_params,
-            output_dir=os.path.join(output_dir, "rp2040_export")
+            preprocess_params=preprocessing_params
         )
         
         logger.info(f"Modell exportiert: {export_info['export_dir']}")

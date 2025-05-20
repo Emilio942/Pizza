@@ -1,0 +1,18 @@
+[2025-05-14 03:33:11,438] [INFO] Found 75 Python scripts to validate
+[2025-05-14 03:33:11,438] [INFO] Validating script: cleanup.py
+[2025-05-14 03:33:11,510] [INFO] Validation passed for /home/emilio/Documents/ai/pizza/scripts/cleanup.py
+[2025-05-14 03:33:11,510] [INFO] Validating script: filter_dataset.py
+[2025-05-14 03:33:11,519] [WARNING] Missing or incomplete docstring in /home/emilio/Documents/ai/pizza/scripts/filter_dataset.py
+[2025-05-14 03:33:11,519] [WARNING] Validation passed with warnings for /home/emilio/Documents/ai/pizza/scripts/filter_dataset.py
+[2025-05-14 03:33:11,519] [INFO] Validating script: label_tool.py
+[2025-05-14 03:33:13,673] [INFO] Validation passed for /home/emilio/Documents/ai/pizza/scripts/label_tool.py
+[2025-05-14 03:33:13,673] [INFO] Validating script: framebuffer_demo.py
+[2025-05-14 03:33:13,784] [WARNING] Execution test issue in /home/emilio/Documents/ai/pizza/scripts/framebuffer_demo.py: Execution failed with error: 
+[2025-05-14 03:33:13,785] [WARNING] Validation passed with warnings for /home/emilio/Documents/ai/pizza/scripts/framebuffer_demo.py
+[2025-05-14 03:33:13,785] [INFO] Validating script: compare_inverted_residual.py
+[2025-05-14 03:33:17,484] [INFO] Validation passed for /home/emilio/Documents/ai/pizza/scripts/compare_inverted_residual.py
+[2025-05-14 03:33:17,484] [INFO] Validating script: test_temporal_smoothing.py
+[2025-05-14 03:33:17,787] [INFO] Validation passed for /home/emilio/Documents/ai/pizza/scripts/test_temporal_smoothing.py
+[2025-05-14 03:33:17,787] [INFO] Validating script: knowledge_distillation.py
+[2025-05-14 03:33:19,776] [INFO] Validation passed for /home/emilio/Documents/ai/pizza/scripts/knowledge_distillation.py
+[2025-05-14 03:33:19,776] [INFO] Validating script: visualize_gradcam.py

@@ -1,0 +1,29 @@
+{
+  "pipeline_start": "2025-05-14T10:53:20Z",
+  "scripts": [
+    {
+      "name": "test_image_preprocessing.py",
+      "status": "success",
+      "duration": 4,
+      "retries": 0,
+      "log": "/home/emilio/Documents/ai/pizza/output/pipeline_runs/20250514_125320/logs/test_image_preprocessing.log",
+      "details": {}
+    },
+    {
+      "name": "augment_dataset.py",
+      "status": "success",
+      "duration": 1,
+      "retries": 0,
+      "log": "/home/emilio/Documents/ai/pizza/output/pipeline_runs/20250514_125320/logs/augment_dataset.log",
+      "details": {}
+    },
+    {
+      "name": "run_pizza_tests.py",
+      "status": "failed",
+      "duration": 8,
+      "retries": 3,
+      "log": "/home/emilio/Documents/ai/pizza/output/pipeline_runs/20250514_125320/logs/run_pizza_tests.log",
+      "details": {}
+    }
+  ]
+}

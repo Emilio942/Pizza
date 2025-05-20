@@ -1,0 +1,53 @@
+{
+  "scripts": [
+    {
+      "name": "compare_tiny_cnns.py",
+      "status": "success",
+      "duration": 17,
+      "retries": 0,
+      "log": "output/optimization/logs/compare_tiny_cnns.py.log"
+    },
+    {
+      "name": "compare_se_models.py",
+      "status": "success",
+      "duration": 25,
+      "retries": 0,
+      "log": "output/optimization/logs/compare_se_models.py.log"
+    },
+    {
+      "name": "compare_inverted_residual.py",
+      "status": "failed",
+      "duration": 11,
+      "retries": 3,
+      "log": "output/optimization/logs/compare_inverted_residual.py.log"
+    },
+    {
+      "name": "compare_hard_swish.py",
+      "status": "failed",
+      "duration": 11,
+      "retries": 3,
+      "log": "output/optimization/logs/compare_hard_swish.py.log"
+    },
+    {
+      "name": "run_pruning_clustering.py",
+      "status": "failed",
+      "duration": 619,
+      "retries": 3,
+      "log": "output/optimization/logs/run_pruning_clustering.py.log"
+    },
+    {
+      "name": "knowledge_distillation.py",
+      "status": "failed",
+      "duration": 10,
+      "retries": 3,
+      "log": "output/optimization/logs/knowledge_distillation.py.log"
+    },
+    {
+      "name": "quantization_aware_training.py",
+      "status": "failed",
+      "duration": 10,
+      "retries": 3,
+      "log": "output/optimization/logs/quantization_aware_training.py.log"
+    }
+  ]
+}

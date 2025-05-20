@@ -1,0 +1,68 @@
+{
+  "model_name": "micropizzanetv2_quantized_s30",
+  "timestamp": "2025-05-19 06:35:39",
+  "optimizations": {
+    "input_size": {
+      "width": 48,
+      "height": 48,
+      "channels": 3
+    },
+    "pruning": {
+      "sparsity": 0.3,
+      "method": "structured",
+      "parameters": {
+        "original": 150000,
+        "pruned": 105000,
+        "reduction_percent": 30.0
+      }
+    },
+    "quantization": {
+      "method": "quantization_aware_training",
+      "bits": 8,
+      "scheme": "int8",
+      "symmetric": true
+    },
+    "cmsis_nn": {
+      "enabled": true,
+      "optimized_ops": [
+        "convolution",
+        "depthwise_convolution",
+        "pooling"
+      ]
+    }
+  },
+  "performance": {
+    "accuracy": 0.902,
+    "precision": 0.9186,
+    "recall": 0.9188,
+    "f1_score": 0.9185,
+    "inference_time_ms": 22,
+    "ram_usage": {
+      "framebuffer_kb": 76.8,
+      "tensor_arena_kb": 10.8,
+      "preprocessing_buffer_kb": 27.0,
+      "system_overhead_kb": 40.0,
+      "stack_kb": 8.0,
+      "heap_kb": 5.0,
+      "static_buffers_kb": 3.0,
+      "total_kb": 170.6,
+      "percentage_of_available_ram": 64.62
+    },
+    "flash_usage": {
+      "model_kb": 105.0,
+      "code_kb": 65.0,
+      "total_kb": 170.0,
+      "percentage_of_available_flash": 9.72
+    }
+  },
+  "minimum_requirements": {
+    "ram_kb": 204,
+    "flash_kb": 1748,
+    "accuracy_threshold": 0.45
+  },
+  "verification_status": {
+    "ram_verified": true,
+    "accuracy_verified": true,
+    "inference_verified": true
+  }
+}

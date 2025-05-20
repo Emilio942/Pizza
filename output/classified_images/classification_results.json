@@ -1,0 +1,17 @@
+[
+  {
+    "filename": "sample_basic.jpg",
+    "path": "augmented_pizza/basic/sample_basic.jpg",
+    "class": "burnt",
+    "confidence": 0.4888545870780945,
+    "probabilities": {
+      "basic": 0.12929750978946686,
+      "burnt": 0.4888545870780945,
+      "combined": 0.1615031659603119,
+      "mixed": 0.1721557229757309,
+      "progression": 0.02452010288834572,
+      "segment": 0.02366890385746956
+    },
+    "inference_time_ms": 125.29277801513672
+  }
+]

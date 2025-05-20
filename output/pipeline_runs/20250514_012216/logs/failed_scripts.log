@@ -1,0 +1,3 @@
+/home/emilio/Documents/ai/pizza/scripts/test_image_preprocessing.py --output-dir /home/emilio/Documents/ai/pizza/output/pipeline_runs/20250514_012216/preprocessing
+/home/emilio/Documents/ai/pizza/scripts/augment_dataset.py --output-dir /home/emilio/Documents/ai/pizza/output/pipeline_runs/20250514_012216/augmented_data
+/home/emilio/Documents/ai/pizza/models/rp2040_export/verify_model.py --model-dir /home/emilio/Documents/ai/pizza/models

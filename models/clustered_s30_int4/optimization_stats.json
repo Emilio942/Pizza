@@ -1,0 +1,262 @@
+{
+  "base_model": {
+    "accuracy": 0.0,
+    "class_accuracies": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "confusion_matrix": [
+      [
+        0,
+        29,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        3,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        94,
+        150,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "avg_inference_time_ms": 2.8070343865288625,
+    "class_names": [
+      "augmented",
+      "classified",
+      "processed",
+      "raw",
+      "synthetic",
+      "videos"
+    ]
+  },
+  "optimized_model": {
+    "accuracy": 0.0,
+    "class_accuracies": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "confusion_matrix": [
+      [
+        0,
+        29,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        3,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        244,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "avg_inference_time_ms": 0.818120108710395,
+    "class_names": [
+      "augmented",
+      "classified",
+      "processed",
+      "raw",
+      "synthetic",
+      "videos"
+    ]
+  },
+  "pruning": {
+    "total_params_before": 582,
+    "pruned_params": 0,
+    "total_params_after": 582,
+    "pruned_percent": 0.0,
+    "pruned_layers": [
+      {
+        "name": "block1.0",
+        "param_name": "weight",
+        "total_params": 216,
+        "pruned_params": 0,
+        "pruned_percent": 0.0
+      },
+      {
+        "name": "block2.0",
+        "param_name": "weight",
+        "total_params": 72,
+        "pruned_params": 0,
+        "pruned_percent": 0.0
+      },
+      {
+        "name": "block2.3",
+        "param_name": "weight",
+        "total_params": 128,
+        "pruned_params": 0,
+        "pruned_percent": 0.0
+      },
+      {
+        "name": "classifier.2",
+        "param_name": "weight",
+        "total_params": 96,
+        "pruned_params": 0,
+        "pruned_percent": 0.0
+      }
+    ],
+    "structured_pruning": {
+      "removed_channels": {},
+      "total_channels_removed": 0
+    }
+  },
+  "clustering": {
+    "total_params": 582,
+    "clustered_layers": [
+      {
+        "name": "block1.0",
+        "param_name": "weight",
+        "tensor_size": 216,
+        "unique_before": 216,
+        "unique_after": 8,
+        "centroids": [
+          -0.00026644952595233917,
+          -0.27771100401878357,
+          0.3740368187427521,
+          0.11776361614465714,
+          -0.17195357382297516,
+          -0.09323356300592422,
+          -0.5047979950904846,
+          0.22009626030921936
+        ],
+        "reduction": 0.962962962962963
+      },
+      {
+        "name": "block2.0",
+        "param_name": "weight",
+        "tensor_size": 72,
+        "unique_before": 72,
+        "unique_after": 8,
+        "centroids": [
+          0.2952718734741211,
+          -0.162638321518898,
+          0.08306193351745605,
+          -0.3150150179862976,
+          -0.09543630480766296,
+          0.15925273299217224,
+          -0.002171829342842102,
+          -0.22623717784881592
+        ],
+        "reduction": 0.8888888888888888
+      },
+      {
+        "name": "block2.3",
+        "param_name": "weight",
+        "tensor_size": 128,
+        "unique_before": 128,
+        "unique_after": 8,
+        "centroids": [
+          0.0008318070322275162,
+          0.5039302110671997,
+          -0.5700270533561707,
+          -0.3705638647079468,
+          0.2396547943353653,
+          0.8464698791503906,
+          -0.19606953859329224,
+          -1.0477968454360962
+        ],
+        "reduction": 0.9375
+      },
+      {
+        "name": "classifier.2",
+        "param_name": "weight",
+        "tensor_size": 96,
+        "unique_before": 96,
+        "unique_after": 8,
+        "centroids": [
+          0.00909068901091814,
+          -0.09500709921121597,
+          0.0743602067232132,
+          -0.011747907847166061,
+          -0.11610930413007736,
+          -0.0690992996096611,
+          0.05022425949573517,
+          0.030222788453102112
+        ],
+        "reduction": 0.9166666666666666
+      }
+    ],
+    "unique_values_before": 512,
+    "unique_values_after": 32,
+    "compression_ratio": 0.9375
+  }
+}

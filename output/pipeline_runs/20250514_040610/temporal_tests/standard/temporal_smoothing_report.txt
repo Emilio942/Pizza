@@ -1,0 +1,38 @@
+=== Temporal Smoothing Ergebnisbericht ===
+
+Testkonfiguration:
+- Anzahl der Frames: 100
+- Smoothing-Fenstergröße: 5
+
+Rohvorhersagen:
+- Genauigkeit: 100.00%
+- Anzahl der Klassenwechsel: 2
+
+Ergebnisse nach Strategie:
+
+MAJORITY_VOTE:
+- Genauigkeit: 96.00%
+- Verbesserung: -4.00%
+- Anzahl der Klassenwechsel: 2
+
+MOVING_AVERAGE:
+- Genauigkeit: 96.00%
+- Verbesserung: -4.00%
+- Anzahl der Klassenwechsel: 2
+
+EXPONENTIAL_MA:
+- Genauigkeit: 98.00%
+- Verbesserung: -2.00%
+- Anzahl der Klassenwechsel: 2
+
+CONFIDENCE_WEIGHTED:
+- Genauigkeit: 95.00%
+- Verbesserung: -5.00%
+- Anzahl der Klassenwechsel: 2
+
+
+Empfehlung:
+Die beste Strategie für diesen Datensatz ist EXPONENTIAL_MA mit einer Genauigkeit von 98.00% (Verbesserung um -2.00%).
+Die stabilste Strategie ist MAJORITY_VOTE mit nur 2 Klassenwechseln.
+
+Hinweis: Die optimale Strategie kann je nach Anwendungsfall variieren. Wenn Stabilität wichtiger ist als Genauigkeit, könnte eine andere Strategie bevorzugt werden.

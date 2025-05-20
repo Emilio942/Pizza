@@ -1,0 +1,63 @@
+{
+  "original_model": {
+    "accuracy": 0.0,
+    "memory_kb": 0,
+    "inference_time_ms": 0.0
+  },
+  "int4_model": {
+    "accuracy": 0.0,
+    "memory_kb": 0,
+    "inference_time_ms": 0.0,
+    "quantization_stats": {
+      "original_model_size": 2.53515625,
+      "quantized_model_size": 0.78515625,
+      "compression_ratio": 0.6902927580893683,
+      "unique_values": {},
+      "int4_layers": [
+        {
+          "name": "block1.0",
+          "param_name": "weight",
+          "tensor_size": 216,
+          "unique_before": 8,
+          "unique_after": 8,
+          "memory_saving_bytes": 756.0,
+          "scale": 0.058588989078998566,
+          "zero_point": 1
+        },
+        {
+          "name": "block2.0",
+          "param_name": "weight",
+          "tensor_size": 72,
+          "unique_before": 8,
+          "unique_after": 8,
+          "memory_saving_bytes": 252.0,
+          "scale": 0.04068579152226448,
+          "zero_point": 0
+        },
+        {
+          "name": "block2.3",
+          "param_name": "weight",
+          "tensor_size": 128,
+          "unique_before": 8,
+          "unique_after": 8,
+          "memory_saving_bytes": 448.0,
+          "scale": 0.12628445029258728,
+          "zero_point": 0
+        },
+        {
+          "name": "classifier.2",
+          "param_name": "weight",
+          "tensor_size": 96,
+          "unique_before": 8,
+          "unique_after": 8,
+          "memory_saving_bytes": 336.0,
+          "scale": 0.012697966769337654,
+          "zero_point": 1
+        }
+      ]
+    }
+  },
+  "accuracy_diff": 0.0,
+  "memory_reduction": 1.0,
+  "int4_model_path": "output/int4_evaluation/int4_quantized/int4_model.pth"
+}

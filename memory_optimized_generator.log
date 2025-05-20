@@ -1,0 +1,22 @@
+2025-05-10 23:08:18,388 - __main__ - INFO - Created backup: src/augmentation/diffusion_pizza_generator.py.bak
+2025-05-10 23:08:18,388 - __main__ - INFO - Applied memory optimization patches to src/augmentation/diffusion_pizza_generator.py
+2025-05-10 23:08:18,388 - __main__ - INFO - Created backup: scripts/generate_pizza_dataset.py.bak
+2025-05-10 23:08:18,388 - __main__ - INFO - Applied memory optimization patches to scripts/generate_pizza_dataset.py
+2025-05-10 23:08:18,388 - __main__ - INFO - Created backup: src/augmentation/advanced_pizza_diffusion_control.py.bak
+2025-05-10 23:08:18,388 - __main__ - INFO - Applied memory optimization patches to src/augmentation/advanced_pizza_diffusion_control.py
+2025-05-10 23:08:18,388 - __main__ - INFO - Running: /home/emilio/Documents/ai/pizza/.venv/bin/python scripts/generate_pizza_dataset.py --output_dir=data/synthetic --batch_size=1 --image_size=512 --preset=small_diverse --model=sd-food
+2025-05-10 23:08:47,778 - __main__ - INFO - Applied memory optimization patches to src/augmentation/diffusion_pizza_generator.py
+2025-05-10 23:08:47,779 - __main__ - INFO - Applied memory optimization patches to scripts/generate_pizza_dataset.py
+2025-05-10 23:08:47,779 - __main__ - INFO - Applied memory optimization patches to src/augmentation/advanced_pizza_diffusion_control.py
+2025-05-10 23:08:47,779 - __main__ - INFO - Set PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
+2025-05-10 23:08:47,779 - __main__ - INFO - Running: /home/emilio/Documents/ai/pizza/.venv/bin/python scripts/generate_pizza_dataset.py --output_dir=data/synthetic --batch_size=1 --image_size=512 --preset=small_diverse --model=sd-food --offload_to_cpu
+2025-05-10 23:10:17,909 - __main__ - INFO - Applied memory optimization patches to src/augmentation/diffusion_pizza_generator.py
+2025-05-10 23:10:17,909 - __main__ - INFO - Applied memory optimization patches to scripts/generate_pizza_dataset.py
+2025-05-10 23:10:17,909 - __main__ - INFO - Applied memory optimization patches to src/augmentation/advanced_pizza_diffusion_control.py
+2025-05-10 23:10:17,909 - __main__ - INFO - Set PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
+2025-05-10 23:10:17,909 - __main__ - INFO - Running: /home/emilio/Documents/ai/pizza/.venv/bin/python scripts/generate_pizza_dataset.py --output_dir=data/synthetic --batch_size=1 --image_size=512 --preset=small_diverse --model=sd-food --offload_to_cpu
+2025-05-19 22:10:45,388 - __main__ - INFO - Applied memory optimization patches to src/augmentation/diffusion_pizza_generator.py
+2025-05-19 22:10:45,389 - __main__ - INFO - Applied memory optimization patches to scripts/generate_pizza_dataset.py
+2025-05-19 22:10:45,389 - __main__ - INFO - Applied memory optimization patches to src/augmentation/advanced_pizza_diffusion_control.py
+2025-05-19 22:10:45,390 - __main__ - INFO - Set PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
+2025-05-19 22:10:45,390 - __main__ - INFO - Running: /home/emilio/Documents/ai/pizza/.venv/bin/python3 scripts/generate_pizza_dataset.py --output_dir=data/synthetic/diffusion_run_20250519_221045 --batch_size=1 --image_size=512 --preset=small_diverse --model=sd-food --offload_to_cpu

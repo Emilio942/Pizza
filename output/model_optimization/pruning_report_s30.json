@@ -1,0 +1,16 @@
+{
+  "timestamp": "2025-05-18 17:31:06",
+  "model_name": "micropizzanetv2_quantized_s30",
+  "sparsity": 0.3,
+  "quantized": true,
+  "parameters": {
+    "original": 150000,
+    "pruned": 105000,
+    "reduction_percent": 30.0
+  },
+  "model_path": "models/micropizzanetv2_quantized_s30.tflite",
+  "inference_stats": {
+    "latency_ms": 20,
+    "ram_usage_kb": 9
+  }
+}

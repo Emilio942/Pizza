@@ -1,0 +1,160 @@
+{
+  "model_name": "MockModel",
+  "verification_date": "2025-05-16T16:16:52.703258",
+  "properties": {
+    "robustness": {
+      "total": 3,
+      "verified": 2,
+      "failed": 1,
+      "verification_rate": 0.6666666666666666,
+      "avg_time": 0.5,
+      "details": [
+        {
+          "verified": true,
+          "property_type": "robustness",
+          "time_seconds": 0.5,
+          "details": {
+            "epsilon": 0.03,
+            "norm": "L_inf",
+            "min_logit_diff": 0.2
+          }
+        },
+        {
+          "verified": false,
+          "property_type": "robustness",
+          "time_seconds": 0.5,
+          "details": {
+            "epsilon": 0.03,
+            "norm": "L_inf",
+            "min_logit_diff": -0.1
+          }
+        },
+        {
+          "verified": true,
+          "property_type": "robustness",
+          "time_seconds": 0.5,
+          "details": {
+            "epsilon": 0.03,
+            "norm": "L_inf",
+            "min_logit_diff": 0.2
+          }
+        }
+      ]
+    },
+    "brightness": {
+      "total": 3,
+      "verified": 2,
+      "failed": 1,
+      "verification_rate": 0.6666666666666666,
+      "avg_time": 0.3,
+      "details": [
+        {
+          "verified": false,
+          "property_type": "brightness",
+          "time_seconds": 0.3,
+          "details": {
+            "brightness_range": [
+              0.7,
+              1.3
+            ],
+            "min_logit_diff": -0.05
+          }
+        },
+        {
+          "verified": true,
+          "property_type": "brightness",
+          "time_seconds": 0.3,
+          "details": {
+            "brightness_range": [
+              0.7,
+              1.3
+            ],
+            "min_logit_diff": 0.3
+          }
+        },
+        {
+          "verified": true,
+          "property_type": "brightness",
+          "time_seconds": 0.3,
+          "details": {
+            "brightness_range": [
+              0.7,
+              1.3
+            ],
+            "min_logit_diff": 0.3
+          }
+        }
+      ]
+    },
+    "class_separation": {
+      "total": 3,
+      "verified": 2,
+      "failed": 1,
+      "verification_rate": 0.6666666666666666,
+      "avg_time": 0.6999999999999998,
+      "details": [
+        {
+          "verified": true,
+          "property_type": "class_separation",
+          "time_seconds": 0.7,
+          "details": {
+            "class1": 1,
+            "class2": 0,
+            "class1_name": "burnt",
+            "class2_name": "basic",
+            "robustness_eps": 0.03,
+            "results": [
+              {
+                "example": 0,
+                "verified": true
+              }
+            ]
+          }
+        },
+        {
+          "verified": true,
+          "property_type": "class_separation",
+          "time_seconds": 0.7,
+          "details": {
+            "class1": 2,
+            "class2": 5,
+            "class1_name": "combined",
+            "class2_name": "segment",
+            "robustness_eps": 0.03,
+            "results": [
+              {
+                "example": 0,
+                "verified": true
+              }
+            ]
+          }
+        },
+        {
+          "verified": false,
+          "property_type": "class_separation",
+          "time_seconds": 0.7,
+          "details": {
+            "class1": 5,
+            "class2": 2,
+            "class1_name": "segment",
+            "class2_name": "combined",
+            "robustness_eps": 0.03,
+            "results": [
+              {
+                "example": 0,
+                "verified": true
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "summary": {
+    "total_properties_checked": 9,
+    "total_verified": 6,
+    "total_failed": 3,
+    "overall_verification_rate": 0.6666666666666666,
+    "total_time_seconds": 4.5
+  }
+}

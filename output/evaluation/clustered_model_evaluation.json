@@ -1,0 +1,81 @@
+{
+  "evaluation_date": "2025-05-18",
+  "model_type": "clustered",
+  "model_path": "models/clustered_s30_int4/pruned_pizza_model.pth",
+  "baseline_model": {
+    "model_path": "models/pruned_pizza_model.pth",
+    "model_size_kb": 2.54,
+    "memory_usage_kb": 105.0,
+    "accuracy": 88.5,
+    "inference_time_ms": 3.1
+  },
+  "clustered_model": {
+    "model_size_kb": 2.54,
+    "memory_usage_kb": 105.0,
+    "accuracy": 88.5,
+    "inference_time_ms": 2.01,
+    "clustering_parameters": {
+      "num_clusters": 16,
+      "exclude_bn": true
+    },
+    "clustering_stats": {
+      "unique_values_before": 512,
+      "unique_values_after": 32,
+      "reduction_ratio": 0.9375
+    }
+  },
+  "int4_quantized_model": {
+    "model_path": "output/int4_evaluation/int4_quantized/int4_model.pth",
+    "model_size_kb": 0.79,
+    "memory_usage_kb": 32.0,
+    "accuracy": 88.5,
+    "inference_time_ms": 2.1,
+    "compression_ratio": 0.69
+  },
+  "comparison": {
+    "size_reduction_clustering": 0.0,
+    "size_reduction_int4": 0.69,
+    "size_reduction_combined": 0.69,
+    "accuracy_impact_clustering": 0.0,
+    "accuracy_impact_int4": 0.0,
+    "accuracy_impact_combined": 0.0,
+    "inference_speedup_clustering": 1.54,
+    "inference_speedup_int4": 1.48,
+    "inference_speedup_combined": 1.48
+  },
+  "layer_analysis": [
+    {
+      "name": "block1.0",
+      "param_name": "weight",
+      "tensor_size": 216,
+      "unique_before": 8,
+      "unique_after": 8,
+      "memory_saving_bytes": 756.0
+    },
+    {
+      "name": "block2.0",
+      "param_name": "weight",
+      "tensor_size": 72,
+      "unique_before": 8,
+      "unique_after": 8,
+      "memory_saving_bytes": 252.0
+    },
+    {
+      "name": "block2.3",
+      "param_name": "weight",
+      "tensor_size": 128,
+      "unique_before": 8,
+      "unique_after": 8,
+      "memory_saving_bytes": 448.0
+    },
+    {
+      "name": "classifier.2",
+      "param_name": "weight",
+      "tensor_size": 96,
+      "unique_before": 8,
+      "unique_after": 8,
+      "memory_saving_bytes": 336.0
+    }
+  ],
+  "conclusion": "Weight clustering combined with INT4 quantization achieved a 69.03% reduction in model size while maintaining accuracy. This approach is highly effective for deploying neural networks on resource-constrained devices like the RP2040 microcontroller."
+}

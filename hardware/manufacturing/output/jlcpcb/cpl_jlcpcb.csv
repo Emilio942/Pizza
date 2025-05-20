@@ -1,0 +1,18 @@
+Designator,Mid X,Mid Y,Layer,Rotation
+RP2040ObjectDetectionv10_1,200.000mm,200.000mm,top,0.0
+RP2040ObjectDetectionv10_2,200.000mm,200.000mm,top,0.0
+RP2040_1,200.000mm,200.000mm,top,0.0
+FLASH_1,285.000mm,180.000mm,top,0.0
+RP2040ObjectDetectionv10_3,80.000mm,70.000mm,top,0.0
+BATTERYPOWER_1,55.000mm,75.000mm,top,0.0
+TP4056_1,95.000mm,75.000mm,top,0.0
+MCP1700_1,60.000mm,95.000mm,top,0.0
+CAMERA_1,320.000mm,80.000mm,top,0.0
+OV2640_1,320.000mm,90.000mm,top,0.0
+XTAL_1,125.000mm,167.500mm,top,0.0
+DEBUGPROG_1,200.000mm,305.000mm,top,0.0
+USB_1,200.000mm,320.000mm,top,0.0
+AUDIO_1,320.000mm,190.000mm,top,0.0
+DRIVER_1,300.000mm,145.000mm,top,0.0
+ONOFF_1,45.000mm,117.500mm,top,0.0
+R1_1,330.000mm,355.000mm,top,0.0

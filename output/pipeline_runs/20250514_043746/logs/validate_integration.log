@@ -1,0 +1,3 @@
+[2025-05-14 04:41:22,959] [INFO] Analyzing script relationships from status file: /home/emilio/Documents/ai/pizza/output/pipeline_runs/20250514_043746/reports/script_status.json
+[2025-05-14 04:41:22,959] [INFO] Integration validation complete. Found 0 potential issues.
+[2025-05-14 04:41:22,959] [INFO] Report written to /home/emilio/Documents/ai/pizza/output/pipeline_runs/20250514_043746/reports/integration_report.json

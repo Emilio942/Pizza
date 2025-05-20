@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/home/emilio/Documents/ai/pizza/scripts/test_image_preprocessing.py", line 22, in <module>
+    from src.constants import INPUT_SIZE
+ModuleNotFoundError: No module named 'src.constants'

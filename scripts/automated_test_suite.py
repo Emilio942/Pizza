@@ -54,7 +54,7 @@ from src.pizza_detector import (
     RP2040Config, create_optimized_dataloaders, load_model, evaluate_model,
     PizzaDatasetAnalysis
 )
-from src.types import InferenceResult, ModelMetrics
+from src.utils.types import InferenceResult, ModelMetrics # MODIFIED: Corrected import path
 from src.metrics import calculate_metrics, visualize_confusion_matrix
 from src.constants import (
     CLASS_NAMES, CLASS_COLORS, PROJECT_ROOT, MODELS_DIR, OUTPUT_DIR,

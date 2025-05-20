@@ -1,13 +1,17 @@
 #!/usr/bin/env python3
 # hardware/manufacturing/pcb_export.py
 """
-PCB Export Tool für JLCPCB-Fertigung
-Konvertiert das vorhandene SVG-Layout in die benötigten Fertigungsformate:
-- Gerber-Dateien für die PCB-Fertigung
-- BOM (Stückliste) für die Materialbestellung
-- CPL (Bestückungsplan) für die automatische Bestückung
+PCB Export Tool für verschiedene Fertigungsanbieter
+Unterstützt mehrere PCB-Fertigungsdienste und nutzt bestehende EDA-Tools.
 
-Nutzt pcbnew aus der KiCad-Bibliothek für eine korrekte Gerber-Generierung.
+Funktionen:
+- Import von SVG-Layouts als Referenz für Komponentenpositionen
+- Export von Fertigungsdateien für mehrere PCB-Hersteller (JLCPCB, PCBWay, OSH Park, Eurocircuits)
+- Integration mit KiCad, Eagle oder direkte Nutzung von FlatCAM
+- Erstellung von BOM und CPL im herstellerspezifischen Format
+- Automatische Preisabfrage und Angebotsvergleich über Hersteller-APIs
+
+Besser nutzbar als eigenständiges Tool oder als Ergänzung im KiCad-Workflow.
 """
 
 import os
@@ -22,964 +26,1968 @@ import zipfile
 import re
 import subprocess
 import tempfile
+import argparse
+import webbrowser
+import requests
+import logging
+from typing import Dict, List, Optional, Tuple, Union, Any, Callable
 
-# Prüfen, ob die KiCad-Bibliotheken verfügbar sind
-try:
-    import pcbnew
-    KICAD_AVAILABLE = True
-except ImportError:
-    KICAD_AVAILABLE = False
-    print("Warnung: KiCad Python-Module (pcbnew) nicht verfügbar.")
-    print("Für vollständige Funktionalität sollte KiCad installiert sein.")
+# Setup logging
+logging.basicConfig(level=logging.INFO, 
+                   format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
 
-PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
-SVG_PATH = PROJECT_ROOT / "pcb-layout-updated.svg"
-GERBER_DIR = PROJECT_ROOT / "hardware" / "manufacturing" / "gerber"
-BOM_DIR = PROJECT_ROOT / "hardware" / "manufacturing" / "bom"
-CPL_DIR = PROJECT_ROOT / "hardware" / "manufacturing" / "centroid"
-
-# Temporärer Pfad für KiCad-Projektdateien
-TEMP_KICAD_DIR = Path(tempfile.mkdtemp(prefix="pizzaboard_kicad_"))
-
-# Stellt sicher, dass alle Verzeichnisse existieren
-for directory in [GERBER_DIR, BOM_DIR, CPL_DIR]:
-    directory.mkdir(parents=True, exist_ok=True)
-
-class PCBExporter:
-    """
-    Exportiert die PCB-Daten in die für JLCPCB benötigten Formate.
-    """
-    def __init__(self, svg_path):
-        self.svg_path = svg_path
-        self.tree = None
-        self.components = []
-        self.kicad_pcb_path = TEMP_KICAD_DIR / "pizzaboard.kicad_pcb"
+# Define API client interface
+class ApiClientInterface:
+    """Interface for API client functionality to handle import issues."""
+    
+    def __init__(self):
+        self.available = False
         
-        # BOM Kategorien und CPL-Header definieren
-        self.bom_fields = ["Designator", "Quantity", "Value", "Package", "Type", "Manufacturer", "Part Number", "Supplier", "LCSC Part Number"]
-        self.cpl_fields = ["Designator", "Mid X", "Mid Y", "Layer", "Rotation"]
+        # Try to import the module
+        try:
+            sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+            import pcb_api_clients
+            self._get_pcb_client = pcb_api_clients.get_pcb_client
+            self._format_price = pcb_api_clients.format_price
+            self._compare_quotes = pcb_api_clients.compare_quotes
+            self.available = True
+            logger.info("PCB API clients module imported successfully.")
+        except ImportError as e:
+            logger.warning(f"PCB API clients module could not be imported: {e}")
+            logger.warning("API quote functionality will not be available.")
+    
+    def get_pcb_client(self, manufacturer: str) -> Any:
+        """Get a PCB API client for the specified manufacturer."""
+        if not self.available:
+            logger.error(f"PCB API clients module not available. Cannot get client for {manufacturer}.")
+            return None
+        return self._get_pcb_client(manufacturer)
+    
+    def format_price(self, price: float, currency: str = "USD") -> str:
+        """Format a price with currency."""
+        if not self.available:
+            return f"{price} {currency}"
+        return self._format_price(price, currency)
+    
+    def compare_quotes(self, quotes_list: List[Dict]) -> Dict:
+        """Compare multiple quotes and return the best options."""
+        if not self.available:
+            logger.error("PCB API clients module not available. Cannot compare quotes.")
+            return {}
+        return self._compare_quotes(quotes_list)
 
-    def parse_svg(self):
-        """Parst die SVG-Datei und extrahiert Komponenten-Informationen."""
+# Initialize the API client interface
+api_client = ApiClientInterface()
+
+# Konfiguration für das Logging
+logging.basicConfig(level=logging.INFO, 
+                    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+logger = logging.getLogger("pcb_export")
+
+# Projekt-Verzeichnisse
+PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
+SVG_PATH = PROJECT_ROOT / "docs" / "pcb-layout-updated.svg"
+MANUFACTURING_DIR = PROJECT_ROOT / "hardware" / "manufacturing"
+OUTPUT_DIR = MANUFACTURING_DIR / "output"
+
+# Stellt sicher, dass das Ausgabeverzeichnis existiert
+OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+
+# Unterstützte PCB-Hersteller
+PCB_MANUFACTURERS = {
+    "jlcpcb": {
+        "name": "JLCPCB",
+        "url": "https://jlcpcb.com/",
+        "quote_calculator_url": "https://cart.jlcpcb.com/quote",
+        "api_docs_url": "https://jlcpcb.com/api/",
+        "bom_format": ["Comment", "Designator", "Footprint", "Quantity"], # Standard KiCad BOM + Quantity
+        "cpl_format": ["Designator", "Val", "Package", "Mid X", "Mid Y", "Rotation", "Layer"], # Standard KiCad CPL
+        "gerber_naming": {"top_copper": "gtl", "bottom_copper": "gbl", "drill": "txt"}, # Common JLCPCB names
+        "api_available": True,
+        "description": "Beliebter chinesischer Hersteller für Prototypen und Kleinserien.",
+        "assembly_service_url": "https://jlcpcb.com/assembly",
+        "technical_data_url": "https://jlcpcb.com/capabilities/pcb-capabilities",
+        "typical_quote_parameters": {
+            "pcb": [
+                "Platinen-Typ: (PCB / PCBA / Schablone)",
+                "Basis-Material: (FR-4 Standard, Aluminium, Rogers, etc.)",
+                "Lagenanzahl: {layers} (aus Kommandozeile)",
+                "Platinenabmessungen (B x H): {width_mm:.2f}mm x {height_mm:.2f}mm (aus SVG)",
+                "Stückzahl: {quantity} (aus Kommandozeile)",
+                "Lieferformat: (Einzelplatine / Nutzen durch JLCPCB / Nutzen durch Kunde)",
+                "Leiterplattendicke: (z.B. 0.6mm, 1.0mm, 1.2mm, 1.6mm (Standard), 2.0mm)",
+                "Kupferaußendicke: (z.B. 1oz (35µm Standard), 2oz (70µm))",
+                "Kupferinnendicke (für >2 Lagen): (z.B. 0.5oz, 1oz)",
+                "Oberfläche: (z.B. HASL bleifrei (Standard), ENIG (Gold), OSP)",
+                "Lötstopplackfarbe: (z.B. Grün, Rot, Gelb, Blau, Weiß, Schwarz matt)",
+                "Bestückungsdruckfarbe: (z.B. Weiß, Schwarz)",
+                "Goldfinger: (Ja/Nein)",
+                "Castellated Holes (Randmetallisierung): (Ja/Nein)",
+                "Entfernen der Auftragsnummer: (Ja/Nein)",
+                "Testmethode: (AOI Standard, Fliegende Sonde Test)",
+                "Papier zwischen Platinen: (Ja/Nein)"
+            ],
+            "assembly": [
+                "Bestückungsseite(n): (Oben / Unten / Beide)",
+                "Anzahl eindeutiger Bauteile: {unique_components} (aus BOM)",
+                "Anzahl gesamter SMD-Bauteile: {total_components} (aus BOM, ggf. SMD/THT präzisieren)",
+                "Anzahl THT-Bauteile: (Manuell angeben, falls vorhanden)",
+                "Schablone (Stencil) benötigt: (Ja/Nein, Typ)",
+                "Bestätigung der Bauteilplatzierung: (Ja/Nein)"
+            ]
+        }
+    },
+    "pcbway": {
+        "name": "PCBWay",
+        "url": "https://www.pcbway.com/",
+        "quote_calculator_url": "https://www.pcbway.com/pcb-quote.html",
+        "api_docs_url": "https://www.pcbway.com/api.html",
+        "bom_format": ["Designator", "Quantity", "Manufacturer", "Manufacturer Part Number", "Type", "Value", "Package", "Description"],
+        "cpl_format": ["Designator", "X (mm)", "Y (mm)", "Side", "Rotation"],
+        "gerber_naming": {"top_copper": "gtl", "bottom_copper": "gbl", "drill": "txt"},
+        "api_available": True,
+        "description": "Umfassende Fertigungsdienstleistungen mit Prototypen und Serienproduktion",
+        "assembly_service_url": "https://www.pcbway.com/assembly.html",
+        "technical_data_url": "https://www.pcbway.com/capabilities.html",
+        "typical_quote_parameters": {
+            "pcb": [
+                "Platinengröße (B x H): {width_mm:.2f}mm x {height_mm:.2f}mm (aus SVG)",
+                "Stückzahl: {quantity} (aus Kommandozeile)",
+                "Lagenanzahl: {layers} (aus Kommandozeile)",
+                "Material: (FR-4 Standard, Aluminium, Rogers, etc.)",
+                "Leiterplattendicke (FR4): (z.B. 0.8mm - 2.0mm (1.6mm Standard))",
+                "Min. Leiterbahn/Abstand: (z.B. 3.5/3.5mil, 4/4mil, 5/5mil (Standard))",
+                "Min. Bohrung: (z.B. 0.2mm, 0.25mm, 0.3mm (Standard))",
+                "Lötstopplackfarbe: (z.B. Grün, Rot, Gelb, Blau, Weiß, Schwarz)",
+                "Bestückungsdruckfarbe: (z.B. Weiß, Schwarz)",
+                "Oberfläche: (HASL bleifrei (Standard), ENIG, Immersion Silber/Zinn, OSP)",
+                "Kupferaußendicke: (1oz (Standard), 2oz)",
+                "Gold Fingers: (Ja/Nein)",
+                "Castellated Holes: (Ja/Nein)",
+                "Impedanzkontrolle: (Ja/Nein)",
+                "Panelisierung: (Einzeln / Panel by PCBWay / Panel by Customer)",
+                "Flying Probe Test: (Standard)"
+            ],
+            "assembly": [
+                "Bestückungsseite(n): (Oben / Unten / Beide)",
+                "Anzahl eindeutiger Bauteile: {unique_components} (aus BOM)",
+                "Anzahl SMD-Bauteile gesamt: {total_components} (aus BOM, ggf. SMD/THT präzisieren)",
+                "Anzahl THT-Bauteile gesamt: (Manuell angeben, falls vorhanden)",
+                "Schablone (Stencil): (Ja/Nein, Typ)"
+            ]
+        }
+    },
+    "oshpark": {
+        "name": "OSH Park",
+        "url": "https://oshpark.com/",
+        "quote_calculator_url": "https://oshpark.com/pricing/", 
+        "api_docs_url": None,
+        "bom_format": ["Reference", "Quantity", "Value", "Footprint", "DNP"],
+        "cpl_format": ["Ref", "Val", "Package", "PosX", "PosY", "Rot", "Side"],
+        "gerber_naming": {"top_copper": "GTL", "bottom_copper": "GBL", "drill": "XLN"},
+        "api_available": False,
+        "description": "US-basierter Hersteller mit hochwertigen PCBs in charakteristischer violetter Farbe",
+        "technical_data_url": "https://docs.oshpark.com/services/",
+        "assembly_service_url": None, # OSH Park bietet keinen eigenen Bestückungsservice an
+        "typical_quote_parameters": {
+            "pcb": [
+                "Lagenanzahl: (2 Lagen Standard / 4 Lagen)",
+                "Platinenabmessungen (B x H): {width_mm:.2f}mm x {height_mm:.2f}mm (aus SVG, wird in inch umgerechnet)",
+                "Stückzahl: {quantity} (meist in 3er-Batches für 2-Lagen)",
+                "Service: (Standard (USA Fertigung) / Super Swift (USA) / After Dark (EU))",
+                "Kupferdicke: (Standard 1oz/ft² (35µm))",
+                "Material: (FR-4 für 2-Lagen, FR408 für 4-Lagen)",
+                "Finish: (ENIG für alle Platinen)",
+                "Hinweis: OSH Park hat feste Spezifikationen pro Service. Der Preis wird pro Quadratzoll berechnet."
+            ],
+            "assembly": [] # Keine Assembly-Parameter, da kein Service angeboten
+        }
+    },
+    "eurocircuits": {
+        "name": "Eurocircuits",
+        "url": "https://www.eurocircuits.com/",
+        "quote_calculator_url": "https://www.eurocircuits.com/pcb-calculator/",
+        "api_docs_url": "https://www.eurocircuits.com/discover-our-apis-for-pcb-services/",
+        "bom_format": ["Component", "Values", "Package", "Layer", "Rotation", "Populated"],
+        "cpl_format": ["Component", "X", "Y", "Layer", "Rotation"],
+        "gerber_naming": {"top_copper": "cmp", "bottom_copper": "sol", "drill": "drd"},
+        "api_available": True,
+        "description": "Europäischer Hersteller mit Fokus auf Qualität und Zuverlässigkeit",
+        "assembly_service_url": "https://www.eurocircuits.com/pcb-assembly/",
+        "technical_data_url": "https://www.eurocircuits.com/pcb-manufacturing-technology/",
+        "typical_quote_parameters": {
+            "pcb": [
+                "Service: (PCB Proto / Standard Pool / etc.)",
+                "Lagenanzahl: {layers} (aus Kommandozeile)",
+                "Platinenabmessungen (B x H): {width_mm:.2f}mm x {height_mm:.2f}mm (aus SVG)",
+                "Stückzahl: {quantity} (aus Kommandozeile)",
+                "Lieferformat: (Einzelplatine / E- όχι Nutzen)",
+                "Material: (FR-4 Standard, etc.)",
+                "Leiterplattendicke: (z.B. 1.0mm, 1.6mm (Standard))",
+                "Kupferlagenaufbau: (Standard / Spezifisch)",
+                "Oberfläche: (Chem. Ni/Au (ENIG Standard), bleifrei HAL, etc.)",
+                "Lötstoppmaske Farbe: (Grün Standard, andere Farben)",
+                "Bestückungsdruck Farbe: (Weiß Standard, andere Farben)",
+                "E-Test: (Standard)",
+                "Kontur: (Fräsen Standard)"
+            ],
+            "assembly": [
+                "Bestückungsseite(n): (Oben / Unten / Beide)",
+                "Anzahl eindeutiger Bauteile: {unique_components} (aus BOM)",
+                "Gesamtzahl Lötstellen (SMD/THT): (Manuell oder aus detaillierter BOM)",
+                "Schablone (Stencil): (Ja/Nein, Edelstahl)"
+            ]
+        }
+    }
+}
+
+# Unterstützte EDA-Tools für die Integration
+EDA_TOOLS = {
+    "kicad": {
+        "name": "KiCad",
+        "check_command": ["kicad-cli", "--version"],
+        "export_gerber_command": ["kicad-cli", "pcb", "export", "gerbers"],
+        "export_bom_command": ["kicad-cli", "pcb", "export", "bom"],
+        "export_cpl_command": ["kicad-cli", "pcb", "export", "pos"],
+        "description": "Open-Source-EDA-Tool mit umfassenden Funktionen",
+        "website": "https://www.kicad.org/"
+    },
+    "flatcam": {
+        "name": "FlatCAM",
+        "check_command": ["flatcam", "--version"],
+        "export_command": ["flatcam", "--run_script"],
+        "description": "Open-Source-Tool zur Erzeugung von Gerber-Dateien aus verschiedenen Eingabeformaten",
+        "website": "http://flatcam.org/"
+    },
+    "gerbv": {
+        "name": "Gerbv",
+        "check_command": ["gerbv", "--version"],
+        "export_command": ["gerbv", "-x", "png"],
+        "description": "Open-Source-Gerber-Viewer mit Export-Funktionen",
+        "website": "http://gerbv.geda-project.org/"
+    }
+}
+
+class PCBExportTool:
+    """
+    Werkzeug zum Export von PCB-Fertigungsdaten für verschiedene Hersteller.
+    Bietet Flexibilität bei der Integration mit bestehenden EDA-Tools.
+    """
+    def __init__(self, svg_path: Path = SVG_PATH, 
+                 output_dir: Path = OUTPUT_DIR,
+                 manufacturer: str = "jlcpcb"):
+        """
+        Initialisiert das PCB-Export-Tool.
+        
+        Args:
+            svg_path: Pfad zur SVG-Layout-Datei
+            output_dir: Verzeichnis für die Ausgabedateien
+            manufacturer: PCB-Hersteller (Standard: jlcpcb)
+        """
+        self.svg_path = svg_path
+        self.output_dir = output_dir
+        
+        # Setze Hersteller
+        if manufacturer.lower() not in PCB_MANUFACTURERS:
+            logger.warning(f"Hersteller '{manufacturer}' nicht unterstützt. Verwende JLCPCB als Standard.")
+            manufacturer = "jlcpcb"
+        
+        self.manufacturer = manufacturer.lower()
+        self.manufacturer_info = PCB_MANUFACTURERS[self.manufacturer]
+        
+        # Erstelle herstellerspezifische Ausgabeverzeichnisse
+        self.mfg_dir = output_dir / self.manufacturer
+        self.gerber_dir = self.mfg_dir / "gerber"
+        self.bom_dir = self.mfg_dir / "bom"
+        self.cpl_dir = self.mfg_dir / "cpl"
+        
+        for directory in [self.mfg_dir, self.gerber_dir, self.bom_dir, self.cpl_dir]:
+            directory.mkdir(parents=True, exist_ok=True)
+        
+        # Initialisiere Komponentendaten
+        self.components = []
+        self.svg_data = None
+        self.board_dimensions = {"width": 0, "height": 0} # Hinzugefügt
+        self.bom_summary = None # Hinzugefügt für Preis-Guidance
+        
+        # Erkenne verfügbare EDA-Tools
+        self.available_tools = self._detect_available_tools()
+
+    def _detect_available_tools(self) -> Dict[str, bool]:
+        """Erkennt, welche EDA-Tools auf dem System verfügbar sind."""
+        available = {}
+        
+        for tool_id, tool_info in EDA_TOOLS.items():
+            try:
+                # Prüfe, ob das Tool verfügbar ist
+                result = subprocess.run(
+                    tool_info["check_command"], 
+                    stdout=subprocess.PIPE, 
+                    stderr=subprocess.PIPE,
+                    timeout=5
+                )
+                available[tool_id] = result.returncode == 0
+                
+                if available[tool_id]:
+                    logger.info(f"{tool_info['name']} gefunden und verfügbar.")
+                else:
+                    logger.info(f"{tool_info['name']} nicht verfügbar (Exit-Code: {result.returncode}).")
+            
+            except (subprocess.SubprocessError, FileNotFoundError):
+                available[tool_id] = False
+                logger.info(f"{tool_info['name']} nicht installiert oder nicht im PATH.")
+        
+        return available
+
+    def parse_svg(self) -> bool:
+        """
+        Parst die SVG-Datei und extrahiert Komponenteninformationen.
+        Einfachere und robustere Implementation als zuvor.
+        Ermittelt auch die Platinenabmessungen.
+        """
+        if not self.svg_path.exists():
+            logger.error(f"SVG-Datei nicht gefunden: {self.svg_path}")
+            return False
+            
         try:
             tree = ET.parse(self.svg_path)
-            self.tree = tree
             root = tree.getroot()
+            self.svg_data = tree
             
-            print(f"SVG-Datei '{self.svg_path}' erfolgreich geladen.")
+            logger.info(f"SVG-Datei '{self.svg_path}' erfolgreich geladen.")
             
-            # Extrahiere Komponenten aus der SVG-Datei
+            # Extrahiere den Namespace aus dem Root-Element (falls vorhanden)
+            ns = {"svg": "http://www.w3.org/2000/svg"}
+            
             components = []
+            component_counter = {}
             
-            # Finde Rechtecke mit Text, die wahrscheinlich Komponenten darstellen
-            for rect in root.findall(".//{http://www.w3.org/2000/svg}rect"):
+            min_x, max_x = float('inf'), float('-inf')
+            min_y, max_y = float('inf'), float('-inf')
+
+            # Finde alle Rechtecke (potenzielle Komponenten)
+            for rect in root.findall(".//svg:rect", ns):
                 x = float(rect.get("x", "0"))
                 y = float(rect.get("y", "0"))
                 width = float(rect.get("width", "0"))
                 height = float(rect.get("height", "0"))
                 
+                # Update board dimensions
+                min_x = min(min_x, x)
+                max_x = max(max_x, x + width)
+                min_y = min(min_y, y)
+                max_y = max(max_y, y + height)
+
                 # Suche nach Text in der Nähe des Rechtecks
-                for text in root.findall(".//{http://www.w3.org/2000/svg}text"):
+                for text in root.findall(".//svg:text", ns):
                     text_x = float(text.get("x", "0"))
                     text_y = float(text.get("y", "0"))
                     
                     # Prüfe, ob der Text innerhalb oder nahe beim Rechteck ist
-                    if (x <= text_x <= x + width and y <= text_y <= y + height):
+                    if (x-5 <= text_x <= x + width+5 and y-5 <= text_y <= y + height+5):
                         component_name = text.text if text.text else "Unknown"
+                        
+                        # Zähle Komponenten gleichen Typs
+                        if component_name not in component_counter:
+                            component_counter[component_name] = 0
+                        component_counter[component_name] += 1
+                        
+                        # Erstelle ID aus dem Namen (z.B. RP2040_1)
+                        base_name = ''.join(c for c in component_name if c.isalnum() or c == '-' or c == '_')
+                        if not base_name:
+                            base_name = "COMP"
+                        component_id = f"{base_name}_{component_counter[component_name]}"
+                        
+                        # Gerundete Position (Mittelpunkt der Komponente)
                         components.append({
+                            "id": component_id,
                             "name": component_name,
-                            "x": x + width/2,  # Mittelpunkt X
-                            "y": y + height/2,  # Mittelpunkt Y
-                            "width": width,
-                            "height": height,
-                            "rotation": 0  # Standard-Rotation
+                            "x": round(x + width/2, 2),  # Mittelpunkt X
+                            "y": round(y + height/2, 2),  # Mittelpunkt Y
+                            "width": round(width, 2),
+                            "height": round(height, 2),
+                            "rotation": 0.0  # Standard-Rotation
                         })
                         break
             
-            # Entferne Duplikate und füge Component IDs hinzu
-            unique_components = []
-            component_counter = {}
+            self.components = components
+            logger.info(f"Extrahierte {len(self.components)} Komponenten aus der SVG-Datei.")
             
-            for comp in components:
-                name = comp["name"]
-                if name not in component_counter:
-                    component_counter[name] = 0
-                component_counter[name] += 1
-                
-                # Erstelle eine Komponenten-ID wie RP2040_1, FLASH_1, etc.
-                base_name = ''.join(c for c in name if c.isalnum() or c == '-' or c == '_')
-                if not base_name:
-                    base_name = "COMP"
-                component_id = f"{base_name}_{component_counter[name]}"
-                
-                comp["id"] = component_id
-                unique_components.append(comp)
-            
-            self.components = unique_components
-            print(f"Extrahierte {len(self.components)} eindeutige Komponenten aus der SVG-Datei.")
-            
+            if self.components: # Nur wenn Komponenten gefunden wurden
+                self.board_dimensions["width"] = round(max_x - min_x, 2)
+                self.board_dimensions["height"] = round(max_y - min_y, 2)
+                logger.info(f"Ermittelte Platinengröße: {self.board_dimensions['width']}mm x {self.board_dimensions['height']}mm")
+            else:
+                logger.warning("Keine Komponenten gefunden, Platinengröße konnte nicht ermittelt werden.")
+
             return True
+            
         except Exception as e:
-            print(f"Fehler beim Parsen der SVG-Datei: {e}")
+            logger.error(f"Fehler beim Parsen der SVG-Datei: {e}")
             return False
 
-    def create_kicad_pcb(self):
+    def export_to_kicad_pcb(self, output_path: Optional[Path] = None) -> bool:
         """
-        Erstellt eine KiCad-PCB-Datei basierend auf den SVG-Daten.
-        Diese Funktion erstellt eine grundlegende KiCad-PCB-Datei,
-        die später für die Gerber-Generierung verwendet werden kann.
+        Exportiert die Komponenten in eine KiCad PCB-Datei.
+        Nutzt ein einfacheres Format ohne komplexe KiCad-Bibliotheksintegrationen.
+        
+        Args:
+            output_path: Pfad für die KiCad PCB-Datei (optional)
         """
-        if not KICAD_AVAILABLE:
-            print("KiCad Python-Module nicht verfügbar. Erstelle vereinfachte KiCad-PCB-Datei.")
-            self._create_kicad_pcb_template()
-            return True
+        if not self.components:
+            logger.error("Keine Komponenten zum Exportieren vorhanden.")
+            return False
+            
+        if output_path is None:
+            output_path = self.mfg_dir / "converted_design.kicad_pcb"
             
         try:
-            print("Erstelle KiCad-PCB-Datei aus SVG-Layout...")
-            
-            # Erstelle eine neue KiCad-PCB
-            board = pcbnew.BOARD()
-            
-            # Setze Eigenschaften für die 8-Lagen-Platine
-            board.SetCopperLayerCount(8)
-            
-            # Erstelle den Umriss der Platine (vereinfacht)
-            board_width_mm = 100  # 100mm
-            board_height_mm = 100  # 100mm
-            
-            # Füge Komponenten hinzu
-            for comp in self.components:
-                name = comp["name"]
-                x = comp["x"]
-                y = comp["y"]
-                
-                # Erstelle Footprint-Modul
-                module = pcbnew.FOOTPRINT(board)
-                module.SetReference(comp["id"])
-                module.SetValue(name)
-                
-                # Positioniere das Modul
-                pos = pcbnew.wxPoint(int(x * pcbnew.PCB_IU_PER_MM), int(y * pcbnew.PCB_IU_PER_MM))
-                module.SetPosition(pos)
-                
-                # Ordne Komponenten nach Typ zu (vereinfacht)
-                if "RP2040" in name:
-                    self._create_qfn_footprint(module, 56, 7, 7)
-                elif "FLASH" in name:
-                    self._create_soic_footprint(module, 8, 4, 4)
-                elif "XTAL" in name:
-                    self._create_smd_footprint(module, 2, 3.2, 2.5)
-                else:
-                    # Generischer SMD-Footprint
-                    self._create_smd_footprint(module, 2, 3, 3)
-                
-                # Füge das Modul zum Board hinzu
-                board.Add(module)
-            
-            # Speichere die PCB-Datei
-            pcbnew.SaveBoard(str(self.kicad_pcb_path), board)
-            print(f"KiCad-PCB-Datei wurde erstellt: {self.kicad_pcb_path}")
-            
-            return True
-        except Exception as e:
-            print(f"Fehler beim Erstellen der KiCad-PCB-Datei: {e}")
-            # Fallback: Erstelle eine Vorlage
-            self._create_kicad_pcb_template()
-            return True
-    
-    def _create_kicad_pcb_template(self):
-        """Erstellt eine minimale KiCad-PCB-Vorlagendatei."""
-        kicad_template = f"""
-(kicad_pcb (version 20211014) (generator pcbnew)
-
+            # Erstelle eine Basis-KiCad-PCB-Datei
+            with open(output_path, 'w') as f:
+                # KiCad-PCB-Header
+                f.write("""(kicad_pcb (version 20211014) (generator pcb_export.py)
   (general
     (thickness 1.6)
   )
-
   (paper "A4")
   (title_block
     (title "RP2040 Pizza Detection System")
-    (date "{datetime.now().strftime('%Y-%m-%d')}")
+    (date "%s")
     (rev "1.0")
   )
-
   (layers
     (0 "F.Cu" signal)
-    (1 "In1.Cu" signal)
-    (2 "In2.Cu" signal)
-    (3 "In3.Cu" signal)
-    (4 "In4.Cu" signal)
-    (5 "In5.Cu" signal)
-    (6 "In6.Cu" signal)
     (31 "B.Cu" signal)
-    (32 "B.Adhes" user "B.Adhesive")
-    (33 "F.Adhes" user "F.Adhesive")
     (34 "B.Paste" user)
     (35 "F.Paste" user)
     (36 "B.SilkS" user "B.Silkscreen")
     (37 "F.SilkS" user "F.Silkscreen")
     (38 "B.Mask" user)
     (39 "F.Mask" user)
-    (40 "Dwgs.User" user "User.Drawings")
-    (41 "Cmts.User" user "User.Comments")
-    (42 "Eco1.User" user "User.Eco1")
-    (43 "Eco2.User" user "User.Eco2")
     (44 "Edge.Cuts" user)
-    (45 "Margin" user)
-    (46 "B.CrtYd" user "B.Courtyard")
-    (47 "F.CrtYd" user "F.Courtyard")
-    (48 "B.Fab" user)
-    (49 "F.Fab" user)
   )
-
-  (setup
-    (pad_to_mask_clearance 0.1)
-    (pcbplotparams
-      (layerselection 0x00010fc_ffffffff)
-      (disableapertmacros false)
-      (usegerberextensions false)
-      (usegerberattributes true)
-      (usegerberadvancedattributes true)
-      (creategerberjobfile true)
-      (svguseinch false)
-      (svgprecision 6)
-      (excludeedgelayer true)
-      (plotframeref false)
-      (viasonmask false)
-      (mode 1)
-      (useauxorigin false)
-      (hpglpennumber 1)
-      (hpglpenspeed 20)
-      (hpglpendiameter 15.0)
-      (dxfpolygonmode true)
-      (dxfimperialunits true)
-      (dxfusepcbnewfont true)
-      (psnegative false)
-      (psa4output false)
-      (plotreference true)
-      (plotvalue true)
-      (plotinvisibletext false)
-      (sketchpadsonfab false)
-      (subtractmaskfromsilk false)
-      (outputformat 1)
-      (mirror false)
-      (drillshape 1)
-      (scaleselection 1)
-      (outputdirectory "")
-    )
-  )
-
-  (net 0 "")
-  (net 1 "GND")
-  (net 2 "VCC")
-  (net 3 "+3V3")
-
-  (gr_rect (start 0 0) (end 100 100) (layer "Edge.Cuts") (width 0.15))
-"""
-
-        # Füge Komponenten hinzu
-        for comp in self.components:
-            name = comp["name"]
-            x = comp["x"] / 4  # Skaliere für die Vorlage
-            y = comp["y"] / 4
-            
-            kicad_template += f"""
-  (module "SMD:Generic" (layer "F.Cu") (tedit 0) (tstamp 00000000-0000-0000-0000-000000000000)
-    (at {x} {y})
-    (descr "{name}")
-    (tags "{comp['id']}")
+""" % (datetime.now().strftime("%Y-%m-%d")))
+                
+                # Füge Komponenten hinzu
+                for comp in self.components:
+                    f.write(f"""  (footprint "Converted:Generic" (layer "F.Cu")
+    (at {comp["x"]} {comp["y"]})
+    (descr "{comp["name"]}")
     (attr smd)
-    (fp_text reference "{comp['id']}" (at 0 -1.5) (layer "F.SilkS")
-      (effects (font (size 1 1) (thickness 0.15)))
-    )
-    (fp_text value "{name}" (at 0 1.5) (layer "F.Fab")
-      (effects (font (size 1 1) (thickness 0.15)))
-    )
-    (fp_rect (start -2 -2) (end 2 2) (layer "F.CrtYd") (width 0.15))
-    (pad 1 smd rect (at -1 0) (size 1 0.5) (layers "F.Cu" "F.Paste" "F.Mask") (net 1 "GND"))
-    (pad 2 smd rect (at 1 0) (size 1 0.5) (layers "F.Cu" "F.Paste" "F.Mask") (net 3 "+3V3"))
+    (fp_text reference "{comp["id"]}" (at 0 -2) (layer "F.SilkS") (effects (font (size 1 1) (thickness 0.15))))
+    (fp_text value "{comp["name"]}" (at 0 2) (layer "F.Fab") (effects (font (size 1 1) (thickness 0.15))))
+    (fp_rect (start -{comp["width"]/2} -{comp["height"]/2}) (end {comp["width"]/2} {comp["height"]/2}) (layer "F.SilkS") (width 0.1))
   )
-"""
-        
-        kicad_template += "\n)"
-
-        # Speichere die Vorlage
-        with open(self.kicad_pcb_path, 'w') as f:
-            f.write(kicad_template)
-        
-        print(f"KiCad-PCB-Vorlagendatei wurde erstellt: {self.kicad_pcb_path}")
-    
-    def _create_qfn_footprint(self, module, pins, width, height):
-        """Erstellt einen QFN-Footprint für das KiCad-Modul."""
-        if not KICAD_AVAILABLE:
-            return
-            
-        # Vereinfachte Implementierung
-        # In einer realen Implementierung würde man hier Pads hinzufügen
-        pass
-        
-    def _create_soic_footprint(self, module, pins, width, height):
-        """Erstellt einen SOIC-Footprint für das KiCad-Modul."""
-        if not KICAD_AVAILABLE:
-            return
-            
-        # Vereinfachte Implementierung
-        pass
-    
-    def _create_smd_footprint(self, module, pads, width, height):
-        """Erstellt einen SMD-Footprint für das KiCad-Modul."""
-        if not KICAD_AVAILABLE:
-            return
-            
-        # Vereinfachte Implementierung
-        pass
-
-    def generate_gerber_files(self):
-        """
-        Erstellt die Gerber-Dateien für die PCB-Fertigung.
-        Wenn KiCad verfügbar ist, werden die Gerber-Dateien direkt aus der KiCad-PCB generiert.
-        Andernfalls werden grundlegende Gerber-Dateien aus den Komponentendaten erstellt.
-        """
-        print("Erstelle Gerber-Dateien für die JLCPCB-Fertigung...")
-        
-        # Erstelle zuerst die KiCad PCB-Datei
-        if not self.create_kicad_pcb():
-            print("Fehler: KiCad PCB-Datei konnte nicht erstellt werden.")
-            return False
-        
-        # Wenn KiCad-Bibliotheken verfügbar sind, nutze pcbnew
-        if KICAD_AVAILABLE:
-            try:
-                print("Generiere Gerber-Dateien mit KiCad pcbnew...")
+""")
                 
-                # Öffne das Board
-                board = pcbnew.LoadBoard(str(self.kicad_pcb_path))
+                # Ende der KiCad-PCB-Datei
+                f.write(")")
                 
-                # Konfiguriere den Plot-Controller
-                pctl = pcbnew.PLOT_CONTROLLER(board)
-                popt = pctl.GetPlotOptions()
-                
-                # Setze gemeinsame Plot-Optionen für JLCPCB
-                popt.SetOutputDirectory(str(GERBER_DIR))
-                popt.SetPlotFrameRef(False)
-                popt.SetPlotValue(True)
-                popt.SetPlotReference(True)
-                popt.SetPlotInvisibleText(False)
-                popt.SetExcludeEdgeLayer(True)
-                popt.SetScale(1)
-                popt.SetUseGerberAttributes(True)
-                popt.SetUseGerberProtelExtensions(False)
-                popt.SetCreateGerberJobFile(True)
-                popt.SetSubtractMaskFromSilk(True)
-                
-                # Generiere die verschiedenen Layer
-                gerber_layers = {
-                    pcbnew.F_Cu: "F_Cu.GTL",
-                    pcbnew.B_Cu: "B_Cu.GBL",
-                    pcbnew.F_SilkS: "F_SilkS.GTO",
-                    pcbnew.B_SilkS: "B_SilkS.GBO",
-                    pcbnew.F_Mask: "F_Mask.GTS",
-                    pcbnew.B_Mask: "B_Mask.GBS",
-                    pcbnew.F_Paste: "F_Paste.GTP",
-                    pcbnew.B_Paste: "B_Paste.GBP",
-                    pcbnew.Edge_Cuts: "Edge_Cuts.GKO"
-                }
-                
-                # Plotte die einzelnen Layer
-                for layer_id, file_suffix in gerber_layers.items():
-                    pctl.SetLayer(layer_id)
-                    pctl.OpenPlotfile(file_suffix.split('.')[0], pcbnew.PLOT_FORMAT_GERBER, file_suffix.split('.')[0])
-                    pctl.PlotLayer()
-                
-                # Schließe den Plot-Controller
-                pctl.ClosePlot()
-                
-                # Generiere die Bohrdatei
-                drill_writer = pcbnew.EXCELLON_WRITER(board)
-                drill_writer.SetOptions(False, False, board.GetDesignSettings().GetAuxOrigin(), True)
-                drill_writer.SetFormat(True)
-                drill_writer.CreateDrillandMapFilesSet(pctl.GetPlotDirName(), True, False)
-                
-                print(f"Gerber-Dateien wurden erfolgreich in {GERBER_DIR} generiert.")
-                return True
-            
-            except Exception as e:
-                print(f"Fehler bei der Gerber-Generierung mit KiCad: {e}")
-                print("Setze auf manuelle Gerber-Generierung zurück...")
-        
-        # Wenn KiCad nicht verfügbar ist oder fehlgeschlagen hat, erstelle grundlegende Gerber-Dateien
-        print("Erstelle grundlegende Gerber-Dateien im JLCPCB-Format...")
-        
-        # Definiere die Layer und ihre Beschreibungen
-        gerber_extensions = {
-            "GTL": "Top Layer",
-            "GBL": "Bottom Layer",
-            "GTO": "Top Silk Screen",
-            "GBO": "Bottom Silk Screen",
-            "GTS": "Top Solder Mask",
-            "GBS": "Bottom Solder Mask",
-            "GTP": "Top Paste",
-            "GBP": "Bottom Paste",
-            "GKO": "Board Outline",
-            "TXT": "NC Drill File"
-        }
-        
-        # Erzeuge Datum für Header
-        date_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        
-        # Erstelle Gerber-Dateien
-        for ext, desc in gerber_extensions.items():
-            filename = GERBER_DIR / f"PizzaBoard-RP2040.{ext}"
-            
-            with open(filename, 'w') as f:
-                f.write(f"; GERBER RS-274X EXPORT - {desc}\n")
-                f.write(f"; Date: {date_str}\n")
-                f.write("; Project: RP2040 Pizza Detection System\n")
-                f.write("; Generated from SVG layout using PCB Export Tool\n\n")
-                
-                # Füge JLCPCB-kompatible Gerber-Header hinzu
-                f.write("%FSLAX46Y46*%\n")  # Format Specification (6 Nachkommastellen)
-                f.write("%MOMM*%\n")  # Einheit: mm
-                f.write("%LPD*%\n")  # Layer Polarity: Dark
-                
-                # Füge JLCPCB-spezifische Attribute hinzu
-                f.write("%TF.GenerationSoftware,PizzaBoard,PCBExporter,1.0*%\n")
-                f.write("%TF.SameCoordinates,Original*%\n")
-                f.write("%TF.FileFunction,{0}*%\n".format(
-                    "Copper,L1,Top" if ext == "GTL" else
-                    "Copper,L2,Bot" if ext == "GBL" else
-                    "Legend,Top" if ext == "GTO" else
-                    "Legend,Bot" if ext == "GBO" else
-                    "Soldermask,Top" if ext == "GTS" else
-                    "Soldermask,Bot" if ext == "GBS" else
-                    "Paste,Top" if ext == "GTP" else
-                    "Paste,Bot" if ext == "GBP" else
-                    "Profile,NP" if ext == "GKO" else
-                    "Drill"
-                ))
-                f.write("%TF.FilePolarity,Positive*%\n")
-                
-                # Füge Komponenten-spezifische Daten hinzu (JLCPCB-konform)
-                f.write("G01*\n")  # Lineare Interpolation
-                f.write("G75*%\n")  # Modus: Single Quadrant
-                
-                # Füge Apertur-Definitionen hinzu (notwendig für gültige Gerber-Dateien)
-                f.write("%ADD10C,0.1*%\n")   # Kreisförmige Apertur mit 0.1mm Durchmesser
-                f.write("%ADD11R,1X1*%\n")   # Rechteckige Apertur 1x1mm
-                
-                # Umriss der Platine
-                if ext == "GKO":
-                    f.write("D10*\n")  # Wähle Apertur 10
-                    f.write("X0Y0D02*\n")  # Starte bei (0,0)
-                    f.write("X10000000Y0D01*\n")  # Linie nach rechts
-                    f.write("X10000000Y10000000D01*\n")  # Linie nach oben
-                    f.write("X0Y10000000D01*\n")  # Linie nach links
-                    f.write("X0Y0D01*\n")  # Linie zurück zum Start
-
-                # Zeichne Komponenten je nach Layer
-                if ext in ["GTL", "GTO", "GTP"]:
-                    f.write("D11*\n")  # Wähle Apertur 11 für Komponenten
-                    for comp in self.components:
-                        x = int(comp["x"] * 10000)  # Konvertiere in Gerber-Einheiten (0,1µm)
-                        y = int(comp["y"] * 10000)
-                        
-                        # Platziere ein Pad für die Komponente
-                        f.write(f"X{x}Y{y}D03*\n")
-                        
-                        # Für Silkscreen zusätzlich den Namen der Komponente
-                        if ext == "GTO":
-                            # Silkscreen-Texte würden hier hinzugefügt werden
-                            pass
-                
-                # Bohrungen
-                if ext == "TXT":
-                    f.write("M48\n")  # Header für Excellon-Format
-                    f.write("METRIC,TZ\n")  # Metrisches Format mit Trailing Zeros
-                    f.write("T1C0.8\n")  # Definiere Bohrerwerkzeug mit 0.8mm Durchmesser
-                    f.write("%\n")  # Ende des Headers
-                    
-                    # Platziereungen der Bohrungen für Komponenten wie RP2040, etc.
-                    f.write("T1\n")  # Wähle Werkzeug 1
-                    
-                    # Füge vier Montagelöcher in den Ecken hinzu
-                    f.write("X000300Y000300\n")
-                    f.write("X009700Y000300\n")
-                    f.write("X000300Y009700\n")
-                    f.write("X009700Y009700\n")
-                    
-                    # Füge Bohrungen für bestimmte Komponenten hinzu
-                    for comp in self.components:
-                        if "RP2040" in comp["name"] or "FLASH" in comp["name"]:
-                            x = int(comp["x"] * 100)  # Konvertiere in 0.01mm für Excellon
-                            y = int(comp["y"] * 100)
-                            f.write(f"X{x:06d}Y{y:06d}\n")
-                    
-                    f.write("M30\n")  # Ende der Datei
-                else:
-                    f.write("M02*\n")  # Ende der Gerber-Datei
-        
-        # Erstelle zusätzlich eine Readme-Datei mit Hinweisen für die Fertigung
-        with open(GERBER_DIR / "README.txt", 'w') as f:
-            f.write("RP2040 Pizza Detection System - Gerber Files für JLCPCB\n")
-            f.write("===========================================\n\n")
-            f.write("Diese Gerber-Dateien wurden für die Fertigung bei JLCPCB optimiert.\n")
-            f.write("Sie entsprechen den JLCPCB-Anforderungen vom Mai 2025.\n\n")
-            f.write("Folgende Dateien sind enthalten:\n")
-            for ext, desc in gerber_extensions.items():
-                f.write(f"- PizzaBoard-RP2040.{ext}: {desc}\n")
-            
-            f.write("\nPCB-Spezifikationen:\n")
-            f.write("- Layer: 8\n")
-            f.write("- Dicke: 1.6mm\n")
-            f.write("- Kupferstärke: 1oz\n")
-            f.write("- Min. Leiterbahnbreite/Abstand: 0.15mm/0.15mm\n")
-            f.write("- Min. Bohrungsdurchmesser: 0.3mm\n")
-            f.write("- PCB-Farbe: Grün\n")
-            f.write("- Oberflächenveredelung: HASL mit Blei\n")
-        
-        print(f"Gerber-Dateien wurden in {GERBER_DIR} erstellt.")
-        return True
-
-    def generate_bom(self):
-        """
-        Erstellt die Stückliste (BOM) für die Materialbestellung.
-        """
-        if not self.components:
-            print("Keine Komponenten gefunden. BOM kann nicht erstellt werden.")
-            return False
-        
-        print("Erstelle Stückliste (BOM) im JLCPCB-Format...")
-        
-        # Erweiterte Übersetzungstabelle für Komponenten mit JLCPCB-spezifischen Teilen
-        component_info = {
-            "RP2040": {
-                "Value": "RP2040", 
-                "Package": "QFN-56", 
-                "Type": "MCU",
-                "Manufacturer": "Raspberry Pi",
-                "Part Number": "SC0915",
-                "Supplier": "LCSC",
-                "LCSC Part Number": "C2040"
-            },
-            "FLASH": {
-                "Value": "W25Q16JVUXIQ", 
-                "Package": "SOIC-8", 
-                "Type": "Flash Memory",
-                "Manufacturer": "Winbond",
-                "Part Number": "W25Q16JVUXIQ",
-                "Supplier": "LCSC",
-                "LCSC Part Number": "C127086"
-            },
-            "XTAL": {
-                "Value": "12MHz", 
-                "Package": "SMD-3225", 
-                "Type": "Crystal",
-                "Manufacturer": "Murata",
-                "Part Number": "XRCGB12M000F2F01R0",
-                "Supplier": "LCSC",
-                "LCSC Part Number": "C321487"
-            },
-            "DRIVER": {
-                "Value": "PAM8302", 
-                "Package": "SOP-8", 
-                "Type": "Audio Amplifier",
-                "Manufacturer": "Diodes Inc",
-                "Part Number": "PAM8302AADCR",
-                "Supplier": "LCSC",
-                "LCSC Part Number": "C150725"
-            },
-            "BUZZER": {
-                "Value": "Piezo Buzzer", 
-                "Package": "SMD", 
-                "Type": "Buzzer",
-                "Manufacturer": "Murata",
-                "Part Number": "PKLCS1212E4001-R1",
-                "Supplier": "LCSC",
-                "LCSC Part Number": "C235798"
-            },
-            "TP4056": {
-                "Value": "TP4056", 
-                "Package": "SOP-8", 
-                "Type": "Battery Charger",
-                "Manufacturer": "NanJing Extension Microelectronics",
-                "Part Number": "TP4056",
-                "Supplier": "LCSC",
-                "LCSC Part Number": "C16581"
-            },
-            "MCP1700": {
-                "Value": "MCP1700T-3302E/TT", 
-                "Package": "SOT-23", 
-                "Type": "Voltage Regulator",
-                "Manufacturer": "Microchip",
-                "Part Number": "MCP1700T-3302E/TT",
-                "Supplier": "LCSC",
-                "LCSC Part Number": "C9164"
-            },
-            "OV2640": {
-                "Value": "OV2640", 
-                "Package": "Camera Module", 
-                "Type": "Camera",
-                "Manufacturer": "OmniVision",
-                "Part Number": "OV2640",
-                "Supplier": "LCSC",
-                "LCSC Part Number": "C94413"
-            },
-            "USB": {
-                "Value": "USB-C Connector", 
-                "Package": "SMD", 
-                "Type": "Connector",
-                "Manufacturer": "Korean Hroparts Elec",
-                "Part Number": "TYPE-C-31-M-12",
-                "Supplier": "LCSC",
-                "LCSC Part Number": "C165948"
-            },
-            "RESET": {
-                "Value": "Reset Button", 
-                "Package": "SMD", 
-                "Type": "Button",
-                "Manufacturer": "C&K",
-                "Part Number": "PTS645SM43SMTR92",
-                "Supplier": "LCSC",
-                "LCSC Part Number": "C221929"
-            },
-            "BOOT": {
-                "Value": "Boot Button", 
-                "Package": "SMD", 
-                "Type": "Button",
-                "Manufacturer": "C&K",
-                "Part Number": "PTS645SM43SMTR92",
-                "Supplier": "LCSC",
-                "LCSC Part Number": "C221929"
-            },
-            "USER": {
-                "Value": "User Button", 
-                "Package": "SMD", 
-                "Type": "Button",
-                "Manufacturer": "C&K",
-                "Part Number": "PTS645SM43SMTR92",
-                "Supplier": "LCSC",
-                "LCSC Part Number": "C221929"
-            },
-            "STATUS": {
-                "Value": "Green LED", 
-                "Package": "0603", 
-                "Type": "LED",
-                "Manufacturer": "Everlight Elec",
-                "Part Number": "19-217/GHC-YR1S2/3T",
-                "Supplier": "LCSC",
-                "LCSC Part Number": "C72043"
-            },
-            "PWR": {
-                "Value": "Red LED", 
-                "Package": "0603", 
-                "Type": "LED",
-                "Manufacturer": "Everlight Elec",
-                "Part Number": "19-217/R6C-AL1M2VY/3T",
-                "Supplier": "LCSC",
-                "LCSC Part Number": "C2286"
-            }
-        }
-        
-        # Kategorisiere Komponenten für die BOM
-        bom_entries = {}
-        
-        for comp in self.components:
-            name = comp["name"]
-            
-            # Identifiziere die Komponente anhand des Namens
-            component_type = None
-            for key in component_info:
-                if key in name.upper():
-                    component_type = key
-                    break
-            
-            if not component_type:
-                # Für unbekannte Komponenten
-                component_type = "GENERIC"
-                if component_type not in component_info:
-                    component_info[component_type] = {
-                        "Value": name, 
-                        "Package": "Unknown", 
-                        "Type": "Unknown",
-                        "Manufacturer": "Generic",
-                        "Part Number": "N/A",
-                        "Supplier": "LCSC",
-                        "LCSC Part Number": "N/A"
-                    }
-                
-            # Füge zur BOM hinzu oder erhöhe die Anzahl
-            if component_type not in bom_entries:
-                bom_entries[component_type] = {
-                    "Designator": comp["id"],
-                    "Quantity": 1,
-                    **component_info[component_type]
-                }
-            else:
-                bom_entries[component_type]["Quantity"] += 1
-                bom_entries[component_type]["Designator"] += f", {comp['id']}"
-        
-        # Schreibe in CSV-Datei im JLCPCB-Format
-        bom_file = BOM_DIR / "bom_jlcpcb.csv"
-        with open(bom_file, 'w', newline='') as csvfile:
-            writer = csv.DictWriter(csvfile, fieldnames=self.bom_fields)
-            writer.writeheader()
-            for entry in bom_entries.values():
-                writer.writerow(entry)
-        
-        # Kopiere BOM in das Hauptverzeichnis für einfachen JLCPCB-Upload
-        shutil.copy2(bom_file, PROJECT_ROOT / "hardware" / "manufacturing" / "bom_jlcpcb.csv")
-        
-        print(f"BOM wurde in {bom_file} erstellt.")
-        
-        # Erstelle auch eine README-Datei mit Hinweisen
-        with open(BOM_DIR / "README.txt", 'w') as f:
-            f.write("RP2040 Pizza Detection System - Bill of Materials (BOM)\n")
-            f.write("===================================================\n\n")
-            f.write("Diese BOM ist für die JLCPCB-SMT-Bestückung optimiert.\n\n")
-            f.write("Wichtige Hinweise für JLCPCB:\n")
-            f.write("1. Alle Teile sind mit LCSC-Teilenummern versehen\n")
-            f.write("2. Die Stückliste ist im JLCPCB-BOM-Format\n")
-            f.write("3. Für die Bestellung bei JLCPCB können Sie die Datei 'bom_jlcpcb.csv' verwenden\n\n")
-            f.write("Komponenten-Beschaffbarkeit:\n")
-            f.write("- Prüfen Sie, ob der RP2040 bei JLCPCB verfügbar ist\n")
-            f.write("- Wenn der RP2040 nicht verfügbar ist, bestellen Sie ihn separat bei einem autorisierten Händler\n")
-            
-        return True
-
-    def generate_cpl(self):
-        """
-        Erstellt den Bestückungsplan (CPL) für die automatische Bestückung.
-        """
-        if not self.components:
-            print("Keine Komponenten gefunden. CPL kann nicht erstellt werden.")
-            return False
-        
-        print("Erstelle Bestückungsplan (CPL) im JLCPCB-Format...")
-        
-        # Erstelle CPL-Daten
-        cpl_entries = []
-        
-        for comp in self.components:
-            # Identifiziere die Komponente anhand des Namens
-            # Füge nur SMD-Komponenten zur CPL hinzu
-            if any(key in comp["name"].upper() for key in [
-                "RP2040", "FLASH", "XTAL", "DRIVER", "TP4056", "MCP1700", 
-                "USB", "RESET", "BOOT", "USER", "STATUS", "PWR", "BUZZER", "OV2640"
-            ]):
-                cpl_entries.append({
-                    "Designator": comp["id"],
-                    "Mid X": f"{comp['x']:.2f}mm",
-                    "Mid Y": f"{comp['y']:.2f}mm",
-                    "Layer": "Top",
-                    "Rotation": f"{comp['rotation']:.1f}"
-                })
-        
-        # Schreibe in CSV-Datei im JLCPCB-Format
-        cpl_file = CPL_DIR / "cpl_jlcpcb.csv"
-        with open(cpl_file, 'w', newline='') as csvfile:
-            writer = csv.DictWriter(csvfile, fieldnames=self.cpl_fields)
-            writer.writeheader()
-            for entry in cpl_entries:
-                writer.writerow(entry)
-        
-        # Kopiere CPL in das Hauptverzeichnis für einfachen JLCPCB-Upload
-        shutil.copy2(cpl_file, PROJECT_ROOT / "hardware" / "manufacturing" / "cpl_jlcpcb.csv")
-        
-        # Erstelle eine Readme-Datei mit Hinweisen
-        with open(CPL_DIR / "README.txt", 'w') as f:
-            f.write("RP2040 Pizza Detection System - Component Placement List (CPL)\n")
-            f.write("======================================================\n\n")
-            f.write("Diese CPL ist für die JLCPCB-SMT-Bestückung optimiert.\n\n")
-            f.write("Wichtige Hinweise für JLCPCB:\n")
-            f.write("1. Alle Positionen sind in mm angegeben\n")
-            f.write("2. Rotationen sind in Grad angegeben\n")
-            f.write("3. Bei der Bestellung bei JLCPCB wählen Sie die Seite 'Top' für die SMT-Bestückung\n")
-            f.write("4. Für die Bestellung bei JLCPCB verwenden Sie die Datei 'cpl_jlcpcb.csv'\n\n")
-            f.write("Hinweise für manuelle Nachbestückung:\n")
-            f.write("- Der RP2040-Mikrocontroller muss möglicherweise separat von Ihnen bestückt werden,\n")
-            f.write("  falls er nicht als JLCPCB-Bauteil verfügbar ist.\n")
-            
-        print(f"CPL wurde in {cpl_file} erstellt.")
-        return True
-    
-    def verify_jlcpcb_compatibility(self):
-        """
-        Überprüft die Kompatibilität der generierten Dateien mit JLCPCB-Anforderungen.
-        """
-        print("Überprüfe Kompatibilität mit JLCPCB-Anforderungen...")
-        
-        # Prüfe Gerber-Dateien
-        required_extensions = ["GTL", "GBL", "GTO", "GBO", "GTS", "GBS", "GTP", "GBP", "GKO", "TXT"]
-        missing_gerber = []
-        
-        for ext in required_extensions:
-            gerber_file = GERBER_DIR / f"PizzaBoard-RP2040.{ext}"
-            if not gerber_file.exists():
-                missing_gerber.append(ext)
-        
-        if missing_gerber:
-            print(f"Warnung: Folgende Gerber-Dateien fehlen: {', '.join(missing_gerber)}")
-        
-        # Prüfe BOM
-        bom_file = PROJECT_ROOT / "hardware" / "manufacturing" / "bom_jlcpcb.csv"
-        if not bom_file.exists():
-            print("Warnung: BOM-Datei für JLCPCB fehlt")
-        else:
-            # Prüfe BOM-Format
-            with open(bom_file, 'r') as f:
-                header = f.readline().strip()
-                expected_fields = ",".join(self.bom_fields)
-                if header != expected_fields:
-                    print("Warnung: BOM-Format entspricht nicht den JLCPCB-Anforderungen")
-        
-        # Prüfe CPL
-        cpl_file = PROJECT_ROOT / "hardware" / "manufacturing" / "cpl_jlcpcb.csv"
-        if not cpl_file.exists():
-            print("Warnung: CPL-Datei für JLCPCB fehlt")
-        else:
-            # Prüfe CPL-Format
-            with open(cpl_file, 'r') as f:
-                header = f.readline().strip()
-                expected_fields = ",".join(self.cpl_fields)
-                if header != expected_fields:
-                    print("Warnung: CPL-Format entspricht nicht den JLCPCB-Anforderungen")
-        
-        # Gib Empfehlungen für JLCPCB-Upload
-        print("\nJLCPCB-Kompatibilitätsprüfung abgeschlossen.")
-        print("Empfehlungen für den JLCPCB-Upload:")
-        print("1. Laden Sie die Datei 'gerber_jlcpcb.zip' als Gerber-Dateien hoch")
-        print("2. Laden Sie 'bom_jlcpcb.csv' als BOM hoch")
-        print("3. Laden Sie 'cpl_jlcpcb.csv' als CPL hoch")
-        print("4. Prüfen Sie bei der Bestellung, dass die Layer-Einstellungen korrekt sind (8 Layer)")
-        
-        return True
-    
-    def export_all(self):
-        """Exportiert alle Dateien für die JLCPCB-Fertigung."""
-        success = self.parse_svg()
-        if not success:
-            return False
-            
-        success_gerber = self.generate_gerber_files()
-        success_bom = self.generate_bom()
-        success_cpl = self.generate_cpl()
-        
-        if success_gerber and success_bom and success_cpl:
-            print("Export erfolgreich: Alle Fertigungsunterlagen wurden erstellt.")
-            
-            # Kopiere die wichtigsten Dateien ins Hauptverzeichnis für einfachen JLCPCB-Upload
-            shutil.copy2(BOM_DIR / "bom_jlcpcb.csv", PROJECT_ROOT / "hardware" / "manufacturing" / "bom_jlcpcb.csv")
-            shutil.copy2(CPL_DIR / "cpl_jlcpcb.csv", PROJECT_ROOT / "hardware" / "manufacturing" / "cpl_jlcpcb.csv")
-            
-            # Erstelle ZIP-Datei für Gerber-Dateien
-            zip_path = PROJECT_ROOT / "hardware" / "manufacturing" / "gerber_jlcpcb.zip"
-            with zipfile.ZipFile(zip_path, 'w') as zipf:
-                for file in GERBER_DIR.glob("*.*"):
-                    if file.is_file() and file.suffix != ".txt":
-                        zipf.write(file, arcname=file.name)
-                        
-            print(f"Für den einfachen JLCPCB-Upload wurden folgende Dateien in {PROJECT_ROOT / 'hardware' / 'manufacturing'} erstellt:")
-            print(f"- bom_jlcpcb.csv")
-            print(f"- cpl_jlcpcb.csv")
-            print(f"- gerber_jlcpcb.zip")
-            
-            # Führe eine JLCPCB-Kompatibilitätsprüfung durch
-            self.verify_jlcpcb_compatibility()
-            
-            # Aktualisiere den PROJECT_STATUS.txt
-            self.update_project_status()
-            
+            logger.info(f"KiCad PCB-Datei erfolgreich exportiert: {output_path}")
             return True
+            
+        except Exception as e:
+            logger.error(f"Fehler beim Exportieren als KiCad PCB: {e}")
+            return False
+
+    def generate_bom(self) -> bool:
+        """
+        Erstellt eine BOM (Stückliste) im herstellerspezifischen Format.
+        Vereinfachte Version, die keine detaillierten Komponenteninformationen erfordert.
+        Speichert auch eine Zusammenfassung für die Preisabschätzung.
+        """
+        if not self.components:
+            logger.error("Keine Komponenten für BOM vorhanden.")
+            return False
+            
+        try:
+            # Erzeuge eine zusammengefasste BOM (gruppiere gleiche Komponenten)
+            bom_entries = {}
+            
+            for comp in self.components:
+                name = comp["name"]
+                component_id = comp["id"]
+                
+                # Bestimme Komponententyp aus dem Namen
+                component_type = "Unknown"
+                for key in ["RP2040", "FLASH", "XTAL", "DRIVER", "BUZZER", "USB", "BUTTON", "LED", "SENSOR"]:
+                    if key.lower() in name.lower():
+                        component_type = key
+                        break
+                
+                # Standardwerte für alle Komponenten
+                component_info = {
+                    "Value": name,
+                    "Package": "SMD", # Annahme: Alle sind SMD für diese einfache BOM
+                    "Type": component_type,
+                    "DNP": "No"
+                }
+                
+                # Füge herstellerspezifische Felder hinzu
+                if self.manufacturer == "jlcpcb":
+                    component_info.update({
+                        "Manufacturer": "Generic",
+                        "Part Number": f"GENERIC-{component_type}",
+                        "Supplier": "LCSC",
+                        "LCSC Part Number": "N/A" # Muss manuell ergänzt werden für echte Bestellung
+                    })
+                
+                # Gruppiere nach Komponentenname
+                if name not in bom_entries:
+                    bom_entries[name] = {
+                        "Designator": component_id,
+                        "Quantity": 1,
+                        **component_info
+                    }
+                else:
+                    bom_entries[name]["Quantity"] += 1
+                    bom_entries[name]["Designator"] += f", {component_id}"
+            
+            # Speichere BOM-Zusammenfassung
+            self.bom_summary = {
+                "unique_components": len(bom_entries),
+                "total_components": sum(item["Quantity"] for item in bom_entries.values())
+            }
+            logger.info(f"BOM Zusammenfassung: {self.bom_summary['unique_components']} eindeutige Bauteile, {self.bom_summary['total_components']} Bauteile gesamt.")
+
+            # Schreibe BOM-Datei im herstellerspezifischen Format
+            bom_fields = self.manufacturer_info["bom_format"]
+            bom_file = self.bom_dir / f"bom_{self.manufacturer}.csv"
+            
+            with open(bom_file, 'w', newline='') as csvfile:
+                writer = csv.DictWriter(csvfile, fieldnames=bom_fields)
+                writer.writeheader()
+                
+                for entry in bom_entries.values():
+                    # Konvertiere in herstellerspezifisches Format
+                    formatted_entry = {}
+                    for field in bom_fields:
+                        if field in entry:
+                            formatted_entry[field] = entry[field]
+                        elif field in ["Reference", "Ref", "Comment"]: # OSH Park, JLCPCB Kompatibilität
+                            formatted_entry[field] = entry.get("Designator", "")
+                        elif field in ["Footprint"]: 
+                            formatted_entry[field] = entry.get("Package", "")
+                        elif field in ["Val", "Values"]:
+                            formatted_entry[field] = entry.get("Value", "")
+                        elif field in ["Component"]: # Eurocircuits Kompatibilität
+                            formatted_entry[field] = entry.get("Designator", "")
+                        elif field in ["Populated"]: # Eurocircuits Kompatibilität
+                            formatted_entry[field] = "Yes" if entry.get("DNP", "No").lower() == "no" else "No"
+                        elif field == "LCSC Part #" and self.manufacturer == "jlcpcb": # Spezifisch für JLCPCB
+                             formatted_entry[field] = entry.get("LCSC Part Number", "N/A")
+                        elif field == "Quantity":
+                            formatted_entry[field] = entry.get("Quantity", 0)
+                        else:
+                            formatted_entry[field] = "N/A" # Fallback
+                    
+                    writer.writerow(formatted_entry)
+            
+            # Kopiere BOM-Datei für einfachen Zugriff
+            shutil.copy2(bom_file, self.mfg_dir / f"bom_{self.manufacturer}.csv")
+            
+            # Erstelle und speichere BOM-Zusammenfassung
+            unique_parts_count = len(bom_entries)
+            total_parts_count = sum(entry['Quantity'] for entry in bom_entries.values())
+            # Annahme: Aktuell keine explizite THT-Erkennung in der BOM-Logik
+            tht_parts_count = 0 # TODO: Erweitern, falls THT-Komponenten identifiziert werden können
+            
+            self.bom_summary = {
+                "unique_parts": unique_parts_count,
+                "total_parts": total_parts_count,
+                "tht_parts": tht_parts_count 
+            }
+            logger.info(f"BOM-Zusammenfassung aktualisiert: {self.bom_summary}")
+            
+            logger.info(f"BOM erfolgreich für {self.manufacturer_info['name']} erstellt: {bom_file}")
+            return True
+            
+        except Exception as e:
+            logger.error(f"Fehler bei der BOM-Erstellung: {e}")
+            return False
+
+    def _get_bom_summary(self) -> Dict[str, int]:
+        """
+        Stellt sicher, dass die BOM-Zusammenfassung verfügbar ist und gibt sie zurück.
+        Generiert die BOM, falls noch nicht geschehen oder self.bom_summary leer ist.
+        Initialisiert self.bom_summary, falls es nicht existiert.
+        """
+        if not hasattr(self, 'bom_summary') or not self.bom_summary:
+            logger.info("BOM-Zusammenfassung nicht initialisiert oder leer, versuche BOM zu generieren...")
+            if not self.components: # Komponenten werden für BOM benötigt
+                logger.info("Keine Komponenten geparst, versuche SVG zu parsen...")
+                if not self.parse_svg():
+                    logger.error("SVG konnte nicht geparst werden. BOM-Zusammenfassung nicht möglich.")
+                    # Initialisiere mit Standardwerten, falls parse_svg fehlschlägt
+                    self.bom_summary = {"unique_parts": 0, "total_parts": 0, "tht_parts": 0}
+                    return self.bom_summary
+            
+            if not self.generate_bom(): # generate_bom sollte self.bom_summary füllen
+                logger.error("BOM konnte nicht generiert werden. BOM-Zusammenfassung nicht möglich.")
+                # Initialisiere mit Standardwerten, falls generate_bom fehlschlägt
+                self.bom_summary = {"unique_parts": 0, "total_parts": 0, "tht_parts": 0}
+                return self.bom_summary
+        
+        # Stelle sicher, dass die erwarteten Schlüssel vorhanden sind, mit Standardwerten
+        # Dies ist nützlich, falls bom_summary zwar existiert, aber unvollständig ist.
+        summary = {
+            "unique_parts": self.bom_summary.get('unique_parts', 0),
+            "total_parts": self.bom_summary.get('total_parts', 0),
+            "tht_parts": self.bom_summary.get('tht_parts', 0) 
+        }
+        # Aktualisiere self.bom_summary, um Konsistenz sicherzustellen
+        self.bom_summary = summary
+        return summary
+
+    def generate_cpl(self) -> bool:
+        """
+        Erstellt eine CPL (Bestückungsplan) im herstellerspezifischen Format.
+        """
+        if not self.components:
+            logger.error("Keine Komponenten für CPL vorhanden.")
+            return False
+            
+        try:
+            # Schreibe CPL-Datei (Bestückungsplan)
+            cpl_fields = self.manufacturer_info["cpl_format"]
+            cpl_file = self.cpl_dir / f"cpl_{self.manufacturer}.csv"
+            
+            with open(cpl_file, 'w', newline='') as csvfile:
+                writer = csv.DictWriter(csvfile, fieldnames=cpl_fields)
+                writer.writeheader()
+                
+                for comp in self.components:
+                    # Konvertiere in herstellerspezifisches Format
+                    cpl_entry = {}
+                    
+                    for field in cpl_fields:
+                        if field in ["Designator", "Ref", "Reference", "Component"]:
+                            cpl_entry[field] = comp["id"]
+                        elif field in ["Mid X", "X", "X (mm)", "PosX"]:
+                            cpl_entry[field] = f"{comp['x']:.3f}mm"
+                        elif field in ["Mid Y", "Y", "Y (mm)", "PosY"]:
+                            cpl_entry[field] = f"{comp['y']:.3f}mm"
+                        elif field in ["Layer", "Side"]:
+                            cpl_entry[field] = "top"  # Standard: Oberseite
+                        elif field in ["Rotation", "Rot"]:
+                            cpl_entry[field] = f"{comp.get('rotation', 0):.1f}"
+                        elif field in ["Val", "Value"]:
+                            cpl_entry[field] = comp["name"]
+                        elif field in ["Package"]:
+                            cpl_entry[field] = "SMD"  # Standard-Package
+                        else:
+                            cpl_entry[field] = ""
+                    
+                    writer.writerow(cpl_entry)
+            
+            # Kopiere CPL-Datei für einfachen Zugriff
+            shutil.copy2(cpl_file, self.mfg_dir / f"cpl_{self.manufacturer}.csv")
+            
+            logger.info(f"CPL erfolgreich für {self.manufacturer_info['name']} erstellt: {cpl_file}")
+            return True
+            
+        except Exception as e:
+            logger.error(f"Fehler bei der CPL-Erstellung: {e}")
+            return False
+
+    def provide_price_estimation_guidance(self, quantity: int = 10, layers: int = 2) -> None:
+        """
+        Stellt detaillierte Informationen und Links für eine manuelle Preisabschätzung bereit,
+        angepasst an die Webseiten der Hersteller.
+        
+        Args:
+            quantity: Die gewünschte Stückzahl für die Preisanfrage.
+            layers: Die Anzahl der Kupferlagen (Standard: 2).
+        """
+        if not self.components:
+            if not self.parse_svg(): # Versuche SVG zu parsen, falls noch nicht geschehen
+                logger.error("SVG konnte nicht geparst werden. Preisabschätzung nicht möglich.")
+                return
+        
+        bom_info = self._get_bom_summary() # Stellt sicher, dass BOM-Daten aktuell sind
+
+        board_width_mm = self.board_dimensions.get("width", 0)
+        board_height_mm = self.board_dimensions.get("height", 0)
+        board_width_str = f"{board_width_mm:.2f} mm" if board_width_mm > 0 else "Unbekannt (aus SVG/Design ableiten)"
+        board_height_str = f"{board_height_mm:.2f} mm" if board_height_mm > 0 else "Unbekannt (aus SVG/Design ableiten)"
+
+        print("\n" + "="*80)
+        print("=== LEITFADEN ZUR PREISABSCHÄTZUNG FÜR PCB-FERTIGUNG & BESTÜCKUNG ===")
+        print("="*80)
+        print("Dieser Leitfaden hilft Ihnen, die notwendigen Parameter für die Online-Kalkulatoren der Hersteller zu sammeln.")
+        print("Die Genauigkeit der Schätzung hängt von den eingegebenen Daten und den spezifischen Optionen des Herstellers ab.")
+        
+        print("\n--- Basisdaten Ihres Projekts ---")
+        print(f"  - SVG-Datei: {self.svg_path.name}")
+        print(f"  - Geschätzte Platinengröße (B x H): {board_width_str} x {board_height_str}")
+        print(f"  - Gewünschte Stückzahl: {quantity}")
+        print(f"  - Anzahl Kupferlagen: {layers}")
+        if bom_info["total_parts"] > 0:
+            print(f"  - Einzigartige Bauteile (SMD): {bom_info['unique_parts']}")
+            print(f"  - Gesamtzahl Bauteil-Platzierungen (SMD): {bom_info['total_parts']}")
+            if bom_info['tht_parts'] > 0: # Falls THT-Zählung implementiert wird
+                 print(f"  - Anzahl THT-Bauteile: {bom_info['tht_parts']}")
         else:
-            print("Export fehlgeschlagen: Nicht alle Fertigungsunterlagen konnten erstellt werden.")
+            print("  - BOM-Daten: Noch nicht verfügbar oder keine Bauteile für Bestückung.")
+
+        format_map = {
+            "width_mm": board_width_mm,
+            "height_mm": board_height_mm,
+            "quantity": quantity,
+            "layers": layers,
+            "unique_components": bom_info['unique_parts'],
+            "total_components": bom_info['total_parts'],
+            "tht_components": bom_info.get('tht_parts', 0)
+        }
+
+        for mfg_id, mfg_info in PCB_MANUFACTURERS.items():
+            print("\n" + "-"*60)
+            print(f"Hersteller: {mfg_info['name']}")
+            print("-"*60)
+            
+            if mfg_info.get("quote_calculator_url"):
+                print(f"  Online-Kalkulator: {mfg_info['quote_calculator_url']}")
+            else:
+                print(f"  Website (für Kalkulator-Suche): {mfg_info['url']}")
+
+            print("\n  Empfohlene Parameter für die Eingabe:")
+            
+            # 1. Parameter für Leiterplattenfertigung
+            print("    --- 1. Parameter für Leiterplattenfertigung ---")
+            printed_pcb_params = set() 
+
+            for param_template in mfg_info.get("typical_quote_parameters", {}).get("pcb", []):
+                # Standardwerte setzen
+                final_display_name = param_template
+                final_output_value = "Prüfen Sie die Optionen auf der Webseite des Herstellers."
+                has_special_handling = False
+
+                # Versuche, jeden Parameter zu formatieren mit den verfügbaren Projektdaten
+                try:
+                    formatted_param = param_template.format_map(format_map)
+                    
+                    # Erfolgreich formatiert und anders als das Original
+                    if formatted_param != param_template:
+                        if ":" in formatted_param:
+                            parts = formatted_param.split(":", 1)
+                            final_display_name = parts[0].strip()
+                            final_output_value = parts[1].strip()
+                        else:
+                            final_display_name = param_template
+                            final_output_value = formatted_param
+                    # Keine Formatierung angewandt oder nicht anders als Original
+                    elif ":" in param_template:
+                        final_display_name = param_template.split(":", 1)[0].strip()
+                        # Versuche einen Standardwert aus dem Parameter-String zu extrahieren
+                        param_value_part = param_template.split(":", 1)[1].strip()
+                        default_value = self._extract_default_from_param_string(param_value_part)
+                        if default_value:
+                            final_output_value = default_value
+                        else:
+                            final_output_value = param_value_part
+                except (KeyError, ValueError):
+                    # Formatierung fehlgeschlagen wegen fehlender Platzhalter oder Formatierungsfehler
+                    logger.debug(f"Formatierung fehlgeschlagen für '{param_template}'. Versuche Schlüsselwort-Erkennung.")
+                    if ":" in param_template:
+                        final_display_name = param_template.split(":", 1)[0].strip()
+                        param_value_part = param_template.split(":", 1)[1].strip()
+                        default_value = self._extract_default_from_param_string(param_value_part)
+                        if default_value:
+                            final_output_value = default_value
+                        else:
+                            final_output_value = param_value_part
+                
+                # Schlüsselwortbasierte Spezialverarbeitung für bestimmte Parameter
+                param_lower_check = param_template.lower()
+                
+                # OSH Park-spezifische Überschreibungen für Kupferdicke
+                if mfg_id == "oshpark" and "kupferdicke" in param_lower_check:
+                    final_display_name = param_template.split(":", 1)[0].strip() if ":" in param_template else "Kupferdicke" 
+                    final_output_value = "1 oz/ft² (35µm) (Standard bei OSH Park für alle Lagen)"
+                    has_special_handling = True
+                # OSH Park-spezifische Überschreibungen für Material
+                elif mfg_id == "oshpark" and "material" in param_lower_check:
+                    final_display_name = "Material"
+                    if layers <= 2:
+                        final_output_value = "FR-4 (Standard für 2-Lagen bei OSH Park)"
+                    else:
+                        final_output_value = "FR408 (High-Speed Material für 4+ Lagen bei OSH Park)"
+                    has_special_handling = True
+                    printed_pcb_params.add("material")
+                # PCBWay-spezifische Überschreibungen
+                elif mfg_id == "pcbway" and "kupferaußendicke" in param_lower_check:
+                    final_display_name = param_template.split(":", 1)[0].strip()
+                    final_output_value = "1 oz/ft² (35µm) (Standard). Für höhere Ströme ggf. 2oz (70µm) wählen."
+                    has_special_handling = True
+                # Kupferinnendicke-Behandlung für 2-Lagen-Designs
+                elif param_lower_check == "kupferinnendicke (für >2 lagen): (z.b. 0.5oz, 1oz)" or "kupferinnendicke" in param_lower_check:
+                    final_display_name = param_template.split(":", 1)[0].strip() if ":" in param_template else "Kupferinnendicke"
+                    if layers <= 2:
+                        final_output_value = "Nur relevant für Platinen mit mehr als 2 Lagen."
+                    else:
+                        final_output_value = "0.5 oz/ft² (17.5µm) or 1 oz/ft² (35µm) (Standard für Innenlagen)."
+                    has_special_handling = True
+                # JLCPCB-spezifische Überschreibungen
+                elif mfg_id == "jlcpcb" and param_lower_check in ["kupferaußendicke: (z.b. 1oz (35µm standard), 2oz (70µm))", "kupferdicke: (standard 1oz)"]:
+                    final_display_name = param_template.split(":", 1)[0].strip()
+                    final_output_value = "1 oz/ft² (35µm) (Standard). Für höhere Ströme ggf. 2oz (70µm) wählen."
+                    has_special_handling = True
+                # Allgemeine Behandlung nach Schlüsselwörtern
+                elif any(p in param_lower_check for p in ["dimension", "size", "width", "height", "größe", "platinenabmessungen"]):
+                    final_display_name = param_template.split(":", 1)[0].strip() if ":" in param_template else "Platinengröße"
+                    final_output_value = f"{board_width_str} x {board_height_str}"
+                    printed_pcb_params.add("dimensions")
+                    has_special_handling = True
+                elif any(p in param_lower_check for p in ["quantity", "menge", "stückzahl"]):
+                    final_display_name = param_template.split(":", 1)[0].strip() if ":" in param_template else "Stückzahl"
+                    final_output_value = str(quantity)
+                    printed_pcb_params.add("quantity")
+                    has_special_handling = True
+                elif any(p in param_lower_check for p in ["layers", "lagen", "lagenanzahl"]):
+                    final_display_name = param_template.split(":", 1)[0].strip() if ":" in param_template else "Lagenanzahl"
+                    final_output_value = str(layers)
+                    printed_pcb_params.add("layers")
+                    has_special_handling = True
+                elif "basis-material" in param_lower_check or ("material" in param_lower_check and not "basis-material" in param_lower_check and mfg_id != "oshpark"):
+                    # Material-Spezifikationen
+                    final_display_name = param_template.split(":", 1)[0].strip() if ":" in param_template else "Material"
+                    final_output_value = "FR-4 (Standard). Prüfen Sie Alternativen falls benötigt."
+                    has_special_handling = True
+                    printed_pcb_params.add("material")
+                elif any(p in param_lower_check for p in ["leiterplattendicke", "thickness", "dicke"]):
+                    final_display_name = param_template.split(":", 1)[0].strip() if ":" in param_template else "Leiterplattendicke"
+                    final_output_value = "1.6mm (Standard). Gängige Optionen: 0.8mm, 1.0mm, 1.2mm, 2.0mm."
+                    has_special_handling = True
+                # OSH Park-spezifische Überschreibungen
+                elif mfg_id == "oshpark" and "kupferdicke" in param_lower_check:
+                    final_display_name = param_template.split(":", 1)[0].strip() if ":" in param_template else "Kupferdicke" 
+                    final_output_value = "1 oz/ft² (35µm) (Standard bei OSH Park für alle Lagen)"
+                    has_special_handling = True
+                # Material für OSH Park
+                elif mfg_id == "oshpark" and "material" in param_lower_check:
+                    final_display_name = "Material"
+                    if layers <= 2:
+                        final_output_value = "FR-4 (Standard für 2-Lagen bei OSH Park)"
+                    else:
+                        final_output_value = "FR408 (High-Speed Material für 4+ Lagen bei OSH Park)"
+                    has_special_handling = True
+                    printed_pcb_params.add("material")
+                # Handle all manufacturers for copper parameters
+                elif mfg_id in ["jlcpcb", "pcbway", "eurocircuits"] and "kupfer" in param_lower_check and "mm" not in final_output_value:
+                    if "außen" in param_lower_check or (("dicke" in param_lower_check or "thickness" in param_lower_check) and "innen" not in param_lower_check):
+                        final_display_name = param_template.split(":", 1)[0].strip() if ":" in param_template else "Kupferaußendicke"
+                        final_output_value = "1 oz/ft² (35µm) (Standard). Für höhere Ströme ggf. 2oz (70µm) wählen."
+                        has_special_handling = True
+                elif "kupferinnendicke" in param_lower_check:
+                    final_display_name = param_template.split(":", 1)[0].strip() if ":" in param_template else "Kupferinnendicke"
+                    final_output_value = "0.5 oz/ft² (17.5µm) oder 1 oz/ft² (35µm) (Standard für Innenlagen)."
+                    has_special_handling = True
+                    if mfg_id == "jlcpcb" and layers <= 2:
+                        final_output_value = "Nur relevant für Platinen mit mehr als 2 Lagen."
+                elif any(p in param_lower_check for p in ["oberfläche", "surface finish", "finish"]):
+                    final_display_name = param_template.split(":", 1)[0].strip() if ":" in param_template else "Oberfläche"
+                    if mfg_id == "oshpark":
+                        final_output_value = "ENIG (Immersion Gold, Standard bei OSH Park)"
+                    else:
+                        final_output_value = "HASL (Lead-Free) (kostengünstig) oder ENIG (Goldoberfläche, gut für feine Pitchs, teurer)."
+                    has_special_handling = True
+                elif any(p in param_lower_check for p in ["lötstopplack", "solder mask", "stoppmask"]):
+                    final_display_name = param_template.split(":", 1)[0].strip() if ":" in param_template else "Lötstopplackfarbe"
+                    if mfg_id == "oshpark":
+                        final_output_value = "Violett (charakteristisch für OSH Park)"
+                    else:
+                        final_output_value = "Grün (oft Standard/günstigst). Andere: Rot, Blau, Schwarz, Weiß, Gelb."
+                    has_special_handling = True
+                elif any(p in param_lower_check for p in ["bestückungsdruckfarbe", "silkscreen"]):
+                    final_display_name = param_template.split(":", 1)[0].strip() if ":" in param_template else "Bestückungsdruckfarbe"
+                    final_output_value = "Weiß (Standard). Andere: Schwarz (je nach Lötstoppfarbe)."
+                    has_special_handling = True
+                elif "goldfinger" in param_lower_check or "gold fingers" in param_lower_check:
+                    final_display_name = param_template.split(":", 1)[0].strip() if ":" in param_template else "Goldfinger"
+                    final_output_value = "Nein (Standard, nur wenn Ihr Design Kantensteckverbinder hat)."
+                    has_special_handling = True
+                elif "castellated holes" in param_lower_check:
+                    final_display_name = param_template.split(":", 1)[0].strip() if ":" in param_template else "Castellated Holes"
+                    final_output_value = "Nein (Standard, nur wenn Ihr Design Module mit randmetallisierten Löchern sind)."
+                    has_special_handling = True
+                elif any(p in param_lower_check for p in ["lieferformat", "delivery format", "panelization", "nutzen"]):
+                    final_display_name = param_template.split(":", 1)[0].strip() if ":" in param_template else "Lieferformat"
+                    final_output_value = "Single Pieces (Standard für kleine Mengen). Bei größeren Mengen 'Panel by Manufacturer' or 'Panel by Customer' prüfen."
+                    has_special_handling = True
+                
+                # Wenn der Parameter weder formatiert noch speziell behandelt wurde, versuche einen Standardwert zu finden
+                if not has_special_handling and "{" not in final_output_value and final_output_value == param_template.split(":", 1)[1].strip() if ":" in param_template else "Prüfen Sie die Optionen auf der Webseite des Herstellers.":
+                    if ":" in param_template:
+                        value_part = param_template.split(":", 1)[1].strip()
+                        default_val = self._extract_default_from_param_string(value_part)
+                        if default_val:
+                            final_output_value = default_val
+                
+                print(f"      - {final_display_name}: {final_output_value}")
+
+            # Füge wichtige Parameter hinzu, falls sie nicht schon gedruckt wurden
+            if "dimensions" not in printed_pcb_params: print(f"      - Platinengröße (Board Size): {board_width_str} x {board_height_str}")
+            if "quantity" not in printed_pcb_params: print(f"      - Stückzahl (Quantity): {quantity}")
+            if "layers" not in printed_pcb_params: print(f"      - Lagen (Layers): {layers}")
+
+            # Assembly-Parameter nur anzeigen, wenn der Hersteller Bestückungsservice anbietet
+            if bom_info["total_parts"] > 0 and mfg_info.get("assembly_service_url"):
+                print("\n    --- 2. Parameter für Bestückungsservice (Assembly) ---")
+                bom_filename = self.bom_dir / f"bom_{mfg_id}.csv" 
+                cpl_filename = self.cpl_dir / f"cpl_{mfg_id}.csv"
+                print(f"      (Stellen Sie sicher, dass Sie Ihre BOM- ({bom_filename}) und CPL-Dateien ({cpl_filename}) bereithalten)")
+                
+                printed_assembly_params = set()
+                for param_template in mfg_info.get("typical_quote_parameters", {}).get("assembly", []):
+                    # Standardwerte setzen
+                    final_display_name = param_template
+                    final_output_value = "Prüfen Sie die Optionen auf der Webseite des Herstellers."
+                    has_special_handling = False
+
+                    # Versuche, Parameter mit Projektdaten zu formatieren
+                    try:
+                        formatted_param = param_template.format_map(format_map)
+                        if formatted_param != param_template:
+                            if ":" in formatted_param:
+                                parts = formatted_param.split(":", 1)
+                                final_display_name = parts[0].strip()
+                                final_output_value = parts[1].strip()
+                            else:
+                                final_display_name = param_template
+                                final_output_value = formatted_param
+                        elif ":" in param_template:
+                            final_display_name = param_template.split(":", 1)[0].strip()
+                            param_value_part = param_template.split(":", 1)[1].strip()
+                            default_value = self._extract_default_from_param_string(param_value_part)
+                            if default_value:
+                                final_output_value = default_value
+                            else:
+                                final_output_value = param_value_part
+                    except (KeyError, ValueError):
+                        if ":" in param_template:
+                            final_display_name = param_template.split(":", 1)[0].strip()
+                            param_value_part = param_template.split(":", 1)[1].strip()
+                            default_value = self._extract_default_from_param_string(param_value_part)
+                            if default_value:
+                                final_output_value = default_value
+                            else:
+                                final_output_value = param_value_part
+
+                    # Schlüsselwortbasierte Spezialverarbeitung
+                    param_lower_check = param_template.lower()
+
+                    if any(p in param_lower_check for p in ["bestückungsseite", "assembly sides", "sides", "seiten"]):
+                        final_display_name = param_template.split(":", 1)[0].strip() if ":" in param_template else "Bestückungsseite(n)"
+                        final_output_value = "Top Side (Standard). 'Both Sides', falls Ihr Design Bauteile auf beiden Seiten hat."
+                        has_special_handling = True
+                    elif any(p in param_lower_check for p in ["anzahl eindeutiger bauteile", "unique components", "unique smt"]):
+                        final_display_name = param_template.split(":", 1)[0].strip() if ":" in param_template else "Anzahl eindeutiger Bauteile"
+                        final_output_value = f"{bom_info['unique_parts']} (aus Ihrer BOM)"
+                        printed_assembly_params.add("unique_parts")
+                        has_special_handling = True
+                    elif any(p in param_lower_check for p in ["anzahl gesamter smd-bauteile", "total components", "total smt", "gesamtzahl"]):
+                        final_display_name = param_template.split(":", 1)[0].strip() if ":" in param_template else "Anzahl gesamter SMD-Bauteile"
+                        final_output_value = f"{bom_info['total_parts']} (aus Ihrer BOM)"
+                        printed_assembly_params.add("total_parts")
+                        has_special_handling = True
+                    elif any(p in param_lower_check for p in ["anzahl tht-bauteile", "tht components"]):
+                        final_display_name = param_template.split(":", 1)[0].strip() if ":" in param_template else "Anzahl THT-Bauteile"
+                        final_output_value = f"{bom_info.get('tht_parts', 0)} (aus Ihrer BOM, falls vorhanden, sonst 0 oder manuell zählen)"
+                        printed_assembly_params.add("tht_parts")
+                        has_special_handling = True
+                    elif any(p in param_lower_check for p in ["schablone", "stencil"]):
+                        final_display_name = param_template.split(":", 1)[0].strip() if ":" in param_template else "Schablone (Stencil)"
+                        final_output_value = "Ja, benötigt für SMD-Bestückung. Der Hersteller bietet dies meist an."
+                        has_special_handling = True
+                    
+                    print(f"      - {final_display_name}: {final_output_value}")
+
+                # Füge wichtige Assembly-Parameter hinzu, falls sie nicht schon gedruckt wurden
+                if "unique_parts" not in printed_assembly_params: 
+                    print(f"      - Anzahl einzigartige SMD-Bauteile: {bom_info['unique_parts']} (aus Ihrer BOM)")
+                if "total_parts" not in printed_assembly_params: 
+                    print(f"      - Gesamtzahl SMD-Platzierungen: {bom_info['total_parts']} (aus Ihrer BOM)")
+                if "tht_parts" not in printed_assembly_params and bom_info.get('tht_parts',0) >= 0: 
+                    print(f"      - Anzahl THT-Bauteile: {bom_info.get('tht_parts',0)} (aus Ihrer BOM, falls vorhanden)")
+
+            # Zusätzliche herstellerspezifische Informationen
+            if mfg_info.get("technical_data_url"):
+                print(f"\n  Technische Daten/Fertigungsmöglichkeiten: {mfg_info['technical_data_url']}")
+            if mfg_info.get("assembly_service_url"):
+                print(f"  Informationen zum Bestückungsservice: {mfg_info['assembly_service_url']}")
+            
+            # Herstellerspezifische Tipps
+            if mfg_id == "jlcpcb":
+                print("  Tipp für JLCPCB: Nutzen Sie deren Online Gerber Viewer zum Überprüfen Ihrer hochgeladenen Daten. Achten Sie auf LCSC-Teilenummern in der BOM für die Bestückung.")
+            elif mfg_id == "pcbway":
+                print("  Tipp für PCBWay: Achten Sie auf Sonderangebote für Prototypen. Der Online-Chat kann bei Fragen helfen.")
+            elif mfg_id == "oshpark":
+                print("  Tipp für OSH Park: Ideal für kleine Stückzahlen und Prototypen in den USA. Preise sind oft pro Quadratzoll. Kein Bestückungsservice.")
+        
+        # Allgemeine Tipps für alle Hersteller
+        print("\n" + "="*80)
+        print("=== Allgemeine Tipps für Online-Preisangebote ===")
+        print("="*80)
+        print("  - **Einheiten prüfen**: Achten Sie darauf, ob Maße in mm oder Zoll (inch) erwartet werden.")
+        print("  - **Dateien hochladen**: Für die genauesten Preise laden Sie Ihre Gerber-, BOM- und CPL-Dateien hoch.")
+        print("  - **Lieferzeit beachten**: Kürzere Lieferzeiten erhöhen den Preis erheblich.")
+        print("  - **Angebote vergleichen**: Holen Sie Angebote von mehreren Herstellern ein, wenn möglich.")
+        print("  - **Sonderangebote**: Achten Sie auf Rabatte für Neukunden oder spezielle Prototypen-Angebote.")
+        print("  - **Dokumentation**: Speichern Sie eine Kopie (Screenshot oder PDF) Ihrer finalen Konfiguration und des Preises.")
+        print("  - **Mindestbestellmengen**: Manche Hersteller haben Mindestmengen oder -preise.")
+        print("  - **Versandkosten**: Berücksichtigen Sie die Versandkosten und -zeiten, besonders bei internationalen Anbietern.")
+        print("--- Ende des Leitfadens ---")
+
+    def generate_gerber_with_external_tool(self, input_file: Optional[Path] = None) -> bool:
+        """
+        Erzeugt Gerber-Dateien mit externen Tools wie KiCad oder FlatCAM.
+        Nutzt verfügbare Werkzeuge statt eigener Implementierung.
+        
+        Args:
+            input_file: Eingabedatei für die Gerber-Generierung (optional)
+        """
+        if not input_file:
+            # Erstelle eine temporäre KiCad PCB Datei als Eingabe
+            temp_file = self.mfg_dir / "temp_design.kicad_pcb"
+            if not self.export_to_kicad_pcb(temp_file):
+                return False
+            input_file = temp_file
+        
+        # Prüfe verfügbare Tools und wähle das beste aus
+        if self.available_tools.get("kicad", False):
+            logger.info("Verwende KiCad für die Gerber-Erzeugung...")
+            return self._export_gerber_with_kicad(input_file)
+        elif self.available_tools.get("flatcam", False):
+            logger.info("Verwende FlatCAM für die Gerber-Erzeugung...")
+            return self._export_gerber_with_flatcam(input_file)
+        else:
+            logger.warning("Keine kompatiblen EDA-Tools gefunden. Erstelle vereinfachte Gerber-Dateien...")
+            return self._create_simplified_gerber()
+    
+    def _export_gerber_with_kicad(self, kicad_pcb_file: Path) -> bool:
+        """Exportiert Gerber-Dateien mit KiCad-CLI."""
+        try:
+            # Erstelle KiCad-Plot-Konfiguration
+            plot_config = self.mfg_dir / "plot_config.kibot.yaml"
+            
+            with open(plot_config, 'w') as f:
+                f.write(f"""kibot:
+  version: 1
+
+outputs:
+  - name: gerbers
+    comment: "Gerber files for {self.manufacturer_info['name']}"
+    type: gerber
+    dir: {self.gerber_dir}
+    options:
+      exclude_edge_layer: true
+      exclude_pads_from_silkscreen: true
+      plot_sheet_reference: false
+      plot_footprint_refs: true
+      plot_footprint_values: true
+      force_plot_invisible_refs_vals: false
+      tent_vias: true
+      line_width: 0.1
+    layers:
+      - F.Cu
+      - B.Cu
+      - F.SilkS
+      - B.SilkS
+      - F.Mask
+      - B.Mask
+      - F.Paste
+      - B.Paste
+      - Edge.Cuts
+
+  - name: drill
+    comment: "Drill files for {self.manufacturer_info['name']}"
+    type: excellon
+    dir: {self.gerber_dir}
+    options:
+      map: true
+""")
+            
+            # Führe KiCad-CLI aus
+            command = [
+                "kicad-cli", "pcb", "export", "gerbers",
+                "--output", str(self.gerber_dir),
+                str(kicad_pcb_file)
+            ]
+            
+            process = subprocess.Popen(
+                command, 
+                stdout=subprocess.PIPE, 
+                stderr=subprocess.PIPE
+            )
+            stdout, stderr = process.communicate(timeout=60)
+            
+            if process.returncode != 0:
+                logger.error(f"KiCad Gerber-Export fehlgeschlagen: {stderr.decode('utf-8')}")
+                return False
+            
+            logger.info(f"Gerber-Dateien erfolgreich mit KiCad erstellt in: {self.gerber_dir}")
+            return True
+            
+        except Exception as e:
+            logger.error(f"Fehler beim Export mit KiCad: {e}")
             return False
     
-    def update_project_status(self):
-        """Aktualisiert den Projektstatus-Bericht."""
-        status_file = PROJECT_ROOT / "PROJECT_STATUS.txt"
-        
-        if not status_file.exists():
-            print(f"Warnung: Projektstatus-Datei {status_file} nicht gefunden.")
-            return
-            
-        # Aktualisieren des Projektstatus
-        today = datetime.now().strftime("%Y-%m-%d")
-        
-        # Lies die aktuelle Datei
-        with open(status_file, 'r') as f:
-            content = f.read()
-            
-        # Aktualisiere den Hardware-Produktionsstatus
-        production_status = f"""
-## Hardware-Produktionsstatus (JLCPCB)
-
-Der aktuelle Status der Hardware-Produktion bei JLCPCB:
-1. PCB-Design: Fertiggestellt und validiert (8-Lagen-Design für optimale Signalintegrität)
-2. DRC (Design Rule Check): Bestanden, alle Sicherheitsabstände JLCPCB-konform
-3. Thermische Analyse: Durchgeführt, kritische Komponenten mit ausreichender Wärmeableitung versehen
-4. Stromversorgung: Überprüft, alle Versorgungsleitungen korrekt dimensioniert
-
-Fertigungsunterlagen für JLCPCB:
-1. Gerber-Dateien: Mit KiCad-Integration erstellt und in `/hardware/manufacturing/gerber/` abgelegt, ZIP-Archiv für JLCPCB in `/hardware/manufacturing/gerber_jlcpcb.zip`
-2. Stückliste (BOM): Vollständig in `/hardware/manufacturing/bom_jlcpcb.csv` und `/hardware/manufacturing/bom/`
-3. Bestückungsplan (CPL): Generiert in `/hardware/manufacturing/cpl_jlcpcb.csv` und `/hardware/manufacturing/centroid/`
-4. Pick-and-Place-Daten: Vorbereitet für SMT-Fertigung
-
-Alle Dateien entsprechen den JLCPCB-Anforderungen und sind bereit für den Upload. Letzter Validierungscheck am {today} durchgeführt.
-
-HINWEIS: Die Fertigungsunterlagen wurden mit dem verbesserten PCB-Export-Tool generiert und sind jetzt JLCPCB-konform. Der Export nutzt KiCad-Bibliotheken zur Erstellung standardkonformer Gerber-Dateien.
-"""
-
-        # Suche und ersetze den entsprechenden Abschnitt
-        new_content = re.sub(r'## Hardware-Produktionsstatus \(JLCPCB\).*?(?=\n## )', production_status, content, flags=re.DOTALL)
-        
-        # Schreibe die aktualisierte Datei
-        with open(status_file, 'w') as f:
-            f.write(new_content)
-            
-        print(f"Projektstatus wurde aktualisiert: {status_file}")
-
-    def cleanup(self):
-        """Bereinigt temporäre Dateien"""
+    def _export_gerber_with_flatcam(self, input_file: Path) -> bool:
+        """Exportiert Gerber-Dateien mit FlatCAM."""
         try:
-            # Bereinige temporäres KiCad-Verzeichnis
-            if TEMP_KICAD_DIR.exists():
-                shutil.rmtree(TEMP_KICAD_DIR)
-                print(f"Temporäres Verzeichnis {TEMP_KICAD_DIR} wurde gelöscht.")
+            # Erstelle FlatCAM-Skript
+            flatcam_script = self.mfg_dir / "flatcam_export.txt"
+            
+            with open(flatcam_script, 'w') as f:
+                f.write(f"""# FlatCAM Gerber Export Skript
+open_gerber("{input_file}")
+set_sys("{self.gerber_dir}")
+export_gerber("top_copper", "{self.manufacturer_info['gerber_naming']['top_copper']}")
+export_gerber("bottom_copper", "{self.manufacturer_info['gerber_naming']['bottom_copper']}")
+export_gerber("drill", "{self.manufacturer_info['gerber_naming']['drill']}")
+save_project("{self.mfg_dir}/flatcam_project.flatcam")
+quit()
+""")
+            
+            # Führe FlatCAM aus
+            command = [
+                "flatcam",
+                "--shellmode",
+                "--script", str(flatcam_script)
+            ]
+            
+            process = subprocess.Popen(
+                command, 
+                stdout=subprocess.PIPE, 
+                stderr=subprocess.PIPE
+            )
+            stdout, stderr = process.communicate(timeout=120)
+            
+            if process.returncode != 0:
+                logger.error(f"FlatCAM Gerber-Export fehlgeschlagen: {stderr.decode('utf-8')}")
+                return False
+            
+            logger.info(f"Gerber-Dateien erfolgreich mit FlatCAM erstellt in: {self.gerber_dir}")
+            return True
+            
         except Exception as e:
-            print(f"Warnung: Konnte temporäre Dateien nicht bereinigen: {e}")
+            logger.error(f"Fehler beim Export mit FlatCAM: {e}")
+            return False
+    
+    def _create_simplified_gerber(self) -> bool:
+        """
+        Erstellt vereinfachte Gerber-Dateien für ein Platinenlayout.
+        Nur als Notlösung gedacht, wenn keine EDA-Tools verfügbar sind.
+        """
+        logger.warning("Erstelle vereinfachte Gerber-Dateien (nicht ideal für Produktion).")
+        
+        try:
+            # Gerber-Layer definieren
+            gerber_layers = {
+                "top_copper": f"PizzaBoard.{self.manufacturer_info['gerber_naming']['top_copper']}",
+                "bottom_copper": f"PizzaBoard.{self.manufacturer_info['gerber_naming']['bottom_copper']}",
+                "top_silkscreen": "PizzaBoard.GTO",
+                "bottom_silkscreen": "PizzaBoard.GBO",
+                "top_mask": "PizzaBoard.GTS",
+                "bottom_mask": "PizzaBoard.GBS",
+                "outline": "PizzaBoard.GKO",
+                "drill": f"PizzaBoard.{self.manufacturer_info['gerber_naming']['drill']}"
+            }
+            
+            # Erzeuge einfache Gerber-Dateien mit rechteckigem Board-Outline
+            board_width = 100  # 100mm
+            board_height = 100  # 100mm
+            
+            # Erstelle Layer-Dateien mit Mindestinhalt
+            for layer_name, filename in gerber_layers.items():
+                filepath = self.gerber_dir / filename
+                
+                with open(filepath, 'w') as f:
+                    # Gerber-Header (RS-274X Format)
+                    f.write(f"G04 Simplified Gerber from PCB Export Tool (Layer: {layer_name})*\n")
+                    f.write("%FSLAX46Y46*%\n")  # Format Statement: Leading zeros suppressed, Absolute coords, 4 integer digits, 6 fractional digits
+                    f.write("%MOMM*%\n")  # Mode: Millimeters
+                    f.write("%LPD*%\n")  # Layer Polarity: Dark
+                    
+                    # Define apertures
+                    f.write("%ADD10C,0.15*%\n")  # Circular aperture with 0.15mm diameter for outlines
+                    f.write("%ADD11C,0.5*%\n")   # Circular aperture for pads
+                    
+                    # Draw board outline for all layers
+                    if layer_name == "outline":
+                        f.write("G01*\n")  # Linear interpolation mode
+                        f.write("D10*\n")  # Select aperture 10
+                        f.write("X0Y0D02*\n")  # Move to 0,0
+                        f.write(f"X{board_width*10000}Y0D01*\n")  # Draw to width,0
+                        f.write(f"X{board_width*10000}Y{board_height*10000}D01*\n")  # Draw to width,height
+                        f.write(f"X0Y{board_height*10000}D01*\n")  # Draw to 0,height
+                        f.write("X0Y0D01*\n")  # Close the rectangle
+                    
+                    # Add component pads to copper and mask layers
+                    if layer_name in ["top_copper", "top_mask"]:
+                        f.write("G01*\n")  # Linear interpolation mode
+                        f.write("D11*\n")  # Select aperture 11
+                        
+                        # Place pads for components
+                        for comp in self.components:
+                            x = int(comp["x"] * 10000)  # Convert to 0.1µm units
+                            y = int(comp["y"] * 10000)
+                            f.write(f"X{x}Y{y}D03*\n")  # Flash pad at component position
+                    
+                    # Add component labels to silkscreen
+                    if layer_name == "top_silkscreen":
+                        # In simplified Gerber, we can't easily add text
+                        # We would usually draw rectangles representing components
+                        f.write("G01*\n")  # Linear interpolation mode
+                        f.write("D10*\n")  # Select thin aperture for outlines
+                        
+                        for comp in self.components:
+                            x = int(comp["x"] * 10000)  # Convert to 0.1µm units
+                            y = int(comp["y"] * 10000)
+                            w = int(comp["width"] * 10000 / 2)  # Half width
+                            h = int(comp["height"] * 10000 / 2)  # Half height
+                            
+                            # Draw rectangle for component outline
+                            f.write(f"X{x-w}Y{y-h}D02*\n")  # Move to top-left
+                            f.write(f"X{x+w}Y{y-h}D01*\n")  # Draw to top-right
+                            f.write(f"X{x+w}Y{y+h}D01*\n")  # Draw to bottom-right
+                            f.write(f"X{x-w}Y{y+h}D01*\n")  # Draw to bottom-left
+                            f.write(f"X{x-w}Y{y-h}D01*\n")  # Close the rectangle
+                    
+                    # End of file
+                    f.write("M02*\n")
+            
+            # Erzeuge eine README-Datei mit Erklärungen
+            with open(self.gerber_dir / "README.txt", 'w') as f:
+                f.write("VEREINFACHTE GERBER-DATEIEN - NUR ZUR REFERENZ\n")
+                f.write("==========================================\n\n")
+                f.write("Diese Gerber-Dateien wurden automatisch aus dem SVG-Layout erzeugt.\n")
+                f.write("HINWEIS: Diese Dateien sind stark vereinfacht und nicht für die direkte Fertigung geeignet!\n\n")
+                f.write("Für eine professionelle Fertigung sollten Sie:\n")
+                f.write("1. Ein geeignetes EDA-Tool wie KiCad oder Eagle verwenden\n")
+                f.write("2. Das Layout entsprechend IPC-Standards überarbeiten\n")
+                f.write("3. Eine DRC (Design Rule Check) durchführen\n\n")
+                f.write("Diese Dateien dienen nur als Ausgangspunkt für die Weiterverarbeitung.")
+            
+            logger.info("Vereinfachte Gerber-Dateien erstellt. HINWEIS: Nicht für direkte Fertigung geeignet!")
+            return True
+            
+        except Exception as e:
+            logger.error(f"Fehler bei der Erstellung der vereinfachten Gerber-Dateien: {e}")
+            return False
 
+    def create_manufacturing_package(self) -> bool:
+        """
+        Erstellt ein komplettes Fertigungspaket mit Gerber-Dateien, BOM und CPL.
+        Komprimiert alle Dateien in eine ZIP-Datei für einfachen Upload.
+        """
+        try:
+            # Erstelle ZIP-Datei mit allen Fertigungsdateien
+            zip_path = self.mfg_dir / f"manufacturing_package_{self.manufacturer}.zip"
+            
+            with zipfile.ZipFile(zip_path, 'w') as zipf:
+                # Füge Gerber-Dateien hinzu
+                for file in self.gerber_dir.glob("*.*"):
+                    if file.is_file() and file.suffix != ".txt":
+                        zipf.write(file, arcname=f"gerber/{file.name}")
+                
+                # Füge BOM hinzu
+                bom_file = self.mfg_dir / f"bom_{self.manufacturer}.csv"
+                if bom_file.exists():
+                    zipf.write(bom_file, arcname=f"bom_{self.manufacturer}.csv")
+                
+                # Füge CPL hinzu
+                cpl_file = self.mfg_dir / f"cpl_{self.manufacturer}.csv"
+                if cpl_file.exists():
+                    zipf.write(cpl_file, arcname=f"cpl_{self.manufacturer}.csv")
+                
+                # Füge README hinzu
+                readme_path = self.mfg_dir / "README.txt"
+                with open(readme_path, 'w') as f:
+                    f.write(f"PCB-Fertigungspaket für {self.manufacturer_info['name']}\n")
+                    f.write("=======================================\n\n")
+                    f.write(f"Erstellt am: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n")
+                    f.write("Enthaltene Dateien:\n")
+                    f.write("- Gerber-Dateien: Enthält alle notwendigen Layer für die Fertigung\n")
+                    f.write(f"- BOM: Stückliste im {self.manufacturer_info['name']}-Format\n")
+                    f.write(f"- CPL: Bestückungsplan im {self.manufacturer_info['name']}-Format\n\n")
+                    f.write("Anleitung für den Upload bei %s:\n" % self.manufacturer_info['name'])
+                    f.write(f"1. Besuchen Sie {self.manufacturer_info['url']}\n")
+                    f.write("2. Laden Sie im Bestellprozess die ZIP-Datei mit den Gerber-Dateien hoch\n")
+                    f.write("3. Laden Sie die BOM- und CPL-Dateien separat hoch, falls Sie SMT-Bestückung wünschen\n")
+                    
+                zipf.write(readme_path, arcname="README.txt")
+            
+            logger.info(f"Fertigungspaket erstellt: {zip_path}")
+            return True
+            
+        except Exception as e:
+            logger.error(f"Fehler bei der Erstellung des Fertigungspakets: {e}")
+            return False
+
+    def launch_manufacturer_website(self) -> bool:
+        """Öffnet die Website des ausgewählten PCB-Herstellers."""
+        url = self.manufacturer_info["url"]
+        logger.info(f"Öffne Website von {self.manufacturer_info['name']}: {url}")
+        
+        try:
+            webbrowser.open(url)
+            return True
+        except Exception as e:
+            logger.error(f"Fehler beim Öffnen der Website: {e}")
+            return False
+
+    def suggest_alternative_approaches(self) -> List[Dict[str, str]]:
+        """
+        Gibt Vorschläge für alternative Ansätze zur PCB-Fertigung zurück.
+        Nützlich für Benutzer, die Probleme mit dem Export-Prozess haben.
+        """
+        alternatives = [
+            {
+                "title": "KiCad direkt verwenden",
+                "description": "Importieren Sie Ihr Design in KiCad und nutzen Sie dessen leistungsstarke Export-Funktionen.",
+                "steps": [
+                    "1. Installieren Sie KiCad von https://www.kicad.org/",
+                    "2. Erstellen Sie ein neues PCB-Projekt",
+                    "3. Importieren Sie Ihr SVG als Referenz-Layer",
+                    "4. Zeichnen Sie die Komponenten und Verbindungen nach",
+                    "5. Exportieren Sie Gerber-Dateien über 'Datei > Platinenherstellung > Gerber...'"
+                ],
+                "url": "https://www.kicad.org/"
+            },
+            {
+                "title": "Online PCB-Tools nutzen",
+                "description": "Online-Tools wie EasyEDA bieten einfache Möglichkeiten zur PCB-Erstellung und direkten Bestellung.",
+                "steps": [
+                    "1. Registrieren Sie sich bei EasyEDA (https://easyeda.com/)",
+                    "2. Importieren Sie Ihr Design als SVG oder zeichnen Sie es neu",
+                    "3. Platzieren Sie Komponenten aus der Bibliothek",
+                    "4. Bestellen Sie direkt bei JLCPCB (integriert)"
+                ],
+                "url": "https://easyeda.com/"
+            },
+            {
+                "title": "Lokale PCB-Fertigung",
+                "description": "Suchen Sie nach lokalen Prototyping-Diensten oder Fab Labs in Ihrer Nähe.",
+                "steps": [
+                    "1. Suchen Sie nach 'Fab Lab' oder 'Makerspace' in Ihrer Region",
+                    "2. Fragen Sie nach PCB-Fertigungsmöglichkeiten",
+                    "3. Bringen Sie Ihr Design in einem kompatiblen Format mit"
+                ],
+                "url": "https://www.fablabs.io/labs"
+            }
+        ]
+        
+        return alternatives
+
+    def export_all(self) -> bool:
+        """
+        Führt den kompletten Export-Prozess durch:
+        1. Parst die SVG-Datei
+        2. Erstellt KiCad PCB (falls möglich)
+        3. Generiert Gerber-Dateien
+        4. Erstellt BOM und CPL
+        5. Erstellt ein komplettes Fertigungspaket
+        """
+        if not self.parse_svg():
+            logger.error("Export abgebrochen: Fehler beim Parsen der SVG-Datei.")
+            return False
+        
+        logger.info(f"Starte Export-Prozess für {self.manufacturer_info['name']}...")
+        
+        # Exportiere zu KiCad PCB (für bessere Kompatibilität)
+        if not self.export_to_kicad_pcb():
+            logger.warning("Warnung: KiCad PCB konnte nicht erstellt werden.")
+        
+        # Generiere Gerber-Dateien (mit externen Tools oder vereinfacht)
+        if not self.generate_gerber_with_external_tool():
+            logger.warning("Warnung: Gerber-Dateien konnten nicht mit externen Tools erstellt werden.")
+            # Nutze Fallback-Methode
+            if not self._create_simplified_gerber():
+                logger.error("Fehler: Gerber-Dateien konnten nicht erstellt werden.")
+                return False
+        
+        # Erstelle BOM und CPL
+        if not self.generate_bom():
+            logger.warning("Warnung: BOM konnte nicht erstellt werden.")
+        
+        if not self.generate_cpl():
+            logger.warning("Warnung: CPL konnte nicht erstellt werden.")
+        
+        # Erstelle fertiges Paket für den Upload
+        if not self.create_manufacturing_package():
+            logger.warning("Warnung: Fertigungspaket konnte nicht erstellt werden.")
+        
+        logger.info(f"Export abgeschlossen. Ergebnisse in: {self.mfg_dir}")
+        return True
+
+    def _extract_default_from_param_string(self, param_string: str) -> Optional[str]:
+        """
+        Versucht, den Standardwert aus einem Parametertext zu extrahieren.
+        Beispiele:
+        - "(z.B. 1oz (35µm Standard), 2oz (70µm))" -> "1oz (35µm)"
+        - "(Standard: 1.6mm)" -> "1.6mm"
+        
+        Args:
+            param_string: Der Text, der einen Standardwert enthalten könnte.
+            
+        Returns:
+            Den extrahierten Standardwert oder None, wenn keiner gefunden wurde.
+        """
+        if not param_string:
+            return None
+            
+        # Versuche, Standard-Werte aus verschiedenen Formaten zu extrahieren
+        standard_patterns = [
+            r'Standard[:\)]*\s*([^,\)]+)',  # Standard: Wert oder Standard) Wert
+            r'Standard[^\(]*\(([^)]+)\)',   # Standard(Wert)
+            r'\(([^)]+)\s+Standard\)',      # (Wert Standard)
+            r'([^,]+)\s+Standard[,\)]',     # Wert Standard, oder Wert Standard) 
+            r'Standard[:\s]+([^,\)]+)',     # Standard: Wert oder Standard Wert
+        ]
+        
+        for pattern in standard_patterns:
+            match = re.search(pattern, param_string, re.IGNORECASE)
+            if match:
+                return match.group(1).strip()
+        
+        # Wenn kein expliziter Standardwert gefunden wurde, versuche den ersten Wert in Klammern zu finden
+        match = re.search(r'\(([^,\)]+)[,\)]', param_string)
+        if match:
+            return match.group(1).strip()
+            
+        return None
+
+    def get_api_quote(self, quantity: int = 10, layers: int = 2, 
+                   thickness_mm: float = 1.6, copper_weight_oz: float = 1.0,
+                   solder_mask_color: str = "Green", silkscreen_color: str = "White",
+                   surface_finish: str = "HASL", 
+                   include_assembly: bool = False) -> Dict:
+        """
+        Holt ein automatisches Preisangebot vom PCB-Hersteller über dessen API.
+        
+        Args:
+            quantity: Die gewünschte Stückzahl der Platinen.
+            layers: Die Anzahl der Kupferlagen.
+            thickness_mm: Die Dicke der Leiterplatte in mm.
+            copper_weight_oz: Das Kupfergewicht in oz.
+            solder_mask_color: Die Farbe der Lötstoppmaske.
+            silkscreen_color: Die Farbe des Bestückungsdrucks.
+            surface_finish: Die Oberflächenbehandlung.
+            include_assembly: Ob Bestückung in die Anfrage einbezogen werden soll.
+            
+        Returns:
+            Ein Dictionary mit den Angebotsinformationen oder Fehlermeldungen.
+        """
+        if not api_client.available:
+            return {
+                "success": False,
+                "error": "API-Client-Modul nicht verfügbar",
+                "details": "Das pcb_api_clients-Modul konnte nicht importiert werden."
+            }
+        
+        # Überprüfe, ob der Hersteller API-Unterstützung bietet
+        if not self.manufacturer_info.get("api_available", False):
+            return {
+                "success": False,
+                "error": f"{self.manufacturer_info['name']} bietet keine API für Preisangebote",
+                "details": f"Für manuelle Preisabschätzungen nutzen Sie bitte den Online-Kalkulator: {self.manufacturer_info.get('quote_calculator_url', self.manufacturer_info['url'])}"
+            }
+        
+        # Holt zuerst BOM-Daten für die Assembly-Informationen
+        if include_assembly:
+            bom_info = self._get_bom_summary()
+        else:
+            bom_info = {"unique_parts": 0, "total_parts": 0, "tht_parts": 0}
+        
+        # Stelle sicher, dass wir die Platinengröße haben
+        if not self.board_dimensions["width"] or not self.board_dimensions["height"]:
+            logger.info("Keine Platinenabmessungen verfügbar, versuche SVG zu parsen...")
+            if not self.parse_svg():
+                return {
+                    "success": False,
+                    "error": "Platinenabmessungen konnten nicht bestimmt werden",
+                    "details": "Die SVG-Datei konnte nicht korrekt analysiert werden, um die Platinenabmessungen zu ermitteln."
+                }
+        
+        # Bereite die Parameter für die Preisanfrage vor
+        pcb_params = {
+            "width_mm": self.board_dimensions["width"],
+            "height_mm": self.board_dimensions["height"],
+            "layers": layers,
+            "quantity": quantity,
+            "pcb_thickness": thickness_mm,
+            "copper_weight": copper_weight_oz,
+            "solder_mask_color": solder_mask_color,
+            "silkscreen_color": silkscreen_color,
+            "surface_finish": surface_finish
+        }
+        
+        # Füge Assembly-Parameter hinzu, wenn gewünscht
+        if include_assembly:
+            pcb_params["assembly"] = True
+            pcb_params["assembly_side"] = "top"  # Standard: nur Oberseite
+            pcb_params["unique_components"] = bom_info["unique_parts"]
+            pcb_params["total_components"] = bom_info["total_parts"]
+            pcb_params["tht_components"] = bom_info.get("tht_parts", 0)
+        
+        # Hole den API-Client für den Hersteller
+        client = api_client.get_pcb_client(self.manufacturer)
+        if not client:
+            return {
+                "success": False,
+                "error": f"Kein API-Client für {self.manufacturer_info['name']} verfügbar",
+                "details": "Trotz API-Unterstützung konnte kein passender API-Client initialisiert werden."
+            }
+        
+        # Versuche die API-Authentifizierung
+        logger.info(f"Authentifiziere mit {self.manufacturer_info['name']} API...")
+        if not client.is_authenticated():
+            # Biete interaktive Authentifizierung an, falls noch nicht authentifiziert
+            auth_result = self._authenticate_api_client(client)
+            if not auth_result["success"]:
+                return auth_result
+        
+        # Hole das Preisangebot
+        logger.info(f"Hole Preisangebot von {self.manufacturer_info['name']}...")
+        quote_result = client.get_quote(pcb_params)
+        
+        # Füge zusätzliche Metadaten hinzu
+        if quote_result.get("success", False):
+            quote_result["query_params"] = pcb_params
+            quote_result["timestamp"] = datetime.now().isoformat()
+            
+            # Speichere das Angebot in einer JSON-Datei zur späteren Referenz
+            quote_file = self.mfg_dir / f"quote_{self.manufacturer}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
+            try:
+                with open(quote_file, 'w') as f:
+                    json.dump(quote_result, f, indent=2)
+                logger.info(f"Preisangebot gespeichert: {quote_file}")
+            except Exception as e:
+                logger.warning(f"Fehler beim Speichern des Preisangebots: {e}")
+        
+        return quote_result
+
+    def _authenticate_api_client(self, client) -> Dict:
+        """
+        Authentifiziert einen API-Client mit Benutzerinteraktion.
+        
+        Args:
+            client: Der zu authentifizierende API-Client
+            
+        Returns:
+            Ein Dictionary mit dem Authentifizierungsergebnis
+        """
+        print(f"\n=== Authentifizierung für {client.name} API ===")
+        print("Um ein Preisangebot zu erhalten, müssen Sie sich bei der API authentifizieren.")
+        
+        if client.name == "JLCPCB":
+            print("Hinweis: Sie benötigen einen JLCPCB API-Key und API-Secret.")
+            print("Diese können Sie im JLCPCB-Entwicklerportal erhalten: https://jlcpcb.com/api/")
+            
+            api_key = input("JLCPCB API-Key: ").strip()
+            api_secret = input("JLCPCB API-Secret: ").strip()
+            
+            if not api_key or not api_secret:
+                return {
+                    "success": False,
+                    "error": "Fehlende Authentifizierungsdaten",
+                    "details": "API-Key und API-Secret sind erforderlich."
+                }
+            
+            result = client.authenticate(api_key=api_key, api_secret=api_secret)
+            
+        elif client.name == "PCBWay":
+            print("Hinweis: Sie benötigen einen PCBWay API-Key.")
+            print("Diesen können Sie im PCBWay-Account erhalten: https://www.pcbway.com/api.html")
+            
+            api_key = input("PCBWay API-Key: ").strip()
+            
+            if not api_key:
+                return {
+                    "success": False,
+                    "error": "Fehlende Authentifizierungsdaten",
+                    "details": "API-Key ist erforderlich."
+                }
+            
+            result = client.authenticate(api_key=api_key)
+            
+        elif client.name == "Eurocircuits":
+            print("Hinweis: Sie benötigen Ihre Eurocircuits-Anmeldedaten.")
+            print("Diese entsprechen Ihren normalen Zugangsdaten für den Eurocircuits-Shop.")
+            
+            username = input("Eurocircuits Benutzername: ").strip()
+            password = input("Eurocircuits Passwort: ").strip()
+            
+            if not username or not password:
+                return {
+                    "success": False,
+                    "error": "Fehlende Authentifizierungsdaten",
+                    "details": "Benutzername und Passwort sind erforderlich."
+                }
+            
+            result = client.authenticate(username=username, password=password)
+            
+        else:
+            return {
+                "success": False,
+                "error": "Unbekannter API-Client",
+                "details": f"Authentifizierungsmethode für {client.name} nicht implementiert."
+            }
+        
+        if result:
+            return {
+                "success": True,
+                "details": f"Authentifizierung bei {client.name} erfolgreich."
+            }
+        else:
+            return {
+                "success": False,
+                "error": "Authentifizierung fehlgeschlagen",
+                "details": f"Die Anmeldung bei {client.name} war nicht erfolgreich. Bitte überprüfen Sie Ihre Eingaben."
+            }
+
+    def get_and_display_quotes(self, quantity: int = 10, layers: int = 2, 
+                              thickness_mm: float = 1.6, include_assembly: bool = False,
+                              manufacturers: Optional[List[str]] = None) -> Dict:
+        """
+        Holt Preisangebote von mehreren Herstellern und zeigt einen Vergleich an.
+        
+        Args:
+            quantity: Die gewünschte Stückzahl.
+            layers: Die Anzahl der Kupferlagen.
+            thickness_mm: Die Dicke der Leiterplatte in mm.
+            include_assembly: Ob Bestückung in die Anfrage einbezogen werden soll.
+            manufacturers: Liste der Hersteller (optional, Standard: alle mit API-Unterstützung)
+            
+        Returns:
+            Ein Dictionary mit allen Angeboten und Vergleichsinformationen
+        """
+        if not api_client.available:
+            print("\n❌ API-Client-Modul nicht verfügbar.")
+            print("Automatische Preisangebote können nicht abgerufen werden.")
+            print("Verwenden Sie stattdessen die manuelle Preisabschätzung mit --get-quotes.")
+            return {"success": False, "quotes": []}
+        
+        # Wenn keine Hersteller angegeben wurden, verwende alle mit API-Unterstützung
+        if not manufacturers:
+            manufacturers = [mfg_id for mfg_id, mfg_info in PCB_MANUFACTURERS.items() 
+                           if mfg_info.get("api_available", False)]
+        
+        # Überprüfe auf gültige Hersteller-IDs
+        valid_manufacturers = []
+        for mfg_id in manufacturers:
+            if mfg_id in PCB_MANUFACTURERS and PCB_MANUFACTURERS[mfg_id].get("api_available", False):
+                valid_manufacturers.append(mfg_id)
+            else:
+                logger.warning(f"Hersteller '{mfg_id}' hat keine API-Unterstützung und wird übersprungen.")
+        
+        if not valid_manufacturers:
+            print("\n❌ Keine Hersteller mit API-Unterstützung ausgewählt.")
+            return {"success": False, "quotes": []}
+        
+        # Hole die Angebote von allen ausgewählten Herstellern
+        quotes = []
+        current_manufacturer = self.manufacturer
+        
+        for mfg_id in valid_manufacturers:
+            # Temporär zum angefragten Hersteller wechseln
+            self.manufacturer = mfg_id
+            self.manufacturer_info = PCB_MANUFACTURERS[mfg_id]
+            
+            print(f"\nAnfrage für {self.manufacturer_info['name']} wird vorbereitet...")
+            
+            # Hole das Angebot
+            quote_result = self.get_api_quote(
+                quantity=quantity,
+                layers=layers,
+                thickness_mm=thickness_mm,
+                include_assembly=include_assembly
+            )
+            
+            if quote_result.get("success", False):
+                quotes.append(quote_result)
+                print(f"✅ Preisangebot von {self.manufacturer_info['name']} erfolgreich erhalten!")
+            else:
+                print(f"❌ Fehler beim Abrufen des Angebots von {self.manufacturer_info['name']}: {quote_result.get('error', 'Unbekannter Fehler')}")
+                print(f"Details: {quote_result.get('details', '')}")
+        
+        # Zurück zum ursprünglichen Hersteller wechseln
+        self.manufacturer = current_manufacturer
+        self.manufacturer_info = PCB_MANUFACTURERS[current_manufacturer]
+        
+        # Vergleiche die Angebote
+        if quotes:
+            comparison = api_client.compare_quotes(quotes)
+            
+            # Zeige die Ergebnisse an
+            self._display_quote_comparison(comparison, include_assembly)
+            
+            return {
+                "success": True,
+                "quotes": quotes,
+                "comparison": comparison
+            }
+        else:
+            print("\n❌ Keine Preisangebote konnten abgerufen werden.")
+            return {
+                "success": False,
+                "quotes": []
+            }
+
+    def _display_quote_comparison(self, comparison: Dict, include_assembly: bool = False) -> None:
+        """
+        Zeigt einen übersichtlichen Vergleich der Preisangebote an.
+        
+        Args:
+            comparison: Das Vergleichs-Dictionary von compare_quotes()
+            include_assembly: Ob Bestückung in den Angeboten enthalten ist
+        """
+        if not comparison.get("quotes"):
+            print("\nKeine Angebote zum Vergleichen verfügbar.")
+            return
+        
+        print("\n" + "="*80)
+        print("=== VERGLEICH DER PREISANGEBOTE ===")
+        print("="*80)
+        
+        # Zeige alle Angebote in einer Tabelle an
+        print(f"\n{'Hersteller':<15} {'Preis':<15} {'Preis (EUR)':<15} {'Lieferzeit':<15} {'Angebotslink':<20}")
+        print("-"*80)
+        
+        for quote in comparison["quotes"]:
+            price_original = quote["total_price_original"]["formatted"]
+            price_eur = quote["total_price_eur_formatted"]
+            days = f"{quote['estimated_days']} Tage" if quote.get('estimated_days') else "Unbekannt"
+            link = "[Verfügbar]" if quote.get("quote_url") else "N/A"
+            
+            print(f"{quote['manufacturer']:<15} {price_original:<15} {price_eur:<15} {days:<15} {link:<20}")
+        
+        print("-"*80)
+        
+        # Zeige das beste Angebot basierend auf Preis
+        if comparison.get("cheapest"):
+            cheapest = comparison["cheapest"]
+            print(f"\n🏆 Günstigstes Angebot: {cheapest['manufacturer']} - {cheapest['total_price_eur_formatted']}")
+        
+        # Zeige das schnellste Angebot
+        if comparison.get("fastest"):
+            fastest = comparison["fastest"]
+            days = f"{fastest['estimated_days']} Tage" if fastest.get('estimated_days') else "Unbekannt"
+            print(f"🚀 Schnellstes Angebot: {fastest['manufacturer']} - {days}")
+        
+        print("\nHinweise:")
+        if include_assembly:
+            print("- Die Preise beinhalten Leiterplattenfertigung UND Bestückung.")
+        else:
+            print("- Die Preise beziehen sich nur auf die Leiterplattenfertigung ohne Bestückung.")
+        print("- Alle Preise wurden zur besseren Vergleichbarkeit in EUR umgerechnet.")
+        print("- Versandkosten können je nach Lieferziel und -option variieren.")
+        print("- Für verbindliche Angebote besuchen Sie bitte die Websites der Hersteller.")
+        
+        # Zeige die Links zu den Angeboten
+        print("\nDirecte Angebotslinks:")
+        for quote in comparison["quotes"]:
+            if quote.get("quote_url"):
+                print(f"- {quote['manufacturer']}: {quote['quote_url']}")
+
+def show_banner():
+    """Zeigt einen Willkommens-Banner an."""
+    print("""
+╔════════════════════════════════════════════════════╗
+║                                                    ║
+║  PCB Export Tool - Flexible PCB-Fertigungslösung   ║
+║                                                    ║
+║  Unterstützt verschiedene PCB-Hersteller:          ║
+║  - JLCPCB                                          ║
+║  - PCBWay                                          ║
+║  - OSH Park                                        ║
+║  - Eurocircuits                                    ║
+║                                                    ║
+║  NEU: Automatische Angebote direkt von Herstellern ║
+║  Verwenden Sie --api-quote oder --compare-quotes   ║
+║                                                    ║
+║  Version 2.0 - Mai 2025                            ║
+║                                                    ║
+╚════════════════════════════════════════════════════╝
+""")
+
+def main():
+    """Hauptfunktion für die direkte Ausführung des Skripts."""
+    show_banner()
+    
+    parser = argparse.ArgumentParser(description="PCB Export Tool für verschiedene Fertigungsanbieter")
+    parser.add_argument("-s", "--svg", type=str, help="Pfad zur SVG-Datei (optional)")
+    parser.add_argument("-o", "--output", type=str, help="Ausgabeverzeichnis (optional)")
+    parser.add_argument("-m", "--manufacturer", type=str, choices=PCB_MANUFACTURERS.keys(), 
+                        default="jlcpcb", help="PCB-Hersteller (Standard: jlcpcb)")
+    parser.add_argument("-v", "--verbose", action="store_true", help="Ausführliche Ausgabe")
+    parser.add_argument("--get-quotes", action="store_true", help="Zeigt einen Leitfaden für Preisabschätzungen an.")
+    parser.add_argument("--quantity", type=int, default=10, help="Stückzahl für die Preisabschätzung (Standard: 10).")
+    parser.add_argument("--layers", type=int, default=2, help="Anzahl Kupferlagen für Preisabschätzung (Standard: 2).")
+    parser.add_argument("--api-quote", action="store_true", help="Holt automatische Preisangebote über die API.")
+    parser.add_argument("--compare-quotes", action="store_true", help="Vergleicht Preisangebote von mehreren Herstellern.")
+    parser.add_argument("--include-assembly", action="store_true", help="Schließt Bestückung in die Preisanfragen ein.")
+    parser.add_argument("--thickness", type=float, default=1.6, help="Leiterplattendicke in mm (Standard: 1.6).")
+    
+    args = parser.parse_args()
+    
+    # Setze Logging-Level basierend auf Verbose-Flag
+    if args.verbose:
+        logger.setLevel(logging.DEBUG)
+    
+    # Bestimme SVG-Pfad
+    svg_path = Path(args.svg) if args.svg else SVG_PATH
+    if not svg_path.exists():
+        logger.error(f"SVG-Datei nicht gefunden: {svg_path}")
+        print("\nBitte geben Sie den korrekten Pfad zur SVG-Datei an:")
+        print("  python pcb_export.py --svg /pfad/zu/design.svg")
+        return 1
+    
+    # Bestimme Ausgabeverzeichnis
+    output_dir = Path(args.output) if args.output else OUTPUT_DIR
+    output_dir.mkdir(parents=True, exist_ok=True)
+    
+    # Erstelle Export-Tool und führe Export durch
+    exporter = PCBExportTool(svg_path, output_dir, args.manufacturer)
+    
+    # API-Preisanfrage
+    if args.api_quote:
+        # Stelle sicher, dass SVG geparsed wurde, um Dimensionen zu haben
+        if not exporter.components and not exporter.board_dimensions["width"]:
+            exporter.parse_svg()  # Parse SVG explizit, wenn noch nicht geschehen
+        
+        quote_result = exporter.get_api_quote(
+            quantity=args.quantity,
+            layers=args.layers,
+            thickness_mm=args.thickness,
+            include_assembly=args.include_assembly
+        )
+        
+        if quote_result.get("success", False):
+            # Zeige das Ergebnis an
+            print("\n✅ Preisangebot erfolgreich erhalten!")
+            print(f"\nHersteller: {quote_result['manufacturer']}")
+            print(f"Leiterplattenpreis: {api_client.format_price(quote_result['pcb_price']['amount'], quote_result['pcb_price']['currency'])}")
+            
+            if args.include_assembly and 'assembly_price' in quote_result:
+                print(f"Bestückungspreis: {api_client.format_price(quote_result['assembly_price']['amount'], quote_result['assembly_price']['currency'])}")
+            
+            print(f"Versandkosten: {api_client.format_price(quote_result['shipping_price']['amount'], quote_result['shipping_price']['currency'])}")
+            print(f"Gesamtpreis: {api_client.format_price(quote_result['total_price']['amount'], quote_result['total_price']['currency'])}")
+            
+            if quote_result.get("estimated_days"):
+                print(f"Geschätzte Lieferzeit: {quote_result['estimated_days']} Tage")
+            
+            if quote_result.get("quote_url"):
+                print(f"\nAngebotslink: {quote_result['quote_url']}")
+                response = input("\nMöchten Sie den Angebotslink im Browser öffnen? (j/n): ")
+                if response.lower() in ['j', 'ja', 'y', 'yes']:
+                    webbrowser.open(quote_result['quote_url'])
+        else:
+            print(f"\n❌ Fehler beim Abrufen des Preisangebots: {quote_result.get('error', 'Unbekannter Fehler')}")
+            print(f"Details: {quote_result.get('details', '')}")
+            
+            # Biete manuelle Preisabschätzung als Fallback an
+            response = input("\nMöchten Sie stattdessen die manuelle Preisabschätzung verwenden? (j/n): ")
+            if response.lower() in ['j', 'ja', 'y', 'yes']:
+                exporter.provide_price_estimation_guidance(quantity=args.quantity, layers=args.layers)
+        
+        return 0
+    
+    # Vergleich von Preisangeboten mehrerer Hersteller
+    elif args.compare_quotes:
+        # Stelle sicher, dass SVG geparsed wurde, um Dimensionen zu haben
+        if not exporter.components and not exporter.board_dimensions["width"]:
+            exporter.parse_svg()  # Parse SVG explizit, wenn noch nicht geschehen
+        
+        # Hole und vergleiche Angebote
+        exporter.get_and_display_quotes(
+            quantity=args.quantity,
+            layers=args.layers,
+            thickness_mm=args.thickness,
+            include_assembly=args.include_assembly
+        )
+        
+        return 0
+    
+    # Manuelle Preisabschätzung
+    elif args.get_quotes:
+        # Stelle sicher, dass SVG geparsed wurde, um Dimensionen zu haben
+        if not exporter.components and not exporter.board_dimensions["width"]:
+            exporter.parse_svg()  # Parse SVG explizit, wenn noch nicht geschehen
+        
+        exporter.provide_price_estimation_guidance(quantity=args.quantity, layers=args.layers)
+        return 0  # Beende nach der Preisinfo
+
+    # Standard-Export-Prozess
+    print(f"\nStarte Export für {PCB_MANUFACTURERS[args.manufacturer]['name']}...\n")
+    
+    # Erkenne verfügbare Tools und informiere den Benutzer
+    available_tools = []
+    for tool_id, available in exporter.available_tools.items():
+        if available:
+            available_tools.append(EDA_TOOLS[tool_id]['name'])
+    
+    if available_tools:
+        print(f"Verfügbare EDA-Tools: {', '.join(available_tools)}")
+    else:
+        print("Warnung: Keine kompatiblen EDA-Tools gefunden. Funktionalität eingeschränkt.")
+        print("Für beste Ergebnisse installieren Sie KiCad von https://www.kicad.org/\n")
+    
+    # Führe Export durch
+    success = exporter.export_all()
+    
+    if success:
+        print("\n✅ Export erfolgreich abgeschlossen!")
+        print(f"Ergebnisse wurden in {exporter.mfg_dir} gespeichert.")
+        
+        # Zeige Fertigungspaket-Details an
+        zip_path = exporter.mfg_dir / f"manufacturing_package_{args.manufacturer}.zip"
+        if zip_path.exists():
+            print(f"\nFertigungspaket: {zip_path}")
+        
+        # Biete an, die Hersteller-Website zu öffnen
+        response = input(f"\nMöchten Sie die Website von {PCB_MANUFACTURERS[args.manufacturer]['name']} öffnen? (j/n): ")
+        if response.lower() in ['j', 'ja', 'y', 'yes']:
+            exporter.launch_manufacturer_website()
+        
+        # Biete an, Preisangebote einzuholen
+        if PCB_MANUFACTURERS[args.manufacturer].get("api_available", False) and api_client.available:
+            response = input(f"\nMöchten Sie ein automatisches Preisangebot von {PCB_MANUFACTURERS[args.manufacturer]['name']} einholen? (j/n): ")
+            if response.lower() in ['j', 'ja', 'y', 'yes']:
+                quote_result = exporter.get_api_quote(
+                    quantity=args.quantity,
+                    layers=args.layers,
+                    include_assembly=args.include_assembly
+                )
+                
+                if quote_result.get("success", False):
+                    print("\n✅ Preisangebot erfolgreich erhalten!")
+                    print(f"Gesamtpreis: {api_client.format_price(quote_result['total_price']['amount'], quote_result['total_price']['currency'])}")
+                    
+                    if quote_result.get("quote_url"):
+                        response = input("\nMöchten Sie den Angebotslink im Browser öffnen? (j/n): ")
+                        if response.lower() in ['j', 'ja', 'y', 'yes']:
+                            webbrowser.open(quote_result['quote_url'])
+                else:
+                    print(f"\n❌ Fehler beim Abrufen des Preisangebots: {quote_result.get('error', 'Unbekannter Fehler')}")
+                    print("Verwenden Sie stattdessen die manuelle Preisabschätzung mit --get-quotes.")
+    else:
+        print("\n❌ Export fehlgeschlagen.")
+        print("Bitte prüfen Sie die Fehlermeldungen oben.")
+        
+        # Zeige alternative Ansätze an
+        print("\nHier sind einige alternative Ansätze zur PCB-Fertigung:")
+        for i, alt in enumerate(exporter.suggest_alternative_approaches(), 1):
+            print(f"\n{i}. {alt['title']}")
+            print(f"   {alt['description']}")
+            print("   Schritte:")
+            for step in alt['steps']:
+                print(f"   {step}")
+        
+    return 0 if success else 1
 
 if __name__ == "__main__":
-    print("PCB Export Tool für JLCPCB-Fertigung (Verbesserte Version)")
-    print("====================================")
-    
-    if not SVG_PATH.exists():
-        print(f"Fehler: SVG-Datei '{SVG_PATH}' nicht gefunden.")
-        sys.exit(1)
-    
-    print("Prüfe KiCad-Integration...", end=" ")
-    if KICAD_AVAILABLE:
-        print("Verfügbar! Nutze KiCad für bessere Gerber-Export-Ergebnisse.")
-    else:
-        print("Nicht verfügbar. Verwende Fallback-Modus für Gerber-Erstellung.")
-        print("Tipp: Für bessere Ergebnisse installieren Sie KiCad und stellen sicher,")
-        print("      dass die Python-Module im Pfad verfügbar sind.")
-    
-    try:
-        exporter = PCBExporter(SVG_PATH)
-        success = exporter.export_all()
-        
-        if success:
-            print("\nAlle Fertigungsunterlagen wurden erfolgreich erstellt und sind jetzt bereit für den Upload bei JLCPCB.")
-            print(f"Die Dateien befinden sich in:\n{PROJECT_ROOT / 'hardware' / 'manufacturing'}")
-            exporter.cleanup()
-            sys.exit(0)
-        else:
-            print("\nFehler: Die Fertigungsunterlagen konnten nicht vollständig erstellt werden.")
-            exporter.cleanup()
-            sys.exit(1)
-    except Exception as e:
-        print(f"\nFehler: {e}")
-        print("Export abgebrochen.")
-        sys.exit(1)
+    sys.exit(main())

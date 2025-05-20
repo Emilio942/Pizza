@@ -1,0 +1,2 @@
+/home/emilio/Documents/ai/pizza/models/rp2040_export/verify_model.py --model-dir /home/emilio/Documents/ai/pizza/models
+/home/emilio/Documents/ai/pizza/scripts/analyze_performance_logs.py --output-dir /home/emilio/Documents/ai/pizza/output/pipeline_runs/20250514_041236/reports

@@ -1,0 +1,30 @@
+{
+  "augmented_pizza": {
+    "basic": 0,
+    "burnt": 0,
+    "combined": 0,
+    "mixed": 0,
+    "progression": 0,
+    "segment": 0
+  },
+  "augmented_pizza_legacy": {
+    "basic": 30,
+    "burnt": 26
+  },
+  "total": {
+    "basic": 30,
+    "burnt": 26,
+    "combined": 0,
+    "mixed": 0,
+    "progression": 0,
+    "segment": 0
+  },
+  "percentages": {
+    "basic": 53.57,
+    "burnt": 46.43,
+    "combined": 0.0,
+    "mixed": 0.0,
+    "progression": 0.0,
+    "segment": 0.0
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "cnn_comparison": {
+    "ran": true,
+    "success": true,
+    "se_models_ran": true,
+    "se_models_success": true,
+    "hard_swish_ran": true,
+    "hard_swish_success": false
+  },
+  "pruning": {
+    "ran": true,
+    "success": false
+  },
+  "distillation": {
+    "ran": true,
+    "success": false
+  },
+  "quantization": {
+    "ran": true,
+    "success": false
+  },
+  "summary": {
+    "timestamp": "2025-05-14T13:06:44.485331",
+    "successful_stages": 1,
+    "failed_stages": 3,
+    "best_model": "MobilePizzaNet-SE",
+    "size_reduction": 15.3,
+    "accuracy_change": 1.2,
+    "latency_improvement": 10.5
+  },
+  "status_file": {
+    "total_scripts": 0,
+    "successful": 0,
+    "failed": 0
+  }
+}

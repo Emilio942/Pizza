@@ -2,7 +2,7 @@
 
 Dieses Dokument enthält alle abgeschlossenen Aufgaben des Pizza-Erkennungsprojekts mit Implementierungsdetails und Verweisen auf die relevanten Dateien. Es dient als Referenz und Nachschlagewerk, während der PROJECT_STATUS.txt den aktuellen Projektstatus und die noch zu erledigenden Aufgaben enthält.
 
-Zuletzt aktualisiert: 2025-05-08
+Zuletzt aktualisiert: 2025-05-19
 
 ## 1. Bild-Vorverarbeitung on-device ✅
 **Ziel**: Automatische Beleuchtungs-Korrektur direkt auf dem RP2040
@@ -210,6 +210,26 @@ Zuletzt aktualisiert: 2025-05-08
 **Relevante Dateien**:
 - `scripts/hyperparameter_search.py`
 - `hyperparameter_search.log`
+
+## Datenaufbereitung und Augmentation
+
+### DATEN-3.1: Standard-Augmentierungs-Pipeline ✅
+**Ziel**: Eine standard Augmentierungs-Pipeline für das Training des Pizza-Erkennungsmodells definieren und implementieren.
+
+**Implementierung**:
+- Standard-Augmentierungspipeline mit konfigurierbaren Parametern und Wahrscheinlichkeiten implementiert
+- Verschiedene Augmentierungstechniken integriert (Geometrisch, Farbanpassungen, Rauschen, Pizza-spezifisch)
+- Drei Intensitätsstufen (niedrig, mittel, hoch) für verschiedene Trainingszenarien
+- Integration in den Trainingsprozess über die PyTorch DataLoader-Schnittstelle
+- Ausführliche Dokumentation der Parameter und Verwendung
+
+**Relevante Dateien**:
+- `scripts/standard_augmentation.py` - Hauptimplementierung der Augmentierungspipeline
+- `scripts/train_with_augmentation.py` - Beispiel für Integration ins Training
+- `docs/standard_augmentation_pipeline.md` - Detaillierte Dokumentation
+- `docs/completed_tasks/DATEN-3.1.md` - Spezifische Task-Dokumentation
+
+Weitere Details: [DATEN-3.1 Dokumentation](/docs/completed_tasks/DATEN-3.1.md)
 
 ### Verbleibende Optimierungen ⏳
 - Gewichts-Pruning & Clustering (in Arbeit, pruning_clustering.log vorhanden)

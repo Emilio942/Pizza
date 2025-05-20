@@ -1,0 +1,8 @@
+usage: quantization_aware_training.py [-h] [--data DATA] [--epochs EPOCHS]
+                                      [--batch-size BATCH_SIZE]
+                                      [--learning-rate LEARNING_RATE]
+                                      [--output-dir OUTPUT_DIR]
+                                      [--pretrained PRETRAINED]
+                                      [--standard-model STANDARD_MODEL]
+                                      [--no-cuda] [--early-exit] [--run]
+quantization_aware_training.py: error: unrecognized arguments: --model-path=models/pizza_model_float32.pth --output_dir=output/optimization/quantization

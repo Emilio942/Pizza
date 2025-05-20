@@ -1,0 +1,1 @@
+./scripts/ci/run_pipeline.sh: line 98: /home/emilio/Documents/ai/pizza/scripts/analyze_performance_logs.py: Permission denied

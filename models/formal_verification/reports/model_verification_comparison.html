@@ -1,0 +1,121 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Pizza Model Formal Verification Comparison</title>
+        <style>
+            body { font-family: Arial, sans-serif; margin: 20px; }
+            h1, h2, h3 { color: #2c3e50; }
+            table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+            th, td { text-align: left; padding: 12px; }
+            th { background-color: #3498db; color: white; }
+            tr:nth-child(even) { background-color: #f2f2f2; }
+            img { max-width: 100%; height: auto; margin: 20px 0; }
+            .highlight { background-color: #e8f4f8; padding: 15px; border-radius: 5px; }
+        </style>
+    </head>
+    <body>
+        <h1>MicroPizzaNet Formal Verification Comparison</h1>
+        <p>Generated on 2025-05-16 21:26:49</p>
+        
+        <h2>Summary</h2>
+        <div class="highlight">
+            <p>This report compares the formal verification properties of different MicroPizzaNet models.</p>
+            <p>Higher verification rates indicate better formal guarantees for the properties tested.</p>
+        </div>
+        
+        <h2>Model Comparison</h2>
+        <table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>model_name</th>
+      <th>model_type</th>
+      <th>overall_rate</th>
+      <th>total_properties</th>
+      <th>verified_properties</th>
+      <th>verification_time</th>
+      <th>robustness_rate</th>
+      <th>robustness_time</th>
+      <th>brightness_rate</th>
+      <th>brightness_time</th>
+      <th>class_separation_rate</th>
+      <th>class_separation_time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>MicroPizzaNet_Base</td>
+      <td>MicroPizzaNet</td>
+      <td>0.88</td>
+      <td>8</td>
+      <td>7</td>
+      <td>3.80</td>
+      <td>1.00</td>
+      <td>0.50</td>
+      <td>1.00</td>
+      <td>0.30</td>
+      <td>0.50</td>
+      <td>0.70</td>
+    </tr>
+    <tr>
+      <td>MicroPizzaNetV2_InvertedRes</td>
+      <td>MicroPizzaNetV2</td>
+      <td>0.67</td>
+      <td>9</td>
+      <td>6</td>
+      <td>4.50</td>
+      <td>0.67</td>
+      <td>0.50</td>
+      <td>0.67</td>
+      <td>0.30</td>
+      <td>0.67</td>
+      <td>0.70</td>
+    </tr>
+    <tr>
+      <td>MicroPizzaNet_WithSE</td>
+      <td>MicroPizzaNetWithSE</td>
+      <td>0.88</td>
+      <td>8</td>
+      <td>7</td>
+      <td>3.80</td>
+      <td>1.00</td>
+      <td>0.50</td>
+      <td>0.67</td>
+      <td>0.30</td>
+      <td>1.00</td>
+      <td>0.70</td>
+    </tr>
+  </tbody>
+</table>
+        
+        <h2>Visualizations</h2>
+        
+        <h3>Overall Verification Rate</h3>
+        <img src="overall_verification_rate.png" alt="Overall Verification Rate">
+        
+    
+        <h3>Property-Specific Verification Rates</h3>
+        <img src="property_verification_rates.png" alt="Property Verification Rates">
+        
+        <h3>Verification Time</h3>
+        <img src="verification_time.png" alt="Verification Time">
+        
+        <h2>Conclusions</h2>
+        <div class="highlight">
+            <p>Best performing model by verification rate: MicroPizzaNet_Base (87.50%)</p>
+            <p>Fastest model to verify: MicroPizzaNet_WithSE (3.80 seconds)</p>
+        </div>
+        
+        <h2>Notes on Formal Verification</h2>
+        <p>Formal verification provides mathematical guarantees that neural networks satisfy certain properties, unlike
+        traditional testing which only checks specific inputs. The verification properties tested include:</p>
+        <ul>
+            <li><strong>Robustness</strong>: The model maintains the same prediction when inputs are perturbed slightly.</li>
+            <li><strong>Brightness Invariance</strong>: The model gives consistent predictions across different brightness levels.</li>
+            <li><strong>Class Separation</strong>: Critical classes (e.g., raw vs. burnt) are never confused.</li>
+        </ul>
+    </body>
+    </html>
+    

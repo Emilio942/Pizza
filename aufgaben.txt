@@ -1,0 +1,539 @@
+[x] SPEICHER-1.1: Framebuffer-Simulationsgenauigkeit verifizieren
+
+Beschreibung: Überprüfe und korrigiere bei Bedarf die Simulation des Kamera-Framebuffer-RAM-Bedarfs im RP2040-Emulator (EMU-01). Stelle sicher, dass die simulierte Nutzung exakt mit der erwarteten Nutzung auf Hardware übereinstimmt.
+Aufgabe für Agent:
+Referenziere Code/Simulation für Framebuffer-RAM-Berechnung.
+Wenn Hardware-Messungen verfügbar sind (siehe Checklist "RP2040-Hardware-Integration"), vergleiche den simulierten Wert mit dem gemessenen Wert.
+Dokumentiere den Unterschied.
+Wenn die Abweichung > 5% ist, analysiere die Ursache in der Simulation und korrigiere sie.
+Kriterium "Fertig": Die Abweichung zwischen simuliertem und (falls verfügbar) gemessenem Framebuffer-RAM-Bedarf ist kleiner oder gleich 5%. Die Logik der Berechnung in der Simulation ist nachvollziehbar und dokumentiert.
+[x] SPEICHER-1.2: Tensor-Arena-Schätzgenauigkeit verifizieren
+
+Beschreibung: Überprüfe und korrigiere bei Bedarf die Schätzung der Tensor-Arena-Größe für das quantisierte Modell im RP2040-Emulator (EMU-02). Stelle sicher, dass die Schätzung den tatsächlich benötigten RAM für die Modellinferenz korrekt widerspiegelt.
+Aufgabe für Agent:
+Führe das Skript scripts/test_pizza_classification.py oder ein spezifisches Emulator-Skript aus, das die Modellinferenz mit dem quantisierten Modell lädt und durchführt.
+Extrahiere die gemeldete oder gemessene Tensor-Arena-Größe aus dem Emulator-Log/Output.
+Vergleiche diesen Wert mit dem in der Speicherbedarfsschätzung verwendeten Wert.
+Dokumentiere den Unterschied.
+Wenn die Abweichung > 5% ist, analysiere die Ursache in der Schätzung und korrigiere sie.
+Kriterium "Fertig": Die Abweichung zwischen geschätzter und im Emulator gemessener Tensor-Arena-Größe ist kleiner oder gleich 5%. Die Schätzlogik ist nachvollziehbar und dokumentiert.
+[x] SPEICHER-1.3: Detaillierte RAM-Nutzungsanalyse durchführen
+
+Beschreibung: Ermittle den detaillierten RAM-Verbrauch aller relevanten Komponenten (Tensor Arena, Framebuffer, Zwischenpuffer für Vorverarbeitung/Ausgabe, Stack, Heap, globale Variablen, statische Puffer etc.) für den kritischsten Betriebsfall (z.B. eine einzelne Inferenz inklusive Vorverarbeitung).
+Aufgabe für Agent:
+Nutze das Performance-Logging des Emulators oder spezifische Debugging-Features, um RAM-Profile während eines Inferenzlaufs zu erstellen.
+Analysiere die Log-Dateien oder den Output, um die Nutzung der verschiedenen RAM-Bereiche zu identifizieren.
+Aggregiere die Ergebnisse und berechne die Gesamt-RAM-Nutzung.
+Generiere einen Bericht (Text/JSON), der die Aufteilung der RAM-Nutzung zeigt und den Gesamtwert angibt.
+Kriterium "Fertig": Ein strukturierter Bericht (output/ram_analysis/ram_usage_report.json oder ähnlich) existiert, der den RAM-Verbrauch der Hauptkomponenten auflistet und die Gesamt-RAM-Nutzung für einen Inferenzzyklus dokumentiert.
+[x] SPEICHER-2.1: Strukturbasiertes Pruning implementieren/anwenden
+
+Beschreibung: Implementiere oder integriere Tools für strukturbasiertes Pruning und wende es auf das MicroPizzaNetV2-Modell an, um nicht benötigte Kanäle oder Filter zu entfernen.
+Aufgabe für Agent:
+Referenziere das Skript oder Tool für strukturbasiertes Pruning (z.B. scripts/pruning_tool.py).
+Führe das Pruning-Skript mit vordefinierten Parametern (z.B. Ziel-Sparsity) aus.
+Das Skript sollte ein neues, gepruntes Modell erzeugen.
+Kriterium "Fertig": Das Skript wurde erfolgreich ausgeführt. Ein neues Modell-Datei (models/pruned_model.tflite oder ähnlich) wurde erstellt. Der Log des Skripts bestätigt den angewendeten Pruning-Grad.
+[x] SPEICHER-2.2: Genauigkeit des geprunten Modells evaluieren
+
+Beschreibung: Evaluiere die Klassifikationsgenauigkeit des geprunten Modells auf dem Test-Datensatz.
+Aufgabe für Agent:
+Führe das Standard-Evaluierungsskript (scripts/run_pizza_tests.py oder ähnlich) für das geprunte Modell aus.
+Sammle die Genauigkeitsmetriken (Accuracy, F1-Score etc.) aus dem Testbericht.
+Kriterium "Fertig": Das Test-Skript wurde erfolgreich ausgeführt. Ein Evaluierungsbericht für das geprunte Modell (output/evaluation/pruned_model_evaluation.json) existiert und enthält die Genauigkeitsmetriken.
+[x] SPEICHER-2.3: RAM-Bedarf des geprunten Modells evaluieren
+
+Beschreibung: Ermittle den RAM-Bedarf (Tensor Arena) des geprunten und quantisierten Modells.
+Aufgabe für Agent:
+Quantisiere das geprunte Modell (falls noch nicht geschehen).
+Führe das Skript zur Tensor-Arena-Schätzung (siehe SPEICHER-1.2) für das geprunte und quantisierte Modell aus.
+Extrahiere den geschätzten/gemessenen RAM-Bedarf.
+Kriterium "Fertig": Der RAM-Bedarf des geprunten Modells ist ermittelt und dokumentiert (z.B. im Evaluation Report von SPEICHER-2.2 oder in einem separaten Log).
+[x] SPEICHER-2.4: (Optional) Gewichts-Clustering implementieren/anwenden & evaluieren
+
+Beschreibung: Untersuche und wende bei Bedarf Gewichts-Clustering auf das Modell an, um die Effizienz der Int4-Quantisierung zu verbessern. Evaluiere die Auswirkungen auf Genauigkeit und Speicherbedarf.
+Aufgabe für Agent:
+Referenziere das Skript/Tool für Gewichts-Clustering.
+Führe das Clustering-Skript aus.
+Quantisiere das geclusterte Modell (ggf. Int4).
+Evaluiere Genauigkeit und RAM-Bedarf des geclusterten Modells (ähnlich SPEICHER-2.2 und SPEICHER-2.3).
+Kriterium "Fertig": Clustering-Tool implementiert/angewendet. Evaluierungsbericht für das geclusterte Modell liegt vor (output/evaluation/clustered_model_evaluation.json o.ä.), das Genauigkeit und Speicherbedarf dokumentiert und mit anderen Varianten vergleicht.
+[x] SPEICHER-2.5: (Optional) Int4-Quantisierung direkt evaluieren
+
+Beschreibung: Evaluiere die Genauigkeit und den Speicherbedarf des Modells bei Int4-Quantisierung (auch ohne vorheriges Clustering/Pruning), um die Grundlinie zu kennen.
+Aufgabe für Agent:
+Wende Int4-Quantisierung auf das Modell an.
+Evaluiere Genauigkeit und RAM-Bedarf (ähnlich SPEICHER-2.2 und SPEICHER-2.3).
+Kriterium "Fertig": Evaluierungsbericht für das Int4-Modell liegt vor (output/evaluation/int4_model_evaluation.json o.ä.), das Genauigkeit und Speicherbedarf dokumentiert.
+[x] SPEICHER-3.1: CMSIS-NN Integration implementieren und testen
+
+Beschreibung: Ersetze Standard-TensorFlow Lite Micro Operationen durch entsprechende, für ARM Cortex-M optimierte CMSIS-NN Funktionen in der C-Code-Basis für den RP2040.
+Aufgabe für Agent:
+Identifiziere die Kern-Operationen (z.B. Convolution, Pooling), die durch CMSIS-NN ersetzt werden können.
+Passe den Code-Generierungsprozess oder den exportierten C-Code an, um CMSIS-NN Funktionen aufzurufen.
+Kompiliere die Firmware mit CMSIS-NN.
+Führe im Emulator oder auf Hardware (falls verfügbar) einen Inferenztest durch und messe die Inferenzzeit (siehe Checklist Performance-Logging).
+Kriterium "Fertig": Die notwendigen CMSIS-NN Funktionen sind im Code integriert. Die Firmware kompiliert erfolgreich. Ein Performance-Log zeigt die Inferenzzeit mit CMSIS-NN.
+[x] SPEICHER-4.1: Kleinere Eingabegrößen evaluieren
+
+Beschreibung: Untersuche die Auswirkungen kleinerer Eingabebildgrößen (z.B. 32x32, 40x40) auf die Erkennungsgenauigkeit und den RAM-Bedarf.
+Aufgabe für Agent:
+Passe das Datensatz-Skript an, um Bilder auf die Zielgröße zu skalieren.
+Trainiere das Modell neu mit der kleineren Eingabegröße.
+Evaluiere die Genauigkeit des neu trainierten Modells auf dem Test-Datensatz.
+Schätze/Messe den RAM-Bedarf für diese Eingabegröße (Framebuffer + Tensor Arena).
+Wiederhole für alle zu testenden Größen.
+Kriterium "Fertig": Für jede getestete Bildgröße liegt ein separater Evaluierungsbericht vor (output/evaluation/eval_size_XXxXX.json), der Genauigkeit und geschätzten/gemessenen RAM-Bedarf dokumentiert.
+[x] SPEICHER-5.1: Flash-Optimierung (Modellteile) untersuchen
+
+Beschreibung: Untersuche die Machbarkeit und den Aufwand, Teile des Modells (z.B. weniger genutzte Layer-Parameter) komprimiert im Flash abzulegen und zur Laufzeit in den RAM zu entpacken/laden.
+Aufgabe für Agent:
+Recherchiere bestehende Methoden oder Bibliotheken für In-Place-Dekompression/Loading auf Mikrocontrollern.
+Bewerte den notwendigen Code-Aufwand und den potenziellen RAM-Gewinn.
+Identifiziere, welche Modellteile ausgelagert werden könnten.
+Kriterium "Fertig": Eine Machbarkeitsstudie/Konzeptdokumentation (docs/flash_model_strategy.md) existiert, die die untersuchten Methoden, den geschätzten Aufwand, den potenziellen Gewinn und eine Empfehlung enthält.
+[x] SPEICHER-6.1: Finale Modellkonfiguration festlegen & verifizieren
+
+Beschreibung: Wähle die finale Kombination von Optimierungen (Pruning, Quantisierung, Bildgröße, CMSIS-NN) basierend auf den Evaluationsergebnissen aus, die den RAM-Bedarf unter 204KB senkt und die Genauigkeitsanforderungen erfüllt. Verifiziere den resultierenden RAM-Bedarf.
+Aufgabe für Agent:
+Analysiere die Ergebnisse aller vorherigen SPEICHER-Aufgaben (Berichte, Logs).
+Schlage die Konfiguration vor, die die Kriterien am besten erfüllt (RAM < 204KB, bestmögliche Genauigkeit).
+Wende die finale Kombination von Optimierungen auf das Modell an und generiere den C-Code für den RP2040.
+Führe eine finale RAM-Analyse (gemäß SPEICHER-1.3) für die finale Konfiguration durch.
+Führe eine finale Genauigkeitsprüfung durch.
+Kriterium "Fertig": Die finale Modellkonfiguration ist dokumentiert (models/final_rp2040_config.json). Der RAM-Bedarf der finalen Konfiguration ist gemessen/simuliert und liegt unter 204KB. Die Genauigkeit der finalen Konfiguration erfüllt die Mindestanforderungen (siehe Checklist Test-Suite).
+
+
+[x] DATEN-1.1: Skript classify_images.py vervollständigen/korrigieren
+
+Beschreibung: Stelle sicher, dass das Skript classify_images.py funktionsfähig ist und Bilder automatisiert anhand des aktuellen Modells klassifizieren oder zumindest eine erste Modell-Inferenz durchführen kann. Dies ist wichtig für das Label-Tool und die Datenauswahl.
+Aufgabe für Agent:
+Überprüfe den aktuellen Zustand des Skripts scripts/classify_images.py.
+Analysiere die erwartete Funktionalität (basierend auf Projektdokumentation oder Kontext).
+Implementiere oder korrigiere den fehlenden Code, sodass das Skript ausführbar ist und Bilder prozessieren kann (z.B. Inferenz durchführen und Ergebnis speichern).
+Führe einen Testlauf mit einigen Bildern durch.
+Kriterium "Fertig": Das Skript scripts/classify_images.py ist vollständig implementiert. Es lässt sich ohne Fehler ausführen (python scripts/classify_images.py --help sollte funktionieren, und ein Testlauf sollte Ergebnisse liefern).
+[x] DATEN-1.2: Skript augment_dataset.py vervollständigen/korrigieren
+
+Beschreibung: Stelle sicher, dass das Skript augment_dataset.py vollständig implementiert ist und verschiedene Datenaugmentierungstechniken korrekt auf den Datensatz anwenden kann.
+Aufgabe für Agent:
+Überprüfe den aktuellen Zustand des Skripts scripts/augment_dataset.py.
+Analysiere die erwartete Funktionalität (basierend auf Projektdokumentation oder Kontext).
+Implementiere oder korrigiere den fehlenden Code, sodass das Skript ausführbar ist und Augmentierungen anwenden kann.
+Führe einen Testlauf mit einem kleinen Teil des Datensatzes und einigen Augmentierungsmethoden durch.
+Kriterium "Fertig": Das Skript scripts/augment_dataset.py ist vollständig implementiert. Es lässt sich ohne Fehler ausführen (python scripts/augment_dataset.py --help sollte funktionieren, und ein Testlauf sollte augmentierte Bilder erzeugen).
+[x] DATEN-1.3: Klassennamen vereinheitlichen
+
+Beschreibung: Beseitige die Inkonsistenz bei der Definition von Klassennamen. Lege eine einzige, maßgebliche Quelle fest (z.B. constants.py oder data/class_definitions.json) und stelle sicher, dass alle Skripte und Dokumentationen diese Quelle referenzieren.
+Aufgabe für Agent:
+Identifiziere die verschiedenen Stellen, an denen Klassennamen definiert oder verwendet werden (z.B. constants.py, data/class_definitions.json, Modell-README, Trainings-Skripte, Test-Skripte, Label-Tool).
+Wähle die maßgebliche Quelle (Vorschlag: data/class_definitions.json, da es bereits ein Label-Tool dafür gibt).
+Passe alle anderen Stellen an, sodass sie die Klassennamen aus dieser Quelle laden oder sich explizit darauf beziehen.
+Entferne harte Codierungen von Klassennamen, wo immer möglich.
+Kriterium "Fertig": Es gibt eine einzige, zentrale Quelle für Klassennamen. Alle relevanten Skripte laden die Klassennamen aus dieser Quelle. Eine manuelle Überprüfung des Codes bestätigt, dass harte Codierungen vermieden werden, wo das Laden aus der zentralen Quelle möglich ist.
+[x] DATEN-2.1: Datenbalance analysieren und berichten
+
+Beschreibung: Analysiere die Verteilung der Bilder pro Klasse im aktuellen Trainingsdatensatz.
+Aufgabe für Agent:
+Greife auf die Label-Informationen des Trainingsdatensatzes zu (vermutlich JSON-Dateien, die vom label_tool.py generiert wurden).
+Zähle die Anzahl der Bilder für jede Klasse.
+Erstelle einen Bericht (Text/JSON), der die Klassenverteilung zeigt.
+Kriterium "Fertig": Ein Bericht zur Klassenverteilung des Trainingsdatensatzes existiert (output/data_analysis/class_distribution_train.json), der die Anzahl der Samples pro Klasse auflistet.
+[x] DATEN-2.2: Datensatz ausgleichen (falls nötig)
+
+Beschreibung: Wenn die Klassenverteilung stark unausgewogen ist (z.B. die seltenste Klasse hat weniger als 50% der Samples der häufigsten Klasse), ergreife Maßnahmen zum Ausgleichen.
+Aufgabe für Agent:
+Analysiere den Bericht zur Klassenverteilung (DATEN-2.1).
+Identifiziere unterrepräsentierte Klassen.
+Option A (Bevorzugt, falls machbar): Generiere zusätzliche, reale Bilder für unterrepräsentierte Klassen (erfordert menschliches Eingreifen oder einen automatisierten Prozess, der noch nicht existiert – ggf. als separaten Task in "Geplante Aufgaben" verschieben/verlinken).
+Option B: Nutze das Augmentierungs-Skript (augment_dataset.py), um zusätzliche augmentierte Samples für unterrepräsentierte Klassen zu erzeugen, bis eine definierte Mindestanzahl pro Klasse erreicht ist (z.B. 80% der häufigsten Klasse).
+Aktualisiere den Datensatz mit den neuen Bildern.
+Führe DATEN-2.1 erneut aus, um die verbesserte Balance zu verifizieren.
+Kriterium "Fertig": Die Klassenverteilung im Trainingsdatensatz ist nach der Bearbeitung ausgeglichener (z.B. die Anzahl der Samples der seltensten Klasse erreicht mindestens 80% der häufigsten Klasse, oder ein anderes definiertes Ziel ist erreicht). Ein aktualisierter Klassenverteilungsbericht existiert.
+[x] DATEN-3.1: Standard-Augmentierungs-Pipeline definieren und implementieren
+
+Beschreibung: Definiere eine Standard-Pipeline von Augmentierungstechniken, die auf jedes Trainingsbild angewendet wird, um die Robustheit des Modells zu erhöhen (Rotation, Skalierung, Helligkeit/Kontrast, Rauschen etc.).
+Aufgabe für Agent:
+Referenziere das Skript augment_dataset.py.
+Implementiere oder konfiguriere gängige Augmentierungstechniken (z.B. zufällige Rotation, zufälliges Skalieren/Cropping, zufällige Helligkeits-/Kontrastanpassung, zufälliges Rauschen hinzufügen).
+Definiere die Wahrscheinlichkeiten und Parameterbereiche für jede Augmentierung.
+Integriere diese Pipeline in den Trainingsprozess.
+Kriterium "Fertig": Eine Standard-Augmentierungs-Pipeline ist im Skript augment_dataset.py (oder direkt im Trainingscode) implementiert. Eine Dokumentation beschreibt die angewendeten Augmentierungen und ihre Parameter.
+[x] DATEN-3.2: Spezifische Augmentierungen implementieren (Lichtverhältnisse, Perspektive)
+
+Beschreibung: Implementiere oder verbessere spezifische Augmentierungsmethoden, um realistische Variationen in Lichtverhältnissen und Perspektiven zu simulieren, die für die Pizza-Erkennung relevant sind.
+Aufgabe für Agent:
+Erweitere das Skript augment_dataset.py um spezifische Augmentierungen für:
+Realistische Lichtverhältnisse (z.B. gerichtetes Licht, Schatten, Über-/Unterbelichtung – ggf. CLAHE-ähnliche Augmentierung auf Host).
+Perspektivenänderungen (leichte Rotationen, Scherungen).
+Konfiguriere die Intensität dieser Augmentierungen.
+Kriterium "Fertig": Die Skripte unterstützen Augmentierungen, die spezifische Licht- und Perspektiveffekte simulieren. Diese Augmentierungen sind getestet und erzeugen visuell plausible Ergebnisse (ggf. manuelle Überprüfung notwendig).
+[x] DATEN-3.3: (Optional/Fortgeschritten) Diffusionsmodell-basierte Bildgenerierung prüfen/integrieren
+
+Beschreibung: Untersuche und integriere (falls machbar und notwendig) die Generierung von Trainingsbildern mit einem Diffusionsmodell, um spezifische, schwer zu erfassende Szenarien (z.B. bestimmte Verbrennungsgrade, seltene Belichtungen) zu simulieren oder unterrepräsentierte Klassen zu erweitern.
+Aufgabe für Agent:
+Siehe separate Checklist "Diffusionsmodell-Datengeneration" für Details zur Implementierung des Modells selbst.
+Sobald das Generierungs-Tool (teilweise) funktioniert, integriere es in den Datensatz-Erstellungsprozess.
+Definiere Prompts oder Parameter, um Bilder mit gewünschten Eigenschaften zu generieren (z.B. "Pizza, leicht verbrannt, scharfe Schatten").
+Generiere eine vordefinierte Anzahl von Bildern für spezifische Klassen/Szenarien.
+Hinweis für Agent: Generierte Bilder erfordern eine manuelle Qualitätskontrolle (siehe DATEN-4.1), da KI-Generierung Fehler enthalten kann.
+Kriterium "Fertig": Das Generierungs-Tool ist integriert. Es können Bilder mit definierten Eigenschaften generiert werden. Die generierten Bilder sind in den Datensatz integriert (nach manueller Prüfung).
+[x~] DATEN-4.1: Qualität der (augmentierten/generierten) Bilder prüfen
+
+Beschreibung: Implementiere oder nutze einen Prozess, um die Qualität der augmentierten und besonders der KI-generierten Bilder (falls DATEN-3.3 durchgeführt) manuell oder halbautomatisch zu überprüfen. Schlechte oder unplausible Bilder müssen aussortiert werden.
+Aufgabe für Agent:
+Stelle einen Prozess bereit, um zufällige Stichproben von augmentierten und generierten Bildern zur manuellen visuellen Inspektion auszuwählen und anzuzeigen (z.B. Generierung eines HTML-Reports mit Miniaturansichten).
+Ermögliche das Markieren von Bildern, die gelöscht werden sollen.
+Lösche die markierten Bilder.
+Kriterium "Fertig": Ein Prozess zur visuellen Qualitätskontrolle existiert und wurde auf die neu generierten Bilder angewendet. Schlechte Bilder wurden aus dem Datensatz entfernt. (Hinweis: Dieser Schritt erfordert menschliches Eingreifen).
+[ ] DATEN-5.1: Test-Set erweitern und validieren
+
+Beschreibung: Erweitere das Test-Set um herausfordernde Testfälle, die die realen Betriebsbedingungen (verschiedene Lichtverhältnisse, Blickwinkel, Pizza-Variationen) abdecken. Stelle sicher, dass das Test-Set repräsentativ ist und nicht für das Training verwendet wird.
+Aufgabe für Agent:
+Identifiziere Szenarien, in denen das aktuelle Modell Schwächen zeigt (ggf. basierend auf Grad-CAM-Analysen oder manuellen Tests).
+Sammle oder generiere neue Testbilder, die diese Szenarien abdecken (z.B. Bilder bei sehr schlechtem Licht, ungewöhnlichen Winkeln, Pizzen mit ungewöhnlichem Belag/Verbrennungsmuster).
+Labe die neuen Testbilder sorgfältig (ggf. menschliches Labeln über das Label-Tool).
+Füge die neuen Bilder zum Test-Set (data/test/) hinzu.
+Verifiziere, dass keine Testbilder versehentlich im Trainings- oder Validierungs-Set landen.
+Analysiere die Klassenverteilung im Test-Set (ähnlich DATEN-2.1).
+Kriterium "Fertig": Das Test-Set ist um N (z.B. N=100) neue, herausfordernde Bilder erweitert. Die neuen Bilder sind korrekt gelabelt. Eine Analyse bestätigt die Zusammensetzung des erweiterten Test-Sets.
+
+[ ] MODELL-1.1: Strukturbasiertes Pruning implementieren und evaluieren
+
+Beschreibung: Implementiere ein Verfahren zum strukturbasierten Pruning (Entfernen ganzer Filter/Kanäle) und wende es auf das Modell an. Evaluiere den Kompromiss zwischen Modellgröße/Effizienz und Genauigkeit.
+Aufgabe für Agent:
+Referenziere das vorhandene Pruning-Tool (pruning_clustering.log deutet auf Arbeit daran hin, nutze das entsprechende Skript, z.B. scripts/pruning.py).
+Führe das Pruning-Skript mit verschiedenen Sparsity-Raten aus (z.B. 10%, 20%, 30% der Filter entfernen).
+Für jedes geprunte Modell:
+Speichere das Modell.
+Quantisiere das Modell (siehe SPEICHER-2.3).
+Evaluiere die Genauigkeit auf dem Test-Set (siehe DATEN-5.1, nutze scripts/run_pizza_tests.py).
+Schätze/Messe den RAM-Bedarf (Tensor Arena, siehe SPEICHER-2.3).
+Messe die Inferenzzeit (im Emulator oder auf Hardware, siehe Checklist Performance-Logging).
+Erstelle einen Bericht, der die Ergebnisse für verschiedene Sparsity-Raten zusammenfasst (Größe, Genauigkeit, RAM, Zeit).
+Kriterium "Fertig": Das Pruning-Skript ist funktionsfähig. Ein Bericht (output/model_optimization/pruning_evaluation.json) vergleicht die Leistungskennzahlen (Genauigkeit, Größe, RAM, Inferenzzeit) des ursprünglichen Modells mit geprunten Varianten bei mindestens 3 verschiedenen Sparsity-Raten. Das Log pruning_clustering.log ist aktualisiert und dokumentiert die durchgeführten Läufe.
+[ ] MODELL-1.2: Gewichts-Clustering implementieren und evaluieren
+
+Beschreibung: Implementiere oder integriere ein Verfahren zum Gewichts-Clustering, um die Anzahl einzigartiger Gewichtswerte im Modell zu reduzieren. Dies kann helfen, die Modellgröße weiter zu reduzieren, insbesondere in Kombination mit Int4-Quantisierung. Evaluiere die Auswirkungen.
+Aufgabe für Agent:
+Referenziere das Clustering-Tool (könnte Teil desselben Skripts wie Pruning sein, basierend auf pruning_clustering.log).
+Führe das Clustering-Skript mit verschiedenen Cluster-Anzahlen aus (z.B. 16, 32, 64 Cluster).
+Für jedes geclusterte Modell:
+Speichere das Modell.
+Quantisiere das Modell (insb. Int8 und Int4, siehe SPEICHER-2.5).
+Evaluiere die Genauigkeit.
+Schätze/Messe den RAM-Bedarf.
+Messe die Inferenzzeit (falls relevant).
+Erstelle einen Bericht, der die Ergebnisse für verschiedene Cluster-Anzahlen zusammenfasst (Größe, Genauigkeit, RAM, Zeit).
+Kriterium "Fertig": Das Clustering-Skript ist funktionsfähig. Ein Bericht (output/model_optimization/clustering_evaluation.json) vergleicht die Leistungskennzahlen (Genauigkeit, Größe, RAM, Inferenzzeit) des ursprünglichen Modells mit geclusterten Varianten bei mindestens 3 verschiedenen Cluster-Anzahlen, idealerweise sowohl für Int8 als auch Int4 Quantisierung. Das Log pruning_clustering.log ist aktualisiert.
+[ ] MODELL-2.1: Dynamische Inferenz (Early Exit) implementieren und evaluieren
+
+Beschreibung: Implementiere einen "Early Exit"-Mechanismus im Modell, bei dem einfachere Fälle früher in der Netzwerkausführung klassifiziert werden können, um Energie und Zeit zu sparen. Füge einen zusätzlichen Klassifikationskopf nach einem früheren Block (z.B. Block 3, wie im Statusbericht erwähnt) hinzu.
+Aufgabe für Agent:
+Modifiziere die Modellarchitektur in den Trainingsskripten (train_pizza_model.py) oder in einem separaten Architekturskript, um einen zusätzlichen "Exit Branch" nach dem definierten Block einzufügen.
+Trainiere das modifizierte Modell.
+Passe die Inferenzlogik an, um den Early Exit zu nutzen (d.h., definiere einen Schwellenwert, bei dessen Überschreitung das frühe Ergebnis akzeptiert wird).
+Evaluiere die Leistung des Modells mit Early Exit auf dem Test-Set. Miss dabei:
+Die durchschnittliche Inferenzzeit (sie sollte für einfache Fälle sinken).
+Die Gesamtgenauigkeit.
+Den Anteil der Fälle, die früh verlassen.
+Die Genauigkeit der frühen Exits vs. späten Exits.
+Erstelle einen Bericht über die Early-Exit-Evaluierung.
+Kriterium "Fertig": Die Modellarchitektur mit Early Exit ist implementiert und trainierbar. Die Inferenzlogik unterstützt Early Exit. Ein Bericht (output/model_optimization/early_exit_report.json oder basierend auf early_exit_evaluation.log) dokumentiert die Auswirkungen auf durchschnittliche Inferenzzeit, Gesamtgenauigkeit und Early-Exit-Statistiken.
+[ ] MODELL-3.1: Integration von CMSIS-NN verifizieren und optimieren
+
+Beschreibung: Stelle sicher, dass die Integration der CMSIS-NN-Bibliothek für die Beschleunigung kritischer Operationen im exportierten C-Code korrekt erfolgt ist und den erwarteten Performancegewinn bringt. (Diese Aufgabe überlappt mit SPEICHER-3.1, hier liegt der Fokus auf der Modell- Nutzung der Bibliothek).
+Aufgabe für Agent:
+Verifiziere, dass die C-Code-Generierung oder die Firmware-Implementierung tatsächlich die Aufrufe zu CMSIS-NN Funktionen für Kern-Operationen (wie Convolution) enthält.
+Kompliere die Firmware mit aktivierter CMSIS-NN Unterstützung.
+Führe detaillierte Performance-Messungen im Emulator oder auf Hardware durch (siehe Checklist Performance-Logging), die die Inferenzzeit spezifisch für die von CMSIS-NN ersetzten Layer und die Gesamt-Inferenzzeit erfassen.
+Vergleiche die gemessenen Inferenzzeiten mit einer Version ohne CMSIS-NN.
+Kriterium "Fertig": Der exportierte/kompilierte C-Code ruft CMSIS-NN Funktionen auf. Ein Performance-Bericht (output/performance/cmsis_nn_impact.json oder Teil des Performance-Logs) dokumentiert den gemessenen Performance-Gewinn (Reduktion der Inferenzzeit), der durch die CMSIS-NN Integration erzielt wird.
+[ ] MODELL-4.1: Finale Modellkonfiguration für RP2040 festlegen (Wiederholung/Konsolidierung)
+
+Beschreibung: Wähle die finale Kombination von Modelloptimierungen (Quantisierung, Pruning, Clustering, Early Exit, CMSIS-NN Integration, Bildgröße – in Abstimmung mit SPEICHER-6.1) aus, die die bestmögliche Balance zwischen Genauigkeit, Inferenzzeit und RAM/Flash-Bedarf auf dem RP2040 bietet.
+Aufgabe für Agent:
+Analysiere alle Ergebnisse der MODELL- und SPEICHER-Aufgaben (Berichte, Logs).
+Schlage eine finale Modellkonfiguration vor, die alle Constraints (RAM < 204KB, akzeptable Inferenzzeit, Mindestgenauigkeit) erfüllt und die Performance maximiert.
+Dokumentiere die ausgewählte Konfiguration und begründe die Entscheidung basierend auf den gesammelten Metriken.
+Kriterium "Fertig": Die finale, für den RP2040 optimierte Modellkonfiguration ist definiert und dokumentiert (models/final_rp2040_model_config.json). Dieses Dokument referenziert die zugrundeliegenden Evaluationsergebnisse.
+
+
+
+
+
+[ ] PERF-1.1: SD-Karten-Logging implementieren
+
+Beschreibung: Implementiere die Funktionalität, Performance- und Statusdaten auf eine SD-Karte zu schreiben. Dies ist notwendig für Langzeit-Logging und die Erfassung von Daten, die den begrenzten UART-Buffer übersteigen.
+Aufgabe für Agent:
+Identifiziere die notwendigen Code-Stellen in der Firmware und im Emulator/Test-Framework, um SD-Karten-Unterstützung zu integrieren (Dateisystem-Bibliothek, SPI-Treiber für SD-Karte).
+Implementiere die Logik zum Öffnen, Schreiben und Schließen von Log-Dateien auf einer simulierten (im Emulator) oder realen (auf Hardware, siehe Checklist Hardware-Integration) SD-Karte.
+Leite ausgewählte Performance-Metriken (z.B. Inferenzzeit, RAM-Spitzenwert, Klassifizierungsergebnis) an die SD-Karten-Logging-Funktion um.
+Erstelle ein Testskript, das das SD-Karten-Logging im Emulator oder auf Hardware verifiziert.
+Kriterium "Fertig": Die SD-Karten-Logging-Funktionalität ist in der Firmware/Emulator implementiert. Ein Testlauf erzeugt erfolgreich eine Log-Datei auf einer simulierten SD-Karte mit Performance-Daten. Der Code ist in der Codebasis integriert.
+[ ] PERF-2.1: Graphviz installieren und Testabdeckung ermöglichen
+
+Beschreibung: Installiere die Graphviz-Bibliothek in der Entwicklungsumgebung und behebe den übersprungenen Test (Nr. 50), der Graphviz benötigt. Dies stellt die volle Testabdeckung der existierenden Test-Suite sicher.
+Aufgabe für Agent:
+Führe den fehlgeschlagenen/übersprungenen Test aus, der Graphviz benötigt (basierend auf dem Testbericht der letzten Test-Suite).
+Analysiere die Fehlermeldung, um die Abhängigkeit von Graphviz zu bestätigen.
+Installiere Graphviz im System/in der Entwicklungsumgebung (systemweit oder in einer virtuellen Umgebung, je nach Setup).
+Stelle sicher, dass die Python-Bindungen für Graphviz verfügbar sind.
+Führe das Testskript (scripts/run_pizza_tests.py) erneut aus, um zu verifizieren, dass der zuvor übersprungene Test nun läuft und besteht.
+Kriterium "Fertig": Graphviz ist erfolgreich in der Entwicklungsumgebung installiert und über Python zugänglich. Der Testlauf (scripts/run_pizza_tests.py) berichtet 0 übersprungene Tests und alle 50 Tests sind bestanden.
+[ ] PERF-2.2: analyze_performance_logs.py robust machen (Klassennamen)
+
+Beschreibung: Ändere das Skript analyze_performance_logs.py so, dass es Klassennamen aus einer Konfigurationsdatei (z.B. data/class_definitions.json oder einer separaten Konfiguration) lädt, anstatt sie hart zu codieren.
+Aufgabe für Agent:
+Referenziere das Skript scripts/analyze_performance_logs.py.
+Identifiziere die Stelle(n) im Skript, an denen Klassennamen hart codiert sind.
+Modifiziere das Skript, um Klassennamen aus einer externen Datei zu laden (z.B. indem es data/class_definitions.json parst).
+Teste das geänderte Skript mit einem Beispiel-Logfile, um zu verifizieren, dass es korrekt funktioniert und die Namen dynamisch lädt.
+Kriterium "Fertig": Das Skript scripts/analyze_performance_logs.py lädt Klassennamen aus einer externen Konfigurationsdatei. Der hartcodierte Code wurde entfernt. Ein Testlauf mit einem Logfile ist erfolgreich und die Ausgabe verwendet die Namen aus der Konfigurationsdatei.
+[ ] PERF-2.3: SQLAlchemy-Warnungen beheben
+
+Beschreibung: Aktualisiere den Code, der SQLAlchemy verwendet, um veraltete Funktionen oder Aufrufe zu ersetzen, die Warnungen generieren. Dies verbessert die Codebasis und verhindert Probleme bei zukünftigen SQLAlchemy-Updates.
+Aufgabe für Agent:
+Identifiziere die spezifischen SQLAlchemy-Warnungen, die während der Ausführung auftreten (basierend auf Logs oder manuellem Lauf).
+Analysiere die SQLAlchemy-Dokumentation, um die korrekten, aktuellen Methoden oder Syntax zu finden.
+Passe den Code an, um die veralteten Aufrufe zu ersetzen.
+Führe die relevanten Teile des Codes aus, die SQLAlchemy nutzen, und verifiziere, dass die spezifischen Warnungen nicht mehr auftreten.
+Kriterium "Fertig": Die Codebasis wurde angepasst. Beim Ausführen der Anwendung oder der relevanten Skripte werden keine SQLAlchemy-Warnungen mehr im Log ausgegeben.
+[ ] PERF-3.1: Testskripte um Messung weiterer Parameter erweitern
+
+Beschreibung: Erweitere die automatisierten Testskripte und das Performance-Logging, um zusätzlich zur Inferenzzeit und RAM-Nutzung weitere relevante Systemparameter wie Temperatur und Spannung zu erfassen, falls die Hardware-Basis dies unterstützt.
+Aufgabe für Agent:
+Identifiziere in der Hardware-Dokumentation (docs/hardware-documentation.html) oder im Firmware-Code, wie Temperatur- und Spannungswerte auf dem RP2040 (oder über angeschlossene Sensoren/Peripherie) ausgelesen werden können.
+Implementiere in der Firmware oder im Emulator die Logik zum Auslesen dieser Werte während des Test- oder Inferenzlaufs.
+Erweitere das Performance-Logging-System (UART und/oder SD-Karte) und die Datenstrukturen (siehe SPEICHER-1.3, DATEN-3.1), um diese neuen Metriken aufzunehmen.
+Passe das Analyse-Skript (analyze_performance_logs.py) an, um die neuen Datenpunkte zu verarbeiten und zu visualisieren.
+Kriterium "Fertig": Die Firmware/Emulator kann Temperatur und Spannung auslesen. Das Logging-System erfasst diese Werte. Das Analyse-Skript kann sie verarbeiten. Testläufe generieren Logfiles mit Temperatur- und Spannungswerten.
+[ ] PERF-4.1: Workflow für automatisierte Regressionstests einrichten
+
+Beschreibung: Richte einen automatisierten Workflow (z.B. in GitHub Actions, basierend auf .github/workflows/model_pipeline.yml) ein, der bei Codeänderungen (insb. am Modell oder der Firmware) automatisch die Test-Suite ausführt und die Performance-Metriken erfasst, um Regressionen (Verschlechterung der Leistung oder Genauigkeit) frühzeitig zu erkennen.
+Aufgabe für Agent:
+Analysiere den bestehenden CI/CD-Workflow.
+Erweitere den Workflow, um nach dem Bau der Firmware/des Modells:
+Die automatisierte Test-Suite (scripts/run_pizza_tests.py) auszuführen.
+Die generierten Testberichte (Accuracy, Coverage) und Performance-Logs (aus Emulator/Simulation) zu sammeln.
+Eine Zusammenfassung der wichtigsten Metriken (Genauigkeit, Inferenzzeit, RAM-Nutzung) zu erstellen.
+Implementiere eine Logik, die fehlschlägt, wenn die Genauigkeit unter eine Mindestschwelle fällt oder die Performance-Metriken (Zeit/RAM) signifikant über vordefinierte Grenzwerte steigen (Regression).
+Kriterium "Fertig": Ein CI-Workflow ist eingerichtet, der bei Commits/Pull Requests automatisch Regressionstests durchführt. Der Workflow führt die Test-Suite aus, sammelt Metriken und schlägt bei erkannten Regressionen fehl. Die Ergebnisse sind im CI-System sichtbar.
+
+
+
+
+DIFFUSION-1.1: Diffusionsmodell-Generator-Basis einrichten und VRAM analysieren
+
+Beschreibung: Richte die grundlegende Umgebung und das Skript zum Ausführen eines Diffusionsmodells (wie Stable Diffusion oder ein spezialisiertes Modell) für die Bildgenerierung ein. Analysiere den anfänglichen VRAM-Bedarf.
+Aufgabe für Agent:
+Stelle sicher, dass die notwendigen Bibliotheken und Abhängigkeiten für das Diffusionsmodell (z.B. PyTorch, Diffusers) installiert sind.
+Referenziere das Skript zur Bildgenerierung (z.B. scripts/generate_images_diffusion.py oder memory_optimized_generator.py).
+Lade ein Basis-Diffusionsmodell (z.B. die sd-food Option, falls verfügbar) und versuche, ein Bild zu generieren.
+Überwache und protokolliere den VRAM-Verbrauch während des Ladens und der Generierung.
+Dokumentiere die Hardware-Anforderungen (GPU-Modell, VRAM-Größe), bei denen die Generierung erfolgreich ist oder fehlschlägt.
+Kriterium "Fertig": Die grundlegende Generierungsumgebung ist eingerichtet. Ein Log (output/diffusion_analysis/initial_vram_usage.log) dokumentiert den VRAM-Bedarf bei einem Testlauf mit Standardeinstellungen. Das Skript kann mindestens ein Bild generieren, auch wenn die VRAM-Nutzung hoch ist.
+[ ] DIFFUSION-1.2: VRAM-Optimierungsoptionen implementieren und testen
+
+Beschreibung: Implementiere und teste verschiedene Strategien zur Reduzierung des VRAM-Bedarfs des Diffusionsmodells (z.B. Modell-Optionen, batch_size=1, Speicheroptimierungs-Flags).
+Aufgabe für Agent:
+Erkunde die Optionen im Generator-Skript (memory_optimized_generator.py wird im Statusbericht erwähnt) und implementiere deren Nutzung im Haupt-Generierungsworkflow.
+Teste spezifische Optionen wie --model sd-food (bevorzugt, falls geringerer VRAM) und das Setzen von --image_size (z.B. auf 512, wie im Statusbericht genannt) und --batch_size 1.
+Führe Testläufe für verschiedene Kombinationen von Optimierungs-Optionen durch.
+Miss und protokolliere den VRAM-Verbrauch für jede getestete Konfiguration (siehe DIFFUSION-1.1).
+Kriterium "Fertig": Die Implementierung der VRAM-Optimierungsoptionen im Skript ist abgeschlossen. Ein Bericht (output/diffusion_analysis/vram_optimization_test.json) vergleicht den VRAM-Bedarf und die Generierungszeit für verschiedene Optimierungsstrategien. Die vielversprechendsten Optionen sind identifiziert.
+[ ] DIFFUSION-2.1: Pipeline für gezielte Bildgenerierung entwickeln
+
+Beschreibung: Entwickle eine robustere Pipeline, die es ermöglicht, Bilder mit spezifischen Eigenschaften zu generieren, die für den Datensatz relevant sind (z.B. gezielter Verbrennungsgrad, bestimmte Lichtbedingungen).
+Aufgabe für Agent:
+Entwickle oder verfeinere die Prompt-Erstellung, um gezielte Eigenschaften zu steuern (z.B. "pizza, slightly burnt", "pizza, direct overhead light, harsh shadow"). Nutze ggf. Template-basierte Prompts.
+Implementiere die Nutzung von Kontrollmechanismen, falls das Diffusionsmodell dies unterstützt (z.B. ControlNet für Haltung/Struktur, falls für Pizza relevant).
+Stelle sicher, dass das Skript die Metadaten der Generierung (verwendeter Prompt, Seed, Parameter) zusammen mit dem Bild speichert.
+Kriterium "Fertig": Das Generierungsskript unterstützt die Erstellung von Bildern basierend auf strukturierten Prompts oder Templates. Generierte Bilder werden zusammen mit ihren Metadaten gespeichert. Ein Testlauf erzeugt Bilder, die visuell den gewünschten Eigenschaften entsprechen (ggf. manuelle Überprüfung notwendig).
+[ ] DIFFUSION-3.1: Strategie zur Datensatzbalance mit generierten Bildern definieren
+
+Beschreibung: Definiere eine Strategie, wie die generierten Bilder genutzt werden, um die Balance des Trainingsdatensatzes zu verbessern oder spezifische, schwer zu sammelnde Szenarien abzudecken (z.B. Übergangszustände wie "Progression_heavy").
+Aufgabe für Agent:
+Analysiere den aktuellen Datensatz (siehe DATEN-2.1) und identifiziere unterrepräsentierte Klassen oder Szenarien.
+Definiere, wie viele Bilder für jede Zielklasse/jedes Zielszenario generiert werden sollen, um die Balance zu erreichen.
+Definiere die notwendigen Prompts oder Generierungsparameter für diese Bilder.
+Kriterium "Fertig": Ein Plan existiert, der definiert, welche Arten von Bildern in welcher Menge generiert werden sollen, um den Trainingsdatensatz zu verbessern. Die notwendigen Prompts sind dokumentiert.
+[ ] DIFFUSION-3.2: Bilder für die Datensatzbalance generieren
+
+Beschreibung: Führe den Prozess zur Generierung der im Plan (DIFFUSION-3.1) definierten Anzahl von Bildern für die ausgewählten Klassen/Szenarien durch.
+Aufgabe für Agent:
+Referenziere den Plan (DIFFUSION-3.1).
+Führe das Generierungsskript (DIFFUSION-2.1) automatisiert aus, um die spezifizierten Bilder zu erzeugen.
+Organisiere die generierten Bilder entsprechend ihrer Klasse oder ihres Szenarios.
+WICHTIG: Markiere die generierten Bilder für die manuelle Qualitätskontrolle (siehe DATEN-4.1), bevor sie endgültig in den Trainingsdatensatz integriert werden.
+Kriterium "Fertig": Die geplante Anzahl von Bildern für die definierten Klassen/Szenarien wurde generiert und in einem temporären Verzeichnis gespeichert. Die Metadaten sind den Bildern zugeordnet. Die Bilder sind bereit für die manuelle Qualitätsprüfung (DATEN-4.1).
+[ ] DIFFUSION-4.1: Tool zur Bildevaluierung (Metriken) entwickeln
+
+Beschreibung: Entwickle objektivere Metriken und ein Tool, um die Qualität und Realistik der generierten Bilder jenseits der reinen visuellen Inspektion zu bewerten.
+Aufgabe für Agent:
+Recherchiere gängige Metriken zur Bewertung generativer Modelle (z.B. FID Score, Inception Score – obwohl diese oft ganze Datensätze bewerten).
+Identifiziere Metriken oder Prüfungen, die auf Einzelbilder oder kleine Batches anwendbar sind und helfen können, offensichtlich fehlerhafte Generierungen automatisch zu erkennen (z.B. basierend auf Bildstatistik, Farbprofilen, einfachen Feature-Extraktoren).
+Implementiere ein Skript (scripts/evaluate_generated_images.py), das diese Metriken für eine Menge von generierten Bildern berechnen kann.
+Kriterium "Fertig": Ein Skript zur Bildevaluierung existiert und kann vordefinierte Metriken auf generierte Bilder anwenden und einen Bericht erstellen.
+[ ] DIFFUSION-4.2: (Optional) A/B-Tests (Synthetisch vs. Real) im Training durchführen
+
+Beschreibung: Führe Experimente durch, bei denen das Modell einmal nur mit realen Daten und einmal mit einem gemischten Datensatz (real + generiert) trainiert wird, um den tatsächlichen Nutzen der generierten Daten für die Modellleistung zu evaluieren.
+Aufgabe für Agent:
+Bereite zwei Trainingsdatensätze vor: einen nur mit realen Daten und einen, der reale Daten und die generierten Bilder (nach Qualitätskontrolle) kombiniert.
+Trainiere das Modell zweimal: einmal mit jedem Datensatz, unter sonst identischen Trainingsbedingungen.
+Evaluiere beide trainierten Modelle auf dem realen Test-Set (DATEN-5.1).
+Erstelle einen Bericht, der die Genauigkeit und andere relevante Metriken der beiden Modelle vergleicht.
+Kriterium "Fertig": Zwei Modelle (trainiert auf rein realen vs. gemischten Daten) sind trainiert und evaluiert. Ein Vergleichsbericht (output/diffusion_evaluation/synthetic_data_impact.json) dokumentiert die Auswirkungen der synthetischen Daten auf die Modellleistung.
+
+
+
+
+
+[ ] ENERGIE-1.1: Energiemesspunkte und -methode definieren (Hardware-Vorbereitung)
+
+Beschreibung: Definiere und dokumentiere, an welchen physikalischen Punkten auf der Hardware-Platine der Stromverbrauch gemessen werden muss und welche Messgeräte/Methoden dafür geeignet sind (z.B. Shunt-Widerstand + Oszilloskop/Multimeter, Power Analyzer). Dies ist ein notwendiger manueller/Hardware-Schritt für die Verifikation.
+Aufgabe für Agent:
+Analysiere das Hardware-Design (docs/hardware-documentation.html, Schaltpläne).
+Identifiziere die Hauptpfade der Stromversorgung (Gesamtverbrauch, Verbrauch der RP2040-MCU, Verbrauch von Kamera, LEDs etc.).
+Dokumentiere empfohlene Messpunkte und Methoden in einem Bericht.
+(Optional, falls Tools vorhanden) Simuliere den Stromfluss im PCB-Design-Tool, falls möglich.
+Kriterium "Fertig": Ein Dokument (docs/energy_measurement_plan.md) existiert, das die notwendigen Messpunkte auf der Hardware und die empfohlene Messmethode beschreibt.
+[ ] ENERGIE-1.2: Skript zur Verarbeitung von Energiemessdaten erstellen/verbessern
+
+Beschreibung: Erstelle oder verbessere ein Skript, das Messdaten von einem externen Messgerät (z.B. Power Analyzer) einlesen, verarbeiten und den durchschnittlichen Verbrauch in verschiedenen Betriebsmodi berechnen kann.
+Aufgabe für Agent:
+Definiere das erwartete Format der Messdaten (z.B. CSV-Export eines Oszilloskops/Analyzers).
+Implementiere ein Python-Skript (scripts/analyze_energy_measurements.py), das diese Daten parsen kann.
+Implementiere Logik zur Identifizierung der verschiedenen Betriebsmodi (Sleep, Aktiv, Übergänge) in den Messdaten, basierend auf Stromprofilen oder Markierungen.
+Implementiere die Berechnung des durchschnittlichen Stromverbrauchs für jeden Modus und über einen repräsentativen Duty-Cycle-Zeitraum.
+Kriterium "Fertig": Das Skript scripts/analyze_energy_measurements.py ist implementiert. Es kann Messdaten einlesen, Betriebsmodi erkennen und den durchschnittlichen Stromverbrauch berechnen. Ein Test mit Beispieldaten ist erfolgreich.
+[ ] ENERGIE-2.1: Sleep-Modus Implementierung im Emulator verifizieren/optimieren
+
+Beschreibung: Überprüfe und optimiere die Firmware-Implementierung des Sleep-Modus (enter_sleep_mode(), wake_up()), um schnelle und energieeffiziente Übergänge zu gewährleisten. Verifiziere die Funktionalität im Emulator.
+Aufgabe für Agent:
+Analysiere den Code der Funktionen enter_sleep_mode() und wake_up() in der Firmware.
+Stelle sicher, dass alle unnötigen Peripheriegeräte abgeschaltet und der RP2040 in den tiefstmöglichen Schlafzustand versetzt wird.
+Stelle sicher, dass der Wake-Up-Prozess zuverlässig und schnell ist.
+Implementiere oder nutze Emulator-Funktionen, um die Zeit zu messen, die für den Eintritt in den Sleep-Modus und das Aufwachen benötigt wird.
+Führe Testläufe im Emulator durch, die wiederholtes Schlafenlegen und Aufwachen simulieren.
+Kriterium "Fertig": Der Code für enter_sleep_mode() und wake_up() ist optimiert. Emulator-Tests bestätigen, dass die Übergangszeiten unterhalb eines Schwellenwerts (z.B. < 10ms für Wake-Up) liegen und der Status korrekt wiederhergestellt wird.
+[ ] ENERGIE-2.2: Adaptives Duty-Cycle Logik implementieren
+
+Beschreibung: Implementiere die Logik für adaptives Duty-Cycling, bei der die Wachperioden und Inferenzzyklen intelligent basierend auf externen Triggern (z.B. Bewegungssensor, Zeitplan) oder internen Zuständen gesteuert werden, anstatt nur ein festes Intervall zu nutzen.
+Aufgabe für Agent:
+Definiere mögliche Trigger oder Kriterien für das Aufwachen/Inferenz.
+Implementiere die Zustandsmaschine oder Logik in der Firmware, die entscheidet, wann aus dem Sleep-Modus aufgewacht und eine Inferenz durchgeführt werden soll.
+Integriere die Anbindung potenzieller Sensoren (simuliert im Emulator) oder Timer, die als Trigger dienen.
+Simuliere verschiedene Szenarien im Emulator (z.B. häufige Trigger, seltene Trigger) und verifiziere das korrekte Verhalten der Duty-Cycle-Logik.
+Kriterium "Fertig": Die adaptive Duty-Cycle-Logik ist in der Firmware implementiert. Emulator-Simulationen zeigen, dass die Logik korrekt auf definierte Trigger reagiert und das System erwartungsgemäß in den Schlafzustand zurückkehrt.
+[ ] ENERGIE-2.3: Energieintensive Codebereiche identifizieren (Verbindung zu Performance-Logging)
+
+Beschreibung: Nutze die Ergebnisse des Performance-Loggings (siehe Checklist Performance-Logging) und ggf. zusätzliche Profiling-Tools, um die Abschnitte des Codes zu identifizieren, die am meisten Rechenzeit und damit potenziell Energie verbrauchen.
+Aufgabe für Agent:
+Analysiere die Performance-Logs und -Berichte (aus PERF-1.1, PERF-3.1), insbesondere die Messungen der Inferenzzeit und der Laufzeit anderer Code-Abschnitte.
+Identifiziere die Funktionen oder Codepfade mit der höchsten kumulativen Ausführungszeit.
+Erstelle einen Bericht, der die top energieintensiven Codebereiche auflistet (z.B. Modellinferenz, Bildvorverarbeitung, Sensor-Handling, Logging).
+Kriterium "Fertig": Ein Bericht (output/energy_analysis/energy_hotspots.json) existiert, der die Top N (z.B. N=5) der zeitintensivsten (und damit potenziell energieintensivsten) Codebereiche auflistet, basierend auf Performance-Messungen.
+[ ] ENERGIE-2.4: Energieintensive Codebereiche optimieren
+
+Beschreibung: Optimiere die in ENERGIE-2.3 identifizierten Codebereiche gezielt, um deren Ausführungszeit und Energieverbrauch zu reduzieren. Dies kann durch Algorithmus-Optimierungen, Nutzung effizienterer Bibliotheken (wie CMSIS-NN, siehe MODELL-3.1) oder Reduzierung unnötiger Berechnungen geschehen.
+Aufgabe für Agent:
+Wähle einen der Top-Hotspots aus ENERGIE-2.3.
+Analysiere den Code dieses Bereichs auf Optimierungspotenzial.
+Implementiere die Optimierung (z.B. Code umstrukturieren, CMSIS-NN integrieren, weniger komplexe Algorithmen nutzen).
+Führe Performance-Messungen (siehe Checklist Performance-Logging) für den optimierten Codebereich durch und vergleiche die Zeit mit der ursprünglichen Version.
+(Sobald Energiemessung auf Hardware möglich ist) Verifiziere die Energieeinsparung in diesem spezifischen Abschnitt durch Messung.
+Kriterium "Fertig": Mindestens ein als energieintensiv identifizierter Codebereich wurde optimiert. Performance-Messungen im Emulator zeigen eine signifikante Reduzierung der Ausführungszeit. Die Codeänderungen sind dokumentiert. (Optimal: Energiemessungen auf Hardware bestätigen Energieeinsparung).
+[ ] ENERGIE-3.1: Batterielebensdauermodell erstellen/verbessern
+
+Beschreibung: Erstelle oder verbessere das Simulationsmodell zur Vorhersage der Batterielebensdauer. Das Modell sollte die gemessenen oder simulierten Stromverbräuche der verschiedenen Betriebsmodi und die Eigenschaften verschiedener Batterietypen berücksichtigen.
+Aufgabe für Agent:
+Analysiere das bestehende Batterielebensdauermodell (basierend auf den Simulationsergebnissen im Statusbericht).
+Stelle sicher, dass das Modell den Stromverbrauch für Aktiv-, Sleep- und Übergangszeiten separat verarbeiten kann.
+Integriere die Spezifikationen relevanter Batterietypen (Kapazität in mAh, Entladekurven – auch wenn vereinfacht).
+Erstelle das Simulationsskript (scripts/simulate_battery_life.py), das die Gesamtlebensdauer basierend auf einem definierten Nutzungsprofil (Anzahl Inferenzzyklen pro Stunde/Tag, Dauer des Aktivseins) berechnet.
+Kriterium "Fertig": Das Simulationsskript scripts/simulate_battery_life.py ist implementiert und kann die Batterielebensdauer basierend auf Modus-Verbräuchen, Batterietyp und Nutzungsprofil berechnen.
+[ ] ENERGIE-3.2: Batterielebensdauer für Szenarien simulieren und berichten
+
+Beschreibung: Nutze das Batterielebensdauermodell (ENERGIE-3.1), um die erwartete Laufzeit für verschiedene Nutzungsszenarien und mit verschiedenen Batterietypen zu simulieren.
+Aufgabe für Agent:
+Definiere repräsentative Nutzungsszenarien (z.B. "häufige Erkennung" - X Zyklen/Stunde, "seltene Erkennung" - Y Zyklen/Tag).
+Definiere relevante Batterietypen (CR123A, 18650 Li-Ion, etc.).
+Führe das Simulationsskript für jede Kombination aus Szenario und Batterietyp aus.
+Erstelle einen Bericht, der die simulierten Batterielaufzeiten tabellarisch oder grafisch darstellt.
+Kriterium "Fertig": Ein Bericht (output/energy_analysis/battery_life_simulations.json) existiert, der die simulierte Batterielebensdauer für mindestens 2 Nutzungsszenarien und 2 Batterietypen auflistet.
+[ ] ENERGIE-4.1: Gesamt-Energiemanagement-Leistung evaluieren
+
+Beschreibung: Bewerte die Gesamtleistung des Energiemanagementsystems. Nutze dafür die Ergebnisse der realen Energiemessungen (sobald verfügbar, verarbeitet mit ENERGIE-1.2) und vergleiche sie mit den Simulationsergebnissen (ENERGIE-3.2) und den Projektzielen.
+Aufgabe für Agent:
+Analysiere die verarbeiteten realen Messdaten (ENERGIE-1.2).
+Vergleiche die gemessenen Verbräuche in den einzelnen Modi mit den Annahmen im Simulationsmodell.
+Vergleiche die reale, gemessene Batterielebensdauer (falls bereits Tests auf Hardware liefen) mit der simulierten Lebensdauer für das gleiche Nutzungsprofil.
+Bewerte, ob die ursprünglichen Projektziele für die Batterielaufzeit (z.B. 9.1 Tage mit CR123A) erreicht werden oder ob weitere Optimierungen notwendig sind.
+Erstelle einen abschließenden Bericht zur Energiemanagement-Leistung.
+Kriterium "Fertig": Ein abschließender Bericht (output/energy_analysis/final_energy_report.json) existiert, der die Ergebnisse der Energiemessungen (real oder simuliert), die Batterielebensdauer-Simulationen und eine Bewertung der Zielerreichung dokumentiert. Er identifiziert, ob weitere Arbeiten am Energiemanagement erforderlich sind.
+
+
+[ ] HWEMU-1.1: OV2640 Kamera-Timing und Capture-Logik im Emulator entwickeln/verifizieren
+
+Beschreibung: Entwickle oder passe die Firmware-Logik an, die für die Initialisierung, Konfiguration und das Auslösen der Bildaufnahme durch den OV2640-Kamerasensor zuständig ist. Verifiziere die Abfolge der Steuerbefehle und die erwarteten Timing-Signale im Emulator.
+Aufgabe für Agent:
+Referenziere die Firmware-Treiber für den OV2640.
+Implementiere die Sequenz der I2C-Befehle zur Initialisierung und Konfiguration des Sensors (Auflösung 48x48px, Bildformat etc.).
+Implementiere die Logik zum Starten eines Frames (z.B. durch Setzen eines GPIOs oder Senden eines Befehls).
+Nutze Emulator-Funktionen, um die zeitliche Abfolge der I2C-Kommunikation und potenzieller GPIO-Signale zu simulieren und zu protokollieren.
+Vergleiche die Emulator-Logs mit dem OV2640-Datenblatt, um die korrekte Sequenz und Timings zu verifizieren.
+Kriterium "Fertig": Die Firmware-Logik zur Steuerung des OV2640 ist im Code vorhanden. Emulator-Logs (output/emulator_logs/ov2640_timing.log) zeigen, dass die Initialisierungssequenz und der Capture-Trigger korrekt simuliert werden.
+[ ] HWEMU-1.2: DMA-Transfer für Kameradaten im Emulator implementieren und testen
+
+Beschreibung: Implementiere die DMA-Konfiguration und -Steuerung auf dem RP2040, um die Bilddaten effizient vom Kamera-Interface-Hardwareblock (DVP) in den RAM zu übertragen, ohne dass die CPU jeden Pixel einzeln kopieren muss. Teste den DMA-Transfer im Emulator.
+Aufgabe für Agent:
+Analysiere die RP2040-Dokumentation bezüglich des DMA-Controllers und des DVP-Interfaces.
+Implementiere die Firmware-Logik zur Konfiguration eines DMA-Kanals: Quelle (DVP-Register/Buffer), Ziel (RAM-Framebuffer), Transfergröße, Trigger (DVP-Event).
+Implementiere einen Mechanismus, um im Emulator zu simulieren, dass Daten vom DVP-Interface bereitgestellt werden.
+Teste im Emulator, ob die Daten über DMA korrekt in den definierten RAM-Puffer übertragen werden.
+Verifiziere die Integrität der übertragenen (simulierten) Daten im RAM-Puffer.
+Kriterium "Fertig": Die Firmware-Logik zur Konfiguration und Initiierung des DMA-Transfers für Kameradaten ist implementiert. Emulator-Tests bestätigen, dass der simulierte DMA-Transfer startet, läuft und die simulierten Daten korrekt im Ziel-RAM-Puffer ankommen.
+[ ] HWEMU-2.1: Temperaturmessung und Logging-Logik im Emulator simulieren
+
+Beschreibung: Implementiere die Firmware-Logik zum Auslesen eines Temperatursensors (entweder interner RP2040-Sensor oder externer Sensor über I2C/SPI). Simuliere das Auslesen des Sensors im Emulator und integriere die Logging-Funktionalität (siehe Checklist Performance-Logging / ENERGIE-3.1).
+Aufgabe für Agent:
+Identifiziere die Schnittstelle zum Temperatursensor (interner ADC des RP2040 oder spezifischer Treiber für externen Sensor).
+Implementiere die Firmware-Funktion zum Auslesen des Temperatursensors.
+Erweitere den Emulator, um simulierte Temperaturwerte bereitzustellen, wenn die Auslesefunktion aufgerufen wird.
+Integriere den Aufruf dieser Funktion im Hauptloop oder periodisch.
+Integriere das Logging der ausgelesenen Temperaturwerte über UART oder simuliertes SD-Karten-Logging (siehe PERF-1.1).
+Kriterium "Fertig": Die Firmware-Logik zum Auslesen der Temperatur ist implementiert. Der Emulator kann simulierte Temperaturwerte liefern. Emulator-Logs zeigen, dass Temperaturwerte periodisch ausgelesen und protokolliert werden.
+[ ] HWEMU-2.2: Adaptive Taktanpassungs-Logik im Emulator testen
+
+Beschreibung: Implementiere die Logik, die die RP2040-Systemtaktfrequenz dynamisch basierend auf gemessenen Temperaturschwellen anpasst, um Überhitzung zu vermeiden oder Energie zu sparen (falls gewünscht). Teste das Verhalten dieser Logik im Emulator.
+Aufgabe für Agent:
+Definiere Temperaturschwellen und die zugehörigen Taktfrequenzen.
+Implementiere die Firmware-Logik, die basierend auf dem ausgelesenen Temperaturwert (ENERGIE-2.1) die RP2040-Taktfrequenz anpasst (nutze die RP2040-SDK-Funktionen dafür).
+Nutze den Emulator, um den Code mit simulierten Temperaturwerten laufen zu lassen, die die Schwellen überschreiten/unterschreiten.
+Verifiziere im Emulator-Log oder durch Abfragen der Systemregister, dass die Taktfrequenz korrekt umgeschaltet wird.
+Kriterium "Fertig": Die Firmware-Logik zur adaptiven Taktanpassung ist implementiert. Emulator-Tests mit simulierten Temperaturen bestätigen, dass die Taktfrequenz korrekt basierend auf den definierten Schwellen umgeschaltet wird.
+[ ] HWEMU-3.1: Automatisierte Selbsttests im Emulator implementieren und testen
+
+Beschreibung: Implementiere eine Suite von automatisierten Selbsttests in der Firmware, die beim Systemstart oder auf Anfrage ausgeführt werden können, um die grundlegende Funktionalität von Hardware-Komponenten zu überprüfen (z.B. RAM-Integrität, Flash-Zugriff, Initialisierung von Peripheriegeräten). Teste die Ausführung und die Ergebnisse im Emulator.
+Aufgabe für Agent:
+Identifiziere kritische Hardware-Funktionen, die beim Start geprüft werden sollten.
+Implementiere Testfunktionen für jeden Bereich (z.B. RAM-Schreib-/Lesetest, Flash-Checksum-Prüfung, Verifikation von Peripherie-Registern nach der Initialisierung).
+Implementiere eine Hauptfunktion, die diese Tests nacheinander aufruft.
+Erweitere den Emulator, um die Testausführung zu unterstützen und Testergebnisse zu protokollieren.
+Führe die Selbsttests im Emulator aus und verifiziere, dass sie wie erwartet ablaufen und die korrekten Ergebnisse (Erfolg/Fehler-Codes) liefern.
+Kriterium "Fertig": Eine Suite automatisierter Selbsttests ist in der Firmware implementiert. Emulator-Testläufe (output/emulator_logs/selftest_results.log) zeigen, dass die Tests ausgeführt werden und plausible Ergebnisse liefern.
+[ ] HWEMU-3.2: Diagnoseprotokoll über serielle Schnittstelle im Emulator implementieren und testen
+
+Beschreibung: Implementiere die Funktionalität, die es ermöglicht, Statusinformationen, Testergebnisse und Debugging-Ausgaben über die serielle UART-Schnittstelle auszugeben. Dies ist ein wichtiges Werkzeug für das Debugging auf Hardware, kann aber im Emulator vorbereitet werden.
+Aufgabe für Agent:
+Implementiere die Initialisierung des UART-Peripheriegeräts in der Firmware.
+Implementiere oder nutze eine Bibliothek für formatierten Output (printf-ähnlich) über UART.
+Integriere Log-Ausgaben an relevanten Stellen im Code (Start, Testergebnisse, Fehler).
+Erweitere den Emulator, um die UART-Ausgabe des simulierten RP2040 abzufangen und in eine Datei oder auf die Konsole auszugeben.
+Führe Code im Emulator aus, der Log-Ausgaben generiert, und verifiziere, dass die Ausgabe korrekt abgefangen und dargestellt wird.
+Kriterium "Fertig": Die UART-Initialisierung und Log-Ausgabe-Funktionalität ist in der Firmware implementiert. Der Emulator fängt die UART-Ausgabe des simulierten RP2040 ab. Ein Testlauf generiert Log-Ausgaben, die im Emulator-Output sichtbar sind und dem erwarteten Format entsprechen.
+
+
+
+

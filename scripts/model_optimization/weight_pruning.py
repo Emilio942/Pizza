@@ -518,28 +518,20 @@ class WeightClusterer:
 
 
 def fine_tune_pruned_model(model, train_loader, val_loader, config, class_names, num_epochs=10):
-    """
-    Feines Nachtraining des geprunten Modells zur Wiederherstellung der Genauigkeit.
-    
-    Args:
-        model: Das geprunte Modell
-        train_loader, val_loader: Datenlader
-        config: Konfigurationsobjekt
-        class_names: Namen der Klassen
-        num_epochs: Anzahl der Nachtrainings-Epochen
-        
-    Returns:
-        history: Trainingshistorie
-        model: Nachtrainiertes Modell
-    """
+    """Feintuned das geprunte Modell, um die Genauigkeit wiederherzustellen."""
     logger.info(f"Starte Feintuning des geprunten Modells für {num_epochs} Epochen...")
-    
-    # Verwende einen niedrigeren Lernrate für das Feintuning
-    config_copy = Config()
-    config_copy.LEARNING_RATE = config.LEARNING_RATE * 0.1
+
+    # Erstelle eine Kopie der Konfiguration, um sie anzupassen
+    config_copy = types.SimpleNamespace(**{k: getattr(config, k) for k in dir(config) if not k.startswith('__')})
     config_copy.EPOCHS = num_epochs
-    config_copy.EARLY_STOPPING_PATIENCE = 5
-    
+    config_copy.LEARNING_RATE = getattr(config, 'LEARNING_RATE', 0.001) * 0.1 # Reduzierte Lernrate für Fine-Tuning
+    config_copy.EARLY_STOPPING_PATIENCE = getattr(config, 'EARLY_STOPPING_PATIENCE', 10) // 2 # Kürzere Geduld
+    # Stelle sicher, dass DEVICE korrekt an train_microcontroller_model übergeben wird
+    if not hasattr(config_copy, 'DEVICE'):
+        config_copy.DEVICE = getattr(config, 'DEVICE', 'cuda' if torch.cuda.is_available() else 'cpu')
+
+
+    # Rufe die Trainingsfunktion aus pizza_detector.py auf
     return train_microcontroller_model(
         model=model,
         train_loader=train_loader,

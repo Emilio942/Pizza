@@ -1,0 +1,7 @@
+usage: knowledge_distillation.py [-h] [--teacher TEACHER] [--data DATA]
+                                 [--epochs EPOCHS] [--batch-size BATCH_SIZE]
+                                 [--alpha ALPHA] [--temperature TEMPERATURE]
+                                 [--learning-rate LEARNING_RATE]
+                                 [--output-dir OUTPUT_DIR]
+                                 [--student-type {micro,custom}] [--no-cuda]
+knowledge_distillation.py: error: unrecognized arguments: --teacher-model=models/pizza_model_float32.pth --output_dir=output/optimization/distillation

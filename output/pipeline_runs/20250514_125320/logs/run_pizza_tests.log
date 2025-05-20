@@ -1,0 +1,14 @@
+===== Pizza-Erkennungssystem: Automatisierte Test-Suite =====
+
+[1/2] Führe Unit-Tests für die Klassifikation aus...
+
+Testergebnisse:
+
+
+Einige Tests sind fehlgeschlagen!
+Fehler:
+ImportError while loading conftest '/home/emilio/Documents/ai/pizza/tests/conftest.py'.
+tests/conftest.py:12: in <module>
+    from src.types import ModelConfig
+E   ModuleNotFoundError: No module named 'src.types'
+

@@ -1,0 +1,72 @@
+# CI/CD Pipeline for Pizza Detection Project
+name: Pizza Detection CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+  workflow_dispatch:
+
+jobs:
+  build_and_test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.8]
+
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+        # Install additional dependencies for formal verification
+        pip install auto_LiRPA
+    
+    - name: Run unit tests
+      run: |
+        pytest tests/ -v
+    
+    - name: Run model training
+      run: |
+        python src/pizza_detector.py --train --data-dir ./data --epochs 10 --output-dir ./models
+    
+    - name: Run model quantization
+      run: |
+        python scripts/quantization_aware_training.py --model-path ./models/pizza_model.pth --output-dir ./models
+    
+    - name: Formal Verification
+      run: |
+        # Generate verification dataset
+        python models/formal_verification/generate_verification_data.py \
+          --data-dir ./data/test \
+          --output-file ./models/verification_data.npz \
+          --samples-per-class 2
+          
+        # Run formal verification
+        python models/formal_verification/ci_verify.py \
+          --model-path ./models/pizza_model.pth \
+          --verification-data ./models/verification_data.npz \
+          --report-path ./models/verification_report.json \
+          --verification-threshold 0.7 \
+          --ci-mode
+    
+    - name: Export to C code
+      run: |
+        python models/rp2040_export/export_to_c.py --model-path ./models/pizza_model_int8.pth --output-dir ./models/rp2040_export
+    
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: pizza-detection-model
+        path: |
+          ./models/*.pth
+          ./models/verification_report.json
+          ./models/rp2040_export/

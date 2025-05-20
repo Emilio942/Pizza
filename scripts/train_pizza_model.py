@@ -356,8 +356,10 @@ def main():
     parser.add_argument('--batch-size', type=int, default=16, help='Batch-Größe')
     parser.add_argument('--learning-rate', type=float, default=0.001, help='Lernrate')
     parser.add_argument('--output-dir', default='output/models', help='Ausgabeverzeichnis für Modell und Visualisierungen')
-    parser.add_argument('--img-size', type=int, default=48, help='Bildgröße für das Training')
+    parser.add_argument('--input-size', type=int, default=INPUT_SIZE, help='Eingabebildgröße für das Training (aus constants.py)')
     parser.add_argument('--no-cuda', action='store_true', help='Deaktiviert CUDA-Beschleunigung')
+    parser.add_argument('--output', type=str, help='Ausgabepfad für das trainierte Modell')
+    parser.add_argument('--no-early-exit', action='store_true', help='Deaktiviert Early Exit im Modell')
     args = parser.parse_args()
     
     # Ausgabeverzeichnis erstellen
@@ -369,7 +371,9 @@ def main():
     logger.info(f"Verwende Gerät: {device}")
     
     # Bildgröße
-    img_size = (args.img_size, args.img_size)
+    input_size = args.input_size
+    img_size = (input_size, input_size)
+    logger.info(f"Verwende Eingabebildgröße: {input_size}x{input_size}")
     
     # Datensatz analysieren für Normalisierungsparameter
     analyzer = PizzaDatasetAnalysis(args.data)
@@ -481,7 +485,11 @@ def main():
     )
     
     # Modell speichern
-    model_path = output_dir / "pizza_model_new.pth"
+    if args.output:
+        model_path = Path(args.output)
+    else:
+        model_path = output_dir / f"pizza_model_size_{input_size}.pth"
+    
     torch.save(trained_model.state_dict(), model_path)
     logger.info(f"Modell gespeichert unter {model_path}")
     

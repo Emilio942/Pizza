@@ -1,0 +1,17 @@
+[
+  {
+    "filename": "sample_pizza_image.jpg",
+    "path": "augmented_pizza/raw/sample_pizza_image.jpg",
+    "class": "burnt",
+    "confidence": 0.435405969619751,
+    "probabilities": {
+      "basic": 0.18983183801174164,
+      "burnt": 0.435405969619751,
+      "combined": 0.16859766840934753,
+      "mixed": 0.16296954452991486,
+      "progression": 0.022239526733756065,
+      "segment": 0.020955447107553482
+    },
+    "inference_time_ms": 122.9555606842041
+  }
+]

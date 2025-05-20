@@ -127,9 +127,26 @@ def augment_pizza(input_dir, output_dir, num_images=20, batch_size=16):
     """Hauptfunktion für die Pizza-Augmentierung"""
     print("Starte Pizza-Augmentierung...")
     
-    # Bilder finden
-    image_files = [os.path.join(input_dir, f) for f in os.listdir(input_dir) 
-                  if f.lower().endswith(('.png', '.jpg', '.jpeg'))]
+    # Check if input_dir exists
+    if not os.path.exists(input_dir):
+        print(f"Eingabeverzeichnis {input_dir} existiert nicht!")
+        return
+    
+    # Check if input_dir has subdirectories (class folders)
+    class_dirs = [d for d in os.listdir(input_dir) if os.path.isdir(os.path.join(input_dir, d))]
+    
+    if class_dirs:
+        # If we have class directories, collect images from each
+        image_files = []
+        for class_dir in class_dirs:
+            class_path = os.path.join(input_dir, class_dir)
+            class_images = [os.path.join(class_path, f) for f in os.listdir(class_path)
+                           if f.lower().endswith(('.png', '.jpg', '.jpeg'))]
+            image_files.extend(class_images)
+    else:
+        # If no subdirectories, get images directly from input_dir
+        image_files = [os.path.join(input_dir, f) for f in os.listdir(input_dir) 
+                      if f.lower().endswith(('.png', '.jpg', '.jpeg'))]
     
     if not image_files:
         print("Keine Bilder gefunden!")
@@ -168,8 +185,8 @@ def augment_pizza(input_dir, output_dir, num_images=20, batch_size=16):
     print(f"Fertig! Bilder wurden in {output_dir} gespeichert.")
 
 if __name__ == "__main__":
-    input_dir = "img-pizza"  # Eingabeverzeichnis
-    output_dir = "augmented_pizza"  # Ausgabeverzeichnis
+    input_dir = "augmented_pizza"  # Updated input directory
+    output_dir = "augmented_pizza_legacy"  # Ausgabeverzeichnis
     num_images = 20  # Bilder pro Original
     batch_size = 16  # Batch-Größe
     

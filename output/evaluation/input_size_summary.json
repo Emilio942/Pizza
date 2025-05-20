@@ -1,0 +1,18 @@
+{
+  "summary": {
+    "32x32": {
+      "accuracy": null,
+      "total_ram_kb": 4.85
+    },
+    "40x40": {
+      "accuracy": null,
+      "total_ram_kb": 6.54
+    },
+    "48x48": {
+      "accuracy": null,
+      "total_ram_kb": 8.6
+    }
+  },
+  "timestamp": "2025-05-19 01:04:51",
+  "note": "Evaluation of different input sizes for RAM usage vs. accuracy trade-off"
+}

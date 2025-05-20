@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MicroPizzaNet Optimierungsbericht</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+        }
+        h1 {
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+            margin-top: 30px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #f8f9fa;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        .highlight {
+            background-color: #e8f4f8;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        .comparison {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0;
+        }
+        .comparison > div {
+            width: 48%;
+        }
+        .positive {
+            color: green;
+        }
+        .negative {
+            color: red;
+        }
+        .warning {
+            color: orange;
+        }
+        .chart {
+            margin: 30px 0;
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>MicroPizzaNet Optimierungsbericht</h1>
+        
+        <div class="highlight">
+            <h2>Zusammenfassung der Optimierung</h2>
+            <p>
+                Das Modell wurde durch Gewichts-Pruning und Clustering optimiert, um die Modellgröße zu reduzieren 
+                und die Inferenzzeit zu verbessern, während die Genauigkeit weitgehend erhalten blieb.
+            </p>
+            <table>
+                <tr>
+                    <th>Metrik</th>
+                    <th>Basis-Modell</th>
+                    <th>Optimiertes Modell</th>
+                    <th>Veränderung</th>
+                </tr>
+                <tr>
+                    <td>Genauigkeit</td>
+                    <td>0.00%</td>
+                    <td>0.00%</td>
+                    <td class="positive">
+                        +0.00%
+                    </td>
+                </tr>
+                <tr>
+                    <td>Parameter (gesamt)</td>
+                    <td>582</td>
+                    <td>582</td>
+                    <td class="positive">
+                        -0.00%
+                    </td>
+                </tr>
+                <tr>
+                    <td>Inferenzzeit</td>
+                    <td>2.81 ms</td>
+                    <td>0.82 ms</td>
+                    <td class="positive">
+                        3.43x schneller
+                    </td>
+                </tr>
+                <tr>
+                    <td>Eindeutige Gewichtswerte</td>
+                    <td>512</td>
+                    <td>32</td>
+                    <td class="positive">
+                        -93.75%
+                    </td>
+                </tr>
+            </table>
+        </div>
+        
+        <h2>Details zum Pruning-Prozess</h2>
+        <p>
+            Es wurden insgesamt <strong>0</strong> Parameter entfernt, 
+            was <strong>0.00%</strong> des Gesamtmodells entspricht.
+        </p>
+        
+        <h3>Unstrukturiertes Pruning</h3>
+        <p>
+            Beim unstrukturierten Pruning wurden individuelle Gewichte mit niedriger Magnitude entfernt.
+            Die folgende Tabelle zeigt die Layer mit dem höchsten Pruning-Anteil:
+        </p>
+        <table>
+            <tr>
+                <th>Layer</th>
+                <th>Entfernte Parameter</th>
+                <th>Gesamtparameter</th>
+                <th>Anteil</th>
+            </tr>
+
+            <tr>
+                <td>block1.0</td>
+                <td>0</td>
+                <td>216</td>
+                <td>0.00%</td>
+            </tr>
+            <tr>
+                <td>block2.0</td>
+                <td>0</td>
+                <td>72</td>
+                <td>0.00%</td>
+            </tr>
+            <tr>
+                <td>block2.3</td>
+                <td>0</td>
+                <td>128</td>
+                <td>0.00%</td>
+            </tr>
+            <tr>
+                <td>classifier.2</td>
+                <td>0</td>
+                <td>96</td>
+                <td>0.00%</td>
+            </tr>
+        </table>
+        
+        <h3>Strukturelles Pruning</h3>
+        <p>
+            Beim strukturellen Pruning wurden ganze Kanäle/Filter basierend auf ihrer Wichtigkeit entfernt.
+        </p>
+        <table>
+            <tr>
+                <th>Layer</th>
+                <th>Entfernte Kanäle</th>
+            </tr>
+
+        </table>
+        
+        <h2>Details zum Clustering-Prozess</h2>
+        <p>
+            Durch Clustering ähnlicher Gewichte wurde die Anzahl eindeutiger Werte von 
+            <strong>512</strong> auf 
+            <strong>32</strong> reduziert.
+            Dies entspricht einer Kompressionsrate von <strong>93.75%</strong>.
+        </p>
+        
+        <h3>Layer mit höchster Clustering-Effizienz</h3>
+        <table>
+            <tr>
+                <th>Layer</th>
+                <th>Eindeutige Werte vorher</th>
+                <th>Eindeutige Werte nachher</th>
+                <th>Reduktion</th>
+            </tr>
+
+            <tr>
+                <td>block1.0</td>
+                <td>216</td>
+                <td>8</td>
+                <td>96.30%</td>
+            </tr>
+            <tr>
+                <td>block2.3</td>
+                <td>128</td>
+                <td>8</td>
+                <td>93.75%</td>
+            </tr>
+            <tr>
+                <td>classifier.2</td>
+                <td>96</td>
+                <td>8</td>
+                <td>91.67%</td>
+            </tr>
+            <tr>
+                <td>block2.0</td>
+                <td>72</td>
+                <td>8</td>
+                <td>88.89%</td>
+            </tr>
+        </table>
+        
+        <h2>Klassenweise Genauigkeit</h2>
+        <p>
+            Die folgende Tabelle zeigt die Genauigkeit pro Klasse vor und nach der Optimierung:
+        </p>
+        <table>
+            <tr>
+                <th>Klasse</th>
+                <th>Basis-Modell</th>
+                <th>Optimiertes Modell</th>
+                <th>Veränderung</th>
+            </tr>
+
+            <tr>
+                <td>augmented</td>
+                <td>0.00%</td>
+                <td>0.00%</td>
+                <td class="positive">
+                    +0.00%
+                </td>
+            </tr>
+            <tr>
+                <td>classified</td>
+                <td>0.00%</td>
+                <td>0.00%</td>
+                <td class="positive">
+                    +0.00%
+                </td>
+            </tr>
+            <tr>
+                <td>processed</td>
+                <td>0.00%</td>
+                <td>0.00%</td>
+                <td class="positive">
+                    +0.00%
+                </td>
+            </tr>
+            <tr>
+                <td>raw</td>
+                <td>0.00%</td>
+                <td>0.00%</td>
+                <td class="positive">
+                    +0.00%
+                </td>
+            </tr>
+            <tr>
+                <td>synthetic</td>
+                <td>0.00%</td>
+                <td>0.00%</td>
+                <td class="positive">
+                    +0.00%
+                </td>
+            </tr>
+            <tr>
+                <td>videos</td>
+                <td>0.00%</td>
+                <td>0.00%</td>
+                <td class="positive">
+                    +0.00%
+                </td>
+            </tr>
+        </table>
+        
+        <h2>Schlussfolgerungen</h2>
+        <div class="highlight">
+            <p>
+                Die Kombination aus unstrukturiertem Pruning, strukturellem Pruning und Weight-Clustering 
+                hat die Modellgröße deutlich reduziert und die Inferenzzeit verbessert, 
+                während die Genauigkeit weitgehend erhalten blieb.
+            </p>
+            <p>
+                <strong>Optimale Parameter für RP2040-Deployment:</strong>
+            </p>
+            <ul>
+                <li>Unstrukturiertes Pruning: 30%</li>
+                <li>Strukturelles Pruning: 20%</li>
+                <li>Gewichts-Clustering: 32 Cluster</li>
+            </ul>
+            <p>
+                Diese Optimierungen ermöglichen eine effizientere Ausführung auf dem RP2040-Mikrocontroller
+                durch reduzierte Speicheranforderungen und schnellere Inferenz.
+            </p>
+        </div>
+    </div>
+</body>
+</html>

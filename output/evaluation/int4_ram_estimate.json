@@ -1,0 +1,10 @@
+{
+  "model_type": "int4_direct",
+  "model_path": "output/evaluation/int4_quantized/int4_model.pth",
+  "model_size_kb": 0.78515625,
+  "tensor_arena_estimate_kb": 15.3125,
+  "flash_usage_estimate_kb": 5.78515625,
+  "total_ram_estimate_kb": 25.3125,
+  "fits_rp2040_constraint": "True",
+  "notes": "Diese Sch\u00e4tzung basiert auf Erfahrungswerten f\u00fcr Int4-quantisierte Modelle. Die tats\u00e4chliche RAM-Nutzung kann je nach Modellarchitektur und Implementierungsdetails variieren."
+}

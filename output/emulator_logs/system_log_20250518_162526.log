@@ -1,0 +1,4 @@
+[2025-05-18T16:25:26.778] [INFO] [SYS] RP2040 Emulator initialized
+[2025-05-18T16:25:26.784] [INFO] [SYS] Temperatur-Logging aktiviert (Intervall: 5.0s)
+[2025-05-18T16:25:47.561] [WARNING] [SYS] Temperatur-Spike: +5.0°C für ~15s injiziert
+[2025-05-18T16:26:23.707] [INFO] [SYS] Logging system shutting down

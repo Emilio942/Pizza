@@ -1,0 +1,573 @@
+[2025-05-14 03:13:49,101] [INFO] Found 75 Python scripts to validate
+[2025-05-14 03:13:49,101] [INFO] Validating script: cleanup.py
+[2025-05-14 03:13:49,167] [INFO] Validation passed for /home/emilio/Documents/ai/pizza/scripts/cleanup.py
+[2025-05-14 03:13:49,167] [INFO] Validating script: filter_dataset.py
+[2025-05-14 03:13:49,176] [WARNING] Missing or incomplete docstring in /home/emilio/Documents/ai/pizza/scripts/filter_dataset.py
+[2025-05-14 03:13:49,176] [WARNING] Validation passed with warnings for /home/emilio/Documents/ai/pizza/scripts/filter_dataset.py
+[2025-05-14 03:13:49,176] [INFO] Validating script: label_tool.py
+[2025-05-14 03:13:53,076] [INFO] Validation passed for /home/emilio/Documents/ai/pizza/scripts/label_tool.py
+[2025-05-14 03:13:53,076] [INFO] Validating script: framebuffer_demo.py
+[2025-05-14 03:13:53,193] [WARNING] Execution test issue in /home/emilio/Documents/ai/pizza/scripts/framebuffer_demo.py: Execution failed with error: 
+[2025-05-14 03:13:53,195] [WARNING] Validation passed with warnings for /home/emilio/Documents/ai/pizza/scripts/framebuffer_demo.py
+[2025-05-14 03:13:53,195] [INFO] Validating script: compare_inverted_residual.py
+[2025-05-14 03:13:57,254] [INFO] Validation passed for /home/emilio/Documents/ai/pizza/scripts/compare_inverted_residual.py
+[2025-05-14 03:13:57,254] [INFO] Validating script: test_temporal_smoothing.py
+[2025-05-14 03:13:57,560] [INFO] Validation passed for /home/emilio/Documents/ai/pizza/scripts/test_temporal_smoothing.py
+[2025-05-14 03:13:57,560] [INFO] Validating script: knowledge_distillation.py
+[2025-05-14 03:13:59,475] [INFO] Validation passed for /home/emilio/Documents/ai/pizza/scripts/knowledge_distillation.py
+[2025-05-14 03:13:59,475] [INFO] Validating script: visualize_gradcam.py
+[2025-05-14 03:14:00,176] [WARNING] Missing dependencies in /home/emilio/Documents/ai/pizza/scripts/visualize_gradcam.py: scripts
+[2025-05-14 03:14:02,759] [WARNING] Validation passed with warnings for /home/emilio/Documents/ai/pizza/scripts/visualize_gradcam.py
+[2025-05-14 03:14:02,759] [INFO] Validating script: classify_images.py
+[2025-05-14 03:14:02,768] [WARNING] Missing or incomplete docstring in /home/emilio/Documents/ai/pizza/scripts/classify_images.py
+[2025-05-14 03:14:02,768] [WARNING] Validation passed with warnings for /home/emilio/Documents/ai/pizza/scripts/classify_images.py
+[2025-05-14 03:14:02,768] [INFO] Validating script: visualize_pruning.py
+[2025-05-14 03:14:05,282] [INFO] Validation passed for /home/emilio/Documents/ai/pizza/scripts/visualize_pruning.py
+[2025-05-14 03:14:05,283] [INFO] Validating script: compare_tiny_cnns.py
+[2025-05-14 03:14:05,314] [WARNING] Missing dependencies in /home/emilio/Documents/ai/pizza/scripts/compare_tiny_cnns.py: scripts
+[2025-05-14 03:14:07,776] [WARNING] Validation passed with warnings for /home/emilio/Documents/ai/pizza/scripts/compare_tiny_cnns.py
+[2025-05-14 03:14:07,776] [INFO] Validating script: compare_se_models.py
+[2025-05-14 03:14:10,386] [INFO] Validation passed for /home/emilio/Documents/ai/pizza/scripts/compare_se_models.py
+[2025-05-14 03:14:10,386] [INFO] Validating script: automated_test_suite.py
+[2025-05-14 03:14:12,853] [WARNING] Execution test issue in /home/emilio/Documents/ai/pizza/scripts/automated_test_suite.py: Execution failed with error: Traceback (most recent call last):
+  File "/home/emilio/Documents/ai/pizza/scripts/automated_test_suite.py", line 53, in <module>
+    from src.pizza_detector import (
+ImportError: cannot import name 'load_model' from 'src.pizza_detector' (/home/emilio/Documents/ai/pizza/src/pizza_detector.py)
+
+[2025-05-14 03:14:12,857] [WARNING] Validation passed with warnings for /home/emilio/Documents/ai/pizza/scripts/automated_test_suite.py
+[2025-05-14 03:14:12,857] [INFO] Validating script: compare_hard_swish.py
+[2025-05-14 03:14:15,296] [INFO] Validation passed for /home/emilio/Documents/ai/pizza/scripts/compare_hard_swish.py
+[2025-05-14 03:14:15,296] [INFO] Validating script: demo_status_display.py
+[2025-05-14 03:14:15,326] [WARNING] Execution test issue in /home/emilio/Documents/ai/pizza/scripts/demo_status_display.py: Execution failed with error: Traceback (most recent call last):
+  File "/home/emilio/Documents/ai/pizza/scripts/demo_status_display.py", line 38, in <module>
+    from src.status_display import (
+ModuleNotFoundError: No module named 'src.status_display'
+
+[2025-05-14 03:14:15,327] [WARNING] Validation passed with warnings for /home/emilio/Documents/ai/pizza/scripts/demo_status_display.py
+[2025-05-14 03:14:15,327] [INFO] Validating script: test_image_preprocessing.py
+[2025-05-14 03:14:15,608] [INFO] Validation passed for /home/emilio/Documents/ai/pizza/scripts/test_image_preprocessing.py
+[2025-05-14 03:14:15,608] [INFO] Validating script: test_pizza_detection.py
+[2025-05-14 03:14:17,518] [WARNING] Execution test issue in /home/emilio/Documents/ai/pizza/scripts/test_pizza_detection.py: Execution failed with error: Traceback (most recent call last):
+  File "/home/emilio/Documents/ai/pizza/scripts/test_pizza_detection.py", line 27, in <module>
+    from src.types import InferenceResult
+ModuleNotFoundError: No module named 'src.types'
+
+[2025-05-14 03:14:17,520] [WARNING] Validation passed with warnings for /home/emilio/Documents/ai/pizza/scripts/test_pizza_detection.py
+[2025-05-14 03:14:17,520] [INFO] Validating script: demo_power_management.py
+[2025-05-14 03:14:17,793] [WARNING] Execution test issue in /home/emilio/Documents/ai/pizza/scripts/demo_power_management.py: Execution failed with error: Traceback (most recent call last):
+  File "/home/emilio/Documents/ai/pizza/scripts/demo_power_management.py", line 19, in <module>
+    from src.emulator import RP2040Emulator
+ModuleNotFoundError: No module named 'src.emulator'
+
+[2025-05-14 03:14:17,794] [WARNING] Validation passed with warnings for /home/emilio/Documents/ai/pizza/scripts/demo_power_management.py
+[2025-05-14 03:14:17,794] [INFO] Validating script: analyze_performance_logs.py
+[2025-05-14 03:14:18,499] [INFO] Validation passed for /home/emilio/Documents/ai/pizza/scripts/analyze_performance_logs.py
+[2025-05-14 03:14:18,499] [INFO] Validating script: simulate_memory_constraints.py
+[2025-05-14 03:14:18,762] [WARNING] Execution test issue in /home/emilio/Documents/ai/pizza/scripts/simulate_memory_constraints.py: Execution failed with error: Traceback (most recent call last):
+  File "/home/emilio/Documents/ai/pizza/scripts/simulate_memory_constraints.py", line 17, in <module>
+    from src.constants import (
+ImportError: cannot import name 'RP2040_CLOCK_SPEED_MHZ' from 'src.constants' (/home/emilio/Documents/ai/pizza/src/constants.py). Did you mean: 'RP2040_CLOCK_SPEED'?
+
+[2025-05-14 03:14:18,764] [WARNING] Validation passed with warnings for /home/emilio/Documents/ai/pizza/scripts/simulate_memory_constraints.py
+[2025-05-14 03:14:18,764] [INFO] Validating script: simulate_clahe_resources.py
+[2025-05-14 03:14:19,062] [INFO] Validation passed for /home/emilio/Documents/ai/pizza/scripts/simulate_clahe_resources.py
+[2025-05-14 03:14:19,062] [INFO] Validating script: run_pizza_tests.py
+[2025-05-14 03:14:19,088] [INFO] Validation passed for /home/emilio/Documents/ai/pizza/scripts/run_pizza_tests.py
+[2025-05-14 03:14:19,088] [INFO] Validating script: run_pruning_clustering.py
+[2025-05-14 03:14:19,090] [WARNING] Missing dependencies in /home/emilio/Documents/ai/pizza/scripts/run_pruning_clustering.py: config, scripts
+[2025-05-14 03:14:20,966] [WARNING] Validation passed with warnings for /home/emilio/Documents/ai/pizza/scripts/run_pruning_clustering.py
+[2025-05-14 03:14:20,966] [INFO] Validating script: augment_dataset.py
+[2025-05-14 03:14:21,081] [INFO] Validation passed for /home/emilio/Documents/ai/pizza/scripts/augment_dataset.py
+[2025-05-14 03:14:21,081] [INFO] Validating script: train_pizza_model.py
+[2025-05-14 03:14:22,880] [INFO] Validation passed for /home/emilio/Documents/ai/pizza/scripts/train_pizza_model.py
+[2025-05-14 03:14:22,880] [INFO] Validating script: simulate_lighting_conditions.py
+[2025-05-14 03:14:23,139] [WARNING] Execution test issue in /home/emilio/Documents/ai/pizza/scripts/simulate_lighting_conditions.py: Execution failed with error: Traceback (most recent call last):
+  File "/home/emilio/Documents/ai/pizza/scripts/simulate_lighting_conditions.py", line 17, in <module>
+    from src.emulator import RP2040Emulator
+ModuleNotFoundError: No module named 'src.emulator'
+
+[2025-05-14 03:14:23,140] [WARNING] Validation passed with warnings for /home/emilio/Documents/ai/pizza/scripts/simulate_lighting_conditions.py
+[2025-05-14 03:14:23,140] [INFO] Validating script: quantization_aware_training.py
+[2025-05-14 03:14:24,992] [INFO] Validation passed for /home/emilio/Documents/ai/pizza/scripts/quantization_aware_training.py
+[2025-05-14 03:14:24,992] [INFO] Validating script: simulate_power_consumption.py
+[2025-05-14 03:14:25,261] [WARNING] Execution test issue in /home/emilio/Documents/ai/pizza/scripts/simulate_power_consumption.py: Execution failed with error: Traceback (most recent call last):
+  File "/home/emilio/Documents/ai/pizza/scripts/simulate_power_consumption.py", line 18, in <module>
+    from src.constants import (
+ImportError: cannot import name 'RP2040_CLOCK_SPEED_MHZ' from 'src.constants' (/home/emilio/Documents/ai/pizza/src/constants.py). Did you mean: 'RP2040_CLOCK_SPEED'?
+
+[2025-05-14 03:14:25,262] [WARNING] Validation passed with warnings for /home/emilio/Documents/ai/pizza/scripts/simulate_power_consumption.py
+[2025-05-14 03:14:25,262] [INFO] Validating script: generate_pizza_dataset.py
+[2025-05-14 03:14:30,590] [WARNING] Execution test issue in /home/emilio/Documents/ai/pizza/scripts/generate_pizza_dataset.py: Execution timed out (> 5 seconds)
+[2025-05-14 03:14:30,592] [WARNING] Validation passed with warnings for /home/emilio/Documents/ai/pizza/scripts/generate_pizza_dataset.py
+[2025-05-14 03:14:30,592] [INFO] Validating script: hyperparameter_search.py
+[2025-05-14 03:14:32,892] [INFO] Validation passed for /home/emilio/Documents/ai/pizza/scripts/hyperparameter_search.py
+[2025-05-14 03:14:32,892] [INFO] Validating script: extract_frames.py
+[2025-05-14 03:14:32,900] [WARNING] Missing or incomplete docstring in /home/emilio/Documents/ai/pizza/scripts/extract_frames.py
+[2025-05-14 03:14:32,900] [WARNING] Validation passed with warnings for /home/emilio/Documents/ai/pizza/scripts/extract_frames.py
+[2025-05-14 03:14:32,900] [INFO] Validating script: validate_integration.py
+[2025-05-14 03:14:32,932] [INFO] Validation passed for /home/emilio/Documents/ai/pizza/scripts/ci/validate_integration.py
+[2025-05-14 03:14:32,932] [INFO] Validating script: validate_scripts.py
+[2025-05-14 03:14:33,014] [INFO] Validation passed for /home/emilio/Documents/ai/pizza/scripts/ci/validate_scripts.py
+[2025-05-14 03:14:33,015] [INFO] Validating script: generate_pipeline_report.py
+[2025-05-14 03:14:33,295] [INFO] Validation passed for /home/emilio/Documents/ai/pizza/scripts/ci/generate_pipeline_report.py
+[2025-05-14 03:14:33,295] [INFO] Validating script: generate_optimization_summary.py
+[2025-05-14 03:14:33,581] [INFO] Validation passed for /home/emilio/Documents/ai/pizza/scripts/ci/generate_optimization_summary.py
+[2025-05-14 03:14:33,581] [INFO] Validating script: weight_pruning.py
+[2025-05-14 03:14:33,590] [WARNING] Missing dependencies in /home/emilio/Documents/ai/pizza/scripts/model_optimization/weight_pruning.py: config
+[2025-05-14 03:14:35,388] [WARNING] Validation passed with warnings for /home/emilio/Documents/ai/pizza/scripts/model_optimization/weight_pruning.py
+[2025-05-14 03:14:35,389] [INFO] Validating script: micropizzanet_early_exit.py
+[2025-05-14 03:14:37,186] [INFO] Validation passed for /home/emilio/Documents/ai/pizza/scripts/early_exit/micropizzanet_early_exit.py
+[2025-05-14 03:14:37,186] [INFO] Validating script: verify_model.py
+[2025-05-14 03:14:38,733] [WARNING] Missing or incomplete docstring in /home/emilio/Documents/ai/pizza/models/rp2040_export/verify_model.py
+[2025-05-14 03:14:38,733] [WARNING] Validation passed with warnings for /home/emilio/Documents/ai/pizza/models/rp2040_export/verify_model.py
+[2025-05-14 03:14:38,733] [INFO] Validating script: pizza-baking-detection-final.py
+[2025-05-14 03:14:39,749] [WARNING] Missing dependencies in /home/emilio/Documents/ai/pizza/src/pizza-baking-detection-final.py: onnx_tf
+[2025-05-14 03:14:41,542] [WARNING] Execution test issue in /home/emilio/Documents/ai/pizza/src/pizza-baking-detection-final.py: Execution failed with error: 2025-05-14 03:14:41,179 - INFO - ================================================================================
+2025-05-14 03:14:41,179 - INFO - RP2040 PIZZA-ERKENNUNGSSYSTEM - DETAILLIERTE KONFIGURATION
+2025-05-14 03:14:41,179 - INFO - ================================================================================
+2025-05-14 03:14:41,179 - INFO - Hardware: RP2040 - 133MHz, 264KB RAM, 2048KB Flash
+2025-05-14 03:14:41,179 - INFO - Kamera: OV2640 - 320x240, 7 FPS
+2025-05-14 03:14:41,179 - INFO - Stromversorgung: CR123A - 1500mAh, 8.33h aktiv, 3000.00h standby
+2025-05-14 03:14:41,179 - INFO - Modellparameter: 48x48 Eingabegröße, 8-Bit Quantisierung
+2025-05-14 03:14:41,179 - INFO - Speicherbeschränkungen: Max. 180KB Modellgröße, 100KB Laufzeit-RAM
+2025-05-14 03:14:41,179 - INFO - ================================================================================
+2025-05-14 03:14:41,179 - INFO - Analysiere Datensatz in augmented_pizza...
+
+Analysiere Bilder:   0%|          | 0/1 [00:00<?, ?it/s]
+Analysiere Bilder: 100%|██████████| 1/1 [00:00<00:00, 71.92it/s]
+2025-05-14 03:14:41,195 - INFO - Datensatzanalyse abgeschlossen:
+2025-05-14 03:14:41,195 - INFO - Gesamtzahl der Bilder: 1
+2025-05-14 03:14:41,195 - INFO - Klassenverteilung: {'synthetic': 0, 'raw': 1, 'processed': 0}
+2025-05-14 03:14:41,195 - INFO - Durchschnittliche Bildgröße: 1024.0 x 768.0
+2025-05-14 03:14:41,195 - INFO - RGB-Mittelwerte: [0.7074, 0.5091, 0.3757]
+2025-05-14 03:14:41,195 - INFO - RGB-Standardabweichungen: [0.1738, 0.2057, 0.2330]
+2025-05-14 03:14:41,195 - INFO - Preparing optimized data loaders...
+2025-05-14 03:14:41,195 - INFO - Using dataset-specific normalization: mean=[0.70737098 0.50908235 0.37567216], std=[0.17381077 0.20568509 0.23304786]
+/home/emilio/Documents/ai/pizza/.venv/lib/python3.12/site-packages/torch/utils/data/dataset.py:473: UserWarning: Length of split at index 0 is 0. This might result in an empty dataset.
+  warnings.warn(
+2025-05-14 03:14:41,196 - ERROR - Fehler im Optimierungsprozess: num_samples should be a positive integer value, but got num_samples=0
+Traceback (most recent call last):
+  File "/home/emilio/Documents/ai/pizza/src/pizza-baking-detection-final.py", line 2253, in main
+    train_loader, val_loader, class_names, preprocessing_params = create_optimized_dataloaders(config, preprocessing_params)
+                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/emilio/Documents/ai/pizza/src/pizza-baking-detection-final.py", line 895, in create_optimized_dataloaders
+    sampler = WeightedRandomSampler(train_dataset.sample_weights, len(train_dataset), replacement=True)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/emilio/Documents/ai/pizza/.venv/lib/python3.12/site-packages/torch/utils/data/sampler.py", line 264, in __init__
+    raise ValueError(
+ValueError: num_samples should be a positive integer value, but got num_samples=0
+Traceback (most recent call last):
+  File "/home/emilio/Documents/ai/pizza/src/pizza-baking-detection-final.py", line 2321, in <module>
+    main()
+  File "/home/emilio/Documents/ai/pizza/src/pizza-baking-detection-final.py", line 2253, in main
+    train_loader, val_loader, class_names, preprocessing_params = create_optimized_dataloaders(config, preprocessing_params)
+                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/emilio/Documents/ai/pizza/src/pizza-baking-detection-final.py", line 895, in create_optimized_dataloaders
+    sampler = WeightedRandomSampler(train_dataset.sample_weights, len(train_dataset), replacement=True)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/emilio/Documents/ai/pizza/.venv/lib/python3.12/site-packages/torch/utils/data/sampler.py", line 264, in __init__
+    raise ValueError(
+ValueError: num_samples should be a positive integer value, but got num_samples=0
+
+[2025-05-14 03:14:41,555] [WARNING] Missing or incomplete docstring in /home/emilio/Documents/ai/pizza/src/pizza-baking-detection-final.py
+[2025-05-14 03:14:41,555] [WARNING] Validation passed with warnings for /home/emilio/Documents/ai/pizza/src/pizza-baking-detection-final.py
+[2025-05-14 03:14:41,555] [INFO] Validating script: metrics.py
+[2025-05-14 03:14:42,645] [INFO] Validation passed for /home/emilio/Documents/ai/pizza/src/metrics.py
+[2025-05-14 03:14:42,645] [INFO] Validating script: __init__.py
+[2025-05-14 03:14:42,655] [WARNING] Missing or incomplete docstring in /home/emilio/Documents/ai/pizza/src/__init__.py
+[2025-05-14 03:14:42,655] [WARNING] Validation passed with warnings for /home/emilio/Documents/ai/pizza/src/__init__.py
+[2025-05-14 03:14:42,655] [INFO] Validating script: pizza_detector.py
+[2025-05-14 03:14:42,677] [WARNING] Missing dependencies in /home/emilio/Documents/ai/pizza/src/pizza_detector.py: onnx_tf
+[2025-05-14 03:14:44,578] [WARNING] Execution test issue in /home/emilio/Documents/ai/pizza/src/pizza_detector.py: Execution failed with error: 2025-05-14 03:14:44,222 - INFO - ================================================================================
+2025-05-14 03:14:44,222 - INFO - RP2040 PIZZA-ERKENNUNGSSYSTEM - DETAILLIERTE KONFIGURATION
+2025-05-14 03:14:44,222 - INFO - ================================================================================
+2025-05-14 03:14:44,222 - INFO - Hardware: RP2040 - 133MHz, 264KB RAM, 2048KB Flash
+2025-05-14 03:14:44,222 - INFO - Kamera: OV2640 - 320x240, 7 FPS
+2025-05-14 03:14:44,222 - INFO - Stromversorgung: CR123A - 1500mAh, 8.33h aktiv, 3000.00h standby
+2025-05-14 03:14:44,222 - INFO - Modellparameter: 48x48 Eingabegröße, 8-Bit Quantisierung
+2025-05-14 03:14:44,222 - INFO - Speicherbeschränkungen: Max. 180KB Modellgröße, 100KB Laufzeit-RAM
+2025-05-14 03:14:44,222 - INFO - ================================================================================
+2025-05-14 03:14:44,222 - INFO - Analysiere Datensatz in augmented_pizza...
+
+Analysiere Bilder:   0%|          | 0/1 [00:00<?, ?it/s]
+Analysiere Bilder: 100%|██████████| 1/1 [00:00<00:00, 87.95it/s]
+2025-05-14 03:14:44,235 - INFO - Datensatzanalyse abgeschlossen:
+2025-05-14 03:14:44,235 - INFO - Gesamtzahl der Bilder: 1
+2025-05-14 03:14:44,235 - INFO - Klassenverteilung: {'synthetic': 0, 'raw': 1, 'processed': 0}
+2025-05-14 03:14:44,235 - INFO - Durchschnittliche Bildgröße: 1024.0 x 768.0
+2025-05-14 03:14:44,235 - INFO - RGB-Mittelwerte: [0.7074, 0.5091, 0.3757]
+2025-05-14 03:14:44,235 - INFO - RGB-Standardabweichungen: [0.1738, 0.2057, 0.2330]
+2025-05-14 03:14:44,235 - INFO - Preparing optimized data loaders...
+2025-05-14 03:14:44,235 - INFO - Using dataset-specific normalization: mean=[0.70737098 0.50908235 0.37567216], std=[0.17381077 0.20568509 0.23304786]
+/home/emilio/Documents/ai/pizza/.venv/lib/python3.12/site-packages/torch/utils/data/dataset.py:473: UserWarning: Length of split at index 0 is 0. This might result in an empty dataset.
+  warnings.warn(
+2025-05-14 03:14:44,236 - ERROR - Fehler im Optimierungsprozess: num_samples should be a positive integer value, but got num_samples=0
+Traceback (most recent call last):
+  File "/home/emilio/Documents/ai/pizza/src/pizza_detector.py", line 2498, in main
+    train_loader, val_loader, class_names, preprocessing_params = create_optimized_dataloaders(config, preprocessing_params)
+                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/emilio/Documents/ai/pizza/src/pizza_detector.py", line 896, in create_optimized_dataloaders
+    sampler = WeightedRandomSampler(train_dataset.sample_weights, len(train_dataset), replacement=True)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/emilio/Documents/ai/pizza/.venv/lib/python3.12/site-packages/torch/utils/data/sampler.py", line 264, in __init__
+    raise ValueError(
+ValueError: num_samples should be a positive integer value, but got num_samples=0
+Traceback (most recent call last):
+  File "/home/emilio/Documents/ai/pizza/src/pizza_detector.py", line 2566, in <module>
+    main()
+  File "/home/emilio/Documents/ai/pizza/src/pizza_detector.py", line 2498, in main
+    train_loader, val_loader, class_names, preprocessing_params = create_optimized_dataloaders(config, preprocessing_params)
+                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/emilio/Documents/ai/pizza/src/pizza_detector.py", line 896, in create_optimized_dataloaders
+    sampler = WeightedRandomSampler(train_dataset.sample_weights, len(train_dataset), replacement=True)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/emilio/Documents/ai/pizza/.venv/lib/python3.12/site-packages/torch/utils/data/sampler.py", line 264, in __init__
+    raise ValueError(
+ValueError: num_samples should be a positive integer value, but got num_samples=0
+
+[2025-05-14 03:14:44,587] [WARNING] Missing or incomplete docstring in /home/emilio/Documents/ai/pizza/src/pizza_detector.py
+[2025-05-14 03:14:44,587] [WARNING] Validation passed with warnings for /home/emilio/Documents/ai/pizza/src/pizza_detector.py
+[2025-05-14 03:14:44,588] [INFO] Validating script: constants.py
+[2025-05-14 03:14:44,606] [INFO] Validation passed for /home/emilio/Documents/ai/pizza/src/constants.py
+[2025-05-14 03:14:44,606] [INFO] Validating script: test_frame_buffer.py
+[2025-05-14 03:14:44,609] [WARNING] Missing dependencies in /home/emilio/Documents/ai/pizza/src/emulation/test_frame_buffer.py: frame_buffer
+[2025-05-14 03:14:44,685] [WARNING] Validation passed with warnings for /home/emilio/Documents/ai/pizza/src/emulation/test_frame_buffer.py
+[2025-05-14 03:14:44,686] [INFO] Validating script: emulator-test.py
+[2025-05-14 03:14:44,785] [WARNING] Missing or incomplete docstring in /home/emilio/Documents/ai/pizza/src/emulation/emulator-test.py
+[2025-05-14 03:14:44,785] [WARNING] Validation passed with warnings for /home/emilio/Documents/ai/pizza/src/emulation/emulator-test.py
+[2025-05-14 03:14:44,785] [INFO] Validating script: emulator.py
+[2025-05-14 03:14:44,790] [WARNING] Missing dependencies in /home/emilio/Documents/ai/pizza/src/emulation/emulator.py: constants, frame_buffer, power_manager, exceptions
+[2025-05-14 03:14:44,856] [WARNING] Execution test issue in /home/emilio/Documents/ai/pizza/src/emulation/emulator.py: Execution failed with error: Traceback (most recent call last):
+  File "/home/emilio/Documents/ai/pizza/src/emulation/emulator.py", line 12, in <module>
+    from .constants import (
+ImportError: attempted relative import with no known parent package
+
+[2025-05-14 03:14:44,858] [WARNING] Validation passed with warnings for /home/emilio/Documents/ai/pizza/src/emulation/emulator.py
+[2025-05-14 03:14:44,858] [INFO] Validating script: frame_buffer.py
+[2025-05-14 03:14:44,922] [INFO] Validation passed for /home/emilio/Documents/ai/pizza/src/emulation/frame_buffer.py
+[2025-05-14 03:14:44,922] [INFO] Validating script: metrics.py
+[2025-05-14 03:14:44,927] [WARNING] Missing dependencies in /home/emilio/Documents/ai/pizza/src/analysis/metrics.py: constants, exceptions
+[2025-05-14 03:14:46,314] [WARNING] Execution test issue in /home/emilio/Documents/ai/pizza/src/analysis/metrics.py: Execution failed with error: Traceback (most recent call last):
+  File "/home/emilio/Documents/ai/pizza/src/analysis/metrics.py", line 16, in <module>
+    from .types import (
+ImportError: attempted relative import with no known parent package
+
+[2025-05-14 03:14:46,316] [WARNING] Validation passed with warnings for /home/emilio/Documents/ai/pizza/src/analysis/metrics.py
+[2025-05-14 03:14:46,316] [INFO] Validating script: models.py
+[2025-05-14 03:14:46,615] [WARNING] Missing or incomplete docstring in /home/emilio/Documents/ai/pizza/src/chatlist_ki/models.py
+[2025-05-14 03:14:46,615] [WARNING] Validation passed with warnings for /home/emilio/Documents/ai/pizza/src/chatlist_ki/models.py
+[2025-05-14 03:14:46,615] [INFO] Validating script: __main__.py
+[2025-05-14 03:14:46,616] [WARNING] Missing dependencies in /home/emilio/Documents/ai/pizza/src/chatlist_ki/__main__.py: chat_interface, models, database
+[2025-05-14 03:14:46,625] [WARNING] Execution test issue in /home/emilio/Documents/ai/pizza/src/chatlist_ki/__main__.py: Execution failed with error: Traceback (most recent call last):
+  File "/home/emilio/Documents/ai/pizza/src/chatlist_ki/__main__.py", line 1, in <module>
+    from .chat_interface import ChatInterface
+ImportError: attempted relative import with no known parent package
+
+[2025-05-14 03:14:46,626] [WARNING] Missing or incomplete docstring in /home/emilio/Documents/ai/pizza/src/chatlist_ki/__main__.py
+[2025-05-14 03:14:46,626] [WARNING] Validation passed with warnings for /home/emilio/Documents/ai/pizza/src/chatlist_ki/__main__.py
+[2025-05-14 03:14:46,626] [INFO] Validating script: __init__.py
+[2025-05-14 03:14:46,626] [WARNING] Missing dependencies in /home/emilio/Documents/ai/pizza/src/chatlist_ki/__init__.py: chat_interface, models, database
+[2025-05-14 03:14:46,634] [WARNING] Execution test issue in /home/emilio/Documents/ai/pizza/src/chatlist_ki/__init__.py: Execution failed with error: Traceback (most recent call last):
+  File "/home/emilio/Documents/ai/pizza/src/chatlist_ki/__init__.py", line 1, in <module>
+    from .models import Task, TaskStatus
+ImportError: attempted relative import with no known parent package
+
+[2025-05-14 03:14:46,634] [WARNING] Missing or incomplete docstring in /home/emilio/Documents/ai/pizza/src/chatlist_ki/__init__.py
+[2025-05-14 03:14:46,634] [WARNING] Validation passed with warnings for /home/emilio/Documents/ai/pizza/src/chatlist_ki/__init__.py
+[2025-05-14 03:14:46,634] [INFO] Validating script: api.py
+[2025-05-14 03:14:46,796] [WARNING] Missing dependencies in /home/emilio/Documents/ai/pizza/src/chatlist_ki/api.py: models, database
+[2025-05-14 03:14:47,021] [WARNING] Execution test issue in /home/emilio/Documents/ai/pizza/src/chatlist_ki/api.py: Execution failed with error: Traceback (most recent call last):
+  File "/home/emilio/Documents/ai/pizza/src/chatlist_ki/api.py", line 5, in <module>
+    from .database import Database, TaskManager
+ImportError: attempted relative import with no known parent package
+
+[2025-05-14 03:14:47,022] [WARNING] Missing or incomplete docstring in /home/emilio/Documents/ai/pizza/src/chatlist_ki/api.py
+[2025-05-14 03:14:47,022] [WARNING] Validation passed with warnings for /home/emilio/Documents/ai/pizza/src/chatlist_ki/api.py
+[2025-05-14 03:14:47,022] [INFO] Validating script: database.py
+[2025-05-14 03:14:47,026] [WARNING] Missing dependencies in /home/emilio/Documents/ai/pizza/src/chatlist_ki/database.py: models
+[2025-05-14 03:14:47,215] [WARNING] Execution test issue in /home/emilio/Documents/ai/pizza/src/chatlist_ki/database.py: Execution failed with error: Traceback (most recent call last):
+  File "/home/emilio/Documents/ai/pizza/src/chatlist_ki/database.py", line 4, in <module>
+    from .models import Base, Task, TaskStatus
+ImportError: attempted relative import with no known parent package
+
+[2025-05-14 03:14:47,215] [WARNING] Missing or incomplete docstring in /home/emilio/Documents/ai/pizza/src/chatlist_ki/database.py
+[2025-05-14 03:14:47,215] [WARNING] Validation passed with warnings for /home/emilio/Documents/ai/pizza/src/chatlist_ki/database.py
+[2025-05-14 03:14:47,215] [INFO] Validating script: chat_interface.py
+[2025-05-14 03:14:47,218] [WARNING] Missing dependencies in /home/emilio/Documents/ai/pizza/src/chatlist_ki/chat_interface.py: models, database
+[2025-05-14 03:14:47,234] [WARNING] Execution test issue in /home/emilio/Documents/ai/pizza/src/chatlist_ki/chat_interface.py: Execution failed with error: Traceback (most recent call last):
+  File "/home/emilio/Documents/ai/pizza/src/chatlist_ki/chat_interface.py", line 2, in <module>
+    from .database import TaskManager, Database
+ImportError: attempted relative import with no known parent package
+
+[2025-05-14 03:14:47,235] [WARNING] Missing or incomplete docstring in /home/emilio/Documents/ai/pizza/src/chatlist_ki/chat_interface.py
+[2025-05-14 03:14:47,235] [WARNING] Validation passed with warnings for /home/emilio/Documents/ai/pizza/src/chatlist_ki/chat_interface.py
+[2025-05-14 03:14:47,235] [INFO] Validating script: status_display.py
+[2025-05-14 03:14:47,241] [WARNING] Missing dependencies in /home/emilio/Documents/ai/pizza/src/visualization/status_display.py: ssd1306, machine
+[2025-05-14 03:14:47,263] [WARNING] Execution test issue in /home/emilio/Documents/ai/pizza/src/visualization/status_display.py: Execution failed with error: Traceback (most recent call last):
+  File "/home/emilio/Documents/ai/pizza/src/visualization/status_display.py", line 22, in <module>
+    from src.types import InferenceResult
+ModuleNotFoundError: No module named 'src'
+
+[2025-05-14 03:14:47,265] [WARNING] Validation passed with warnings for /home/emilio/Documents/ai/pizza/src/visualization/status_display.py
+[2025-05-14 03:14:47,265] [INFO] Validating script: visualization.py
+[2025-05-14 03:14:47,281] [WARNING] Missing dependencies in /home/emilio/Documents/ai/pizza/src/visualization/visualization.py: constants
+[2025-05-14 03:14:49,043] [WARNING] Execution test issue in /home/emilio/Documents/ai/pizza/src/visualization/visualization.py: Execution failed with error: Traceback (most recent call last):
+  File "/home/emilio/Documents/ai/pizza/src/visualization/visualization.py", line 15, in <module>
+    from .types import (
+ImportError: attempted relative import with no known parent package
+
+[2025-05-14 03:14:49,045] [WARNING] Validation passed with warnings for /home/emilio/Documents/ai/pizza/src/visualization/visualization.py
+[2025-05-14 03:14:49,045] [INFO] Validating script: exceptions.py
+[2025-05-14 03:14:49,054] [INFO] Validation passed for /home/emilio/Documents/ai/pizza/src/utils/exceptions.py
+[2025-05-14 03:14:49,054] [INFO] Validating script: types.py
+[2025-05-14 03:14:49,073] [WARNING] Execution test issue in /home/emilio/Documents/ai/pizza/src/utils/types.py: Execution failed with error: Traceback (most recent call last):
+  File "/home/emilio/Documents/ai/pizza/src/utils/types.py", line 5, in <module>
+    from typing import Dict, List, Tuple, Optional, Union, NamedTuple, Callable
+  File "/usr/lib/python3.12/typing.py", line 27, in <module>
+    import contextlib
+  File "/usr/lib/python3.12/contextlib.py", line 7, in <module>
+    from functools import wraps
+  File "/usr/lib/python3.12/functools.py", line 22, in <module>
+    from types import GenericAlias
+  File "/home/emilio/Documents/ai/pizza/src/utils/types.py", line 5, in <module>
+    from typing import Dict, List, Tuple, Optional, Union, NamedTuple, Callable
+ImportError: cannot import name 'Dict' from partially initialized module 'typing' (most likely due to a circular import) (/usr/lib/python3.12/typing.py)
+
+[2025-05-14 03:14:49,073] [WARNING] Validation passed with warnings for /home/emilio/Documents/ai/pizza/src/utils/types.py
+[2025-05-14 03:14:49,073] [INFO] Validating script: power_manager.py
+[2025-05-14 03:14:49,078] [WARNING] Missing dependencies in /home/emilio/Documents/ai/pizza/src/utils/power_manager.py: constants, metrics, devices
+[2025-05-14 03:14:49,091] [WARNING] Execution test issue in /home/emilio/Documents/ai/pizza/src/utils/power_manager.py: Execution failed with error: Traceback (most recent call last):
+  File "/home/emilio/Documents/ai/pizza/src/utils/power_manager.py", line 7, in <module>
+    import logging
+  File "/usr/lib/python3.12/logging/__init__.py", line 26, in <module>
+    import sys, os, time, io, re, traceback, warnings, weakref, collections.abc
+  File "/usr/lib/python3.12/re/__init__.py", line 124, in <module>
+    import enum
+  File "/usr/lib/python3.12/enum.py", line 3, in <module>
+    from types import MappingProxyType, DynamicClassAttribute
+  File "/home/emilio/Documents/ai/pizza/src/utils/types.py", line 5, in <module>
+    from typing import Dict, List, Tuple, Optional, Union, NamedTuple, Callable
+  File "/usr/lib/python3.12/typing.py", line 27, in <module>
+    import contextlib
+  File "/usr/lib/python3.12/contextlib.py", line 7, in <module>
+    from functools import wraps
+  File "/usr/lib/python3.12/functools.py", line 22, in <module>
+    from types import GenericAlias
+ImportError: cannot import name 'GenericAlias' from partially initialized module 'types' (most likely due to a circular import) (/home/emilio/Documents/ai/pizza/src/utils/types.py)
+
+[2025-05-14 03:14:49,093] [WARNING] Validation passed with warnings for /home/emilio/Documents/ai/pizza/src/utils/power_manager.py
+[2025-05-14 03:14:49,093] [INFO] Validating script: devices.py
+[2025-05-14 03:14:49,094] [WARNING] Missing dependencies in /home/emilio/Documents/ai/pizza/src/utils/devices.py: constants, exceptions
+[2025-05-14 03:14:49,114] [WARNING] Execution test issue in /home/emilio/Documents/ai/pizza/src/utils/devices.py: Execution failed with error: Traceback (most recent call last):
+  File "/home/emilio/Documents/ai/pizza/src/utils/devices.py", line 6, in <module>
+    import logging
+  File "/usr/lib/python3.12/logging/__init__.py", line 26, in <module>
+    import sys, os, time, io, re, traceback, warnings, weakref, collections.abc
+  File "/usr/lib/python3.12/re/__init__.py", line 124, in <module>
+    import enum
+  File "/usr/lib/python3.12/enum.py", line 3, in <module>
+    from types import MappingProxyType, DynamicClassAttribute
+  File "/home/emilio/Documents/ai/pizza/src/utils/types.py", line 5, in <module>
+    from typing import Dict, List, Tuple, Optional, Union, NamedTuple, Callable
+  File "/usr/lib/python3.12/typing.py", line 27, in <module>
+    import contextlib
+  File "/usr/lib/python3.12/contextlib.py", line 7, in <module>
+    from functools import wraps
+  File "/usr/lib/python3.12/functools.py", line 22, in <module>
+    from types import GenericAlias
+ImportError: cannot import name 'GenericAlias' from partially initialized module 'types' (most likely due to a circular import) (/home/emilio/Documents/ai/pizza/src/utils/types.py)
+
+[2025-05-14 03:14:49,115] [WARNING] Validation passed with warnings for /home/emilio/Documents/ai/pizza/src/utils/devices.py
+[2025-05-14 03:14:49,115] [INFO] Validating script: validation.py
+[2025-05-14 03:14:49,117] [WARNING] Missing dependencies in /home/emilio/Documents/ai/pizza/src/utils/validation.py: constants, exceptions
+[2025-05-14 03:14:49,136] [WARNING] Execution test issue in /home/emilio/Documents/ai/pizza/src/utils/validation.py: Execution failed with error: Traceback (most recent call last):
+  File "/home/emilio/Documents/ai/pizza/src/utils/validation.py", line 6, in <module>
+    import json
+  File "/usr/lib/python3.12/json/__init__.py", line 106, in <module>
+    from .decoder import JSONDecoder, JSONDecodeError
+  File "/usr/lib/python3.12/json/decoder.py", line 3, in <module>
+    import re
+  File "/usr/lib/python3.12/re/__init__.py", line 124, in <module>
+    import enum
+  File "/usr/lib/python3.12/enum.py", line 3, in <module>
+    from types import MappingProxyType, DynamicClassAttribute
+  File "/home/emilio/Documents/ai/pizza/src/utils/types.py", line 5, in <module>
+    from typing import Dict, List, Tuple, Optional, Union, NamedTuple, Callable
+  File "/usr/lib/python3.12/typing.py", line 27, in <module>
+    import contextlib
+  File "/usr/lib/python3.12/contextlib.py", line 7, in <module>
+    from functools import wraps
+  File "/usr/lib/python3.12/functools.py", line 22, in <module>
+    from types import GenericAlias
+ImportError: cannot import name 'GenericAlias' from partially initialized module 'types' (most likely due to a circular import) (/home/emilio/Documents/ai/pizza/src/utils/types.py)
+
+[2025-05-14 03:14:49,137] [WARNING] Validation passed with warnings for /home/emilio/Documents/ai/pizza/src/utils/validation.py
+[2025-05-14 03:14:49,137] [INFO] Validating script: memory.py
+[2025-05-14 03:14:49,138] [WARNING] Missing dependencies in /home/emilio/Documents/ai/pizza/src/utils/memory.py: exceptions, constants
+[2025-05-14 03:14:49,157] [WARNING] Execution test issue in /home/emilio/Documents/ai/pizza/src/utils/memory.py: Execution failed with error: Traceback (most recent call last):
+  File "/home/emilio/Documents/ai/pizza/src/utils/memory.py", line 5, in <module>
+    import torch
+  File "/home/emilio/Documents/ai/pizza/.venv/lib/python3.12/site-packages/torch/__init__.py", line 14, in <module>
+    import ctypes
+  File "/usr/lib/python3.12/ctypes/__init__.py", line 4, in <module>
+    import types as _types
+  File "/home/emilio/Documents/ai/pizza/src/utils/types.py", line 5, in <module>
+    from typing import Dict, List, Tuple, Optional, Union, NamedTuple, Callable
+  File "/usr/lib/python3.12/typing.py", line 27, in <module>
+    import contextlib
+  File "/usr/lib/python3.12/contextlib.py", line 7, in <module>
+    from functools import wraps
+  File "/usr/lib/python3.12/functools.py", line 22, in <module>
+    from types import GenericAlias
+ImportError: cannot import name 'GenericAlias' from partially initialized module 'types' (most likely due to a circular import) (/home/emilio/Documents/ai/pizza/src/utils/types.py)
+
+[2025-05-14 03:14:49,158] [WARNING] Validation passed with warnings for /home/emilio/Documents/ai/pizza/src/utils/memory.py
+[2025-05-14 03:14:49,158] [INFO] Validating script: temporal_smoother.py
+[2025-05-14 03:14:49,187] [WARNING] Execution test issue in /home/emilio/Documents/ai/pizza/src/utils/temporal_smoother.py: Execution failed with error: Traceback (most recent call last):
+  File "/home/emilio/Documents/ai/pizza/src/utils/temporal_smoother.py", line 9, in <module>
+    import numpy as np
+  File "/home/emilio/Documents/ai/pizza/.venv/lib/python3.12/site-packages/numpy/__init__.py", line 92, in <module>
+    from ._globals import _NoValue, _CopyMode
+  File "/home/emilio/Documents/ai/pizza/.venv/lib/python3.12/site-packages/numpy/_globals.py", line 18, in <module>
+    import enum
+  File "/usr/lib/python3.12/enum.py", line 3, in <module>
+    from types import MappingProxyType, DynamicClassAttribute
+  File "/home/emilio/Documents/ai/pizza/src/utils/types.py", line 5, in <module>
+    from typing import Dict, List, Tuple, Optional, Union, NamedTuple, Callable
+  File "/usr/lib/python3.12/typing.py", line 27, in <module>
+    import contextlib
+  File "/usr/lib/python3.12/contextlib.py", line 7, in <module>
+    from functools import wraps
+  File "/usr/lib/python3.12/functools.py", line 22, in <module>
+    from types import GenericAlias
+ImportError: cannot import name 'GenericAlias' from partially initialized module 'types' (most likely due to a circular import) (/home/emilio/Documents/ai/pizza/src/utils/types.py)
+
+[2025-05-14 03:14:49,188] [WARNING] Validation passed with warnings for /home/emilio/Documents/ai/pizza/src/utils/temporal_smoother.py
+[2025-05-14 03:14:49,188] [INFO] Validating script: utils.py
+[2025-05-14 03:14:49,213] [WARNING] Execution test issue in /home/emilio/Documents/ai/pizza/src/utils/utils.py: Execution failed with error: Traceback (most recent call last):
+  File "/home/emilio/Documents/ai/pizza/src/utils/utils.py", line 6, in <module>
+    import logging
+  File "/usr/lib/python3.12/logging/__init__.py", line 26, in <module>
+    import sys, os, time, io, re, traceback, warnings, weakref, collections.abc
+  File "/usr/lib/python3.12/re/__init__.py", line 124, in <module>
+    import enum
+  File "/usr/lib/python3.12/enum.py", line 3, in <module>
+    from types import MappingProxyType, DynamicClassAttribute
+  File "/home/emilio/Documents/ai/pizza/src/utils/types.py", line 5, in <module>
+    from typing import Dict, List, Tuple, Optional, Union, NamedTuple, Callable
+  File "/usr/lib/python3.12/typing.py", line 27, in <module>
+    import contextlib
+  File "/usr/lib/python3.12/contextlib.py", line 7, in <module>
+    from functools import wraps
+  File "/usr/lib/python3.12/functools.py", line 22, in <module>
+    from types import GenericAlias
+ImportError: cannot import name 'GenericAlias' from partially initialized module 'types' (most likely due to a circular import) (/home/emilio/Documents/ai/pizza/src/utils/types.py)
+
+[2025-05-14 03:14:49,214] [WARNING] Validation passed with warnings for /home/emilio/Documents/ai/pizza/src/utils/utils.py
+[2025-05-14 03:14:49,214] [INFO] Validating script: constants.py
+[2025-05-14 03:14:49,235] [WARNING] Execution test issue in /home/emilio/Documents/ai/pizza/src/utils/constants.py: Execution failed with error: Traceback (most recent call last):
+  File "/home/emilio/Documents/ai/pizza/src/utils/constants.py", line 5, in <module>
+    from pathlib import Path
+  File "/usr/lib/python3.12/pathlib.py", line 8, in <module>
+    import fnmatch
+  File "/usr/lib/python3.12/fnmatch.py", line 14, in <module>
+    import re
+  File "/usr/lib/python3.12/re/__init__.py", line 124, in <module>
+    import enum
+  File "/usr/lib/python3.12/enum.py", line 3, in <module>
+    from types import MappingProxyType, DynamicClassAttribute
+  File "/home/emilio/Documents/ai/pizza/src/utils/types.py", line 5, in <module>
+    from typing import Dict, List, Tuple, Optional, Union, NamedTuple, Callable
+  File "/usr/lib/python3.12/typing.py", line 27, in <module>
+    import contextlib
+  File "/usr/lib/python3.12/contextlib.py", line 7, in <module>
+    from functools import wraps
+  File "/usr/lib/python3.12/functools.py", line 22, in <module>
+    from types import GenericAlias
+ImportError: cannot import name 'GenericAlias' from partially initialized module 'types' (most likely due to a circular import) (/home/emilio/Documents/ai/pizza/src/utils/types.py)
+
+[2025-05-14 03:14:49,235] [WARNING] Validation passed with warnings for /home/emilio/Documents/ai/pizza/src/utils/constants.py
+[2025-05-14 03:14:49,235] [INFO] Validating script: enhanced_pizza_augmentation.py
+[2025-05-14 03:14:51,232] [WARNING] Execution test issue in /home/emilio/Documents/ai/pizza/src/augmentation/enhanced_pizza_augmentation.py: Execution failed with error: 
+[2025-05-14 03:14:51,241] [WARNING] Missing or incomplete docstring in /home/emilio/Documents/ai/pizza/src/augmentation/enhanced_pizza_augmentation.py
+[2025-05-14 03:14:51,241] [WARNING] Validation passed with warnings for /home/emilio/Documents/ai/pizza/src/augmentation/enhanced_pizza_augmentation.py
+[2025-05-14 03:14:51,241] [INFO] Validating script: augmentation_optimized.py
+[2025-05-14 03:14:53,296] [WARNING] Execution test issue in /home/emilio/Documents/ai/pizza/src/augmentation/augmentation_optimized.py: Execution failed with error: Traceback (most recent call last):
+  File "/home/emilio/Documents/ai/pizza/src/augmentation/augmentation_optimized.py", line 698, in <module>
+    main()
+  File "/home/emilio/Documents/ai/pizza/src/augmentation/augmentation_optimized.py", line 688, in main
+    augment_pizza_dataset(input_dir, output_dir, img_per_original=img_per_original, batch_size=batch_size)
+  File "/home/emilio/Documents/ai/pizza/src/augmentation/augmentation_optimized.py", line 512, in augment_pizza_dataset
+    image_files = [os.path.join(input_dir, f) for f in os.listdir(input_dir) 
+                                                       ^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/emilio/Documents/ai/pizza/img-pizza/'
+
+[2025-05-14 03:14:53,299] [WARNING] Missing or incomplete docstring in /home/emilio/Documents/ai/pizza/src/augmentation/augmentation_optimized.py
+[2025-05-14 03:14:53,299] [WARNING] Validation passed with warnings for /home/emilio/Documents/ai/pizza/src/augmentation/augmentation_optimized.py
+[2025-05-14 03:14:53,299] [INFO] Validating script: diffusion_pizza_generator.py
+[2025-05-14 03:14:57,626] [INFO] Validation passed for /home/emilio/Documents/ai/pizza/src/augmentation/diffusion_pizza_generator.py
+[2025-05-14 03:14:57,626] [INFO] Validating script: augmentation.py
+[2025-05-14 03:14:59,816] [WARNING] Execution test issue in /home/emilio/Documents/ai/pizza/src/augmentation/augmentation.py: Execution failed with error: 
+[2025-05-14 03:14:59,825] [WARNING] Missing or incomplete docstring in /home/emilio/Documents/ai/pizza/src/augmentation/augmentation.py
+[2025-05-14 03:14:59,825] [WARNING] Validation passed with warnings for /home/emilio/Documents/ai/pizza/src/augmentation/augmentation.py
+[2025-05-14 03:14:59,825] [INFO] Validating script: advanced_pizza_diffusion_control.py
+[2025-05-14 03:15:01,488] [WARNING] Execution test issue in /home/emilio/Documents/ai/pizza/src/augmentation/advanced_pizza_diffusion_control.py: Execution failed with error: Traceback (most recent call last):
+  File "/home/emilio/Documents/ai/pizza/src/augmentation/advanced_pizza_diffusion_control.py", line 36, in <module>
+    from src.augmentation.diffusion_pizza_generator import PizzaDiffusionGenerator, PIZZA_STAGES
+ModuleNotFoundError: No module named 'src'
+
+[2025-05-14 03:15:01,491] [WARNING] Validation passed with warnings for /home/emilio/Documents/ai/pizza/src/augmentation/advanced_pizza_diffusion_control.py
+[2025-05-14 03:15:01,491] [INFO] Validating script: optimized-pizza-augmentation.py
+[2025-05-14 03:15:03,672] [WARNING] Execution test issue in /home/emilio/Documents/ai/pizza/src/augmentation/optimized-pizza-augmentation.py: Execution failed with error: Traceback (most recent call last):
+  File "/home/emilio/Documents/ai/pizza/src/augmentation/optimized-pizza-augmentation.py", line 698, in <module>
+    main()
+  File "/home/emilio/Documents/ai/pizza/src/augmentation/optimized-pizza-augmentation.py", line 688, in main
+    augment_pizza_dataset(input_dir, output_dir, img_per_original=img_per_original, batch_size=batch_size)
+  File "/home/emilio/Documents/ai/pizza/src/augmentation/optimized-pizza-augmentation.py", line 512, in augment_pizza_dataset
+    image_files = [os.path.join(input_dir, f) for f in os.listdir(input_dir) 
+                                                       ^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/emilio/Documents/ai/pizza/img-pizza/'
+
+[2025-05-14 03:15:03,675] [WARNING] Missing or incomplete docstring in /home/emilio/Documents/ai/pizza/src/augmentation/optimized-pizza-augmentation.py
+[2025-05-14 03:15:03,675] [WARNING] Validation passed with warnings for /home/emilio/Documents/ai/pizza/src/augmentation/optimized-pizza-augmentation.py
+[2025-05-14 03:15:03,675] [INFO] Validating script: augment_legacy.py
+[2025-05-14 03:15:05,546] [WARNING] Execution test issue in /home/emilio/Documents/ai/pizza/src/legacy/augment_legacy.py: Execution failed with error: Traceback (most recent call last):
+  File "/home/emilio/Documents/ai/pizza/src/legacy/augment_legacy.py", line 176, in <module>
+    augment_pizza(input_dir, output_dir, num_images, batch_size) 
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/emilio/Documents/ai/pizza/src/legacy/augment_legacy.py", line 131, in augment_pizza
+    image_files = [os.path.join(input_dir, f) for f in os.listdir(input_dir) 
+                                                       ^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'img-pizza'
+
+[2025-05-14 03:15:05,547] [WARNING] Missing or incomplete docstring in /home/emilio/Documents/ai/pizza/src/legacy/augment_legacy.py
+[2025-05-14 03:15:05,547] [WARNING] Validation passed with warnings for /home/emilio/Documents/ai/pizza/src/legacy/augment_legacy.py
+[2025-05-14 03:15:05,547] [INFO] Validating script: diffusion_data_agent.py
+[2025-05-14 03:15:05,554] [WARNING] Missing dependencies in /home/emilio/Documents/ai/pizza/src/integration/diffusion_data_agent.py: cleanfid
+[2025-05-14 03:15:07,256] [WARNING] Validation passed with warnings for /home/emilio/Documents/ai/pizza/src/integration/diffusion_data_agent.py
+[2025-05-14 03:15:07,256] [INFO] Validating script: pizza_diffusion_integration.py
+[2025-05-14 03:15:07,262] [WARNING] Missing dependencies in /home/emilio/Documents/ai/pizza/src/integration/pizza_diffusion_integration.py: enhanced_pizza_augmentation, diffusion_data_agent, optimized_pizza_augmentation
+[2025-05-14 03:15:08,930] [WARNING] Execution test issue in /home/emilio/Documents/ai/pizza/src/integration/pizza_diffusion_integration.py: Execution failed with error: Traceback (most recent call last):
+  File "/home/emilio/Documents/ai/pizza/src/integration/pizza_diffusion_integration.py", line 29, in <module>
+    from enhanced_pizza_augmentation import (
+ModuleNotFoundError: No module named 'enhanced_pizza_augmentation'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/emilio/Documents/ai/pizza/src/integration/pizza_diffusion_integration.py", line 40, in <module>
+    from optimized_pizza_augmentation import (
+ModuleNotFoundError: No module named 'optimized_pizza_augmentation'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/emilio/Documents/ai/pizza/src/integration/pizza_diffusion_integration.py", line 49, in <module>
+    from test import (
+ImportError: cannot import name 'PizzaBurningEffect' from 'test' (/usr/lib/python3.12/test/__init__.py)
+
+[2025-05-14 03:15:08,932] [WARNING] Validation passed with warnings for /home/emilio/Documents/ai/pizza/src/integration/pizza_diffusion_integration.py
+[2025-05-14 03:15:08,932] [INFO] Validating script: diffusion_training_integration.py
+[2025-05-14 03:15:13,354] [INFO] Validation passed for /home/emilio/Documents/ai/pizza/src/integration/diffusion_training_integration.py
+[2025-05-14 03:15:13,355] [INFO] Validation complete. Summary: 27 passed, 48 with warnings, 0 failed
+[2025-05-14 03:15:13,356] [INFO] Report written to /home/emilio/Documents/ai/pizza/output/pipeline_runs/20250514_031349/reports/validation_report.json

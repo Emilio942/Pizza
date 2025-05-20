@@ -1,0 +1,85 @@
+{
+  "timestamp": "2025-05-14T03:39:15.775156",
+  "category_stats": {
+    "preprocessing": {
+      "total": 2,
+      "successful": 1,
+      "success_rate": 50.0,
+      "scripts": [
+        {
+          "name": "test_image_preprocessing.py",
+          "status": "success",
+          "duration": 4,
+          "retries": 0,
+          "log": "/home/emilio/Documents/ai/pizza/output/pipeline_runs/20250514_033552/logs/test_image_preprocessing.log",
+          "details": {}
+        },
+        {
+          "name": "augment_dataset.py",
+          "status": "failed",
+          "duration": 4,
+          "retries": 3,
+          "log": "/home/emilio/Documents/ai/pizza/output/pipeline_runs/20250514_033552/logs/augment_dataset.log",
+          "details": {}
+        }
+      ]
+    },
+    "testing": {
+      "total": 2,
+      "successful": 2,
+      "success_rate": 100.0,
+      "scripts": [
+        {
+          "name": "run_pizza_tests.py",
+          "status": "success",
+          "duration": 0,
+          "retries": 0,
+          "log": "/home/emilio/Documents/ai/pizza/output/pipeline_runs/20250514_033552/logs/run_pizza_tests.log",
+          "details": {}
+        },
+        {
+          "name": "test_temporal_smoothing.py",
+          "status": "success",
+          "duration": 3,
+          "retries": 0,
+          "log": "/home/emilio/Documents/ai/pizza/output/pipeline_runs/20250514_033552/logs/test_temporal_smoothing.log",
+          "details": {}
+        }
+      ]
+    },
+    "unknown": {
+      "total": 1,
+      "successful": 0,
+      "success_rate": 0.0,
+      "scripts": [
+        {
+          "name": "verify_model.py",
+          "status": "failed",
+          "duration": 4,
+          "retries": 3,
+          "log": "/home/emilio/Documents/ai/pizza/output/pipeline_runs/20250514_033552/logs/verify_model.log",
+          "details": {}
+        }
+      ]
+    }
+  },
+  "issues": [
+    {
+      "type": "failed_script",
+      "category": "preprocessing",
+      "script": "augment_dataset.py",
+      "details": "Script failed after 3 retries"
+    },
+    {
+      "type": "failed_script",
+      "category": "unknown",
+      "script": "verify_model.py",
+      "details": "Script failed after 3 retries"
+    }
+  ],
+  "summary": {
+    "total_categories": 3,
+    "total_issues": 2,
+    "overall_success_rate": 50.0
+  }
+}

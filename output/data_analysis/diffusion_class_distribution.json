@@ -1,0 +1,25 @@
+{
+  "timestamp": "2025-05-19T22:10:28.163053",
+  "total_images": 57,
+  "average_per_class": 9.5,
+  "class_distribution": {
+    "basic": 29,
+    "burnt": 4,
+    "combined": 17,
+    "mixed": 7,
+    "progression": 0,
+    "segment": 0
+  },
+  "underrepresented_classes": {
+    "burnt": 4,
+    "mixed": 7,
+    "progression": 0,
+    "segment": 0
+  },
+  "recommended_generation": {
+    "burnt": 10,
+    "mixed": 10,
+    "progression": 10,
+    "segment": 10
+  }
+}

@@ -1,0 +1,14 @@
+Testing model with images from ../../augmented_pizza
+Class: basic, Image: test_basic.jpg
+Prediction: combined with 37.7% confidence
+Class: burnt, Image: test_burnt.jpg
+Prediction: combined with 37.7% confidence
+Class: combined, Image: test_combined.jpg
+Prediction: combined with 37.7% confidence
+Class: mixed, Image: test_mixed.jpg
+Prediction: combined with 37.7% confidence
+Class: progression, Image: test_progression.jpg
+Prediction: combined with 37.7% confidence
+Class: segment, Image: test_segment.jpg
+Prediction: combined with 37.7% confidence
+Successfully tested 6/6 classes

@@ -1,0 +1,15 @@
+=== Projekt-Bereinigung ===
+Gelöscht: scripts/__pycache__
+Gelöscht: scripts/model_optimization/__pycache__
+Gelöscht: config/__pycache__
+Gelöscht: src/__pycache__
+Gelöscht: src/emulation/__pycache__
+Gelöscht: src/utils/__pycache__
+Gelöscht: src/augmentation/__pycache__
+Gelöscht: src/integration/__pycache__
+
+Bereinigung abgeschlossen: 8 Dateien/Verzeichnisse entfernt
+Bereinigt und neu erstellt: output/temp
+Bereinigt und neu erstellt: output/logs
+
+Bereinigung abgeschlossen!

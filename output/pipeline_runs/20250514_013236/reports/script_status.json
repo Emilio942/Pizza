@@ -1,0 +1,45 @@
+{
+  "pipeline_start": "2025-05-13T23:32:36Z",
+  "scripts": [
+    {
+      "name": "test_image_preprocessing.py",
+      "status": "success",
+      "duration": 6,
+      "retries": 0,
+      "log": "/home/emilio/Documents/ai/pizza/output/pipeline_runs/20250514_013236/logs/test_image_preprocessing.log",
+      "details": {}
+    },
+    {
+      "name": "augment_dataset.py",
+      "status": "failed",
+      "duration": 4,
+      "retries": 3,
+      "log": "/home/emilio/Documents/ai/pizza/output/pipeline_runs/20250514_013236/logs/augment_dataset.log",
+      "details": {}
+    },
+    {
+      "name": "run_pizza_tests.py",
+      "status": "success",
+      "duration": 0,
+      "retries": 0,
+      "log": "/home/emilio/Documents/ai/pizza/output/pipeline_runs/20250514_013236/logs/run_pizza_tests.log",
+      "details": {}
+    },
+    {
+      "name": "verify_model.py",
+      "status": "failed",
+      "duration": 4,
+      "retries": 3,
+      "log": "/home/emilio/Documents/ai/pizza/output/pipeline_runs/20250514_013236/logs/verify_model.log",
+      "details": {}
+    },
+    {
+      "name": "test_temporal_smoothing.py",
+      "status": "success",
+      "duration": 6,
+      "retries": 0,
+      "log": "/home/emilio/Documents/ai/pizza/output/pipeline_runs/20250514_013236/logs/test_temporal_smoothing.log",
+      "details": {}
+    }
+  ]
+}

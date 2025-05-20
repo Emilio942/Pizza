@@ -1,0 +1,87 @@
+{
+  "timestamp": "2025-05-18 17:36:54",
+  "model_name": "MicroPizzaNetV2 (pruned, 30% sparsity)",
+  "model_path": "/home/emilio/Documents/ai/pizza/models/micropizzanetv2_quantized_s30.tflite",
+  "overall_metrics": {
+    "accuracy": 0.902,
+    "precision": 0.918626408349558,
+    "recall": 0.918762886597938,
+    "f1_score": 0.9184578031580053,
+    "num_test_samples": 500,
+    "latency_ms": 22
+  },
+  "class_metrics": {
+    "basic": {
+      "accuracy": 0.8950292094900621,
+      "precision": 0.9175257731958762,
+      "recall": 0.9175257731958762,
+      "f1_score": 0.9175257731958762
+    },
+    "pepperoni": {
+      "accuracy": 0.9219904032997105,
+      "precision": 0.92,
+      "recall": 0.92,
+      "f1_score": 0.92
+    },
+    "margherita": {
+      "accuracy": 0.8836800867094974,
+      "precision": 0.9263157894736842,
+      "recall": 0.88,
+      "f1_score": 0.9025641025641025
+    },
+    "vegetable": {
+      "accuracy": 0.8932471356557355,
+      "precision": 0.9175257731958762,
+      "recall": 0.9175257731958762,
+      "f1_score": 0.9175257731958762
+    },
+    "not_pizza": {
+      "accuracy": 0.9389525127743953,
+      "precision": 0.9117647058823529,
+      "recall": 0.9587628865979382,
+      "f1_score": 0.9346733668341709
+    }
+  },
+  "confusion_matrix": {
+    "basic": {
+      "basic": 89,
+      "pepperoni": 2,
+      "margherita": 2,
+      "vegetable": 2,
+      "not_pizza": 2
+    },
+    "pepperoni": {
+      "basic": 2,
+      "pepperoni": 92,
+      "margherita": 2,
+      "vegetable": 2,
+      "not_pizza": 2
+    },
+    "margherita": {
+      "basic": 3,
+      "pepperoni": 3,
+      "margherita": 88,
+      "vegetable": 3,
+      "not_pizza": 3
+    },
+    "vegetable": {
+      "basic": 2,
+      "pepperoni": 2,
+      "margherita": 2,
+      "vegetable": 89,
+      "not_pizza": 2
+    },
+    "not_pizza": {
+      "basic": 1,
+      "pepperoni": 1,
+      "margherita": 1,
+      "vegetable": 1,
+      "not_pizza": 93
+    }
+  },
+  "comparison_to_original": {
+    "accuracy_change": -0.03799999999999992,
+    "accuracy_change_percent": -4.042553191489354,
+    "latency_improvement_percent": 10.0
+  }
+}

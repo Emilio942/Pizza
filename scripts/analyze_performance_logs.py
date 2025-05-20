@@ -179,7 +179,17 @@ class PerformanceLogAnalyzer:
         """
         if self.data is None or self.data.empty:
             logger.error("Keine Daten zum Analysieren verfügbar")
-            return {}
+            return {
+                "total_entries": 0,
+                "error": "Keine Daten zum Analysieren verfügbar",
+                "inference_time": {},
+                "ram_usage": {},
+                "cpu_load": {},
+                "temperature": {},
+                "predictions": {
+                    "class_distribution": {}
+                }
+            }
         
         # Grundlegende Statistiken
         stats = {

@@ -21,7 +21,7 @@
         <body>
             <div class="header">
                 <h1>MicroPizzaNet: Squeeze-and-Excitation Modellvergleich</h1>
-                <p>Generiert am 06.05.2025 00:20</p>
+                <p>Generiert am 14.05.2025 12:55</p>
             </div>
             
             <h2 class="section">Übersicht</h2>
@@ -92,9 +92,19 @@ class SqueezeExcitationModule(nn.Module):
                 </tr>
         
                 <tr class="highlight">
+                    <td>MicroPizzaNetWithSE (SE-Ratio=8)</td>
+                    <td>25.00%</td>
+                    <td>0.1000</td>
+                    <td>662</td>
+                    <td>2.8</td>
+                    <td>102.4</td>
+                    <td>7.8</td>
+                </tr>
+            
+                <tr>
                     <td>MicroPizzaNet (Original)</td>
-                    <td>41.67%</td>
-                    <td>0.4242</td>
+                    <td>8.33%</td>
+                    <td>0.1250</td>
                     <td>582</td>
                     <td>2.5</td>
                     <td>102.1</td>
@@ -108,17 +118,7 @@ class SqueezeExcitationModule(nn.Module):
                     <td>742</td>
                     <td>3.2</td>
                     <td>102.5</td>
-                    <td>7.8</td>
-                </tr>
-            
-                <tr>
-                    <td>MicroPizzaNetWithSE (SE-Ratio=8)</td>
-                    <td>0.00%</td>
-                    <td>0.0000</td>
-                    <td>662</td>
-                    <td>2.8</td>
-                    <td>102.4</td>
-                    <td>7.7</td>
+                    <td>8.2</td>
                 </tr>
             
             </table>
@@ -228,12 +228,12 @@ class SqueezeExcitationModule(nn.Module):
         
             <p>
                 Die Untersuchung zeigt, dass die Integration von Squeeze-and-Excitation (SE) Modulen in das
-                MicroPizzaNet zu einer <strong>Genauigkeitsverbesserung von 0.00%</strong> führt.
+                MicroPizzaNet zu einer <strong>Genauigkeitsverbesserung von 16.67%</strong> führt.
             </p>
             
             <p>
-                Das beste Modell ist <strong>MicroPizzaNet (Original)</strong> mit einer Genauigkeit von 41.67%.
-                Dies wurde mit einem Anstieg der Parameterzahl um 0.0% und der Modellgröße um 0.0% erreicht.
+                Das beste Modell ist <strong>MicroPizzaNetWithSE (SE-Ratio=8)</strong> mit einer Genauigkeit von 25.00%.
+                Dies wurde mit einem Anstieg der Parameterzahl um 13.7% und der Modellgröße um 12.3% erreicht.
             </p>
             
             <p>
@@ -247,7 +247,7 @@ class SqueezeExcitationModule(nn.Module):
             </ul>
             
             <p>
-                <strong>Empfehlung:</strong> MicroPizzaNet (Original) bietet das beste Gleichgewicht zwischen 
+                <strong>Empfehlung:</strong> MicroPizzaNetWithSE (SE-Ratio=8) bietet das beste Gleichgewicht zwischen 
                 Genauigkeit und Ressourceneffizienz für den RP2040-Mikrocontroller und sollte für 
                 das Pizza-Erkennungssystem verwendet werden.
             </p>

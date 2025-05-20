@@ -1,0 +1,209 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Pizza Detection Pipeline Report</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+            }
+            h1, h2, h3, h4 {
+                color: #2c3e50;
+            }
+            .summary-box {
+                padding: 15px;
+                margin-bottom: 20px;
+                border-radius: 5px;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            }
+            .success {
+                background-color: #e8f5e9;
+                border-left: 5px solid #4CAF50;
+            }
+            .warning {
+                background-color: #fff8e1;
+                border-left: 5px solid #FFC107;
+            }
+            .error {
+                background-color: #ffebee;
+                border-left: 5px solid #F44336;
+            }
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-bottom: 20px;
+            }
+            th, td {
+                padding: 12px 15px;
+                text-align: left;
+                border-bottom: 1px solid #ddd;
+            }
+            th {
+                background-color: #f8f9fa;
+                font-weight: bold;
+            }
+            tr:hover {
+                background-color: #f5f5f5;
+            }
+            .chart-container {
+                display: flex;
+                justify-content: center;
+                margin: 20px 0;
+                flex-wrap: wrap;
+            }
+            .chart {
+                max-width: 100%;
+                height: auto;
+                margin: 10px;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+                border-radius: 5px;
+            }
+            .badge {
+                display: inline-block;
+                padding: 5px 10px;
+                border-radius: 15px;
+                color: white;
+                font-size: 12px;
+                margin-right: 5px;
+            }
+            .badge-success { background-color: #4CAF50; }
+            .badge-warning { background-color: #FFC107; color: black; }
+            .badge-error { background-color: #F44336; }
+            .badge-info { background-color: #2196F3; }
+        </style>
+    </head>
+    <body>
+        <h1>Pizza Detection Pipeline Report</h1>
+        <p>Generated on: 2025-05-14 04:53:42</p>
+        
+        <div class="summary-box success">
+            <h2>Pipeline Summary</h2>
+            <p><strong>Duration:</strong> 123.62 minutes</p>
+            <p><strong>Total Scripts:</strong> 5</p>
+            <p><strong>Success Rate:</strong> 100.00% (5 successful, 0 failed)</p>
+            <p><strong>Overall Status:</strong> Success</p>
+        </div>
+        
+        <div class="chart-container">
+    <img src="status_distribution.png" alt="Pipeline Chart" class="chart">
+<img src="execution_duration.png" alt="Pipeline Chart" class="chart">
+<img src="validation_results.png" alt="Pipeline Chart" class="chart">
+<img src="category_success_rates.png" alt="Pipeline Chart" class="chart">
+
+        </div>
+        
+        <h2>Script Execution Details</h2>
+        <table>
+            <tr>
+                <th>Script</th>
+                <th>Status</th>
+                <th>Duration (s)</th>
+                <th>Retries</th>
+            </tr>
+    
+            <tr>
+                <td>test_image_preprocessing.py</td>
+                <td><span class="badge badge-success">Success</span></td>
+                <td>17.00</td>
+                <td>0</td>
+            </tr>
+        
+            <tr>
+                <td>augment_dataset.py</td>
+                <td><span class="badge badge-success">Success</span></td>
+                <td>0.00</td>
+                <td>0</td>
+            </tr>
+        
+            <tr>
+                <td>run_pizza_tests.py</td>
+                <td><span class="badge badge-success">Success</span></td>
+                <td>0.00</td>
+                <td>0</td>
+            </tr>
+        
+            <tr>
+                <td>verify_model.py</td>
+                <td><span class="badge badge-success">Success</span></td>
+                <td>2.00</td>
+                <td>0</td>
+            </tr>
+        
+            <tr>
+                <td>test_temporal_smoothing.py</td>
+                <td><span class="badge badge-success">Success</span></td>
+                <td>3.00</td>
+                <td>0</td>
+            </tr>
+        
+        </table>
+        
+        <h2>Validation Results</h2>
+    
+        <div class="summary-box success">
+            <p><strong>Total Scripts Validated:</strong> 75</p>
+            <p><strong>Passed:</strong> 28</p>
+            <p><strong>With Warnings:</strong> 47</p>
+            <p><strong>Failed:</strong> 0</p>
+            <p><strong>Pass Rate:</strong> 37.33%</p>
+        </div>
+        
+        <h2>Integration Analysis</h2>
+    
+        <div class="summary-box success">
+            <p><strong>Overall Success Rate:</strong> 100.0%</p>
+            <p><strong>Total Categories:</strong> 3</p>
+            <p><strong>Total Issues:</strong> 0</p>
+        </div>
+        
+        <h3>Category Success Rates</h3>
+        <table>
+            <tr>
+                <th>Category</th>
+                <th>Success Rate</th>
+                <th>Successful Scripts</th>
+                <th>Total Scripts</th>
+            </tr>
+        
+            <tr>
+                <td>preprocessing</td>
+                <td><span class="badge badge-success">100.0%</span></td>
+                <td>2</td>
+                <td>2</td>
+            </tr>
+            
+            <tr>
+                <td>testing</td>
+                <td><span class="badge badge-success">100.0%</span></td>
+                <td>2</td>
+                <td>2</td>
+            </tr>
+            
+            <tr>
+                <td>unknown</td>
+                <td><span class="badge badge-success">100.0%</span></td>
+                <td>1</td>
+                <td>1</td>
+            </tr>
+            </table>
+        <h2>Recommendations</h2>
+        <ul>
+    <li>All scripts are running well. Consider adding more tests or optimizations.</li>
+
+        </ul>
+        
+        <hr>
+        <footer>
+            <p>Pizza Detection CI/CD Pipeline</p>
+            <p>Generated automatically</p>
+        </footer>
+    </body>
+    </html>
+    

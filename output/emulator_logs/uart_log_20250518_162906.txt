@@ -1,0 +1,23 @@
+[2025-05-18 16:29:06.998] UART initialized with 115200 baud
+[2025-05-18 16:29:07.010] [2025-05-18T16:29:07.010] [INFO] [SYS] RP2040 Emulator initialized
+[2025-05-18 16:29:07.016] [2025-05-18T16:29:07.016] [INFO] [SYS] Temperatur-Logging aktiviert (Intervall: 5.0s)
+[2025-05-18 16:29:13.329] [2025-05-18T16:29:13.329] [INFO] [TEMP] Temperature: 25.00°C (sensor: internal, status: OK)
+[2025-05-18 16:29:13.338] [2025-05-18T16:29:13.338] [DEBUG] [TEMP] Temperatur-Statistik: Min 24.0°C, Max 25.0°C, Avg 24.5°C, Messungen: 4
+[2025-05-18 16:29:18.670] [2025-05-18T16:29:18.670] [INFO] [TEMP] Temperature: 24.89°C (sensor: internal, status: OK)
+[2025-05-18 16:29:18.679] [2025-05-18T16:29:18.679] [DEBUG] [TEMP] Temperatur-Statistik: Min 24.0°C, Max 25.0°C, Avg 24.7°C, Messungen: 6
+[2025-05-18 16:29:23.741] [2025-05-18T16:29:23.741] [INFO] [TEMP] Temperature: 25.00°C (sensor: internal, status: OK)
+[2025-05-18 16:29:23.750] [2025-05-18T16:29:23.750] [DEBUG] [TEMP] Temperatur-Statistik: Min 24.0°C, Max 25.0°C, Avg 24.7°C, Messungen: 9
+[2025-05-18 16:29:27.793] [2025-05-18T16:29:27.793] [WARNING] [SYS] Temperatur-Spike: +5.0°C für ~15s injiziert
+[2025-05-18 16:29:30.804] [2025-05-18T16:29:30.804] [INFO] [TEMP] Temperature: 31.00°C (sensor: internal, status: OK)
+[2025-05-18 16:29:30.813] [2025-05-18T16:29:30.813] [DEBUG] [TEMP] Temperatur-Statistik: Min 24.0°C, Max 31.0°C, Avg 25.6°C, Messungen: 12
+[2025-05-18 16:29:36.826] [2025-05-18T16:29:36.826] [INFO] [TEMP] Temperature: 30.00°C (sensor: internal, status: OK)
+[2025-05-18 16:29:36.835] [2025-05-18T16:29:36.835] [DEBUG] [TEMP] Temperatur-Statistik: Min 24.0°C, Max 31.0°C, Avg 26.1°C, Messungen: 14
+[2025-05-18 16:29:42.848] [2025-05-18T16:29:42.848] [INFO] [TEMP] Temperature: 29.00°C (sensor: internal, status: OK)
+[2025-05-18 16:29:42.857] [2025-05-18T16:29:42.857] [DEBUG] [TEMP] Temperatur-Statistik: Min 24.0°C, Max 31.0°C, Avg 26.6°C, Messungen: 16
+[2025-05-18 16:29:48.870] [2025-05-18T16:29:48.870] [INFO] [TEMP] Temperature: 31.00°C (sensor: internal, status: OK)
+[2025-05-18 16:29:48.879] [2025-05-18T16:29:48.879] [DEBUG] [TEMP] Temperatur-Statistik: Min 24.0°C, Max 31.0°C, Avg 27.1°C, Messungen: 18
+[2025-05-18 16:29:54.892] [2025-05-18T16:29:54.892] [INFO] [TEMP] Temperature: 31.00°C (sensor: internal, status: OK)
+[2025-05-18 16:29:54.901] [2025-05-18T16:29:54.901] [DEBUG] [TEMP] Temperatur-Statistik: Min 24.0°C, Max 31.0°C, Avg 27.4°C, Messungen: 20
+[2025-05-18 16:29:59.914] [2025-05-18T16:29:59.914] [INFO] [TEMP] Temperature: 30.00°C (sensor: internal, status: OK)
+[2025-05-18 16:29:59.923] [2025-05-18T16:29:59.923] [DEBUG] [TEMP] Temperatur-Statistik: Min 24.0°C, Max 31.0°C, Avg 27.6°C, Messungen: 22
+[2025-05-18 16:30:03.936] UART connection closed

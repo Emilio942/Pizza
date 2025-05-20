@@ -1,0 +1,33 @@
+{
+    "dataset_name": "test_set_distribution",
+    "analysis_timestamp": "2025-05-20T12:40:39.349753",
+    "class_counts": {
+        "basic": 28,
+        "burnt": 32,
+        "combined": 44,
+        "mixed": 44,
+        "progression": 44,
+        "segment": 44
+    },
+    "total_images": 236,
+    "percentages": {
+        "basic": 11.86,
+        "burnt": 13.56,
+        "combined": 18.64,
+        "mixed": 18.64,
+        "progression": 18.64,
+        "segment": 18.64
+    },
+    "leakage_check": {
+        "checked_against_dirs": [
+            "augmented_pizza",
+            "augmented_pizza_legacy",
+            "data/raw",
+            "data/processed",
+            "data/classified",
+            "data/augmented"
+        ],
+        "leaked_files_count": 0,
+        "leaked_files_basenames": []
+    }
+}

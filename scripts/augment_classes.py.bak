@@ -1,0 +1,569 @@
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+import torchvision.transforms as transforms
+from torchvision.transforms import functional as TVF
+import random
+import numpy as np
+from PIL import Image
+
+class PizzaBurningEffect(nn.Module):
+    """Optimized simulation of burning effects for pizza images"""
+    
+    def __init__(self, burn_intensity_min=0.2, burn_intensity_max=0.8, burn_pattern='random'):
+        super().__init__()
+        self.burn_intensity_min = burn_intensity_min
+        self.burn_intensity_max = burn_intensity_max
+        self.burn_pattern = burn_pattern  # 'random', 'edge', 'spot', 'streak'
+        
+    def _create_edge_burn_mask(self, h, w, device):
+        """Create an edge burn mask"""
+        y_coords, x_coords = torch.meshgrid(
+            torch.linspace(-1, 1, h, device=device),
+            torch.linspace(-1, 1, w, device=device),
+            indexing='ij'
+        )
+        
+        # Distance from center
+        dist = torch.sqrt(x_coords**2 + y_coords**2)
+        
+        # Random distortion for irregular edges
+        noise = torch.randn(h, w, device=device) * 0.05
+        dist = dist + noise
+        
+        # Exponential decay from edge to center with random threshold
+        threshold = random.uniform(0.6, 0.8)
+        edge_weight = torch.exp(3 * (dist - threshold))
+        
+        # Normalize between 0 and 1
+        edge_weight = (edge_weight - edge_weight.min()) / (edge_weight.max() - edge_weight.min())
+        
+        # Add random variations
+        if random.random() < 0.3:
+            # Asymmetric burning - more on one side
+            side = random.choice(['left', 'right', 'top', 'bottom'])
+            if side == 'left':
+                side_mask = (x_coords < -0.3)
+            elif side == 'right':
+                side_mask = (x_coords > 0.3)
+            elif side == 'top':
+                side_mask = (y_coords < -0.3)
+            else:  # bottom
+                side_mask = (y_coords > 0.3)
+            
+            edge_weight = torch.where(side_mask, edge_weight * random.uniform(1.2, 1.5), edge_weight)
+        
+        return edge_weight
+    
+    def _create_spot_burn_mask(self, h, w, device):
+        """Create a spot burn mask"""
+        y_coords, x_coords = torch.meshgrid(
+            torch.linspace(-1, 1, h, device=device),
+            torch.linspace(-1, 1, w, device=device),
+            indexing='ij'
+        )
+        
+        spots_mask = torch.zeros(h, w, device=device)
+        num_spots = random.randint(3, 10)
+        
+        # Create spots with varying intensity and shape
+        for _ in range(num_spots):
+            # Random position, slightly biased towards the edge
+            r = random.uniform(0.3, 1.0)  # Radius from center
+            theta = random.uniform(0, 2*np.pi)  # Angle
+            spot_x = r * np.cos(theta)
+            spot_y = r * np.sin(theta)
+            
+            # Different shapes by scaling axes
+            if random.random() < 0.3:
+                # Elliptical instead of circular
+                x_scale = random.uniform(0.5, 1.5)
+                y_scale = random.uniform(0.5, 1.5)
+                spot_dist = torch.sqrt(((x_coords - spot_x)/x_scale)**2 + 
+                                       ((y_coords - spot_y)/y_scale)**2)
+            else:
+                # Circular
+                spot_dist = torch.sqrt((x_coords - spot_x)**2 + (y_coords - spot_y)**2)
+            
+            # Parameters for the spot
+            spot_radius = random.uniform(0.05, 0.25)
+            spot_intensity = random.uniform(0.6, 1.0)
+            spot_falloff = random.uniform(1.0, 3.0)
+            
+            # Generate spot with different profiles
+            if random.random() < 0.5:
+                # Exponential profile
+                spot_mask = torch.exp(-spot_dist * spot_falloff / spot_radius) * spot_intensity
+            else:
+                # Quadratic profile for sharper edges
+                normalized_dist = spot_dist / spot_radius
+                spot_mask = torch.maximum(torch.zeros_like(normalized_dist), 
+                                         (1 - normalized_dist**2)) * spot_intensity
+            
+            # Combine with existing mask (maximum for overlapping areas)
+            spots_mask = torch.maximum(spots_mask, spot_mask)
+        
+        return spots_mask
+    
+    def _create_streak_burn_mask(self, h, w, device):
+        """Create a streak burn mask"""
+        y_coords, x_coords = torch.meshgrid(
+            torch.linspace(-1, 1, h, device=device),
+            torch.linspace(-1, 1, w, device=device),
+            indexing='ij'
+        )
+        
+        streaks_mask = torch.zeros(h, w, device=device)
+        num_streaks = random.randint(1, 4)
+        
+        for _ in range(num_streaks):
+            # Define a line with random orientation
+            theta = random.uniform(0, np.pi)  # Line angle
+            rho = random.uniform(-0.8, 0.8)   # Distance from origin
+            
+            # Normal line: x*cos(theta) + y*sin(theta) = rho
+            dist_to_line = torch.abs(x_coords * np.cos(theta) + y_coords * np.sin(theta) - rho)
+            
+            # Parameters for the streak
+            streak_width = random.uniform(0.05, 0.15)
+            streak_intensity = random.uniform(0.7, 1.0)
+            
+            # Generate streak with Gaussian profile
+            streak_mask = torch.exp(-(dist_to_line**2) / (2 * streak_width**2)) * streak_intensity
+            
+            # Add slight variation to the line
+            noise = torch.randn(h, w, device=device) * 0.03
+            streak_mask = streak_mask * (1 + noise)
+            
+            # Combine with existing mask
+            streaks_mask = torch.maximum(streaks_mask, streak_mask)
+        
+        return streaks_mask
+    
+    def _create_random_burn_mask(self, h, w, device):
+        """Combine different burning patterns randomly"""
+        pattern_weights = {
+            'edge': random.uniform(0.3, 1.0) if random.random() < 0.8 else 0,
+            'spot': random.uniform(0.5, 1.0),
+            'streak': random.uniform(0.2, 0.8) if random.random() < 0.4 else 0
+        }
+        
+        mask = torch.zeros(h, w, device=device)
+        
+        if pattern_weights['edge'] > 0:
+            edge_mask = self._create_edge_burn_mask(h, w, device)
+            mask = torch.maximum(mask, edge_mask * pattern_weights['edge'])
+        
+        if pattern_weights['spot'] > 0:
+            spot_mask = self._create_spot_burn_mask(h, w, device)
+            mask = torch.maximum(mask, spot_mask * pattern_weights['spot'])
+        
+        if pattern_weights['streak'] > 0:
+            streak_mask = self._create_streak_burn_mask(h, w, device)
+            mask = torch.maximum(mask, streak_mask * pattern_weights['streak'])
+        
+        # Normalize between 0 and 1
+        if mask.max() > 0:
+            mask = mask / mask.max()
+        
+        return mask
+    
+    def _create_burn_color(self, burn_level):
+        """Create realistic burning colors based on intensity"""
+        # Color variations from lightly browned to charred
+        if burn_level < 0.2:  # Lightly browned
+            return torch.tensor([0.85, 0.65, 0.45])
+        elif burn_level < 0.5:  # Medium burnt
+            return torch.tensor([0.65, 0.40, 0.25])
+        elif burn_level < 0.8:  # Heavily burnt
+            return torch.tensor([0.35, 0.20, 0.15])
+        else:  # Charred
+            return torch.tensor([0.15, 0.10, 0.10])
+    
+    def forward(self, img):
+        # Ensure the image is a tensor and on the right device
+        if not isinstance(img, torch.Tensor):
+            img = TVF.to_tensor(img)
+        
+        device = img.device
+        h, w = img.shape[1], img.shape[2]
+        
+        # Generate burn mask based on selected pattern
+        if self.burn_pattern == 'edge':
+            burn_mask_2d = self._create_edge_burn_mask(h, w, device)
+        elif self.burn_pattern == 'spot':
+            burn_mask_2d = self._create_spot_burn_mask(h, w, device)
+        elif self.burn_pattern == 'streak':
+            burn_mask_2d = self._create_streak_burn_mask(h, w, device)
+        else:  # 'random' or default
+            burn_mask_2d = self._create_random_burn_mask(h, w, device)
+        
+        # Random burn intensity
+        burn_intensity = random.uniform(self.burn_intensity_min, self.burn_intensity_max)
+        burn_mask_2d = burn_mask_2d * burn_intensity
+        
+        # Expand for all channels
+        burn_mask = burn_mask_2d.unsqueeze(0).expand_as(img)
+        
+        # Create burning effect with different color levels
+        result = img.clone()
+        
+        # Apply different burning colors by intensity
+        burn_levels = [0.25, 0.5, 0.75, 1.0]
+        
+        for level in burn_levels:
+            level_mask = (burn_mask_2d > level * 0.8) & (burn_mask_2d <= level)
+            if level_mask.any():
+                burn_color = self._create_burn_color(level).to(device)
+                
+                # Expand mask and color for all channels
+                level_mask_3d = level_mask.unsqueeze(0).expand_as(img)
+                burn_color_3d = burn_color.view(3, 1, 1).expand_as(img)
+                
+                # Blend original image with burn color
+                blend_factor = torch.ones_like(img) * (level * burn_intensity)
+                result = torch.where(level_mask_3d, 
+                                   img * (1 - blend_factor) + burn_color_3d * blend_factor,
+                                   result)
+        
+        # Heavy burning (charred)
+        charred_mask = (burn_mask_2d > 0.8)
+        if charred_mask.any():
+            charred_color = torch.tensor([0.05, 0.05, 0.05]).to(device)
+            charred_mask_3d = charred_mask.unsqueeze(0).expand_as(img)
+            charred_color_3d = charred_color.view(3, 1, 1).expand_as(img)
+            
+            result = torch.where(charred_mask_3d, charred_color_3d, result)
+        
+        # Add subtle textures for burnt areas
+        if random.random() < 0.7:
+            texture_noise = torch.randn_like(burn_mask_2d) * 0.05
+            texture_mask = (burn_mask_2d > 0.3).unsqueeze(0).expand_as(img)
+            result = torch.where(texture_mask, result * (1 + texture_noise.unsqueeze(0)), result)
+        
+        # Clamp values to valid range
+        result = torch.clamp(result, 0, 1)
+        
+        return result
+
+
+class OvenEffect(nn.Module):
+    """Enhanced simulation of oven effects with realistic details"""
+    
+    def __init__(self, effect_strength=1.0, scipy_available=False):
+        super().__init__()
+        self.effect_strength = effect_strength
+        self.scipy_available = scipy_available
+        
+    def _apply_gaussian_blur(self, tensor, kernel_size, sigma, device):
+        """Apply Gaussian blur to a tensor"""
+        if self.scipy_available:
+            # More efficient implementation with SciPy, but requires CPU transfer
+            from scipy.ndimage import gaussian_filter
+            tensor_np = tensor.squeeze(0).cpu().numpy()
+            blurred_np = gaussian_filter(tensor_np, sigma=sigma)
+            return torch.tensor(blurred_np, device=device).unsqueeze(0)
+        else:
+            # PyTorch-based alternative
+            # Ensure kernel_size is odd
+            kernel_size = max(3, int(kernel_size) // 2 * 2 + 1)
+            return TVF.gaussian_blur(tensor, kernel_size=kernel_size, sigma=sigma)
+    
+    def forward(self, img):
+        # Ensure the image is a tensor and on the right device
+        if not isinstance(img, torch.Tensor):
+            img = TVF.to_tensor(img)
+        
+        device = img.device
+        h, w = img.shape[1], img.shape[2]
+        
+        # Choose effects based on strength and randomness
+        effects = []
+        if random.random() < 0.4 * self.effect_strength:
+            effects.append('steam')
+        if random.random() < 0.5 * self.effect_strength:
+            effects.append('warmth')
+        if random.random() < 0.3 * self.effect_strength:
+            effects.append('shadow')
+        if random.random() < 0.4 * self.effect_strength:
+            effects.append('lighting')
+        
+        # If no effects selected, choose a random one
+        if not effects and random.random() < 0.7:
+            effects.append(random.choice(['steam', 'warmth', 'shadow', 'lighting']))
+        
+        # Only create a copy if effects will be applied
+        result = img.clone() if effects else img
+        
+        # Steam effect - more realistic with gradients and motion blur
+        if 'steam' in effects:
+            steam_opacity = random.uniform(0.1, 0.3) * self.effect_strength
+            
+            # Generate enhanced steam mask
+            # Base is a vertical gradient
+            y_coords = torch.linspace(1.0, 0.0, h, device=device).view(-1, 1).expand(-1, w)
+            
+            # Add random variations
+            noise_scale = random.uniform(0.3, 0.7)
+            noise = torch.rand(h, w, device=device) * noise_scale
+            
+            # Combine with gradient for more realistic steam
+            steam_base = y_coords * noise
+            
+            # Smoothing the mask
+            sigma = random.uniform(5, 20)
+            kernel_size = int(sigma * 3) // 2 * 2 + 1  # Odd number ~3*sigma
+            steam_mask = self._apply_gaussian_blur(
+                steam_base.unsqueeze(0), kernel_size, sigma, device
+            ).squeeze(0) * steam_opacity
+            
+            # Expand for all channels
+            steam_mask_3d = steam_mask.unsqueeze(0).expand_as(result)
+            
+            # Brighten where steam is, with slightly bluish tint for realism
+            steam_color = torch.ones_like(result)
+            steam_color[2] = steam_color[2] * 1.05  # Slightly more blue
+            
+            result = result * (1 - steam_mask_3d) + steam_color * steam_mask_3d
+        
+        # Warmth effect - gives the image a warmer color tone with subtle variations
+        if 'warmth' in effects:
+            warmth = random.uniform(0.05, 0.15) * self.effect_strength
+            
+            # Generate warmth gradient (more in center)
+            y_coords, x_coords = torch.meshgrid(
+                torch.linspace(-1, 1, h, device=device),
+                torch.linspace(-1, 1, w, device=device),
+                indexing='ij'
+            )
+            
+            # Circular gradient from center
+            dist_from_center = torch.sqrt(x_coords**2 + y_coords**2)
+            warmth_gradient = torch.exp(-dist_from_center * 2) * 0.5 + 0.5
+            
+            # Apply warmth effect with gradient
+            warmth_factor = warmth * warmth_gradient
+            
+            # Channel-wise adjustment
+            result_channels = result.clone()
+            # Increase red
+            result_channels[0] = torch.clamp(result[0] * (1 + warmth_factor), 0, 1)
+            # Slightly increase green
+            result_channels[1] = torch.clamp(result[1] * (1 + warmth_factor * 0.3), 0, 1)
+            # Decrease blue
+            result_channels[2] = torch.clamp(result[2] * (1 - warmth_factor * 0.2), 0, 1)
+            
+            result = result_channels
+        
+        # Shadow effect with more realistic transitions
+        if 'shadow' in effects:
+            shadow_opacity = random.uniform(0.15, 0.4) * self.effect_strength
+            
+            # Generate coordinate grid
+            y_coords, x_coords = torch.meshgrid(
+                torch.arange(h, device=device),
+                torch.arange(w, device=device),
+                indexing='ij'
+            )
+            
+            # Parameters for the shadow
+            shadow_type = random.choice(['corner', 'side', 'spot'])
+            
+            if shadow_type == 'corner':
+                # Shadow effect from a corner
+                corner = random.choice(['tl', 'tr', 'bl', 'br'])
+                if corner == 'tl':
+                    corner_x, corner_y = 0, 0
+                elif corner == 'tr':
+                    corner_x, corner_y = w-1, 0
+                elif corner == 'bl':
+                    corner_x, corner_y = 0, h-1
+                else:  # 'br'
+                    corner_x, corner_y = w-1, h-1
+                
+                shadow_dist = torch.sqrt(((x_coords - corner_x)**2 + (y_coords - corner_y)**2).float())
+                shadow_radius = random.uniform(0.7, 1.3) * max(h, w)
+                shadow_mask = torch.exp(-shadow_dist / shadow_radius) * shadow_opacity
+            
+            elif shadow_type == 'side':
+                # Shadow from a side
+                side = random.choice(['left', 'right', 'top', 'bottom'])
+                
+                if side == 'left':
+                    shadow_mask = torch.exp(-(x_coords.float()) / (w * 0.3)) * shadow_opacity
+                elif side == 'right':
+                    shadow_mask = torch.exp(-((w - 1 - x_coords).float()) / (w * 0.3)) * shadow_opacity
+                elif side == 'top':
+                    shadow_mask = torch.exp(-(y_coords.float()) / (h * 0.3)) * shadow_opacity
+                else:  # 'bottom'
+                    shadow_mask = torch.exp(-((h - 1 - y_coords).float()) / (h * 0.3)) * shadow_opacity
+            
+            else:  # 'spot'
+                # Round shadow at random position
+                shadow_x = random.randint(w//4, w*3//4)
+                shadow_y = random.randint(h//4, h*3//4)
+                shadow_radius = random.uniform(0.3, 0.5) * min(h, w)
+                
+                shadow_dist = torch.sqrt(((x_coords - shadow_x)**2 + (y_coords - shadow_y)**2).float())
+                shadow_mask = (1 - torch.exp(-shadow_dist**2 / (2 * shadow_radius**2))) * shadow_opacity
+            
+            # Add slight blur to the shadow
+            sigma = random.uniform(10, 30)
+            kernel_size = int(sigma * 2) // 2 * 2 + 1
+            shadow_mask = self._apply_gaussian_blur(
+                shadow_mask.unsqueeze(0), kernel_size, sigma, device
+            ).squeeze(0)
+            
+            # Expand for all channels
+            shadow_mask_3d = shadow_mask.unsqueeze(0).expand_as(result)
+            
+            # Darken where shadow is
+            result = result * (1 - shadow_mask_3d)
+        
+        # Lighting effect - simulates uneven lighting in the oven
+        if 'lighting' in effects:
+            light_intensity = random.uniform(0.1, 0.25) * self.effect_strength
+            
+            # Generate coordinate grid
+            y_coords, x_coords = torch.meshgrid(
+                torch.linspace(-1, 1, h, device=device),
+                torch.linspace(-1, 1, w, device=device),
+                indexing='ij'
+            )
+            
+            # Parameters for the light
+            light_x = random.uniform(-0.5, 0.5)
+            light_y = random.uniform(-0.5, 0.5)
+            light_radius = random.uniform(0.4, 0.8)
+            
+            # Calculate distance to light source
+            light_dist = torch.sqrt((x_coords - light_x)**2 + (y_coords - light_y)**2)
+            
+            # Generate light mask with soft falloff
+            light_mask = torch.exp(-light_dist**2 / (2 * light_radius**2)) * light_intensity
+            
+            # Expand for all channels
+            light_mask_3d = light_mask.unsqueeze(0).expand_as(result)
+            
+            # Brighten where light is, with slightly yellowish tint
+            light_color = torch.ones_like(result)
+            light_color[0] = light_color[0] * 1.05  # Slightly more red
+            light_color[1] = light_color[1] * 1.03  # Slightly more green
+            
+            result = result * (1 - light_mask_3d) + torch.minimum(
+                light_color * result * (1 + light_mask_3d),
+                torch.ones_like(result)
+            )
+        
+        # Clamp values to valid range
+        result = torch.clamp(result, 0, 1)
+        
+        return result
+
+
+class PizzaSegmentEffect(nn.Module):
+    """Modular effect system for individual pizza segments"""
+    
+    def __init__(self, device, burning_min=0.0, burning_max=0.9):
+        super().__init__()
+        self.device = device
+        self.burning_min = burning_min
+        self.burning_max = burning_max
+        
+        # Instantiate effect modules
+        self.burning_effect = PizzaBurningEffect(
+            burn_intensity_min=burning_min,
+            burn_intensity_max=burning_max
+        ).to(device)
+        
+        self.oven_effect = OvenEffect(
+            effect_strength=random.uniform(0.5, 1.0)
+        ).to(device)
+    
+    def _create_segment_mask(self, h, w, num_segments=8):
+        """Generate mask for pizza segments"""
+        y_coords, x_coords = torch.meshgrid(
+            torch.linspace(-1, 1, h, device=self.device),
+            torch.linspace(-1, 1, w, device=self.device),
+            indexing='ij'
+        )
+        
+        # Calculate angle for all pixels (in radians)
+        angles = torch.atan2(y_coords, x_coords)
+        # Normalize angles to [0, 2π]
+        angles = torch.where(angles < 0, angles + 2 * np.pi, angles)
+        
+        # Distance from center
+        dist_from_center = torch.sqrt(x_coords**2 + y_coords**2)
+        
+        # Circle mask for pizza area
+        pizza_radius = random.uniform(0.7, 0.9)
+        pizza_mask = (dist_from_center <= pizza_radius).float()
+        
+        # Segment masks
+        segment_size = 2 * np.pi / num_segments
+        segment_masks = []
+        
+        for i in range(num_segments):
+            start_angle = i * segment_size
+            end_angle = (i + 1) * segment_size
+            
+            # Mask for current segment
+            if end_angle <= 2 * np.pi:
+                segment_mask = ((angles >= start_angle) & (angles < end_angle)).float()
+            else:
+                # Handle overflow
+                segment_mask = ((angles >= start_angle) | (angles < (end_angle % (2 * np.pi)))).float()
+            
+            # Combine with pizza mask
+            segment_mask = segment_mask * pizza_mask
+            
+            segment_masks.append(segment_mask)
+        
+        return segment_masks
+    
+    def forward(self, img):
+        # Ensure the image is a tensor and on the right device
+        if not isinstance(img, torch.Tensor):
+            img = TVF.to_tensor(img).to(self.device)
+        else:
+            img = img.to(self.device)
+        
+        h, w = img.shape[1], img.shape[2]
+        
+        # Create random number of segments
+        num_segments = random.randint(4, 8)
+        segment_masks = self._create_segment_mask(h, w, num_segments)
+        
+        # Create different effect combinations for each segment
+        result = img.clone()
+        
+        for i, segment_mask in enumerate(segment_masks):
+            # Random effects per segment
+            segment_img = img.clone()
+            
+            # Random burning intensity
+            burn_intensity = random.uniform(0, 1)
+            
+            if burn_intensity > 0.1:  # Apply burning effects
+                # Adjust burning intensity per segment
+                self.burning_effect.burn_intensity_min = self.burning_min + burn_intensity * 0.3
+                self.burning_effect.burn_intensity_max = min(self.burning_min + burn_intensity * 0.6, self.burning_max)
+                
+                # Choose pattern
+                self.burning_effect.burn_pattern = random.choice(['random', 'edge', 'spot'])
+                
+                # Apply effect
+                segment_img = self.burning_effect(segment_img)
+            
+            # Random application of oven effects
+            if random.random() < 0.5:
+                segment_img = self.oven_effect(segment_img)
+            
+            # Expand mask for all channels
+            segment_mask_3d = segment_mask.unsqueeze(0).expand_as(result)
+            
+            # Combine with result
+            result = torch.where(segment_mask_3d > 0, segment_img, result)
+        
+        return result

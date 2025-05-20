@@ -1,0 +1,10 @@
+timestamp,temperature_c,sensor_type,status
+2025-05-18T16:29:13.329,25.00,internal,OK
+2025-05-18T16:29:18.670,24.89,internal,OK
+2025-05-18T16:29:23.741,25.00,internal,OK
+2025-05-18T16:29:30.804,31.00,internal,OK
+2025-05-18T16:29:36.826,30.00,internal,OK
+2025-05-18T16:29:42.848,29.00,internal,OK
+2025-05-18T16:29:48.870,31.00,internal,OK
+2025-05-18T16:29:54.892,31.00,internal,OK
+2025-05-18T16:29:59.914,30.00,internal,OK

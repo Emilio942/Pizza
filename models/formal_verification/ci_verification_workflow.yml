@@ -1,0 +1,162 @@
+name: Pizza Model Formal Verification
+
+on:
+  push:
+    branches: [ main, develop ]
+    paths:
+      - 'src/pizza_detector.py'
+      - 'models/*.pth'
+      - 'models/formal_verification/**'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'src/pizza_detector.py'
+      - 'models/*.pth'
+      - 'models/formal_verification/**'
+  workflow_dispatch:
+    inputs:
+      model_path:
+        description: 'Path to the model file to verify'
+        required: false
+        default: 'models/pizza_model_float32.pth'
+      model_type:
+        description: 'Type of model to verify'
+        required: false
+        default: 'MicroPizzaNet'
+        type: choice
+        options:
+          - MicroPizzaNet
+          - MicroPizzaNetV2
+          - MicroPizzaNetWithSE
+      epsilon:
+        description: 'Epsilon value for robustness verification'
+        required: false
+        default: '0.03'
+
+jobs:
+  verify_model:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.8]
+        model: 
+          - {path: 'models/pizza_model_float32.pth', type: 'MicroPizzaNet'}
+          - {path: 'models/pizza_model_v2.pth', type: 'MicroPizzaNetV2'}
+          - {path: 'models/pizza_model_with_se.pth', type: 'MicroPizzaNetWithSE'}
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pytest pytest-cov
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+        # Try to install auto_LiRPA for real verification
+        pip install torch==1.12.0 # Specific version compatible with auto_LiRPA
+        pip install auto_LiRPA || echo "Could not install auto_LiRPA, will use mock implementation"
+
+    - name: Run unit tests
+      run: |
+        cd models/formal_verification
+        python -m pytest test_verification_unit.py -v
+
+    - name: Run verification on model
+      run: |
+        cd models/formal_verification
+        python test_verification.py --model-path ${{ github.event.inputs.model_path || matrix.model.path }} --model-type ${{ github.event.inputs.model_type || matrix.model.type }} --epsilon ${{ github.event.inputs.epsilon || '0.03' }} --max-images 3 --output-dir ./reports
+
+    - name: Upload verification reports
+      uses: actions/upload-artifact@v2
+      with:
+        name: verification-reports-${{ matrix.model.type }}
+        path: models/formal_verification/reports/
+
+  verify_critical_properties:
+    runs-on: ubuntu-latest
+    needs: verify_model
+    
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Set up Python 
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+        
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+        
+    - name: Download verification reports
+      uses: actions/download-artifact@v2
+      with:
+        path: verification-reports
+        
+    - name: Analyze verification results
+      run: |
+        # Create a summary of all verification results
+        echo "# Formal Verification Results" > verification_summary.md
+        echo "## Critical Properties Summary" >> verification_summary.md
+        
+        # Use Python to parse and analyze the JSON reports
+        python -c '
+import os
+import json
+import glob
+
+total_verified = 0
+total_checked = 0
+property_stats = {}
+
+# Find all JSON reports
+report_files = glob.glob("verification-reports/**/*.json", recursive=True)
+
+for report_file in report_files:
+    try:
+        with open(report_file, "r") as f:
+            report = json.load(f)
+            
+        if "summary" in report:
+            total_verified += report["summary"].get("total_verified", 0)
+            total_checked += report["summary"].get("total_properties_checked", 0)
+            
+            # Collect stats by property
+            for prop_name, prop_data in report.get("properties", {}).items():
+                if prop_name not in property_stats:
+                    property_stats[prop_name] = {"verified": 0, "total": 0}
+                
+                property_stats[prop_name]["verified"] += prop_data.get("verified", 0)
+                property_stats[prop_name]["total"] += prop_data.get("total", 0)
+    except Exception as e:
+        print(f"Error processing {report_file}: {e}")
+
+# Write to summary file
+with open("verification_summary.md", "a") as f:
+    f.write(f"\nTotal properties verified: {total_verified}/{total_checked} ")
+    if total_checked > 0:
+        f.write(f"({total_verified/total_checked*100:.1f}%)\n\n")
+    else:
+        f.write("(0%)\n\n")
+    
+    f.write("| Property Type | Verified | Total | Verification Rate |\n")
+    f.write("|--------------|----------|-------|------------------|\n")
+    
+    for prop_name, stats in property_stats.items():
+        rate = stats["verified"] / stats["total"] * 100 if stats["total"] > 0 else 0
+        f.write(f"| {prop_name} | {stats['verified']} | {stats['total']} | {rate:.1f}% |\n")
+        '
+        
+        cat verification_summary.md
+        
+    - name: Upload summary report
+      uses: actions/upload-artifact@v2
+      with:
+        name: verification-summary
+        path: verification_summary.md

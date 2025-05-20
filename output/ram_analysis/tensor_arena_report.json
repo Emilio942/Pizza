@@ -1,0 +1,38 @@
+{
+  "timestamp": "2025-05-18 12:00:00",
+  "model_info": {
+    "filename": "pizza_model_int8.pth",
+    "size_bytes": 2348,
+    "is_quantized": true
+  },
+  "current_estimation": {
+    "method": "Fixed percentage (20% for quantized models)",
+    "estimated_tensor_arena_bytes": 470,
+    "estimated_tensor_arena_kb": 0.5
+  },
+  "improved_estimation": {
+    "method": "Architecture-based estimation",
+    "max_feature_maps": 16,
+    "activation_size_bytes": 9216,
+    "estimated_tensor_arena_bytes": 11059,
+    "estimated_tensor_arena_kb": 10.8,
+    "calculations": {
+      "input_size": [3, 48, 48],
+      "bytes_per_value": 1,
+      "activation_size": "1 (batch) * 16 (features) * 24 (height/2) * 24 (width/2) * 1 (bytes) = 9216 bytes",
+      "overhead_factor": 1.2
+    }
+  },
+  "analysis": {
+    "difference_bytes": 10589,
+    "difference_kb": 10.3,
+    "difference_percentage": 2253.0,
+    "exceeds_threshold": true,
+    "conclusion": "Die aktuelle EMU-02 Schätzung unterschätzt den tatsächlichen RAM-Bedarf der Tensor-Arena erheblich. Eine Korrektur ist dringend erforderlich, um potentielle Speicherprobleme auf der Hardware zu vermeiden."
+  },
+  "recommendation": {
+    "implement_architecture_based_calculation": true,
+    "suggested_code_location": "src/emulation/emulator-test.py",
+    "minimum_ram_recommendation": "Mindestens 11KB sollten für die Tensor-Arena reserviert werden, statt der aktuell geschätzten 0.5KB."
+  }
+}

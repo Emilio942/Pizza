@@ -1,0 +1,72 @@
+{
+  "timestamp": "2025-05-14T04:35:45.708063",
+  "category_stats": {
+    "preprocessing": {
+      "total": 2,
+      "successful": 2,
+      "success_rate": 100.0,
+      "scripts": [
+        {
+          "name": "test_image_preprocessing.py",
+          "status": "success",
+          "duration": 4,
+          "retries": 0,
+          "log": "/home/emilio/Documents/ai/pizza/output/pipeline_runs/20250514_043222/logs/test_image_preprocessing.log",
+          "details": {}
+        },
+        {
+          "name": "augment_dataset.py",
+          "status": "success",
+          "duration": 0,
+          "retries": 0,
+          "log": "/home/emilio/Documents/ai/pizza/output/pipeline_runs/20250514_043222/logs/augment_dataset.log",
+          "details": {}
+        }
+      ]
+    },
+    "testing": {
+      "total": 2,
+      "successful": 2,
+      "success_rate": 100.0,
+      "scripts": [
+        {
+          "name": "run_pizza_tests.py",
+          "status": "success",
+          "duration": 0,
+          "retries": 0,
+          "log": "/home/emilio/Documents/ai/pizza/output/pipeline_runs/20250514_043222/logs/run_pizza_tests.log",
+          "details": {}
+        },
+        {
+          "name": "test_temporal_smoothing.py",
+          "status": "success",
+          "duration": 3,
+          "retries": 0,
+          "log": "/home/emilio/Documents/ai/pizza/output/pipeline_runs/20250514_043222/logs/test_temporal_smoothing.log",
+          "details": {}
+        }
+      ]
+    },
+    "unknown": {
+      "total": 1,
+      "successful": 1,
+      "success_rate": 100.0,
+      "scripts": [
+        {
+          "name": "verify_model.py",
+          "status": "success",
+          "duration": 2,
+          "retries": 0,
+          "log": "/home/emilio/Documents/ai/pizza/output/pipeline_runs/20250514_043222/logs/verify_model.log",
+          "details": {}
+        }
+      ]
+    }
+  },
+  "issues": [],
+  "summary": {
+    "total_categories": 3,
+    "total_issues": 0,
+    "overall_success_rate": 100.0
+  }
+}

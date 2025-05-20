@@ -1,0 +1,47 @@
+{
+  "timestamp": "2025-05-19 06:35:39",
+  "ra2040_specs": {
+    "total_ram_kb": 264.0,
+    "max_usable_ram_kb": 204.0
+  },
+  "ram_usage_components": {
+    "tensor_arena_kb": 10.8,
+    "system_overhead_kb": 40.0,
+    "framebuffer_kb": 76.8,
+    "preprocessing_buffer_kb": 27.0,
+    "stack_kb": 8.0,
+    "heap_kb": 5.0,
+    "static_buffers_kb": 3.0
+  },
+  "summary": {
+    "total_ram_usage_kb": 170.6,
+    "available_ram_kb": 93.4,
+    "percentage_used": 64.62121212121212,
+    "meets_requirements": true
+  },
+  "analysis": {
+    "critical_components": [
+      {
+        "name": "Tensor Arena",
+        "size_kb": 10.8,
+        "percentage": 6.330597889800704
+      },
+      {
+        "name": "Framebuffer",
+        "size_kb": 76.8,
+        "percentage": 45.01758499413834
+      },
+      {
+        "name": "System Overhead",
+        "size_kb": 40.0,
+        "percentage": 23.446658851113718
+      }
+    ],
+    "recommendations": [
+      {
+        "component": "Framebuffer",
+        "suggestion": "Verwenden Sie eine niedrigere Aufl\u00f6sung oder ein einfacheres Pixelformat (z.B. Graustufen statt RGB)."
+      }
+    ]
+  }
+}

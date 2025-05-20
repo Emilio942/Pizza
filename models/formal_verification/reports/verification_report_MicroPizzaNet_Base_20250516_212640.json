@@ -1,0 +1,142 @@
+{
+  "model_name": "MockModel",
+  "verification_date": "2025-05-16T21:26:40.477897",
+  "properties": {
+    "robustness": {
+      "total": 3,
+      "verified": 3,
+      "failed": 0,
+      "verification_rate": 1.0,
+      "avg_time": 0.5,
+      "details": [
+        {
+          "verified": true,
+          "property_type": "robustness",
+          "time_seconds": 0.5,
+          "details": {
+            "epsilon": 0.03,
+            "norm": "L_inf",
+            "min_logit_diff": 0.2
+          }
+        },
+        {
+          "verified": true,
+          "property_type": "robustness",
+          "time_seconds": 0.5,
+          "details": {
+            "epsilon": 0.03,
+            "norm": "L_inf",
+            "min_logit_diff": 0.2
+          }
+        },
+        {
+          "verified": true,
+          "property_type": "robustness",
+          "time_seconds": 0.5,
+          "details": {
+            "epsilon": 0.03,
+            "norm": "L_inf",
+            "min_logit_diff": 0.2
+          }
+        }
+      ]
+    },
+    "brightness": {
+      "total": 3,
+      "verified": 3,
+      "failed": 0,
+      "verification_rate": 1.0,
+      "avg_time": 0.3,
+      "details": [
+        {
+          "verified": true,
+          "property_type": "brightness",
+          "time_seconds": 0.3,
+          "details": {
+            "brightness_range": [
+              0.7,
+              1.3
+            ],
+            "min_logit_diff": 0.3
+          }
+        },
+        {
+          "verified": true,
+          "property_type": "brightness",
+          "time_seconds": 0.3,
+          "details": {
+            "brightness_range": [
+              0.7,
+              1.3
+            ],
+            "min_logit_diff": 0.3
+          }
+        },
+        {
+          "verified": true,
+          "property_type": "brightness",
+          "time_seconds": 0.3,
+          "details": {
+            "brightness_range": [
+              0.7,
+              1.3
+            ],
+            "min_logit_diff": 0.3
+          }
+        }
+      ]
+    },
+    "class_separation": {
+      "total": 2,
+      "verified": 1,
+      "failed": 1,
+      "verification_rate": 0.5,
+      "avg_time": 0.7,
+      "details": [
+        {
+          "verified": true,
+          "property_type": "class_separation",
+          "time_seconds": 0.7,
+          "details": {
+            "class1": 2,
+            "class2": 5,
+            "class1_name": "combined",
+            "class2_name": "segment",
+            "robustness_eps": 0.03,
+            "results": [
+              {
+                "example": 0,
+                "verified": true
+              }
+            ]
+          }
+        },
+        {
+          "verified": false,
+          "property_type": "class_separation",
+          "time_seconds": 0.7,
+          "details": {
+            "class1": 5,
+            "class2": 2,
+            "class1_name": "segment",
+            "class2_name": "combined",
+            "robustness_eps": 0.03,
+            "results": [
+              {
+                "example": 0,
+                "verified": true
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "summary": {
+    "total_properties_checked": 8,
+    "total_verified": 7,
+    "total_failed": 1,
+    "overall_verification_rate": 0.875,
+    "total_time_seconds": 3.8
+  }
+}

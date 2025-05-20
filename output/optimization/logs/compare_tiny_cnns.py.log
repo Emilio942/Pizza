@@ -1,0 +1,237 @@
+2025-05-14 12:55:02,163 - INFO - Starte Vergleich alternativer Tiny-CNNs für Pizza-Erkennung
+2025-05-14 12:55:02,163 - INFO - ================================================================================
+2025-05-14 12:55:02,163 - INFO - RP2040 PIZZA-ERKENNUNGSSYSTEM - DETAILLIERTE KONFIGURATION
+2025-05-14 12:55:02,163 - INFO - ================================================================================
+2025-05-14 12:55:02,163 - INFO - Hardware: RP2040 - 133MHz, 264KB RAM, 2048KB Flash
+2025-05-14 12:55:02,163 - INFO - Kamera: OV2640 - 320x240, 7 FPS
+2025-05-14 12:55:02,163 - INFO - Stromversorgung: CR123A - 1500mAh, 8.33h aktiv, 3000.00h standby
+2025-05-14 12:55:02,163 - INFO - Modellparameter: 48x48 Eingabegröße, 8-Bit Quantisierung
+2025-05-14 12:55:02,163 - INFO - Speicherbeschränkungen: Max. 180KB Modellgröße, 100KB Laufzeit-RAM
+2025-05-14 12:55:02,163 - INFO - ================================================================================
+2025-05-14 12:55:02,163 - INFO - Lade Datensatz aus data/augmented
+2025-05-14 12:55:02,164 - INFO - Analysiere Datensatz in data/augmented...
+Analysiere Bilder:   0%|          | 0/50 [00:00<?, ?it/s]Analysiere Bilder: 100%|██████████| 50/50 [00:00<00:00, 1832.63it/s]
+2025-05-14 12:55:02,198 - INFO - Datensatzanalyse abgeschlossen:
+2025-05-14 12:55:02,198 - INFO - Gesamtzahl der Bilder: 57
+2025-05-14 12:55:02,198 - INFO - Klassenverteilung: {'progression': 0, 'mixed': 7, 'basic': 29, 'segment': 0, 'combined': 17, 'burnt': 4}
+2025-05-14 12:55:02,198 - INFO - Durchschnittliche Bildgröße: 224.0 x 224.0
+2025-05-14 12:55:02,198 - INFO - RGB-Mittelwerte: [0.4870, 0.4030, 0.3319]
+2025-05-14 12:55:02,198 - INFO - RGB-Standardabweichungen: [0.2403, 0.2570, 0.2688]
+2025-05-14 12:55:02,198 - INFO - Preparing optimized data loaders...
+2025-05-14 12:55:02,198 - INFO - Using dataset-specific normalization: mean=[0.48703012 0.40298717 0.33186391], std=[0.24028467 0.25698002 0.26875999]
+2025-05-14 12:55:02,199 - INFO - Data loaders created: 45 training images, 12 validation images
+2025-05-14 12:55:02,199 - INFO - Classes: ['basic', 'burnt', 'combined', 'mixed', 'progression', 'segment']
+2025-05-14 12:55:02,200 - INFO - 
+==================================================
+Trainiere Modell 1/3: MicroPizzaNet (Baseline)
+==================================================
+2025-05-14 12:55:02,204 - INFO - Speicheranalyse:
+2025-05-14 12:55:02,204 - INFO -   Modellgröße (Float32): 6.23 KB
+2025-05-14 12:55:02,204 - INFO -   Modellgröße (Int8): 1.56 KB (0.1% des Flash)
+2025-05-14 12:55:02,204 - INFO -   Aktivierungsspeicher: 122.90 KB
+2025-05-14 12:55:02,204 - INFO -   Gesamter Laufzeitspeicher: 124.46 KB (47.1% des RAM)
+2025-05-14 12:55:02,204 - WARNING - Warnung: Laufzeitspeicher überschreitet RAM-Beschränkung (124.46KB > 100KB)
+2025-05-14 12:55:02,204 - INFO - Modell hat 1,430 Parameter
+2025-05-14 12:55:02,204 - INFO - Geschätzte Modellgröße: 6.23 KB (float32), 1.56 KB (int8)
+Epoch 1/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s]Epoch 1/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.8, acc=3.12]Epoch 1/30 [Train]:  50%|█████     | 1/2 [00:00<00:00,  3.54it/s, loss=1.8, acc=3.12]Epoch 1/30 [Train]:  50%|█████     | 1/2 [00:00<00:00,  3.54it/s, loss=1.84, acc=2.22]Epoch 1/30 [Train]: 100%|██████████| 2/2 [00:00<00:00,  6.66it/s, loss=1.84, acc=2.22]
+2025-05-14 12:55:02,695 - INFO - Epoch 1/30 - Train Loss: 1.8079, Train Acc: 2.22% - Val Loss: 1.7900, Val Acc: 0.00%
+Epoch 2/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s]Epoch 2/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.81, acc=0]Epoch 2/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.81, acc=0]Epoch 2/30 [Train]: 100%|██████████| 2/2 [00:00<00:00, 19.34it/s, loss=1.81, acc=0]
+2025-05-14 12:55:02,873 - INFO - Epoch 2/30 - Train Loss: 1.8131, Train Acc: 0.00% - Val Loss: 1.7887, Val Acc: 8.33%
+Epoch 3/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s]Epoch 3/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.8, acc=0]Epoch 3/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.81, acc=0]Epoch 3/30 [Train]: 100%|██████████| 2/2 [00:00<00:00, 19.82it/s, loss=1.81, acc=0]
+2025-05-14 12:55:03,050 - INFO - Epoch 3/30 - Train Loss: 1.8023, Train Acc: 0.00% - Val Loss: 1.7867, Val Acc: 66.67%
+Epoch 4/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s]Epoch 4/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.78, acc=0]Epoch 4/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.8, acc=0] Epoch 4/30 [Train]: 100%|██████████| 2/2 [00:00<00:00, 18.64it/s, loss=1.8, acc=0]
+2025-05-14 12:55:03,234 - INFO - Epoch 4/30 - Train Loss: 1.7885, Train Acc: 0.00% - Val Loss: 1.7826, Val Acc: 66.67%
+Epoch 5/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s]Epoch 5/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.78, acc=9.38]Epoch 5/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.77, acc=11.1]Epoch 5/30 [Train]: 100%|██████████| 2/2 [00:00<00:00, 20.26it/s, loss=1.77, acc=11.1]
+2025-05-14 12:55:03,409 - INFO - Epoch 5/30 - Train Loss: 1.7803, Train Acc: 11.11% - Val Loss: 1.7765, Val Acc: 66.67%
+Epoch 6/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s]Epoch 6/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.75, acc=21.9]Epoch 6/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.73, acc=28.9]Epoch 6/30 [Train]: 100%|██████████| 2/2 [00:00<00:00, 19.98it/s, loss=1.73, acc=28.9]
+2025-05-14 12:55:03,592 - INFO - Epoch 6/30 - Train Loss: 1.7436, Train Acc: 28.89% - Val Loss: 1.7697, Val Acc: 58.33%
+Epoch 7/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s]Epoch 7/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.72, acc=31.2]Epoch 7/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.7, acc=33.3] Epoch 7/30 [Train]: 100%|██████████| 2/2 [00:00<00:00, 20.72it/s, loss=1.7, acc=33.3]
+2025-05-14 12:55:03,765 - INFO - Epoch 7/30 - Train Loss: 1.7134, Train Acc: 33.33% - Val Loss: 1.7608, Val Acc: 0.00%
+Epoch 8/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s]Epoch 8/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.68, acc=37.5]Epoch 8/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.66, acc=35.6]Epoch 8/30 [Train]: 100%|██████████| 2/2 [00:00<00:00, 20.53it/s, loss=1.66, acc=35.6]
+2025-05-14 12:55:03,939 - INFO - Epoch 8/30 - Train Loss: 1.6719, Train Acc: 35.56% - Val Loss: 1.7522, Val Acc: 0.00%
+Epoch 9/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s]Epoch 9/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.64, acc=28.1]Epoch 9/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.64, acc=26.7]Epoch 9/30 [Train]: 100%|██████████| 2/2 [00:00<00:00, 20.02it/s, loss=1.64, acc=26.7]
+2025-05-14 12:55:04,115 - INFO - Epoch 9/30 - Train Loss: 1.6371, Train Acc: 26.67% - Val Loss: 1.7426, Val Acc: 0.00%
+Epoch 10/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s]Epoch 10/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.62, acc=15.6]Epoch 10/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.57, acc=22.2]Epoch 10/30 [Train]: 100%|██████████| 2/2 [00:00<00:00, 20.05it/s, loss=1.57, acc=22.2]
+2025-05-14 12:55:04,288 - INFO - Epoch 10/30 - Train Loss: 1.6075, Train Acc: 22.22% - Val Loss: 1.7335, Val Acc: 0.00%
+Epoch 11/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s]Epoch 11/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.61, acc=18.8]Epoch 11/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.54, acc=24.4]Epoch 11/30 [Train]: 100%|██████████| 2/2 [00:00<00:00, 20.10it/s, loss=1.54, acc=24.4]
+2025-05-14 12:55:04,465 - INFO - Epoch 11/30 - Train Loss: 1.5917, Train Acc: 24.44% - Val Loss: 1.7250, Val Acc: 0.00%
+Epoch 12/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s]Epoch 12/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.57, acc=15.6]Epoch 12/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.48, acc=22.2]Epoch 12/30 [Train]: 100%|██████████| 2/2 [00:00<00:00, 20.14it/s, loss=1.48, acc=22.2]
+2025-05-14 12:55:04,636 - INFO - Epoch 12/30 - Train Loss: 1.5449, Train Acc: 22.22% - Val Loss: 1.7172, Val Acc: 0.00%
+Epoch 13/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s]Epoch 13/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.47, acc=37.5]Epoch 13/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.51, acc=37.8]Epoch 13/30 [Train]: 100%|██████████| 2/2 [00:00<00:00, 19.83it/s, loss=1.51, acc=37.8]
+2025-05-14 12:55:04,813 - INFO - Epoch 13/30 - Train Loss: 1.4844, Train Acc: 37.78% - Val Loss: 1.7149, Val Acc: 0.00%
+Epoch 14/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s]Epoch 14/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.51, acc=31.2]Epoch 14/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.43, acc=35.6]Epoch 14/30 [Train]: 100%|██████████| 2/2 [00:00<00:00, 20.64it/s, loss=1.43, acc=35.6]
+2025-05-14 12:55:04,996 - INFO - Epoch 14/30 - Train Loss: 1.4830, Train Acc: 35.56% - Val Loss: 1.7125, Val Acc: 0.00%
+Epoch 15/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s]Epoch 15/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.53, acc=25]Epoch 15/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.48, acc=28.9]Epoch 15/30 [Train]: 100%|██████████| 2/2 [00:00<00:00, 19.84it/s, loss=1.48, acc=28.9]
+2025-05-14 12:55:05,172 - INFO - Epoch 15/30 - Train Loss: 1.5162, Train Acc: 28.89% - Val Loss: 1.7053, Val Acc: 0.00%
+Epoch 16/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s]Epoch 16/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.48, acc=37.5]Epoch 16/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.35, acc=44.4]Epoch 16/30 [Train]: 100%|██████████| 2/2 [00:00<00:00, 19.36it/s, loss=1.35, acc=44.4]
+2025-05-14 12:55:05,351 - INFO - Epoch 16/30 - Train Loss: 1.4393, Train Acc: 44.44% - Val Loss: 1.6974, Val Acc: 8.33%
+Epoch 17/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s]Epoch 17/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.41, acc=34.4]Epoch 17/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.51, acc=28.9]Epoch 17/30 [Train]: 100%|██████████| 2/2 [00:00<00:00, 18.43it/s, loss=1.51, acc=28.9]
+2025-05-14 12:55:05,536 - INFO - Epoch 17/30 - Train Loss: 1.4360, Train Acc: 28.89% - Val Loss: 1.6927, Val Acc: 8.33%
+Epoch 18/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s]Epoch 18/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.46, acc=37.5]Epoch 18/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.53, acc=31.1]Epoch 18/30 [Train]: 100%|██████████| 2/2 [00:00<00:00, 19.29it/s, loss=1.53, acc=31.1]
+2025-05-14 12:55:05,713 - INFO - Epoch 18/30 - Train Loss: 1.4791, Train Acc: 31.11% - Val Loss: 1.6803, Val Acc: 8.33%
+Epoch 19/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s]Epoch 19/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.51, acc=21.9]Epoch 19/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.5, acc=15.6] Epoch 19/30 [Train]: 100%|██████████| 2/2 [00:00<00:00, 20.40it/s, loss=1.5, acc=15.6]
+2025-05-14 12:55:05,883 - INFO - Epoch 19/30 - Train Loss: 1.5046, Train Acc: 15.56% - Val Loss: 1.6581, Val Acc: 8.33%
+Epoch 20/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s]Epoch 20/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.39, acc=40.6]Epoch 20/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.48, acc=37.8]Epoch 20/30 [Train]: 100%|██████████| 2/2 [00:00<00:00, 19.64it/s, loss=1.48, acc=37.8]
+2025-05-14 12:55:06,060 - INFO - Epoch 20/30 - Train Loss: 1.4145, Train Acc: 37.78% - Val Loss: 1.6375, Val Acc: 8.33%
+Epoch 21/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s]Epoch 21/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.41, acc=28.1]Epoch 21/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.4, acc=31.1] Epoch 21/30 [Train]: 100%|██████████| 2/2 [00:00<00:00, 20.03it/s, loss=1.4, acc=31.1]
+2025-05-14 12:55:06,235 - INFO - Epoch 21/30 - Train Loss: 1.4077, Train Acc: 31.11% - Val Loss: 1.6204, Val Acc: 8.33%
+Epoch 22/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s]Epoch 22/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.43, acc=34.4]Epoch 22/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.5, acc=33.3] Epoch 22/30 [Train]: 100%|██████████| 2/2 [00:00<00:00, 20.25it/s, loss=1.5, acc=33.3]
+2025-05-14 12:55:06,407 - INFO - Epoch 22/30 - Train Loss: 1.4469, Train Acc: 33.33% - Val Loss: 1.6086, Val Acc: 8.33%
+Epoch 23/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s]Epoch 23/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.37, acc=40.6]Epoch 23/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.53, acc=33.3]Epoch 23/30 [Train]: 100%|██████████| 2/2 [00:00<00:00, 19.49it/s, loss=1.53, acc=33.3]
+2025-05-14 12:55:06,584 - INFO - Epoch 23/30 - Train Loss: 1.4164, Train Acc: 33.33% - Val Loss: 1.5958, Val Acc: 8.33%
+Epoch 24/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s]Epoch 24/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.41, acc=40.6]Epoch 24/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.39, acc=37.8]Epoch 24/30 [Train]: 100%|██████████| 2/2 [00:00<00:00, 19.73it/s, loss=1.39, acc=37.8]
+2025-05-14 12:55:06,759 - INFO - Epoch 24/30 - Train Loss: 1.4065, Train Acc: 37.78% - Val Loss: 1.5842, Val Acc: 8.33%
+Epoch 25/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s]Epoch 25/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.37, acc=43.8]Epoch 25/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.39, acc=44.4]Epoch 25/30 [Train]: 100%|██████████| 2/2 [00:00<00:00, 18.82it/s, loss=1.39, acc=44.4]
+2025-05-14 12:55:06,939 - INFO - Epoch 25/30 - Train Loss: 1.3773, Train Acc: 44.44% - Val Loss: 1.5735, Val Acc: 8.33%
+Epoch 26/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s]Epoch 26/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.41, acc=37.5]Epoch 26/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.31, acc=44.4]Epoch 26/30 [Train]: 100%|██████████| 2/2 [00:00<00:00, 19.81it/s, loss=1.31, acc=44.4]
+2025-05-14 12:55:07,117 - INFO - Epoch 26/30 - Train Loss: 1.3849, Train Acc: 44.44% - Val Loss: 1.5709, Val Acc: 8.33%
+Epoch 27/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s]Epoch 27/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.35, acc=43.8]Epoch 27/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.43, acc=44.4]Epoch 27/30 [Train]: 100%|██████████| 2/2 [00:00<00:00, 19.50it/s, loss=1.43, acc=44.4]
+2025-05-14 12:55:07,294 - INFO - Epoch 27/30 - Train Loss: 1.3753, Train Acc: 44.44% - Val Loss: 1.5709, Val Acc: 8.33%
+Epoch 28/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s]Epoch 28/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.32, acc=71.9]Epoch 28/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.41, acc=64.4]Epoch 28/30 [Train]: 100%|██████████| 2/2 [00:00<00:00, 18.66it/s, loss=1.41, acc=64.4]
+2025-05-14 12:55:07,475 - INFO - Epoch 28/30 - Train Loss: 1.3454, Train Acc: 64.44% - Val Loss: 1.5723, Val Acc: 8.33%
+Epoch 29/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s]Epoch 29/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.39, acc=40.6]Epoch 29/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.37, acc=40]  Epoch 29/30 [Train]: 100%|██████████| 2/2 [00:00<00:00, 17.16it/s, loss=1.37, acc=40]
+2025-05-14 12:55:07,666 - INFO - Epoch 29/30 - Train Loss: 1.3853, Train Acc: 40.00% - Val Loss: 1.5735, Val Acc: 0.00%
+Epoch 30/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s]Epoch 30/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.41, acc=46.9]Epoch 30/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.36, acc=48.9]Epoch 30/30 [Train]: 100%|██████████| 2/2 [00:00<00:00, 17.92it/s, loss=1.36, acc=48.9]
+2025-05-14 12:55:07,851 - INFO - Epoch 30/30 - Train Loss: 1.3977, Train Acc: 48.89% - Val Loss: 1.5767, Val Acc: 0.00%
+2025-05-14 12:55:07,852 - INFO - Beste Modellgewichte wiederhergestellt
+/home/emilio/Documents/ai/pizza/.venv/lib/python3.12/site-packages/sklearn/metrics/_classification.py:1565: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/emilio/Documents/ai/pizza/.venv/lib/python3.12/site-packages/sklearn/metrics/_classification.py:1565: UndefinedMetricWarning: Recall is ill-defined and being set to 0.0 in labels with no true samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+2025-05-14 12:55:07,973 - INFO - Modell gespeichert unter: output/tiny_cnn_comparison/models/micropizzanet_(baseline).pth
+2025-05-14 12:55:08,425 - INFO - 
+==================================================
+Trainiere Modell 2/3: MCUNet
+==================================================
+2025-05-14 12:55:08,429 - INFO - Speicheranalyse:
+2025-05-14 12:55:08,429 - INFO -   Modellgröße (Float32): 11.16 KB
+2025-05-14 12:55:08,429 - INFO -   Modellgröße (Int8): 2.79 KB (0.1% des Flash)
+2025-05-14 12:55:08,429 - INFO -   Aktivierungsspeicher: 391.65 KB
+2025-05-14 12:55:08,429 - INFO -   Gesamter Laufzeitspeicher: 394.44 KB (149.4% des RAM)
+2025-05-14 12:55:08,429 - WARNING - Warnung: Laufzeitspeicher überschreitet RAM-Beschränkung (394.44KB > 100KB)
+2025-05-14 12:55:08,429 - INFO - Modell hat 2,526 Parameter
+2025-05-14 12:55:08,429 - INFO - Geschätzte Modellgröße: 11.16 KB (float32), 2.79 KB (int8)
+Epoch 1/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s]Epoch 1/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.79, acc=9.38]Epoch 1/30 [Train]:  50%|█████     | 1/2 [00:00<00:00,  9.81it/s, loss=1.79, acc=9.38]Epoch 1/30 [Train]:  50%|█████     | 1/2 [00:00<00:00,  9.81it/s, loss=1.79, acc=11.1]Epoch 1/30 [Train]: 100%|██████████| 2/2 [00:00<00:00, 14.94it/s, loss=1.79, acc=11.1]
+2025-05-14 12:55:08,647 - INFO - Epoch 1/30 - Train Loss: 1.7902, Train Acc: 11.11% - Val Loss: 1.7910, Val Acc: 0.00%
+Epoch 2/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s]Epoch 2/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.79, acc=18.8]Epoch 2/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.79, acc=20]  Epoch 2/30 [Train]: 100%|██████████| 2/2 [00:00<00:00, 19.19it/s, loss=1.79, acc=20]
+2025-05-14 12:55:08,831 - INFO - Epoch 2/30 - Train Loss: 1.7904, Train Acc: 20.00% - Val Loss: 1.7902, Val Acc: 0.00%
+Epoch 3/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s]Epoch 3/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.79, acc=21.9]Epoch 3/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.79, acc=22.2]Epoch 3/30 [Train]: 100%|██████████| 2/2 [00:00<00:00, 19.15it/s, loss=1.79, acc=22.2]
+2025-05-14 12:55:09,014 - INFO - Epoch 3/30 - Train Loss: 1.7884, Train Acc: 22.22% - Val Loss: 1.7891, Val Acc: 0.00%
+Epoch 4/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s]Epoch 4/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.79, acc=18.8]Epoch 4/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.79, acc=20]  Epoch 4/30 [Train]: 100%|██████████| 2/2 [00:00<00:00, 18.84it/s, loss=1.79, acc=20]
+2025-05-14 12:55:09,202 - INFO - Epoch 4/30 - Train Loss: 1.7870, Train Acc: 20.00% - Val Loss: 1.7876, Val Acc: 0.00%
+Epoch 5/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s]Epoch 5/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.78, acc=25]Epoch 5/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.78, acc=31.1]Epoch 5/30 [Train]: 100%|██████████| 2/2 [00:00<00:00, 19.25it/s, loss=1.78, acc=31.1]
+2025-05-14 12:55:09,392 - INFO - Epoch 5/30 - Train Loss: 1.7822, Train Acc: 31.11% - Val Loss: 1.7858, Val Acc: 0.00%
+Epoch 6/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s]Epoch 6/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.78, acc=18.8]Epoch 6/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.77, acc=28.9]Epoch 6/30 [Train]: 100%|██████████| 2/2 [00:00<00:00, 19.20it/s, loss=1.77, acc=28.9]
+2025-05-14 12:55:09,579 - INFO - Epoch 6/30 - Train Loss: 1.7747, Train Acc: 28.89% - Val Loss: 1.7829, Val Acc: 0.00%
+Epoch 7/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s]Epoch 7/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.77, acc=12.5]Epoch 7/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.76, acc=17.8]Epoch 7/30 [Train]: 100%|██████████| 2/2 [00:00<00:00, 19.07it/s, loss=1.76, acc=17.8]
+2025-05-14 12:55:09,764 - INFO - Epoch 7/30 - Train Loss: 1.7699, Train Acc: 17.78% - Val Loss: 1.7782, Val Acc: 0.00%
+Epoch 8/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s]Epoch 8/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.76, acc=28.1]Epoch 8/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.74, acc=31.1]Epoch 8/30 [Train]: 100%|██████████| 2/2 [00:00<00:00, 18.84it/s, loss=1.74, acc=31.1]
+2025-05-14 12:55:09,963 - INFO - Epoch 8/30 - Train Loss: 1.7555, Train Acc: 31.11% - Val Loss: 1.7713, Val Acc: 0.00%
+Epoch 9/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s]Epoch 9/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.75, acc=15.6]Epoch 9/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.75, acc=13.3]Epoch 9/30 [Train]: 100%|██████████| 2/2 [00:00<00:00, 18.91it/s, loss=1.75, acc=13.3]
+2025-05-14 12:55:10,150 - INFO - Epoch 9/30 - Train Loss: 1.7509, Train Acc: 13.33% - Val Loss: 1.7623, Val Acc: 0.00%
+Epoch 10/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s]Epoch 10/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.74, acc=34.4]Epoch 10/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.73, acc=28.9]Epoch 10/30 [Train]: 100%|██████████| 2/2 [00:00<00:00, 19.04it/s, loss=1.73, acc=28.9]
+2025-05-14 12:55:10,336 - INFO - Epoch 10/30 - Train Loss: 1.7329, Train Acc: 28.89% - Val Loss: 1.7533, Val Acc: 0.00%
+Epoch 11/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s]Epoch 11/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.72, acc=31.2]Epoch 11/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.71, acc=31.1]Epoch 11/30 [Train]: 100%|██████████| 2/2 [00:00<00:00, 19.54it/s, loss=1.71, acc=31.1]
+2025-05-14 12:55:10,522 - INFO - Epoch 11/30 - Train Loss: 1.7195, Train Acc: 31.11% - Val Loss: 1.7433, Val Acc: 0.00%
+Epoch 12/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s]Epoch 12/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.71, acc=37.5]Epoch 12/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.7, acc=37.8] Epoch 12/30 [Train]: 100%|██████████| 2/2 [00:00<00:00, 18.07it/s, loss=1.7, acc=37.8]
+2025-05-14 12:55:10,716 - INFO - Epoch 12/30 - Train Loss: 1.7057, Train Acc: 37.78% - Val Loss: 1.7325, Val Acc: 0.00%
+Epoch 13/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s]Epoch 13/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.69, acc=31.2]Epoch 13/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.68, acc=35.6]Epoch 13/30 [Train]: 100%|██████████| 2/2 [00:00<00:00, 18.93it/s, loss=1.68, acc=35.6]
+2025-05-14 12:55:10,902 - INFO - Epoch 13/30 - Train Loss: 1.6883, Train Acc: 35.56% - Val Loss: 1.7212, Val Acc: 0.00%
+Epoch 14/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s]Epoch 14/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.7, acc=21.9]Epoch 14/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.69, acc=24.4]Epoch 14/30 [Train]: 100%|██████████| 2/2 [00:00<00:00, 19.26it/s, loss=1.69, acc=24.4]
+2025-05-14 12:55:11,089 - INFO - Epoch 14/30 - Train Loss: 1.6965, Train Acc: 24.44% - Val Loss: 1.7118, Val Acc: 0.00%
+Epoch 15/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s]Epoch 15/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.68, acc=31.2]Epoch 15/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.66, acc=31.1]Epoch 15/30 [Train]: 100%|██████████| 2/2 [00:00<00:00, 19.45it/s, loss=1.66, acc=31.1]
+2025-05-14 12:55:11,274 - INFO - Epoch 15/30 - Train Loss: 1.6732, Train Acc: 31.11% - Val Loss: 1.7039, Val Acc: 0.00%
+Epoch 16/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s]Epoch 16/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.66, acc=37.5]Epoch 16/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.67, acc=31.1]Epoch 16/30 [Train]: 100%|██████████| 2/2 [00:00<00:00, 18.25it/s, loss=1.67, acc=31.1]
+2025-05-14 12:55:11,467 - INFO - Epoch 16/30 - Train Loss: 1.6645, Train Acc: 31.11% - Val Loss: 1.6977, Val Acc: 0.00%
+Epoch 17/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s]Epoch 17/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.66, acc=28.1]Epoch 17/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.64, acc=31.1]Epoch 17/30 [Train]: 100%|██████████| 2/2 [00:00<00:00, 19.17it/s, loss=1.64, acc=31.1]
+2025-05-14 12:55:11,655 - INFO - Epoch 17/30 - Train Loss: 1.6572, Train Acc: 31.11% - Val Loss: 1.6913, Val Acc: 0.00%
+Epoch 18/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s]Epoch 18/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.65, acc=28.1]Epoch 18/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.63, acc=26.7]Epoch 18/30 [Train]: 100%|██████████| 2/2 [00:00<00:00, 17.94it/s, loss=1.63, acc=26.7]
+2025-05-14 12:55:11,847 - INFO - Epoch 18/30 - Train Loss: 1.6444, Train Acc: 26.67% - Val Loss: 1.6845, Val Acc: 0.00%
+Epoch 19/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s]Epoch 19/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.64, acc=34.4]Epoch 19/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.62, acc=40]  Epoch 19/30 [Train]: 100%|██████████| 2/2 [00:00<00:00, 18.15it/s, loss=1.62, acc=40]
+2025-05-14 12:55:12,037 - INFO - Epoch 19/30 - Train Loss: 1.6316, Train Acc: 40.00% - Val Loss: 1.6803, Val Acc: 0.00%
+Epoch 20/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s]Epoch 20/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.62, acc=28.1]Epoch 20/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.63, acc=26.7]Epoch 20/30 [Train]: 100%|██████████| 2/2 [00:00<00:00, 18.15it/s, loss=1.63, acc=26.7]
+2025-05-14 12:55:12,235 - INFO - Epoch 20/30 - Train Loss: 1.6239, Train Acc: 26.67% - Val Loss: 1.6765, Val Acc: 0.00%
+Epoch 21/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s]Epoch 21/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.63, acc=37.5]Epoch 21/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.6, acc=40]   Epoch 21/30 [Train]: 100%|██████████| 2/2 [00:00<00:00, 18.31it/s, loss=1.6, acc=40]
+2025-05-14 12:55:12,428 - INFO - Epoch 21/30 - Train Loss: 1.6177, Train Acc: 40.00% - Val Loss: 1.6750, Val Acc: 0.00%
+Epoch 22/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s]Epoch 22/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.62, acc=31.2]Epoch 22/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.62, acc=35.6]Epoch 22/30 [Train]: 100%|██████████| 2/2 [00:00<00:00, 17.14it/s, loss=1.62, acc=35.6]
+2025-05-14 12:55:12,623 - INFO - Epoch 22/30 - Train Loss: 1.6207, Train Acc: 35.56% - Val Loss: 1.6724, Val Acc: 0.00%
+Epoch 23/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s]Epoch 23/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.63, acc=18.8]Epoch 23/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.6, acc=22.2] Epoch 23/30 [Train]: 100%|██████████| 2/2 [00:00<00:00, 17.11it/s, loss=1.6, acc=22.2]
+2025-05-14 12:55:12,830 - INFO - Epoch 23/30 - Train Loss: 1.6220, Train Acc: 22.22% - Val Loss: 1.6698, Val Acc: 0.00%
+Epoch 24/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s]Epoch 24/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.63, acc=25]Epoch 24/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.59, acc=28.9]Epoch 24/30 [Train]: 100%|██████████| 2/2 [00:00<00:00, 19.62it/s, loss=1.59, acc=28.9]
+2025-05-14 12:55:13,010 - INFO - Epoch 24/30 - Train Loss: 1.6162, Train Acc: 28.89% - Val Loss: 1.6674, Val Acc: 0.00%
+Epoch 25/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s]Epoch 25/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.6, acc=34.4]Epoch 25/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.59, acc=37.8]Epoch 25/30 [Train]: 100%|██████████| 2/2 [00:00<00:00, 19.78it/s, loss=1.59, acc=37.8]
+2025-05-14 12:55:13,193 - INFO - Epoch 25/30 - Train Loss: 1.5973, Train Acc: 37.78% - Val Loss: 1.6647, Val Acc: 0.00%
+Epoch 26/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s]Epoch 26/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.61, acc=25]Epoch 26/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.57, acc=33.3]Epoch 26/30 [Train]: 100%|██████████| 2/2 [00:00<00:00, 18.86it/s, loss=1.57, acc=33.3]
+2025-05-14 12:55:13,378 - INFO - Epoch 26/30 - Train Loss: 1.5980, Train Acc: 33.33% - Val Loss: 1.6619, Val Acc: 0.00%
+Epoch 27/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s]Epoch 27/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.59, acc=34.4]Epoch 27/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.63, acc=26.7]Epoch 27/30 [Train]: 100%|██████████| 2/2 [00:00<00:00, 19.35it/s, loss=1.63, acc=26.7]
+2025-05-14 12:55:13,561 - INFO - Epoch 27/30 - Train Loss: 1.6057, Train Acc: 26.67% - Val Loss: 1.6597, Val Acc: 0.00%
+Epoch 28/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s]Epoch 28/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.6, acc=31.2]Epoch 28/30 [Train]:  50%|█████     | 1/2 [00:00<00:00,  9.90it/s, loss=1.6, acc=31.2]Epoch 28/30 [Train]:  50%|█████     | 1/2 [00:00<00:00,  9.90it/s, loss=1.58, acc=33.3]Epoch 28/30 [Train]: 100%|██████████| 2/2 [00:00<00:00, 16.77it/s, loss=1.58, acc=33.3]
+2025-05-14 12:55:13,760 - INFO - Epoch 28/30 - Train Loss: 1.5971, Train Acc: 33.33% - Val Loss: 1.6574, Val Acc: 0.00%
+Epoch 29/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s]Epoch 29/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.59, acc=28.1]Epoch 29/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.64, acc=26.7]Epoch 29/30 [Train]: 100%|██████████| 2/2 [00:00<00:00, 18.39it/s, loss=1.64, acc=26.7]
+2025-05-14 12:55:13,946 - INFO - Epoch 29/30 - Train Loss: 1.6065, Train Acc: 26.67% - Val Loss: 1.6545, Val Acc: 0.00%
+Epoch 30/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s]Epoch 30/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.61, acc=25]Epoch 30/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.58, acc=31.1]Epoch 30/30 [Train]: 100%|██████████| 2/2 [00:00<00:00, 19.34it/s, loss=1.58, acc=31.1]
+2025-05-14 12:55:14,125 - INFO - Epoch 30/30 - Train Loss: 1.6006, Train Acc: 31.11% - Val Loss: 1.6531, Val Acc: 0.00%
+2025-05-14 12:55:14,127 - INFO - Beste Modellgewichte wiederhergestellt
+/home/emilio/Documents/ai/pizza/.venv/lib/python3.12/site-packages/sklearn/metrics/_classification.py:1565: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/emilio/Documents/ai/pizza/.venv/lib/python3.12/site-packages/sklearn/metrics/_classification.py:1565: UndefinedMetricWarning: Recall is ill-defined and being set to 0.0 in labels with no true samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+2025-05-14 12:55:14,244 - INFO - Modell gespeichert unter: output/tiny_cnn_comparison/models/mcunet.pth
+2025-05-14 12:55:14,625 - INFO - 
+==================================================
+Trainiere Modell 3/3: MobilePizzaNet
+==================================================
+2025-05-14 12:55:14,633 - INFO - Speicheranalyse:
+2025-05-14 12:55:14,633 - INFO -   Modellgröße (Float32): 27.27 KB
+2025-05-14 12:55:14,633 - INFO -   Modellgröße (Int8): 6.82 KB (0.3% des Flash)
+2025-05-14 12:55:14,633 - INFO -   Aktivierungsspeicher: 875.34 KB
+2025-05-14 12:55:14,633 - INFO -   Gesamter Laufzeitspeicher: 882.15 KB (334.1% des RAM)
+2025-05-14 12:55:14,633 - WARNING - Warnung: Laufzeitspeicher überschreitet RAM-Beschränkung (882.15KB > 100KB)
+2025-05-14 12:55:14,633 - INFO - Modell hat 6,086 Parameter
+2025-05-14 12:55:14,633 - INFO - Geschätzte Modellgröße: 27.27 KB (float32), 6.82 KB (int8)
+Epoch 1/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s]Epoch 1/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.79, acc=12.5]Epoch 1/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.79, acc=13.3]Epoch 1/30 [Train]: 100%|██████████| 2/2 [00:00<00:00, 17.96it/s, loss=1.79, acc=13.3]Epoch 1/30 [Train]: 100%|██████████| 2/2 [00:00<00:00, 15.79it/s, loss=1.79, acc=13.3]
+2025-05-14 12:55:14,842 - INFO - Epoch 1/30 - Train Loss: 1.7892, Train Acc: 13.33% - Val Loss: 1.7939, Val Acc: 0.00%
+Epoch 2/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s]Epoch 2/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.79, acc=21.9]Epoch 2/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.79, acc=26.7]Epoch 2/30 [Train]: 100%|██████████| 2/2 [00:00<00:00, 17.67it/s, loss=1.79, acc=26.7]
+2025-05-14 12:55:15,035 - INFO - Epoch 2/30 - Train Loss: 1.7890, Train Acc: 26.67% - Val Loss: 1.7947, Val Acc: 0.00%
+Epoch 3/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s]Epoch 3/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.79, acc=12.5]Epoch 3/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.79, acc=13.3]Epoch 3/30 [Train]: 100%|██████████| 2/2 [00:00<00:00, 17.96it/s, loss=1.79, acc=13.3]
+2025-05-14 12:55:15,227 - INFO - Epoch 3/30 - Train Loss: 1.7918, Train Acc: 13.33% - Val Loss: 1.7952, Val Acc: 0.00%
+Epoch 4/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s]Epoch 4/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.79, acc=15.6]Epoch 4/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.79, acc=13.3]Epoch 4/30 [Train]: 100%|██████████| 2/2 [00:00<00:00, 18.87it/s, loss=1.79, acc=13.3]
+2025-05-14 12:55:15,415 - INFO - Epoch 4/30 - Train Loss: 1.7893, Train Acc: 13.33% - Val Loss: 1.7957, Val Acc: 0.00%
+Epoch 5/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s]Epoch 5/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.78, acc=31.2]Epoch 5/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.79, acc=24.4]Epoch 5/30 [Train]: 100%|██████████| 2/2 [00:00<00:00, 17.42it/s, loss=1.79, acc=24.4]
+2025-05-14 12:55:15,616 - INFO - Epoch 5/30 - Train Loss: 1.7869, Train Acc: 24.44% - Val Loss: 1.7954, Val Acc: 0.00%
+Epoch 6/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s]Epoch 6/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.79, acc=28.1]Epoch 6/30 [Train]:   0%|          | 0/2 [00:00<?, ?it/s, loss=1.78, acc=33.3]Epoch 6/30 [Train]: 100%|██████████| 2/2 [00:00<00:00, 17.86it/s, loss=1.78, acc=33.3]
+2025-05-14 12:55:15,810 - INFO - Epoch 6/30 - Train Loss: 1.7867, Train Acc: 33.33% - Val Loss: 1.7950, Val Acc: 0.00%
+2025-05-14 12:55:15,811 - INFO - Early Stopping in Epoche 6
+2025-05-14 12:55:15,812 - INFO - Beste Modellgewichte wiederhergestellt
+/home/emilio/Documents/ai/pizza/.venv/lib/python3.12/site-packages/sklearn/metrics/_classification.py:1565: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/emilio/Documents/ai/pizza/.venv/lib/python3.12/site-packages/sklearn/metrics/_classification.py:1565: UndefinedMetricWarning: Recall is ill-defined and being set to 0.0 in labels with no true samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+2025-05-14 12:55:15,942 - INFO - Modell gespeichert unter: output/tiny_cnn_comparison/models/mobilepizzanet.pth
+2025-05-14 12:55:16,859 - INFO - 
+==================================================
+2025-05-14 12:55:16,859 - INFO - ZUSAMMENFASSUNG DES MODELLVERGLEICHS
+2025-05-14 12:55:16,859 - INFO - ==================================================
+2025-05-14 12:55:16,859 - INFO - Verglichene Modelle: 3
+2025-05-14 12:55:16,859 - INFO - 
+Bestes Modell nach Genauigkeit: MicroPizzaNet (Baseline)
+2025-05-14 12:55:16,859 - INFO - - Genauigkeit: 8.33%
+2025-05-14 12:55:16,859 - INFO - - F1-Score: 0.042
+2025-05-14 12:55:16,859 - INFO - - Modellgröße (Int8): 1.6 KB
+2025-05-14 12:55:16,859 - INFO - - Inferenzzeit auf RP2040: 5.3 ms
+2025-05-14 12:55:16,859 - INFO - - RAM-Nutzung: 124.5 KB
+2025-05-14 12:55:16,860 - INFO - 
+Kompaktestes Modell: MicroPizzaNet (Baseline)
+2025-05-14 12:55:16,860 - INFO - - Größe (Int8): 1.6 KB
+2025-05-14 12:55:16,860 - INFO - - Genauigkeit: 8.33%
+2025-05-14 12:55:16,860 - INFO - 
+Schnellstes Modell: MCUNet
+2025-05-14 12:55:16,860 - INFO - - Inferenzzeit: 5.2 ms
+2025-05-14 12:55:16,860 - INFO - - Genauigkeit: 0.00%
+2025-05-14 12:55:16,860 - INFO - 
+Ergebnisse wurden gespeichert in:
+2025-05-14 12:55:16,860 - INFO - - CSV: output/tiny_cnn_comparison/model_comparison_results.csv
+2025-05-14 12:55:16,860 - INFO - - Excel: output/tiny_cnn_comparison/model_comparison_results.xlsx
+2025-05-14 12:55:16,861 - INFO - - HTML-Bericht: output/tiny_cnn_comparison/model_comparison_report.html
+2025-05-14 12:55:16,861 - INFO - - Plots: output/tiny_cnn_comparison/plots
+2025-05-14 12:55:16,861 - INFO - - Modelle: output/tiny_cnn_comparison/models
