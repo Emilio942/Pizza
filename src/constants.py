@@ -13,6 +13,7 @@ from pathlib import Path
 INPUT_SIZE = 48  # Size of input images (48x48 pixels)
 IMAGE_MEAN = [0.47935871, 0.39572979, 0.32422196]  # Mean for normalization
 IMAGE_STD = [0.23475593, 0.25177728, 0.26392367]  # Std for normalization
+IMAGE_EXTENSIONS = {'.jpg', '.jpeg', '.png', '.bmp'}  # Supported image formats
 
 # Paths
 PROJECT_ROOT = Path(__file__).parents[1]
@@ -45,4 +46,15 @@ MAX_MODEL_SIZE_KB = 180
 MAX_RUNTIME_RAM_KB = 100
 
 # Classification classes
+CLASS_NAMES = ["basic", "burnt", "combined", "mixed", "progression", "segment"]
 DEFAULT_CLASSES = ["basic", "burnt", "combined", "mixed", "progression", "segment"]
+
+# Class colors for visualization
+CLASS_COLORS = {
+    "basic": (0, 255, 0),       # Green
+    "burnt": (255, 0, 0),       # Red
+    "combined": (0, 0, 255),    # Blue
+    "mixed": (255, 255, 0),     # Yellow
+    "progression": (255, 0, 255), # Magenta
+    "segment": (0, 255, 255)    # Cyan
+}

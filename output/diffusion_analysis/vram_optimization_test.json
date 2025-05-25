@@ -1,0 +1,132 @@
+{
+  "test_info": {
+    "timestamp": "2025-05-24T02:13:59.019863",
+    "total_configurations": 3,
+    "successful_tests": 3,
+    "failed_tests": 0
+  },
+  "system_info": {
+    "timestamp": "2025-05-24T02:11:33.964561",
+    "cpu_count": 16,
+    "total_ram_gb": 31.16,
+    "python_version": "3.12.3",
+    "torch_version": "2.6.0+cu124",
+    "cuda_available": true,
+    "cuda_version": "12.4",
+    "gpu_count": 1,
+    "gpu_devices": [
+      {
+        "device_id": 0,
+        "name": "NVIDIA GeForce RTX 3060",
+        "total_memory_gb": 11.63,
+        "major": 8,
+        "minor": 6
+      }
+    ]
+  },
+  "results": [
+    {
+      "config_name": "baseline_sd_food",
+      "model": "sd-food",
+      "image_size": 512,
+      "batch_size": 1,
+      "success": true,
+      "peak_vram_gb": 3.180239677429199,
+      "avg_vram_gb": 2.5826496283213296,
+      "generation_time_s": 3.6306610902150473,
+      "images_generated": 3,
+      "vram_efficiency": 0.31444170925141307,
+      "time_efficiency": 0.27543193240897323,
+      "error_message": "",
+      "memory_optimizations": {
+        "cpu_offload": false,
+        "attention_slicing": true,
+        "vae_slicing": true,
+        "torch_dtype": "float16",
+        "xformers": true,
+        "sequential_cpu_offload": false
+      }
+    },
+    {
+      "config_name": "max_optimized_sd_food",
+      "model": "sd-food",
+      "image_size": 512,
+      "batch_size": 1,
+      "success": true,
+      "peak_vram_gb": 1.1728153228759766,
+      "avg_vram_gb": 0.5754485925038656,
+      "generation_time_s": 10.601108074188232,
+      "images_generated": 3,
+      "vram_efficiency": 0.8526491600977731,
+      "time_efficiency": 0.0943297618514821,
+      "error_message": "",
+      "memory_optimizations": {
+        "cpu_offload": true,
+        "attention_slicing": true,
+        "vae_slicing": true,
+        "torch_dtype": "float16",
+        "xformers": true,
+        "sequential_cpu_offload": true
+      }
+    },
+    {
+      "config_name": "small_image_sd_food",
+      "model": "sd-food",
+      "image_size": 256,
+      "batch_size": 1,
+      "success": true,
+      "peak_vram_gb": 2.734469413757324,
+      "avg_vram_gb": 2.5836897691090903,
+      "generation_time_s": 1.0191473166147869,
+      "images_generated": 3,
+      "vram_efficiency": 0.3657016585992601,
+      "time_efficiency": 0.9812124152194338,
+      "error_message": "",
+      "memory_optimizations": {
+        "cpu_offload": false,
+        "attention_slicing": true,
+        "vae_slicing": true,
+        "torch_dtype": "float16",
+        "xformers": true,
+        "sequential_cpu_offload": false
+      }
+    }
+  ],
+  "analysis": {
+    "summary": {
+      "total_successful_tests": 3,
+      "vram_usage_range_gb": {
+        "min": 1.1728153228759766,
+        "max": 3.180239677429199,
+        "average": 2.3625081380208335
+      },
+      "generation_time_range_s": {
+        "min": 1.0191473166147869,
+        "max": 10.601108074188232,
+        "average": 5.083638827006022
+      }
+    },
+    "best_configurations": {
+      "lowest_vram": {
+        "name": "max_optimized_sd_food",
+        "vram_gb": 1.1728153228759766,
+        "time_s": 10.601108074188232
+      },
+      "fastest_generation": {
+        "name": "small_image_sd_food",
+        "time_s": 1.0191473166147869,
+        "vram_gb": 2.734469413757324
+      },
+      "best_efficiency": {
+        "name": "max_optimized_sd_food",
+        "vram_efficiency": 0.8526491600977731,
+        "vram_gb": 1.1728153228759766
+      }
+    },
+    "recommendations": {
+      "low_vram_setup": "For systems with limited VRAM (<4GB), use 'max_optimized_sd_food' which uses only 1.17GB",
+      "fast_generation": "For fastest generation, use 'small_image_sd_food' which generates images in 1.0s",
+      "general": "All tested configurations are suitable for GPUs with 6GB+ VRAM"
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "total_combinations": 20,
+  "scenarios_analyzed": 5,
+  "battery_types_analyzed": 4,
+  "best_combination": {
+    "combination": "18650 Li-Ion + Battery Saver",
+    "runtime_days": 205.04166666666666,
+    "current_ma": 0.6739583333333333
+  },
+  "worst_combination": {
+    "combination": "LiPo 500mAh + Continuous Monitoring",
+    "runtime_days": 0.375,
+    "current_ma": 59.05
+  },
+  "runtime_statistics": {
+    "mean_days": 41.58958333333334,
+    "median_days": 16.083333333333332,
+    "std_days": 55.89388944903752,
+    "min_days": 0.375,
+    "max_days": 205.04166666666666
+  },
+  "current_statistics": {
+    "mean_ma": 14.697236111111113,
+    "median_ma": 4.271111111111111,
+    "std_ma": 22.913521922827464,
+    "min_ma": 0.6739583333333333,
+    "max_ma": 59.05
+  }
+}

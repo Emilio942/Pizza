@@ -1,0 +1,18 @@
+[2025-05-22 02:24:58.683] UART initialized with 115200 baud
+[2025-05-22 02:24:58.695] [2025-05-22T02:24:58.695] [INFO] [SYS] RP2040 Emulator initialized
+[2025-05-22 02:24:58.854] [2025-05-22T02:24:58.853] [INFO] [PERF] Performance: CPU 70.0%, RAM 0.0KB, Inference 50.00ms, Temp 25.0°C
+[2025-05-22 02:24:58.864] [2025-05-22T02:24:58.864] [INFO] [TEMP] Temperature: 25.00°C (sensor: internal, status: OK)
+[2025-05-22 02:24:58.874] [2025-05-22T02:24:58.874] [DEBUG] [TEMP] Temperatur-Statistik: Min 25.0°C, Max 25.0°C, Avg 25.0°C, Messungen: 1
+[2025-05-22 02:24:59.445] [2025-05-22T02:24:59.445] [INFO] [PERF] Performance: CPU 75.0%, RAM 0.0KB, Inference 60.00ms, Temp 25.0°C
+[2025-05-22 02:24:59.456] [2025-05-22T02:24:59.456] [INFO] [TEMP] Temperature: 25.00°C (sensor: internal, status: OK)
+[2025-05-22 02:24:59.466] [2025-05-22T02:24:59.466] [DEBUG] [TEMP] Temperatur-Statistik: Min 25.0°C, Max 25.0°C, Avg 25.0°C, Messungen: 1
+[2025-05-22 02:25:00.047] [2025-05-22T02:25:00.047] [INFO] [PERF] Performance: CPU 80.0%, RAM 0.0KB, Inference 70.00ms, Temp 25.0°C
+[2025-05-22 02:25:00.058] [2025-05-22T02:25:00.058] [INFO] [TEMP] Temperature: 25.00°C (sensor: internal, status: OK)
+[2025-05-22 02:25:00.067] [2025-05-22T02:25:00.067] [DEBUG] [TEMP] Temperatur-Statistik: Min 25.0°C, Max 25.0°C, Avg 25.0°C, Messungen: 1
+[2025-05-22 02:25:00.659] [2025-05-22T02:25:00.659] [INFO] [PERF] Performance: CPU 85.0%, RAM 0.0KB, Inference 80.00ms, Temp 25.0°C
+[2025-05-22 02:25:00.670] [2025-05-22T02:25:00.670] [INFO] [TEMP] Temperature: 25.00°C (sensor: internal, status: OK)
+[2025-05-22 02:25:00.680] [2025-05-22T02:25:00.680] [DEBUG] [TEMP] Temperatur-Statistik: Min 25.0°C, Max 25.0°C, Avg 25.0°C, Messungen: 1
+[2025-05-22 02:25:01.283] [2025-05-22T02:25:01.283] [INFO] [PERF] Performance: CPU 90.0%, RAM 0.0KB, Inference 90.00ms, Temp 24.0°C
+[2025-05-22 02:25:01.295] [2025-05-22T02:25:01.295] [INFO] [TEMP] Temperature: 24.00°C (sensor: internal, status: OK)
+[2025-05-22 02:25:01.304] [2025-05-22T02:25:01.304] [DEBUG] [TEMP] Temperatur-Statistik: Min 24.0°C, Max 25.0°C, Avg 24.5°C, Messungen: 2
+[2025-05-22 02:25:01.816] UART connection closed

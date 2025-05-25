@@ -1,0 +1,15 @@
+{
+  "timestamp": "20250524_025813",
+  "original_count": 1223,
+  "kept_count": 765,
+  "removed_count": 458,
+  "quality_threshold": 0.4,
+  "filtering_criteria": {
+    "exclude_very_poor": true,
+    "min_quality_score": 0.4
+  },
+  "improvement": {
+    "removal_percentage": 37.448896156991005,
+    "kept_percentage": 62.551103843008995
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "timestamp": "2025-05-21 17:57:51",
+  "cmsis_nn_integration": {
+    "integrated": true,
+    "function_calls": {
+      "arm_convolve_HWC_q7_basic": 1,
+      "arm_depthwise_separable_conv_HWC_q7": 1,
+      "arm_convolve_1x1_HWC_q7_fast": 1,
+      "arm_fully_connected_q7": 1,
+      "arm_max_pool_s8": 1,
+      "arm_avgpool_s8": 1
+    }
+  },
+  "performance": {
+    "standard_implementation": {
+      "avg_inference_time_ms": 38.2,
+      "max_inference_time_ms": 43.548,
+      "ram_usage_bytes": 59801,
+      "flash_usage_bytes": 58163
+    },
+    "cmsis_nn_implementation": {
+      "avg_inference_time_ms": 17.6,
+      "max_inference_time_ms": 19.887999999999998,
+      "ram_usage_bytes": 53350,
+      "flash_usage_bytes": 68812
+    },
+    "improvements": {
+      "speedup_factor": 2.17,
+      "time_reduction_percent": 53.9,
+      "ram_reduction_bytes": 6451,
+      "ram_reduction_percent": 10.8,
+      "flash_increase_bytes": 10649,
+      "flash_increase_percent": 18.3
+    },
+    "layer_specific_improvements": {
+      "convolution": 2.4,
+      "depthwise_conv": 2.1,
+      "pointwise_conv": 2.3,
+      "fully_connected": 1.9,
+      "maxpool": 1.7
+    }
+  },
+  "summary": {
+    "success": true,
+    "speedup_factor": 2.17,
+    "ram_reduction_bytes": 6451,
+    "ram_reduction_percent": 10.8,
+    "meets_requirements": true
+  }
+}

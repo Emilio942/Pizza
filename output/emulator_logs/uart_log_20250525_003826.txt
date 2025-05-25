@@ -1,0 +1,6 @@
+[2025-05-25 00:38:26.118] UART initialized with 115200 baud
+[2025-05-25 00:38:26.193] [2025-05-25T00:38:26.193] [INFO] [SYS] RP2040 Emulator initialized
+[2025-05-25 00:38:26.506] UART initialized with 115200 baud
+[2025-05-25 00:38:26.583] [2025-05-25T00:38:26.583] [INFO] [SYS] RP2040 Emulator initialized
+[2025-05-25 00:38:26.914] UART initialized with 115200 baud
+[2025-05-25 00:38:26.992] [2025-05-25T00:38:26.992] [INFO] [SYS] RP2040 Emulator initialized

@@ -1,0 +1,6 @@
+[2025-05-25 14:51:47.632] UART initialized with 115200 baud
+[2025-05-25 14:51:47.712] [2025-05-25T14:51:47.712] [INFO] [SYS] RP2040 Emulator initialized
+[2025-05-25 14:51:47.806] [2025-05-25T14:51:47.805] [INFO] [SYS] Clock frequency changed: 133 MHz -> 100 MHz (temp: 45.0°C)
+[2025-05-25 14:51:47.816] [2025-05-25T14:51:47.816] [INFO] [SYS] Clock frequency changed: 100 MHz -> 75 MHz (temp: 80.0°C)
+[2025-05-25 14:51:47.827] [2025-05-25T14:51:47.827] [INFO] [SYS] Clock frequency changed: 75 MHz -> 133 MHz (temp: 30.0°C)
+[2025-05-25 14:51:48.803] UART connection closed

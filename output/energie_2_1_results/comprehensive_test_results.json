@@ -1,0 +1,112 @@
+{
+  "transition_performance": {
+    "sleep_times": [
+      0.30429100002038467,
+      0.130680999973265,
+      0.12311099999351427,
+      0.11451099999248981,
+      0.14430800001719035,
+      0.11422300008234743,
+      0.11510400008774013,
+      0.11435700002948579,
+      0.14059599993743177,
+      0.1446139999643492,
+      0.15509500008192845,
+      0.15276499993888137,
+      0.11201699999219272,
+      0.11152299998684612,
+      0.0909569998839288,
+      0.08809400014797575,
+      0.059311999848432606,
+      0.08742299996811198,
+      0.11175999998158659,
+      0.112526000066282
+    ],
+    "wake_times": [
+      0.366357000075368,
+      0.3347589999975753,
+      0.3022870000677358,
+      0.3247960000862804,
+      0.31371099998978025,
+      0.3268420000495098,
+      0.30077399992478604,
+      0.3854940000564966,
+      0.2785560000120313,
+      0.34629000015229394,
+      0.285185000166166,
+      0.29013900007157645,
+      0.31023199994706374,
+      0.2301459999216604,
+      0.2323689998320333,
+      0.1726129999042314,
+      0.21845500009476382,
+      0.34108799991372507,
+      0.2961999998660758,
+      0.32205299999077397
+    ],
+    "avg_sleep_ms": 0.12636339999971824,
+    "avg_wake_ms": 0.29891730000599637,
+    "max_sleep_ms": 0.30429100002038467,
+    "max_wake_ms": 0.3854940000564966,
+    "min_sleep_ms": 0.059311999848432606,
+    "min_wake_ms": 0.1726129999042314,
+    "wake_under_10ms": true
+  },
+  "peripheral_shutdown": {
+    "tests": {
+      "sleep_mode_active": true,
+      "ram_reduced": true,
+      "camera_state": true,
+      "peripheral_states_saved": true
+    },
+    "initial_ram_kb": 126.25,
+    "sleep_ram_kb": 74.6494140625,
+    "ram_reduction_percent": 40.87175123762376,
+    "all_tests_passed": true
+  },
+  "status_restoration": {
+    "pre_sleep_state": {
+      "ram_usage": 129280,
+      "sleep_mode": false,
+      "temperature": 26,
+      "camera_initialized": false
+    },
+    "post_wake_state": {
+      "ram_usage": 129280,
+      "sleep_mode": false,
+      "temperature": 26,
+      "camera_initialized": false
+    },
+    "tests": {
+      "ram_restored": true,
+      "sleep_mode_cleared": true,
+      "temperature_valid": true,
+      "camera_restored": true
+    },
+    "all_tests_passed": true
+  },
+  "energy_efficiency": {
+    "active_duration_ms": 100.09908676147461,
+    "sleep_duration_ms": 200.17266273498535,
+    "energy_consumed_mah": 5.566063854429458e-05,
+    "theoretical_min_mah": 0.0022522259089681838,
+    "efficiency_ratio": 0.024713612574412878,
+    "efficiency_good": true
+  },
+  "reliability": {
+    "total_cycles": 50,
+    "successful_cycles": 50,
+    "failed_cycles": [],
+    "success_rate_percent": 100.0,
+    "reliability_good": true
+  },
+  "test_timestamp": 1748082217.0743756,
+  "requirements_met": {
+    "wake_time_under_10ms": true,
+    "peripheral_shutdown_ok": true,
+    "status_restoration_ok": true,
+    "energy_efficiency_ok": true,
+    "reliability_ok": true
+  },
+  "all_requirements_met": true
+}

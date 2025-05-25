@@ -27,6 +27,7 @@ import torch
 import numpy as np
 import argparse
 import logging
+import traceback # Added import
 from datetime import datetime
 from pathlib import Path
 import torch.nn as nn
@@ -41,6 +42,7 @@ sys.path.append(str(project_root))
 from src.pizza_detector import MicroPizzaNetV2, InvertedResidualBlock
 from torchvision.datasets import ImageFolder
 from torch.utils.data import DataLoader, random_split
+import torchvision.transforms as transforms # Added import
 
 # Logging konfigurieren
 logging.basicConfig(
@@ -73,19 +75,28 @@ def parse_arguments():
     
     return parser.parse_args()
 
-def get_model():
+def get_model(model_path=None):
     """
     Lädt das vortrainierte MicroPizzaNetV2-Modell
     Wenn kein spezifischer Pfad angegeben ist, wird ein Modell trainiert
+    
+    Args:
+        model_path (str, optional): Pfad zum vortrainierten Modell. Falls None,
+                                   wird args.model_path verwendet oder ein neues 
+                                   Modell trainiert.
     """
+    global args
     model = MicroPizzaNetV2(num_classes=4)
     
-    if args.model_path:
-        if os.path.exists(args.model_path):
-            logger.info(f"Lade vortrainiertes Modell von {args.model_path}")
-            model.load_state_dict(torch.load(args.model_path))
+    # Verwende den expliziten model_path, wenn angegeben
+    path = model_path if model_path is not None else (args.model_path if 'args' in globals() else None)
+    
+    if path:
+        if os.path.exists(path):
+            logger.info(f"Lade vortrainiertes Modell von {path}")
+            model.load_state_dict(torch.load(path))
         else:
-            logger.warning(f"Modellpfad {args.model_path} nicht gefunden. Verwende untrainiertes Modell.")
+            logger.warning(f"Modellpfad {path} nicht gefunden. Verwende untrainiertes Modell.")
     else:
         logger.info("Kein Modellpfad angegeben. Trainiere ein neues Modell.")
         train_quick_model(model)
@@ -167,12 +178,17 @@ def create_dataloaders(batch_size=32, img_size=48):
     
     return train_loader, val_loader
 
-def train_quick_model(model, epochs=10):
+def train_quick_model(model, epochs=10, batch_size=32):
     """
     Trainiert ein Modell für einige Epochen, falls kein vortrainiertes Modell vorhanden ist
+    
+    Args:
+        model: Das zu trainierende Modell
+        epochs: Anzahl der Trainings-Epochen
+        batch_size: Batch-Größe für das Training
     """
     # Datensatz laden
-    train_loader, val_loader = create_dataloaders(batch_size=args.batch_size)
+    train_loader, val_loader = create_dataloaders(batch_size=batch_size)
     
     # Verlustfunktion und Optimizer definieren
     criterion = nn.CrossEntropyLoss()
@@ -258,17 +274,34 @@ def get_filter_importance(model):
     
     return importance_dict
 
-def create_pruned_model(model, importance_dict, sparsity):
+def create_pruned_model(model, sparsity):
     """
     Erstellt eine geprunte Version des MicroPizzaNetV2-Modells
     
     - Für Convolutional Layers: Entfernt Filter mit niedriger Wichtigkeit
     - Passt nachfolgende Layer entsprechend an
-    """
-    # Importiere den Original-Modell-Code
-    pruned_model = MicroPizzaNetV2(num_classes=4)
     
-    # Bestimme, welche Filter entfernt werden sollen
+    Args:
+        model: Das zu prunende Modell
+        sparsity: Die Sparsity-Rate (0.0 bis 1.0)
+        
+    Returns:
+        Ein gepruntes MicroPizzaNetV2-Modell mit reduzierten Kanälen
+    """
+    logger.info(f"Erstelle gepruntes Modell mit Sparsity {sparsity:.2f}")
+    
+    # 1. Berechne Wichtigkeit der Filter (L1-Norm) für alle Conv-Layer
+    importance_dict = {}
+    
+    for name, module in model.named_modules():
+        if isinstance(module, nn.Conv2d) and module.groups == 1:  # Überspringe Depthwise Conv-Layer
+            # Berechne L1-Norm der Filter (über alle Ausgabe-Kanäle)
+            weight = module.weight.data.clone()
+            importance = torch.norm(weight.view(weight.size(0), -1), p=1, dim=1)
+            importance_dict[name] = importance
+            logger.info(f"Layer {name}: {len(importance)} Filter, Wichtigkeitsbereich: {importance.min().item():.6f} - {importance.max().item():.6f}")
+    
+    # 2. Bestimme, welche Filter entfernt werden sollen
     prune_targets = {}
     
     # Für jede Komponente des Modells
@@ -288,50 +321,283 @@ def create_pruned_model(model, importance_dict, sparsity):
                 'prune_indices': prune_indices,
                 'keep_indices': keep_indices
             }
+            logger.info(f"Layer {name}: behalte {len(keep_indices)}/{n_filters} Filter, entferne {len(prune_indices)}")
     
-    # Implementiere das geprunte Modell (vereinfachte Version für Demo)
-    # In der Praxis würde hier eine komplexere Logik zum Anpassen der Layer-Dimensionen stehen
+    # 3. Erstelle ein neues Modell mit reduzierter Kanalanzahl
+    pruned_model = MicroPizzaNetV2(num_classes=4) # TODO: Ensure MicroPizzaNetV2 can be initialized this way and then modified
     
-    logger.info(f"Erstelle gepruntes Modell mit Sparsity {sparsity:.2f}")
-    logger.info(f"Prune-Ziele: {prune_targets}")
-    
-    # Hier müsste nun die Implementation für das strukturierte Pruning erfolgen
-    # Dies würde eine neue Modellinstanz mit reduzierter Kanalanzahl erstellen
-    
-    # Diese vereinfachte Implementierung dient als Platzhalter
-    # In der Praxis würde hier das neue Modell mit angepassten Layer-Dimensionen erstellt
-    
-    # Transfer Weights von wichtigen Filtern (vereinfacht)
+    # 4. Kopiere die Gewichte der wichtigen Filter
     with torch.no_grad():
-        for name, module in model.named_modules():
-            if name in prune_targets:
-                # Hier würden die Gewichte der beibehaltenen Filter übertragen
-                logger.info(f"Übertrage Gewichte für Layer {name}, behalte {len(prune_targets[name]['keep_indices'])} Filter")
+        # Block 1: Regulärer Conv2d
+        if 'block1.0' in prune_targets:
+            keep_indices = prune_targets['block1.0']['keep_indices']
+            pruned_model.block1[0].weight.data = model.block1[0].weight.data[keep_indices].clone()
+            if model.block1[0].bias is not None:
+                pruned_model.block1[0].bias.data = model.block1[0].bias.data[keep_indices].clone()
+            
+            pruned_model.block1[1].weight.data = model.block1[1].weight.data[keep_indices].clone()
+            pruned_model.block1[1].bias.data = model.block1[1].bias.data[keep_indices].clone()
+            pruned_model.block1[1].running_mean.data = model.block1[1].running_mean.data[keep_indices].clone()
+            pruned_model.block1[1].running_var.data = model.block1[1].running_var.data[keep_indices].clone()
+        else: # Layer not in prune_targets, copy all weights/params
+            pruned_model.block1[0].load_state_dict(model.block1[0].state_dict())
+            pruned_model.block1[1].load_state_dict(model.block1[1].state_dict())
+
+        # Block 2: InvertedResidualBlock
+        # 1. Expansion Layer (1x1 Pointwise) - block2.conv[0]
+        src_block1_keep_indices = prune_targets['block1.0']['keep_indices'] if 'block1.0' in prune_targets else list(range(model.block1[0].out_channels))
+        
+        if 'block2.conv.0' in prune_targets:
+            src_block2_expansion_out_keep_indices = prune_targets['block2.conv.0']['keep_indices']
+            
+            pruned_weights_exp = model.block2.conv[0].weight.data[src_block2_expansion_out_keep_indices][:, src_block1_keep_indices].clone()
+            pruned_model.block2.conv[0].weight.data = pruned_weights_exp
+            if model.block2.conv[0].bias is not None:
+                pruned_model.block2.conv[0].bias.data = model.block2.conv[0].bias.data[src_block2_expansion_out_keep_indices].clone()
+
+            pruned_model.block2.conv[1].weight.data = model.block2.conv[1].weight.data[src_block2_expansion_out_keep_indices].clone()
+            pruned_model.block2.conv[1].bias.data = model.block2.conv[1].bias.data[src_block2_expansion_out_keep_indices].clone()
+            pruned_model.block2.conv[1].running_mean.data = model.block2.conv[1].running_mean.data[src_block2_expansion_out_keep_indices].clone()
+            pruned_model.block2.conv[1].running_var.data = model.block2.conv[1].running_var.data[src_block2_expansion_out_keep_indices].clone()
+        else: # Layer not in prune_targets, copy all weights/params, adjusting for previous layer's input channels
+            # This assumes the pruned_model's layer is already configured for len(src_block1_keep_indices) inputs
+            # Or MicroPizzaNetV2 handles this. For safety, copy relevant slice.
+            temp_weights = model.block2.conv[0].weight.data[:, src_block1_keep_indices].clone()
+            pruned_model.block2.conv[0].weight.data = temp_weights
+            if model.block2.conv[0].bias is not None:
+                 pruned_model.block2.conv[0].bias.data = model.block2.conv[0].bias.data.clone() # Bias depends only on out_channels
+            pruned_model.block2.conv[1].load_state_dict(model.block2.conv[1].state_dict())
+            src_block2_expansion_out_keep_indices = list(range(model.block2.conv[0].out_channels))
+
+        # 2. Depthwise Conv-Layer (groups = in_channels) - block2.conv[3]
+        # Channels for depthwise layer are determined by the output of the expansion layer (src_block2_expansion_out_keep_indices)
+        src_depthwise_keep_indices = src_block2_expansion_out_keep_indices
+
+        if src_depthwise_keep_indices: # Proceed if there are channels to keep
+            pruned_weights_dw = model.block2.conv[3].weight.data[src_depthwise_keep_indices].clone()
+            pruned_model.block2.conv[3].weight.data = pruned_weights_dw
+            pruned_model.block2.conv[3].groups = len(src_depthwise_keep_indices)
+            # Bias for depthwise conv is unusual but if present:
+            if model.block2.conv[3].bias is not None:
+                pruned_model.block2.conv[3].bias.data = model.block2.conv[3].bias.data[src_depthwise_keep_indices].clone()
+
+            pruned_model.block2.conv[4].weight.data = model.block2.conv[4].weight.data[src_depthwise_keep_indices].clone()
+            pruned_model.block2.conv[4].bias.data = model.block2.conv[4].bias.data[src_depthwise_keep_indices].clone()
+            pruned_model.block2.conv[4].running_mean.data = model.block2.conv[4].running_mean.data[src_depthwise_keep_indices].clone()
+            pruned_model.block2.conv[4].running_var.data = model.block2.conv[4].running_var.data[src_depthwise_keep_indices].clone()
+        elif model.block2.conv[0].out_channels > 0 : # All channels pruned from a non-empty layer
+             logger.warning("All channels for depthwise layer pruned. Layer will be empty/trivial.")
+             # Ensure layers are valid with 0 channels if MicroPizzaNetV2 definition allows
+             pruned_model.block2.conv[3].weight.data = torch.empty_like(pruned_model.block2.conv[3].weight.data)
+             pruned_model.block2.conv[3].groups = 1 # Must be at least 1
+             if model.block2.conv[3].bias is not None: pruned_model.block2.conv[3].bias.data = torch.empty_like(pruned_model.block2.conv[3].bias.data)
+             pruned_model.block2.conv[4].weight.data = torch.empty_like(pruned_model.block2.conv[4].weight.data)
+             pruned_model.block2.conv[4].bias.data = torch.empty_like(pruned_model.block2.conv[4].bias.data)
+             pruned_model.block2.conv[4].running_mean.data = torch.empty_like(pruned_model.block2.conv[4].running_mean.data)
+             pruned_model.block2.conv[4].running_var.data = torch.empty_like(pruned_model.block2.conv[4].running_var.data)
+
+
+        # 3. Pointwise Conv-Layer (1x1) - Projection Layer - block2.conv[6]
+        # Input channels for projection are the output of depthwise (src_depthwise_keep_indices)
+        src_pointwise_projection_in_keep_indices = src_depthwise_keep_indices
+        
+        if 'block2.conv.6' in prune_targets:
+            src_pointwise_projection_out_keep_indices = prune_targets['block2.conv.6']['keep_indices']
+            
+            pruned_weights_proj = model.block2.conv[6].weight.data[src_pointwise_projection_out_keep_indices][:, src_pointwise_projection_in_keep_indices].clone()
+            pruned_model.block2.conv[6].weight.data = pruned_weights_proj
+            if model.block2.conv[6].bias is not None:
+                pruned_model.block2.conv[6].bias.data = model.block2.conv[6].bias.data[src_pointwise_projection_out_keep_indices].clone()
+
+            pruned_model.block2.conv[7].weight.data = model.block2.conv[7].weight.data[src_pointwise_projection_out_keep_indices].clone()
+            pruned_model.block2.conv[7].bias.data = model.block2.conv[7].bias.data[src_pointwise_projection_out_keep_indices].clone()
+            pruned_model.block2.conv[7].running_mean.data = model.block2.conv[7].running_mean.data[src_pointwise_projection_out_keep_indices].clone()
+            pruned_model.block2.conv[7].running_var.data = model.block2.conv[7].running_var.data[src_pointwise_projection_out_keep_indices].clone()
+        else: # Layer not in prune_targets
+            temp_weights = model.block2.conv[6].weight.data[:, src_pointwise_projection_in_keep_indices].clone()
+            pruned_model.block2.conv[6].weight.data = temp_weights
+            if model.block2.conv[6].bias is not None:
+                pruned_model.block2.conv[6].bias.data = model.block2.conv[6].bias.data.clone()
+            pruned_model.block2.conv[7].load_state_dict(model.block2.conv[7].state_dict())
+            src_pointwise_projection_out_keep_indices = list(range(model.block2.conv[6].out_channels))
+        
+        # 4. Fully Connected Layer anpassen - classifier[2]
+        # Input features are the output channels from the projection layer
+        final_conv_out_indices = src_pointwise_projection_out_keep_indices
+        
+        # Ensure the linear layer in pruned_model is adaptable or re-created if in_features changed.
+        # For now, just copy the slice of weights.
+        if final_conv_out_indices:
+             pruned_model.classifier[2].weight.data = model.classifier[2].weight.data[:, final_conv_out_indices].clone()
+        else: # No input features to linear layer
+             logger.warning("All input features to the final classifier have been pruned.")
+             # Create a layer that will output zeros or handle as appropriate
+             pruned_model.classifier[2].weight.data = torch.empty_like(pruned_model.classifier[2].weight.data)
+
+
+        pruned_model.classifier[2].bias.data = model.classifier[2].bias.data.clone() # Bias is independent of input features
+    
+    logger.info(f"Geprunte Modellstruktur:\\n{pruned_model}")
+    logger.info(f"Original Parameter: {model.count_parameters():,}")
+    logger.info(f"Geprunte Parameter: {pruned_model.count_parameters():,}")
+    logger.info(f"Reduktion: {100 * (1 - pruned_model.count_parameters() / model.count_parameters()):.2f}%")
     
     return pruned_model
 
-def quantize_model(model):
+def quantize_model(model, train_loader=None, input_size=(3, 48, 48)):
     """
     Quantisiert das Modell zu Int8 (für TensorFlow Lite)
+    
+    Args:
+        model: Das zu quantisierende PyTorch-Modell
+        train_loader: DataLoader mit Trainingsdaten für die Kalibrierung
+        input_size: Tupel mit der Eingabegröße (channels, height, width)
+    
+    Returns:
+        Das quantisierte Modell
     """
     logger.info("Quantisiere Modell zu Int8 (TensorFlow Lite-Format)")
-    # Hier würde die Quantisierungslogik implementiert werden
-    # In der Praxis würde hier das PyTorch-Modell zu TFLite konvertiert und quantisiert
     
-    return model
+    try:
+        from torch import quantization # Corrected indentation
+        
+        # Create a copy of the model to avoid modifying the original
+        # Ensure the model copy is correctly initialized (e.g. with num_classes)
+        if hasattr(model, 'classifier') and hasattr(model.classifier, '2') and hasattr(model.classifier[2], 'out_features'):
+            num_classes = model.classifier[2].out_features
+        elif hasattr(model, 'num_classes'):
+            num_classes = model.num_classes # Assuming model might have this attribute
+        else:
+            # Fallback or error, this depends on MicroPizzaNetV2 structure
+            logger.warning("Could not determine num_classes for model copy, defaulting to 4. Quantization might be incorrect if this is wrong.")
+            num_classes = 4 # Default if not found, adjust as necessary
+            
+        model_copy = type(model)(num_classes=num_classes)
+        model_copy.load_state_dict(model.state_dict())
+        model_to_quantize = model_copy
+        
+        # Model in Eval-Modus setzen
+        model_to_quantize.eval()
+        
+        # Konfiguriere die Modell-Quantisierung
+        # Für x86/x64: 'fbgemm'
+        # Für ARM/mobile: 'qnnpack'
+        backend = 'qnnpack' # Ensure this backend is available/appropriate
+        model_to_quantize.qconfig = quantization.get_default_qconfig(backend)
+        
+        # Füge Observer-Module hinzu
+        # Ensure all submodules that need quantization are covered.
+        # For complex models, quantization.prepare_qat(model_to_quantize, inplace=True) might be used if doing QAT.
+        # For post-training static quantization:
+        model_prepared = quantization.prepare(model_to_quantize, inplace=True)
+        
+        # Kalibrierung durchführen
+        if train_loader is not None:
+            logger.info(f"Kalibriere Quantisierung mit {min(10, len(train_loader))} Batches echter Trainingsdaten...")
+            num_batches = min(10, len(train_loader)) # Use at least 1 batch if train_loader is small
+            if len(train_loader) > 0 and num_batches == 0: num_batches = 1
 
-def save_pruned_model(model, sparsity, quantized=False):
+            with torch.no_grad():
+                for i, (inputs, _) in enumerate(train_loader):
+                    if i >= num_batches:
+                        break # Added break
+                    model_prepared(inputs)
+                    
+                    if (i + 1) % 2 == 0 or (i + 1) == num_batches:
+                        logger.info(f"  Kalibrierungs-Batch {i+1}/{num_batches} verarbeitet.") # Added logger
+        else:
+            logger.info("Kalibriere Quantisierung mit künstlichen Daten...")
+            with torch.no_grad():
+                for _ in range(10): # Number of calibration steps with dummy data
+                    dummy_input = torch.randn(1, *input_size) # Batch size of 1 for dummy data
+                    model_prepared(dummy_input)
+                values = [0.0, 0.25, 0.5, 0.75, 1.0]
+                for val in values:
+                    dummy_input = torch.ones(1, *input_size) * val
+                    model_prepared(dummy_input)
+        
+        # Konvertiere zu einem statisch quantisierten Modell
+        quantized_model = quantization.convert(model_prepared, inplace=True)
+        
+        original_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
+        quantized_params = sum(p.numel() for p in quantized_model.parameters() if p.requires_grad)
+        
+        # Simplified size calculation (actual file size will differ)
+        original_size_kb = sum(p.numel() * p.element_size() for p in model.parameters()) / 1024
+        # For quantized model, it's more complex. Int8 weights, float biases/scales.
+        # This is a rough estimate assuming most params become Int8.
+        quantized_size_kb = (sum(p.numel() for p in quantized_model.parameters() if p.dtype == torch.qint8) / 1024 +
+                             sum(p.numel() * p.element_size() for p in quantized_model.parameters() if p.dtype != torch.qint8) / 1024)
+
+
+        logger.info(f"Originale Parameter: {original_params:,} (ca. {original_size_kb:.2f} KB)")
+        logger.info(f"Quantisierte Parameter: {quantized_params:,} (ca. {quantized_size_kb:.2f} KB)")
+        if original_size_kb > 0:
+             logger.info(f"Größenreduktion (geschätzt): {100 * (1 - quantized_size_kb / original_size_kb):.2f}%")
+        logger.info("Quantisierung erfolgreich abgeschlossen")
+        
+        return quantized_model
+        
+    except Exception as e:
+        logger.error(f"Fehler bei der Quantisierung: {e}")
+        logger.warning("Quantisierung fehlgeschlagen. Verwende unquantisiertes Modell.")
+        traceback.print_exc() # Added
+        return model
+
+def save_pruned_model(model, sparsity, output_dir="models", quantized=False, include_metrics=True):
     """
     Speichert das geprunte Modell und erstellt einen Bericht
+    
+    Args:
+        model: Das zu speichernde Modell
+        sparsity: Die angewendete Sparsity-Rate (0.0 bis 1.0)
+        output_dir: Ausgabeverzeichnis
+        quantized: Ob das Modell quantisiert wurde
+        include_metrics: Ob Modellmetriken im Bericht enthalten sein sollen
+    
+    Returns:
+        dict: Dictionary mit Berichtsdaten und Pfad zum gespeicherten Modell
     """
-    output_dir = Path(args.output_dir)
+    output_dir = Path(output_dir)
     output_dir.mkdir(exist_ok=True, parents=True)
     
-    # Speichere PyTorch-Modell
+    # Modelltyp und Name bestimmen
     model_type = "quantized" if quantized else "pruned"
-    model_name = f"micropizzanetv2_{model_type}_s{int(sparsity*100)}"
+    sparsity_str = f"{int(sparsity*100)}" if sparsity > 0 else "base"
+    model_name = f"micropizzanetv2_{model_type}_s{sparsity_str}"
     torch_path = output_dir / f"{model_name}.pth"
+    
+    # Modell speichern
+    logger.info(f"Speichere {model_type} Modell nach: {torch_path}")
     torch.save(model.state_dict(), torch_path)
+    
+    # Bericht erstellen
+    report = {
+        "model_name": model_name,
+        "model_type": model_type,
+        "sparsity": sparsity,
+        "model_path": str(torch_path)
+    }
+    
+    if include_metrics:
+        # Sammle Modellmetriken
+        num_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
+        model_size_kb = sum(p.nelement() * p.element_size() for p in model.parameters()) / 1024
+        
+        report.update({
+            "parameters": num_params,
+            "model_size_kb": model_size_kb,
+            "saved_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        })
+        
+        # Speichere Bericht als JSON
+        report_path = output_dir / f"{model_name}_report.json"
+        with open(report_path, 'w') as f:
+            json.dump(report, f, indent=2)
+        
+        logger.info(f"Modellbericht gespeichert unter: {report_path}")
+    
+    return report
     
     # Für TFLite-Export würden wir hier weitere Schritte durchführen
     # Dies ist ein Platzhalter für die tatsächliche Implementierung
@@ -363,10 +629,24 @@ def save_pruned_model(model, sparsity, quantized=False):
     
     return report
 
-def main():
-    """Hauptfunktion"""
+def main(custom_args=None):
+    """
+    Hauptfunktion
+    
+    Args:
+        custom_args: Liste mit benutzerdefinierten Befehlszeilenargumenten
+                    oder None, um sys.argv zu verwenden
+    """
     global args
-    args = parse_arguments()
+    if custom_args is not None:
+        # Wenn benutzerdefinierte Argumente übergeben wurden, parse diese
+        orig_argv = sys.argv
+        sys.argv = ['pruning_tool.py'] + custom_args
+        args = parse_arguments()
+        sys.argv = orig_argv
+    else:
+        # Sonst parse die Kommandozeilenargumente wie gewohnt
+        args = parse_arguments()
     
     start_time = time.time()
     logger.info(f"Starte strukturbasiertes Pruning mit Ziel-Sparsity {args.sparsity:.2f}")
@@ -418,10 +698,11 @@ def main():
     # Optional: Quantisierung
     final_model = pruned_model
     if args.quantize:
-        final_model = quantize_model(pruned_model)
+        train_loader, _ = create_dataloaders(batch_size=args.batch_size)
+        final_model = quantize_model(pruned_model, train_loader)
     
     # Speichere Modell und Bericht
-    report = save_pruned_model(final_model, args.sparsity, quantized=args.quantize)
+    report = save_pruned_model(final_model, args.sparsity, output_dir=args.output_dir, quantized=args.quantize)
     
     # Ausgabe
     elapsed_time = time.time() - start_time
@@ -429,6 +710,13 @@ def main():
     logger.info(f"Originale Parameter: {model.count_parameters():,}")
     logger.info(f"Geprunte Parameter: {final_model.count_parameters():,}")
     logger.info(f"Reduktion: {100 * (1 - final_model.count_parameters() / model.count_parameters()):.2f}%")
+    
+    return {
+        'original_model': model,
+        'pruned_model': final_model,
+        'report': report,
+        'sparsity': args.sparsity
+    }
 
 if __name__ == "__main__":
     main()

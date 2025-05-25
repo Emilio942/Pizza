@@ -1,0 +1,17 @@
+[2025-05-25T19:54:18.123] [INFO] [SYS] RP2040 Emulator initialized
+[2025-05-25T19:54:18.302] [INFO] [SYS] Clock frequency changed: 133 MHz -> 100 MHz (temp: 45.0°C)
+[2025-05-25T19:54:18.413] [INFO] [SYS] Clock frequency changed: 100 MHz -> 75 MHz (temp: 65.0°C)
+[2025-05-25T19:54:18.523] [INFO] [SYS] Clock frequency changed: 75 MHz -> 48 MHz (temp: 80.0°C)
+[2025-05-25T19:54:18.633] [INFO] [SYS] Clock frequency changed: 48 MHz -> 133 MHz (temp: 30.0°C)
+[2025-05-25T19:54:18.744] [INFO] [SYS] Clock frequency changed: 133 MHz -> 100 MHz (temp: 61.0°C)
+[2025-05-25T19:54:18.853] [INFO] [SYS] Clock frequency changed: 100 MHz -> 75 MHz (temp: 59.0°C)
+[2025-05-25T19:54:18.962] [INFO] [SYS] Clock frequency changed: 75 MHz -> 133 MHz (temp: 35.0°C)
+[2025-05-25T19:54:19.072] [INFO] [SYS] Clock frequency changed: 133 MHz -> 48 MHz (temp: 90.0°C)
+[2025-05-25T19:54:19.183] [INFO] [SYS] Clock frequency changed: 48 MHz -> 133 MHz (temp: 30.0°C)
+[2025-05-25T19:54:19.293] [WARNING] [SYS] Temperatur-Spike: +50.0°C für ~30s injiziert
+[2025-05-25T19:54:19.802] [INFO] [SYS] Clock frequency changed: 133 MHz -> 48 MHz (temp: 80.0°C)
+[2025-05-25T19:54:20.011] [INFO] [SYS] Clock frequency changed: 48 MHz -> 100 MHz (temp: 80.0°C)
+[2025-05-25T19:54:20.020] [INFO] [SYS] Adaptive clock management disabled
+[2025-05-25T19:54:20.128] [INFO] [SYS] Adaptive clock management enabled
+[2025-05-25T19:54:21.203] [INFO] [SYS] Logging system shutting down
+[2025-05-25T19:54:21.205] [INFO] [SYS] Clock frequency changed: 100 MHz -> 48 MHz (temp: 90.0°C)

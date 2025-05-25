@@ -1,0 +1,48 @@
+{
+  "model_architecture": "MicroPizzaNetV2",
+  "input_size": [48, 48, 3],
+  "optimizations": {
+    "pruning": {
+      "type": "structured",
+      "amount": 0.3
+    },
+    "quantization": {
+      "type": "int8",
+      "method": "QAT"
+    },
+    "clustering": {
+      "enabled": false
+    },
+    "early_exit": {
+      "enabled": false
+    },
+    "cmsis_nn": {
+      "enabled": true
+    },
+    "compression": {
+      "depthwise_conv": "Delta+RLE",
+      "fully_connected": "Heatshrink"
+    }
+  },
+  "performance": {
+    "accuracy": 90.2,
+    "precision": 91.86,
+    "recall": 91.88,
+    "f1_score": 0.9185,
+    "inference_time_ms": 22,
+    "ram_usage_kb": 170.6,
+    "flash_usage_kb": 67.2
+  },
+  "constraints": {
+    "max_ram_kb": 204,
+    "min_accuracy": 85.0
+  },
+  "references": [
+    "models/final_rp2040_summary.md",
+    "output/ram_analysis/s30_tensor_arena_report.md",
+    "output/evaluation/input_size_report.md",
+    "models/rp2040_export/README_CMSIS_NN.md",
+    "docs/flash_model_strategy.md"
+  ],
+  "justification": "Diese Konfiguration bietet die beste Balance aus Genauigkeit, Inferenzzeit und RAM/Flash-Bedarf für den RP2040. Die Auswahl basiert auf umfassender Analyse der Optimierungsberichte, RAM-Analysen und Performance-Logs. Pruning (30%) und Int8-Quantisierung reduzieren die Modellgröße und RAM-Nutzung signifikant, ohne die Genauigkeit unter die Mindestanforderung zu senken. Die CMSIS-NN-Integration beschleunigt die Inferenz um mehr als das Doppelte. Die Bildgröße 48x48 liefert die beste Genauigkeit bei akzeptablem Speicherbedarf. Kompressionstechniken für einzelne Layer (Delta+RLE, Heatshrink) sparen zusätzlich Flash, ohne nennenswerten Einfluss auf die Inferenzzeit oder RAM. Alle Constraints (RAM < 204KB, akzeptable Inferenzzeit, Mindestgenauigkeit) werden erfüllt."
+}

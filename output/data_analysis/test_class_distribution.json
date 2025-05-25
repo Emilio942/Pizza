@@ -1,0 +1,19 @@
+{
+  "class_counts": {
+    "basic": 50,
+    "burnt": 58,
+    "combined": 80,
+    "mixed": 80,
+    "progression": 80,
+    "segment": 80
+  },
+  "percentages": {
+    "basic": 11.68,
+    "burnt": 13.55,
+    "combined": 18.69,
+    "mixed": 18.69,
+    "progression": 18.69,
+    "segment": 18.69
+  },
+  "total": 428
+}

@@ -1,0 +1,8 @@
+[2025-05-22 02:07:53.188] UART initialized with 115200 baud
+[2025-05-22 02:07:53.200] [2025-05-22T02:07:53.200] [INFO] [SYS] RP2040 Emulator initialized
+[2025-05-22 02:07:53.407] [2025-05-22T02:07:53.407] [INFO] [PERF] Performance: CPU 70.0%, RAM 0.0KB, Inference 100.00ms, Temp 25.0°C
+[2025-05-22 02:07:53.418] [2025-05-22T02:07:53.418] [INFO] [TEMP] Temperature: 25.00°C (sensor: internal, status: OK)
+[2025-05-22 02:07:53.427] [2025-05-22T02:07:53.426] [DEBUG] [TEMP] Temperatur-Statistik: Min 25.0°C, Max 25.0°C, Avg 25.0°C, Messungen: 1
+[2025-05-22 02:07:54.058] [2025-05-22T02:07:54.058] [INFO] [PERF] Performance: CPU 75.0%, RAM 0.0KB, Inference 120.00ms, Temp 25.0°C
+[2025-05-22 02:07:54.069] [2025-05-22T02:07:54.068] [INFO] [TEMP] Temperature: 25.00°C (sensor: internal, status: OK)
+[2025-05-22 02:07:54.077] [2025-05-22T02:07:54.077] [DEBUG] [TEMP] Temperatur-Statistik: Min 25.0°C, Max 25.0°C, Avg 25.0°C, Messungen: 1

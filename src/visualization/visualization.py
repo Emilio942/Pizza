@@ -12,20 +12,23 @@ import torch
 import cv2
 from datetime import datetime
 
-from .types import (
+from src.utils.types import (
     InferenceResult,
     ModelMetrics,
     ResourceUsage,
     PowerProfile
 )
-from .constants import (
-    CLASS_NAMES,
-    CLASS_COLORS,
-    OUTPUT_DIR,
-    COLOR_PALETTE, 
-    PLOT_DPI, 
-    FIGURE_SIZE
+from src.constants import (
+    DEFAULT_CLASSES as CLASS_NAMES,
+    OUTPUT_DIR
 )
+
+# Define additional constants for visualization
+COLOR_PALETTE = ["#FF5733", "#4CAF50", "#3498DB", "#9B59B6", "#F1C40F", "#E74C3C"]
+CLASS_COLORS = {class_name: COLOR_PALETTE[i % len(COLOR_PALETTE)] 
+                for i, class_name in enumerate(CLASS_NAMES)}
+PLOT_DPI = 100
+FIGURE_SIZE = (10, 6)
 
 logger = logging.getLogger(__name__)
 

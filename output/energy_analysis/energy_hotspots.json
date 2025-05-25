@@ -1,0 +1,162 @@
+{
+  "metadata": {
+    "timestamp": "2025-05-24T13:08:56.764685",
+    "analysis_version": "1.0",
+    "project": "Pizza Detection System Energy Analysis",
+    "description": "Analysis of the top 5 most energy-intensive code areas based on execution time, CPU usage, and memory access patterns",
+    "methodology": "Energy scoring based on computational complexity, memory access patterns, CPU utilization, and execution time"
+  },
+  "system_overview": {
+    "total_system_energy_score": 4378.264109090909,
+    "average_inference_time_ms": 17.6,
+    "total_ram_usage_kb": 170.6,
+    "optimization_status": "CMSIS-NN optimization enabled",
+    "energy_efficiency_rating": "Good - 53.9% improvement over baseline"
+  },
+  "energy_hotspots": [
+    {
+      "rank": 1,
+      "component": "Image Preprocessing",
+      "category": "Data Processing",
+      "energy_score": 3135.28,
+      "energy_percentage": 71.6,
+      "performance_metrics": {
+        "average_execution_time_ms": 82.944,
+        "cpu_intensity_ratio": 0.7,
+        "memory_intensity_ratio": 0.9
+      },
+      "description": "Image resizing, normalization, and format conversion operations",
+      "specific_functions": [
+        "image_resize",
+        "pixel_normalization",
+        "color_space_conversion",
+        "clahe_preprocessing"
+      ],
+      "optimization_potential": "Medium - hardware acceleration and lookup tables possible",
+      "energy_impact": "High"
+    },
+    {
+      "rank": 2,
+      "component": "Neural Network Inference",
+      "category": "Model Execution",
+      "energy_score": 1203.84,
+      "energy_percentage": 27.5,
+      "performance_metrics": {
+        "average_execution_time_ms": 17.6,
+        "cpu_intensity_ratio": 0.95,
+        "memory_intensity_ratio": 0.8
+      },
+      "description": "Forward pass through the CNN model including convolution, activation, and pooling operations",
+      "specific_functions": [
+        "arm_convolve_HWC_q7_basic",
+        "arm_depthwise_separable_conv_HWC_q7",
+        "arm_fully_connected_q7",
+        "activation_functions"
+      ],
+      "optimization_potential": "High - further quantization, pruning, and operator fusion possible",
+      "energy_impact": "High"
+    },
+    {
+      "rank": 3,
+      "component": "Memory Management",
+      "category": "System Operations",
+      "energy_score": 27.14,
+      "energy_percentage": 0.6,
+      "performance_metrics": {
+        "average_execution_time_ms": 0.5,
+        "cpu_intensity_ratio": 0.4,
+        "memory_intensity_ratio": 0.7
+      },
+      "description": "Dynamic memory allocation, garbage collection, and buffer management",
+      "specific_functions": [
+        "malloc/free_operations",
+        "tensor_arena_management",
+        "framebuffer_operations",
+        "stack_management"
+      ],
+      "optimization_potential": "Medium - static allocation and memory pools can reduce overhead",
+      "energy_impact": "Low"
+    },
+    {
+      "rank": 4,
+      "component": "I/O Operations",
+      "category": "Hardware Interface",
+      "energy_score": 10.8,
+      "energy_percentage": 0.2,
+      "performance_metrics": {
+        "average_execution_time_ms": 2.0,
+        "cpu_intensity_ratio": 0.3,
+        "memory_intensity_ratio": 0.6
+      },
+      "description": "Camera data acquisition, UART communication, and SD card operations",
+      "specific_functions": [
+        "camera_capture",
+        "uart_transmission",
+        "sd_card_logging",
+        "gpio_operations"
+      ],
+      "optimization_potential": "Low - already hardware-accelerated, limited optimization potential",
+      "energy_impact": "Low"
+    },
+    {
+      "rank": 5,
+      "component": "System Overhead",
+      "category": "Operating System",
+      "energy_score": 1.2,
+      "energy_percentage": 0.0,
+      "performance_metrics": {
+        "average_execution_time_ms": 0.1,
+        "cpu_intensity_ratio": 0.2,
+        "memory_intensity_ratio": 0.3
+      },
+      "description": "Task scheduling, interrupt handling, and system service operations",
+      "specific_functions": [
+        "task_scheduler",
+        "interrupt_handlers",
+        "timer_services",
+        "power_management"
+      ],
+      "optimization_potential": "Low - system overhead is already minimal in embedded environment",
+      "energy_impact": "Low"
+    }
+  ],
+  "optimization_recommendations": {
+    "immediate_actions": [
+      "Enable additional CMSIS-NN optimizations for remaining operations",
+      "Implement static memory allocation where possible",
+      "Optimize image preprocessing with lookup tables"
+    ],
+    "medium_term_actions": [
+      "Implement early exit mechanisms in neural network",
+      "Use more aggressive quantization (INT4) for selected layers",
+      "Optimize memory layout for better cache performance"
+    ],
+    "long_term_actions": [
+      "Hardware acceleration for preprocessing operations",
+      "Custom silicon optimizations",
+      "Advanced power management strategies"
+    ]
+  },
+  "energy_distribution": {
+    "Image Preprocessing": {
+      "percentage": 71.6,
+      "category": "Data Processing"
+    },
+    "Neural Network Inference": {
+      "percentage": 27.5,
+      "category": "Model Execution"
+    },
+    "Memory Management": {
+      "percentage": 0.6,
+      "category": "System Operations"
+    },
+    "I/O Operations": {
+      "percentage": 0.2,
+      "category": "Hardware Interface"
+    },
+    "System Overhead": {
+      "percentage": 0.0,
+      "category": "Operating System"
+    }
+  }
+}

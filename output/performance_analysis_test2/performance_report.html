@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <title>Performance-Analyse: Pizza-Erkennungssystem</title>
+            <meta charset="UTF-8">
+            <style>
+                body { font-family: Arial, sans-serif; margin: 20px; color: #333; }
+                h1, h2, h3 { color: #2c3e50; }
+                h1 { border-bottom: 2px solid #3498db; padding-bottom: 10px; }
+                h2 { border-bottom: 1px solid #bdc3c7; padding-bottom: 5px; margin-top: 30px; }
+                .container { max-width: 1200px; margin: 0 auto; }
+                .summary { background-color: #ecf0f1; padding: 15px; border-radius: 5px; margin: 20px 0; }
+                table { border-collapse: collapse; width: 100%; margin: 15px 0; }
+                th, td { text-align: left; padding: 12px; border-bottom: 1px solid #ddd; }
+                th { background-color: #3498db; color: white; }
+                tr:nth-child(even) { background-color: #f2f2f2; }
+                tr:hover { background-color: #e1f5fe; }
+                .highlight { font-weight: bold; color: #e74c3c; }
+                .good { color: #27ae60; }
+                .warning { color: #f39c12; }
+                .danger { color: #c0392b; }
+                .gallery { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; margin: 20px 0; }
+                .gallery img { max-width: 45%; border: 1px solid #ddd; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+                footer { text-align: center; margin-top: 50px; color: #7f8c8d; font-size: 0.8em; }
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <h1>Performance-Analyse: Pizza-Erkennungssystem</h1>
+                
+                <div class="summary">
+                    <h2>Zusammenfassung</h2>
+                    <p>
+                        Diese Analyse basiert auf 5 Messwerten über eine Gesamtdauer von 
+                        2.43 Sekunden.
+                    </p>
+                    <p>
+                        <strong>Durchschnittliche Inferenzzeit:</strong> 
+                        <span class="warning">70.00 ms</span>
+                    </p>
+                    <p>
+                        <strong>Maximaler RAM-Verbrauch:</strong> 
+                        <span class="good">0.00 KB</span>
+                    </p>
+                    <p>
+                        <strong>Durchschnittliche CPU-Auslastung:</strong> 
+                        <span class="warning">80.00%</span>
+                    </p>
+                    <p>
+                        <strong>Durchschnittliche Temperatur:</strong> 
+                        <span class="good">24.80°C</span>
+                    </p>
+                </div>
+                
+                <h2>Inferenzzeit</h2>
+                <table>
+                    <tr>
+                        <th>Metrik</th>
+                        <th>Wert</th>
+                        <th>Bewertung</th>
+                    </tr>
+                    <tr>
+                        <td>Minimum</td>
+                        <td>50.00 ms</td>
+                        <td class="warning">Akzeptabel</td>
+                    </tr>
+                    <tr>
+                        <td>Maximum</td>
+                        <td>90.00 ms</td>
+                        <td class="danger">Langsam</td>
+                    </tr>
+                    <tr>
+                        <td>Durchschnitt</td>
+                        <td>70.00 ms</td>
+                        <td class="warning">Akzeptabel</td>
+                    </tr>
+                    <tr>
+                        <td>Median</td>
+                        <td>70.00 ms</td>
+                        <td class="warning">Akzeptabel</td>
+                    </tr>
+                    <tr>
+                        <td>Standardabweichung</td>
+                        <td>15.81 ms</td>
+                        <td><span class='warning'>Leicht variabel</span></td>
+                    </tr>
+                </table>
+                
+                <h2>RAM-Nutzung</h2>
+                <table>
+                    <tr>
+                        <th>Metrik</th>
+                        <th>Wert</th>
+                        <th>Bewertung</th>
+                    </tr>
+                    <tr>
+                        <td>Minimum</td>
+                        <td>0.00 KB</td>
+                        <td class="good">Niedrig</td>
+                    </tr>
+                    <tr>
+                        <td>Maximum</td>
+                        <td>0.00 KB</td>
+                        <td class="good">Niedrig</td>
+                    </tr>
+                    <tr>
+                        <td>Durchschnitt</td>
+                        <td>0.00 KB</td>
+                        <td class="good">Niedrig</td>
+                    </tr>
+                    <tr>
+                        <td>Median</td>
+                        <td>0.00 KB</td>
+                        <td class="good">Niedrig</td>
+                    </tr>
+                    <tr>
+                        <td>Verfügbarer RAM (gesamt)</td>
+                        <td>204 KB</td>
+                        <td>Referenzwert</td>
+                    </tr>
+                    <tr>
+                        <td>RAM-Auslastung</td>
+                        <td>0.00%</td>
+                        <td class="good">Viel Puffer</td>
+                    </tr>
+                </table>
+                
+                <h2>CPU und Temperatur</h2>
+                <table>
+                    <tr>
+                        <th>Metrik</th>
+                        <th>Wert</th>
+                        <th>Bewertung</th>
+                    </tr>
+                    <tr>
+                        <td>Min. CPU-Auslastung</td>
+                        <td>70.00%</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>Max. CPU-Auslastung</td>
+                        <td>90.00%</td>
+                        <td class="danger">Sehr hoch</td>
+                    </tr>
+                    <tr>
+                        <td>Durchschn. CPU-Auslastung</td>
+                        <td>80.00%</td>
+                        <td class="warning">Sehr hoch</td>
+                    </tr>
+                    <tr>
+                        <td>Min. Temperatur</td>
+                        <td>24.00°C</td>
+                        <td class="good">Optimal</td>
+                    </tr>
+                    <tr>
+                        <td>Max. Temperatur</td>
+                        <td>25.00°C</td>
+                        <td class="good">Optimal</td>
+                    </tr>
+                    <tr>
+                        <td>Durchschn. Temperatur</td>
+                        <td>24.80°C</td>
+                        <td class="good">Optimal</td>
+                    </tr>
+                </table>
+                
+                <h2>Vorhersagen</h2>
+                <table>
+                    <tr>
+                        <th>Klasse</th>
+                        <th>Anzahl</th>
+                        <th>Prozent</th>
+                    </tr>
+        
+                    <tr>
+                        <td>basic</td>
+                        <td>5</td>
+                        <td>100.00%</td>
+                    </tr>
+            
+                </table>
+                <p>Durchschnittliche Konfidenz: <strong>90.00%</strong></p>
+                
+                <h2>Visualisierungen</h2>
+                <div class="gallery">
+                    <img src="inference_time_series.png" alt="Inferenzzeit im Zeitverlauf">
+                    <img src="ram_usage_series.png" alt="RAM-Nutzung im Zeitverlauf">
+                    <img src="inference_time_histogram.png" alt="Verteilung der Inferenzzeiten">
+                    <img src="prediction_distribution.png" alt="Verteilung der Vorhersageklassen">
+                </div>
+                
+                <div class="gallery">
+                    <img src="metrics_correlation.png" alt="Korrelation zwischen Metriken">
+                    <img src="performance_dashboard.png" alt="Performance-Dashboard">
+                </div>
+                
+                <h2>Empfehlungen</h2>
+                <ul>
+<li class='warning'>Die durchschnittliche Inferenzzeit von 70.00 ms könnte verbessert werden. Erwägen Sie weitere Quantisierung oder Hardware-Beschleunigung.</li>
+<li class='warning'>Die CPU-Auslastung von 80.00% ist erhöht. Dies könnte zu erhöhtem Stromverbrauch und kürzerer Batterielebensdauer führen.</li>
+<li class='good'>Die RAM-Nutzung von 0.00 KB (0.00%) bietet ausreichend Puffer für zukünftige Erweiterungen.</li>
+</ul>
+                
+                <footer>
+                    <p>Pizza-Erkennungssystem Performance-Analyse | Erstellt am 2025-05-22 02:50:42</p>
+                </footer>
+            </div>
+        </body>
+        </html>
+        

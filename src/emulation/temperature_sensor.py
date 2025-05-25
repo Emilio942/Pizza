@@ -175,8 +175,8 @@ class TemperatureSensor:
         # Aktuelle Temperatur ist Basistemperatur plus kurzfristige Schwankungen
         self.current_temperature = self.base_temperature + 0.2 * temp_oscillation
         
-        # Begrenze Temperatur auf plausiblen Bereich
-        self.current_temperature = max(10.0, min(45.0, self.current_temperature))
+        # Begrenze Temperatur auf plausiblen Bereich (erweitert für Testszenarien)
+        self.current_temperature = max(10.0, min(100.0, self.current_temperature))
         
         self.last_update_time = current_time
     
@@ -189,10 +189,23 @@ class TemperatureSensor:
             duration: Ungefähre Dauer des Anstiegs in Sekunden
         """
         self.base_temperature += delta
+        self.current_temperature += delta  # Direkte Aktualisierung für sofortige Wirkung
         logger.info(f"Temperatursensor: Künstlicher Anstieg um {delta:.1f}°C für ~{duration:.0f}s")
         
         # Nach 'duration' Sekunden wird die Basistemperatur langsam zurückgehen
         # durch die natürliche Drift in _update_simulated_temperature()
+    
+    def set_temperature_for_testing(self, temperature: float) -> None:
+        """
+        Setzt die Temperatur direkt für Testzwecke.
+        Dies überschreibt die normale Temperatur-Simulation.
+        
+        Args:
+            temperature: Gewünschte Temperatur in °C
+        """
+        self.base_temperature = temperature
+        self.current_temperature = temperature
+        logger.debug(f"Temperatursensor: Temperatur für Tests auf {temperature:.1f}°C gesetzt")
     
     def get_stats(self) -> Dict:
         """

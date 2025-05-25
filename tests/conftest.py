@@ -9,11 +9,14 @@ import numpy as np
 from pathlib import Path
 from typing import Generator, Dict
 
-from src.types import ModelConfig
+from src.utils.types import ModelConfig
 from src.constants import (
-    INPUT_SIZE, NUM_CLASSES, CLASS_NAMES,
+    INPUT_SIZE, DEFAULT_CLASSES as CLASS_NAMES,
     DATA_DIR, MODELS_DIR, OUTPUT_DIR
 )
+
+# Define NUM_CLASSES based on CLASS_NAMES
+NUM_CLASSES = len(CLASS_NAMES)
 
 @pytest.fixture
 def test_config() -> ModelConfig:

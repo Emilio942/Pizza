@@ -1,0 +1,6 @@
+[2025-05-25T19:45:40.155] [INFO] [SYS] RP2040 Emulator initialized
+[2025-05-25T19:45:44.260] [WARNING] [SYS] Temperatur-Spike: +50.0°C für ~30s injiziert
+[2025-05-25T19:45:44.771] [INFO] [SYS] Clock frequency changed: 133 MHz -> 100 MHz (temp: 45.0°C)
+[2025-05-25T19:45:44.982] [INFO] [SYS] Adaptive clock management disabled
+[2025-05-25T19:45:45.190] [INFO] [SYS] Adaptive clock management enabled
+[2025-05-25T19:45:46.249] [INFO] [SYS] Logging system shutting down

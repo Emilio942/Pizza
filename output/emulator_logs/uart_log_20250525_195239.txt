@@ -1,0 +1,16 @@
+[2025-05-25 19:52:39.945] UART initialized with 115200 baud
+[2025-05-25 19:52:40.018] [2025-05-25T19:52:40.018] [INFO] [SYS] RP2040 Emulator initialized
+[2025-05-25 19:52:40.191] [2025-05-25T19:52:40.191] [INFO] [SYS] Clock frequency changed: 133 MHz -> 100 MHz (temp: 45.0°C)
+[2025-05-25 19:52:40.301] [2025-05-25T19:52:40.301] [INFO] [SYS] Clock frequency changed: 100 MHz -> 75 MHz (temp: 65.0°C)
+[2025-05-25 19:52:40.411] [2025-05-25T19:52:40.411] [INFO] [SYS] Clock frequency changed: 75 MHz -> 48 MHz (temp: 80.0°C)
+[2025-05-25 19:52:40.521] [2025-05-25T19:52:40.521] [INFO] [SYS] Clock frequency changed: 48 MHz -> 133 MHz (temp: 30.0°C)
+[2025-05-25 19:52:40.631] [2025-05-25T19:52:40.631] [INFO] [SYS] Clock frequency changed: 133 MHz -> 100 MHz (temp: 61.0°C)
+[2025-05-25 19:52:40.741] [2025-05-25T19:52:40.741] [INFO] [SYS] Clock frequency changed: 100 MHz -> 75 MHz (temp: 59.0°C)
+[2025-05-25 19:52:40.851] [2025-05-25T19:52:40.851] [INFO] [SYS] Clock frequency changed: 75 MHz -> 133 MHz (temp: 35.0°C)
+[2025-05-25 19:52:40.961] [2025-05-25T19:52:40.961] [INFO] [SYS] Clock frequency changed: 133 MHz -> 48 MHz (temp: 90.0°C)
+[2025-05-25 19:52:41.071] [2025-05-25T19:52:41.071] [INFO] [SYS] Clock frequency changed: 48 MHz -> 133 MHz (temp: 30.0°C)
+[2025-05-25 19:52:41.180] [2025-05-25T19:52:41.180] [WARNING] [SYS] Temperatur-Spike: +50.0°C für ~30s injiziert
+[2025-05-25 19:52:41.889] [2025-05-25T19:52:41.889] [INFO] [SYS] Clock frequency changed: 133 MHz -> 100 MHz (temp: 30.0°C)
+[2025-05-25 19:52:41.898] [2025-05-25T19:52:41.898] [INFO] [SYS] Adaptive clock management disabled
+[2025-05-25 19:52:42.006] [2025-05-25T19:52:42.006] [INFO] [SYS] Adaptive clock management enabled
+[2025-05-25 19:52:43.090] UART connection closed

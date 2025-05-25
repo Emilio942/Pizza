@@ -290,7 +290,6 @@ class AdvancedPizzaDiffusionControl:
         # Create the base diffusion generator
         self.generator = PizzaDiffusionGenerator(
             image_size=image_size,
-            image_size=image_size,
             model_id=model_id,
             model_type=model_type,
             device=device,

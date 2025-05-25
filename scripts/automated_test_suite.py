@@ -51,8 +51,10 @@ sys.path.append(str(project_root))
 
 # Importiere Module aus dem Pizza-Projekt
 from src.pizza_detector import (
-    RP2040Config, create_optimized_dataloaders, load_model, evaluate_model,
-    PizzaDatasetAnalysis
+    PizzaDatasetAnalysis, create_optimized_dataloaders
+)
+from src.pizza_utils import (
+    RP2040Config, load_model, preprocess_image, get_prediction, evaluate_model
 )
 from src.utils.types import InferenceResult, ModelMetrics # MODIFIED: Corrected import path
 from src.metrics import calculate_metrics, visualize_confusion_matrix
@@ -253,14 +255,14 @@ def generate_test_images(test_dir: str, num_images_per_class: int = 20):
                         factor = random.uniform(1.4, 1.8)
                         img = adjust_brightness(img, factor)
                     elif condition == "uneven":
-                        img = apply_shadow(img, intensity=random.uniform(0.4, 0.7))
+                        img = apply_shadow(img, shadow_intensity=random.uniform(0.4, 0.7))
                     elif condition == "low_contrast":
                         factor = random.uniform(0.4, 0.7)
                         img = adjust_contrast(img, factor)
                     
                     # Zusätzliches zufälliges Rauschen, leichte Rotation
                     if random.random() < 0.7:
-                        img = add_noise(img, intensity=random.uniform(0.01, 0.05))
+                        img = add_noise(img, noise_factor=random.uniform(0.01, 0.05))
                     
                     if random.random() < 0.5:
                         angle = random.uniform(-10, 10)

@@ -1,0 +1,13 @@
+{
+  "sparsities": [
+    0.1,
+    0.2,
+    0.3
+  ],
+  "base_model": "models/micropizzanetv2_base.pth",
+  "output_dir": "output/model_optimization",
+  "finetune_epochs": 5,
+  "finetune_lr": 0.0005,
+  "skip_quantization": false,
+  "skip_tensor_arena": false
+}

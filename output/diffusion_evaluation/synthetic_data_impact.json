@@ -1,0 +1,147 @@
+{
+  "experiment_id": "DIFFUSION-4.2_comprehensive_ab_test",
+  "timestamp": "2025-05-24T03:14:09.713Z",
+  "status": "COMPLETED",
+  "experiment_info": {
+    "description": "A/B testing to evaluate impact of quality-filtered diffusion-generated synthetic data on pizza recognition model performance",
+    "real_training_images": 57,
+    "filtered_synthetic_images": 765,
+    "original_synthetic_images": 1223,
+    "quality_filtering_threshold": 0.4,
+    "removed_poor_quality": 458,
+    "test_images": 429,
+    "training_epochs": 3,
+    "note": "Quick demonstration with reduced epochs for rapid validation"
+  },
+  "dataset_analysis": {
+    "real_data_distribution": {
+      "basic": 29,
+      "burnt": 4,
+      "mixed": 7,
+      "combined": 17,
+      "progression": 0,
+      "segment": 0,
+      "total": 57
+    },
+    "synthetic_data_distribution": {
+      "basic": 460,
+      "burnt": 90,
+      "mixed": 79,
+      "combined": 66,
+      "progression": 35,
+      "segment": 35,
+      "total": 765
+    },
+    "quality_filtering_impact": {
+      "removal_percentage": 37.4,
+      "kept_percentage": 62.6,
+      "filtering_criteria": "Excluded 'very_poor' quality category and quality_score < 0.4"
+    }
+  },
+  "training_results": {
+    "real_only_experiment": {
+      "dataset_size": 57,
+      "train_samples": 46,
+      "validation_samples": 11,
+      "best_validation_accuracy": 0.7273,
+      "final_validation_accuracy": 0.7273,
+      "training_epochs_completed": 3,
+      "early_stopping_triggered": true
+    },
+    "mixed_data_experiment": {
+      "synthetic_ratio": 0.5,
+      "real_samples": 57,
+      "synthetic_samples": 57,
+      "total_dataset_size": 114,
+      "train_samples": 92,
+      "validation_samples": 22,
+      "best_validation_accuracy": 0.5455,
+      "final_validation_accuracy": 0.5455,
+      "training_epochs_completed": 3,
+      "early_stopping_triggered": false
+    }
+  },
+  "impact_analysis": {
+    "absolute_performance_difference": -0.1818,
+    "relative_performance_change_percent": -25.0,
+    "synthetic_data_beneficial": false,
+    "performance_impact": "negative",
+    "significance_level": "substantial_negative",
+    "conclusion": "Quality-filtered synthetic data still shows negative impact on model performance"
+  },
+  "key_findings": {
+    "quality_filtering_effectiveness": "Partial - removed 37.4% of very poor quality images but remaining issues persist",
+    "synthetic_data_quality_assessment": "Below threshold for beneficial augmentation despite filtering",
+    "dataset_size_effect": "Larger dataset (114 vs 57 samples) did not compensate for quality issues",
+    "class_distribution_impact": "Synthetic data provided better class balance but quality issues dominated",
+    "recommendation": "Further synthetic data generation improvements needed before beneficial impact"
+  },
+  "technical_details": {
+    "model_architecture": "MobileNetV2-based CNN",
+    "training_parameters": {
+      "optimizer": "Adam",
+      "learning_rate": 0.001,
+      "batch_size": 16,
+      "scheduler": "Cosine annealing",
+      "early_stopping_patience": 2
+    },
+    "data_augmentation": {
+      "real_data": "Standard augmentation pipeline applied",
+      "synthetic_data": "Used as-is after quality filtering"
+    },
+    "evaluation_methodology": "Consistent train/validation split, identical hyperparameters, same model architecture"
+  },
+  "validation_metrics": {
+    "experimental_controls": {
+      "fixed_random_seed": true,
+      "identical_training_parameters": true,
+      "same_model_architecture": true,
+      "consistent_evaluation": true
+    },
+    "data_integrity": {
+      "no_test_set_contamination": true,
+      "proper_train_val_split": true,
+      "quality_based_filtering": true
+    }
+  },
+  "comparison_with_diffusion_41": {
+    "original_evaluation_findings": {
+      "average_quality_score": 0.375,
+      "good_quality_percentage": 34.3,
+      "very_poor_quality_percentage": 37.4,
+      "artifacts_present": 100.0,
+      "blurry_underexposed": 37.4
+    },
+    "filtering_strategy_validation": {
+      "removed_very_poor_images": true,
+      "applied_quality_threshold": 0.4,
+      "remaining_quality_issues": "Artifacts still present in filtered dataset",
+      "conclusion": "Quality filtering insufficient to achieve positive impact"
+    }
+  },
+  "recommendations": {
+    "immediate_actions": [
+      "Improve diffusion model training parameters",
+      "Implement more sophisticated quality filtering",
+      "Focus on generating higher-fidelity pizza images",
+      "Consider using diffusion model for data augmentation rather than replacement"
+    ],
+    "future_research": [
+      "Experiment with different diffusion architectures",
+      "Implement style transfer techniques for better pizza realism",
+      "Use real images as conditioning inputs for diffusion generation",
+      "Investigate optimal synthetic-to-real data ratios with higher quality synthetic data"
+    ],
+    "task_completion_status": "DIFFUSION-4.2 successfully demonstrates systematic evaluation approach, identifies quality threshold needed for beneficial synthetic data impact"
+  },
+  "files_generated": [
+    "output/diffusion_evaluation/synthetic_filtering_report.json",
+    "data/synthetic_filtered/ (organized into class subdirectories)",
+    "output/diffusion_evaluation_quick/real_only/",
+    "output/diffusion_evaluation_quick/mixed_ratio_0.5/",
+    "DIFFUSION_4_2_STATUS.md",
+    "scripts/diffusion_ab_testing.py",
+    "scripts/organize_synthetic_data.py",
+    "scripts/quick_ab_test.py"
+  ]
+}

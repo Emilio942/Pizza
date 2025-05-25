@@ -1,6 +1,7 @@
 """
 Logging-Framework für das RP2040 Emulationssystem.
 Ermöglicht das strukturierte Logging von Temperatur-, Performance- und Diagnosedaten.
+Unterstützt Logging über UART, Dateien und simulierte SD-Karte.
 """
 
 import time
@@ -12,6 +13,7 @@ from datetime import datetime
 from typing import Dict, List, Optional, Any, Union
 
 from .uart_emulator import UARTEmulator
+from .sd_card_emulator import SDCardEmulator
 
 logger = logging.getLogger(__name__)
 
@@ -34,12 +36,14 @@ class LogType(Enum):
 class LoggingSystem:
     """
     Zentrales Logging-System für den RP2040-Emulator.
-    Unterstützt Logging über UART und/oder in Dateien.
+    Unterstützt Logging über UART, Dateien und/oder simulierte SD-Karte.
     """
     
     def __init__(self, 
                  uart: Optional[UARTEmulator] = None,
                  log_to_file: bool = True,
+                 log_to_sd: bool = False,
+                 sd_card: Optional[SDCardEmulator] = None,
                  log_dir: Optional[str] = None,
                  default_log_level: LogLevel = LogLevel.INFO):
         """
@@ -48,12 +52,22 @@ class LoggingSystem:
         Args:
             uart: UARTEmulator-Instanz für UART-Logging
             log_to_file: Wenn True, werden Logs auch in Dateien geschrieben
+            log_to_sd: Wenn True, werden Logs auch auf die simulierte SD-Karte geschrieben
+            sd_card: SDCardEmulator-Instanz für SD-Karten-Logging
             log_dir: Verzeichnis für Log-Dateien
             default_log_level: Standard-Log-Level
         """
         self.uart = uart
         self.log_to_file = log_to_file
+        self.log_to_sd = log_to_sd
+        self.sd_card = sd_card
         self.default_log_level = default_log_level
+        
+        # SD-Karten-Dateihandles
+        self.sd_temperature_handle = None
+        self.sd_performance_handle = None
+        self.sd_system_handle = None
+        self.sd_test_handle = None
         
         # Erstelle Log-Verzeichnis falls notwendig
         if log_dir:
@@ -76,11 +90,46 @@ class LoggingSystem:
                 f.write("timestamp,temperature_c,sensor_type,status\n")
             
             with open(self.performance_log_file, 'w') as f:
-                f.write("timestamp,cpu_usage_percent,ram_used_kb,flash_used_kb,inference_time_ms,temperature_c\n")
+                f.write("timestamp,cpu_usage_percent,ram_used_kb,flash_used_kb,inference_time_ms,temperature_c,vdd_voltage_mv,battery_voltage_mv\n")
             
             logger.info(f"Logging-System initialisiert mit Logfiles in {self.log_dir}")
         else:
             logger.info("Logging-System initialisiert ohne Datei-Logging")
+        
+        # Initialisiere SD-Karten-Logging
+        if log_to_sd and self.sd_card:
+            if not self.sd_card.mounted:
+                # Initialisiere SD-Karte, falls nicht bereits geschehen
+                if self.sd_card.status.value == "not_initialized":
+                    self.sd_card.initialize()
+                
+                # Versuche SD-Karte zu mounten
+                if not self.sd_card.mount():
+                    logger.error("SD-Karte konnte nicht gemountet werden, SD-Logging deaktiviert")
+                    self.log_to_sd = False
+                    return
+            
+            # Erstelle Verzeichnisstruktur auf SD-Karte (emuliert)
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            
+            # Öffne Log-Dateien auf SD-Karte
+            self.sd_temperature_handle = self.sd_card.open_file(f"logs/temperature_log_{timestamp}.csv", "w")
+            self.sd_performance_handle = self.sd_card.open_file(f"logs/performance_log_{timestamp}.csv", "w")
+            self.sd_system_handle = self.sd_card.open_file(f"logs/system_log_{timestamp}.log", "w")
+            self.sd_test_handle = self.sd_card.open_file(f"logs/test_log_{timestamp}.log", "w")
+            
+            # Schreibe Header für CSV-Dateien
+            if self.sd_temperature_handle:
+                self.sd_card.write_file(self.sd_temperature_handle, "timestamp,temperature_c,sensor_type,status\n")
+            
+            if self.sd_performance_handle:
+                self.sd_card.write_file(self.sd_performance_handle, 
+                                        "timestamp,cpu_usage_percent,ram_used_kb,flash_used_kb,inference_time_ms,temperature_c,vdd_voltage_mv,battery_voltage_mv\n")
+            
+            logger.info("SD-Karten-Logging initialisiert")
+        elif log_to_sd:
+            logger.warning("SD-Karten-Logging aktiviert, aber keine SD-Karte konfiguriert")
+            self.log_to_sd = False
     
     def log(self, message: str, level: LogLevel = None, log_type: LogType = LogType.SYSTEM) -> None:
         """
@@ -110,6 +159,15 @@ class LoggingSystem:
                 with open(self.test_log_file, 'a') as f:
                     f.write(log_entry + '\n')
         
+        # Logge auf SD-Karte, falls aktiviert
+        if self.log_to_sd and self.sd_card and self.sd_card.mounted:
+            if log_type == LogType.SYSTEM or log_type == LogType.DIAGNOSTIC:
+                if self.sd_system_handle:
+                    self.sd_card.write_file(self.sd_system_handle, log_entry + '\n')
+            elif log_type == LogType.TEST:
+                if self.sd_test_handle:
+                    self.sd_card.write_file(self.sd_test_handle, log_entry + '\n')
+        
         # Gib Log auch im Emulator-Logger aus
         py_level = getattr(logging, level.value)
         logger.log(py_level, f"[{log_type.value}] {message}")
@@ -133,6 +191,28 @@ class LoggingSystem:
         if self.log_to_file:
             with open(self.temperature_log_file, 'a') as f:
                 f.write(f"{timestamp},{temperature_c:.2f},{sensor_type},{status}\n")
+        
+        # Schreibe auf SD-Karte, falls aktiviert
+        if self.log_to_sd and self.sd_card and self.sd_card.mounted and self.sd_temperature_handle:
+            self.sd_card.write_file(self.sd_temperature_handle, 
+                                  f"{timestamp},{temperature_c:.2f},{sensor_type},{status}\n")
+    
+    def log_voltage(self, voltage_mv: float, sensor_type: str, status: str = "OK") -> None:
+        """
+        Loggt einen Spannungsmesswert.
+        
+        Args:
+            voltage_mv: Gemessene Spannung in mV
+            sensor_type: Typ des Spannungssensors (z.B. 'internal', 'battery')
+            status: Status des Sensors/der Messung
+        """
+        timestamp = datetime.now().isoformat(timespec='milliseconds')
+        
+        # Erstelle Log-Eintrag für UART/Datei
+        message = f"Voltage: {voltage_mv/1000:.3f}V (sensor: {sensor_type}, status: {status})"
+        self.log(message, LogLevel.INFO, LogType.DIAGNOSTIC)
+        
+        # Spannung wird primär im Performance-Log mit erfasst
     
     def log_performance(self, metrics: Dict[str, Any]) -> None:
         """
@@ -149,18 +229,26 @@ class LoggingSystem:
         flash_used = metrics.get('flash_used_kb', 0)
         inference_time = metrics.get('inference_time_ms', 0)
         temperature = metrics.get('temperature_c', 0)
+        vdd_voltage = metrics.get('vdd_voltage_mv', 0)
+        battery_voltage = metrics.get('battery_voltage_mv', 0)
         
         # Erstelle menschenlesbare Log-Nachricht
         message = (
             f"Performance: CPU {cpu_usage:.1f}%, RAM {ram_used:.1f}KB, "
-            f"Inference {inference_time:.2f}ms, Temp {temperature:.1f}°C"
+            f"Inference {inference_time:.2f}ms, Temp {temperature:.1f}°C, "
+            f"VDD {vdd_voltage/1000:.2f}V, Batt {battery_voltage/1000:.2f}V"
         )
         self.log(message, LogLevel.INFO, LogType.PERFORMANCE)
         
         # Schreibe strukturierte Daten in CSV, falls aktiviert
         if self.log_to_file:
             with open(self.performance_log_file, 'a') as f:
-                f.write(f"{timestamp},{cpu_usage:.1f},{ram_used:.1f},{flash_used:.1f},{inference_time:.2f},{temperature:.2f}\n")
+                f.write(f"{timestamp},{cpu_usage:.1f},{ram_used:.1f},{flash_used:.1f},{inference_time:.2f},{temperature:.2f},{vdd_voltage:.1f},{battery_voltage:.1f}\n")
+        
+        # Schreibe auf SD-Karte, falls aktiviert
+        if self.log_to_sd and self.sd_card and self.sd_card.mounted and self.sd_performance_handle:
+            self.sd_card.write_file(self.sd_performance_handle, 
+                                  f"{timestamp},{cpu_usage:.1f},{ram_used:.1f},{flash_used:.1f},{inference_time:.2f},{temperature:.2f},{vdd_voltage:.1f},{battery_voltage:.1f}\n")
     
     def log_json(self, data: Dict[str, Any], log_type: LogType = LogType.SYSTEM) -> None:
         """
@@ -176,3 +264,26 @@ class LoggingSystem:
     def close(self) -> None:
         """Schließt das Logging-System."""
         self.log("Logging system shutting down", LogLevel.INFO, LogType.SYSTEM)
+        
+        # Schließe SD-Karten-Dateien
+        if self.log_to_sd and self.sd_card and self.sd_card.mounted:
+            if self.sd_temperature_handle:
+                self.sd_card.close_file(self.sd_temperature_handle)
+                self.sd_temperature_handle = None
+            
+            if self.sd_performance_handle:
+                self.sd_card.close_file(self.sd_performance_handle)
+                self.sd_performance_handle = None
+            
+            if self.sd_system_handle:
+                self.sd_card.close_file(self.sd_system_handle)
+                self.sd_system_handle = None
+            
+            if self.sd_test_handle:
+                self.sd_card.close_file(self.sd_test_handle)
+                self.sd_test_handle = None
+            
+            # Unmounte SD-Karte
+            self.sd_card.unmount()
+            
+            logger.info("SD-Karten-Logging beendet")

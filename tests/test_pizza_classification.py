@@ -23,11 +23,12 @@ project_root = Path(__file__).parent.parent
 sys.path.append(str(project_root))
 
 # Importiere notwendige Module
-from src.pizza_detector import (
-    RP2040Config, load_model, preprocess_image, get_prediction
+from src.pizza_utils import (
+    RP2040Config, preprocess_image, get_prediction
 )
+from src.pizza_detector import MicroPizzaNet
 from src.constants import (
-    CLASS_NAMES, PROJECT_ROOT, MODELS_DIR, INPUT_SIZE
+    DEFAULT_CLASSES as CLASS_NAMES, PROJECT_ROOT, MODELS_DIR, INPUT_SIZE
 )
 from scripts.automated_test_suite import (
     setup_test_environment, generate_test_images, evaluate_test_images
@@ -82,7 +83,26 @@ def test_environment():
 def model():
     """Lädt das Modell für Tests"""
     config = RP2040Config()
-    return load_model(DEFAULT_MODEL_PATH, config, quantized=DEFAULT_MODEL_PATH.endswith('int8.pth'))
+    
+    # Erstelle Modellinstanz
+    model_instance = MicroPizzaNet(num_classes=len(CLASS_NAMES))
+    
+    # Lade Gewichte
+    try:
+        model_instance.load_state_dict(torch.load(DEFAULT_MODEL_PATH, map_location=config.DEVICE))
+        model_instance.eval()
+        model_instance.to(config.DEVICE)
+        return model_instance
+    except Exception as e:
+        # Falls das int8 Modell nicht existiert, versuche das float32 Modell
+        fallback_path = os.path.join(MODELS_DIR, "pizza_model_float32.pth")
+        if os.path.exists(fallback_path):
+            model_instance.load_state_dict(torch.load(fallback_path, map_location=config.DEVICE))
+            model_instance.eval()
+            model_instance.to(config.DEVICE)
+            return model_instance
+        else:
+            raise e
 
 # Tests für die Pizza-Erkennung
 class TestPizzaDetection:
@@ -111,6 +131,9 @@ class TestPizzaDetection:
         
         # Führe Inferenz durch
         img_tensor = preprocess_image(test_image_path, INPUT_SIZE)
+        # Move tensor to same device as model
+        device = next(model.parameters()).device
+        img_tensor = img_tensor.unsqueeze(0).to(device)
         with torch.no_grad():
             outputs = model(img_tensor)
         

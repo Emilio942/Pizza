@@ -1,0 +1,59 @@
+VRAM Usage Monitor - Diffusion Model Analysis
+Started: 2025-05-22T20:33:47.058870
+System Info: {
+  "timestamp": "2025-05-22T20:33:46.986342",
+  "cpu_count": 16,
+  "total_ram_gb": 31.16,
+  "python_version": "3.12.3 (main, Feb  4 2025, 14:48:35) [GCC 13.3.0]",
+  "torch_version": "2.6.0+cu124",
+  "cuda_available": true,
+  "cuda_version": "12.4",
+  "gpu_count": 1,
+  "gpu_devices": [
+    {
+      "device_id": 0,
+      "name": "NVIDIA GeForce RTX 3060",
+      "total_memory_gb": 11.63,
+      "major": 8,
+      "minor": 6
+    }
+  ]
+}
+================================================================================
+
+[2025-05-22T20:33:47.058941] start: Initial memory state
+  System RAM: 6.06GB used (21.9%)
+  GPU_0: 0.000GB allocated, 0.000GB cached (max: 0.000GB)
+
+[2025-05-22T20:33:47.150788] imports: After importing diffusion libraries
+  System RAM: 6.14GB used (22.2%)
+  GPU_0: 0.000GB allocated, 0.000GB cached (max: 0.000GB)
+
+[2025-05-22T20:33:53.158866] diffusers_imported: After importing diffusers
+  System RAM: 6.44GB used (23.1%)
+  GPU_0: 0.000GB allocated, 0.000GB cached (max: 0.000GB)
+
+[2025-05-22T20:33:53.163849] pre_model_load: Before loading model stable-diffusion-v1-5/stable-diffusion-v1-5
+  System RAM: 6.44GB used (23.1%)
+  GPU_0: 0.000GB allocated, 0.000GB cached (max: 0.000GB)
+
+[2025-05-22T20:36:21.672128] model_loaded: After loading model (took 148.5s)
+  System RAM: 8.61GB used (30.1%)
+  GPU_0: 0.000GB allocated, 0.000GB cached (max: 2.008GB)
+
+[2025-05-22T20:36:21.672835] pre_generation_0: Before generating image 1
+  System RAM: 8.61GB used (30.1%)
+  GPU_0: 0.000GB allocated, 0.000GB cached (max: 2.008GB)
+
+[2025-05-22T20:36:26.815266] post_generation_0: After generating image 1 (took 5.1s)
+  System RAM: 9.43GB used (32.7%)
+  GPU_0: 0.008GB allocated, 0.029GB cached (max: 2.008GB)
+
+[2025-05-22T20:36:26.872241] complete: Generation complete
+  System RAM: 9.42GB used (32.7%)
+  GPU_0: 0.008GB allocated, 0.023GB cached (max: 2.008GB)
+
+[2025-05-22T20:36:26.875301] cleanup: After cleanup
+  System RAM: 9.42GB used (32.7%)
+  GPU_0: 0.008GB allocated, 0.020GB cached (max: 2.008GB)
+

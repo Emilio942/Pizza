@@ -1,0 +1,435 @@
+{
+  "metadata": {
+    "timestamp": "2025-05-24T13:58:13.946151",
+    "report_version": "1.0.0",
+    "task": "ENERGIE-4.1",
+    "description": "Final Energy Management System Performance Evaluation"
+  },
+  "executive_summary": {
+    "total_scenarios_analyzed": 20,
+    "battery_types_tested": 4,
+    "best_overall_configuration": {
+      "battery": "18650 Li-Ion",
+      "scenario": "Battery Saver",
+      "runtime_days": 205.04166666666666
+    },
+    "project_goal_status": "ACHIEVED",
+    "measurement_validation": "NO_REAL_DATA"
+  },
+  "project_goal_analysis": {
+    "project_goals": {
+      "cr123a_target_days": 9.1,
+      "target_battery": "CR123A Lithium",
+      "duty_cycle_mode": "moderate_detection",
+      "context": "90% Sleep Mode (Duty-Cycle)"
+    },
+    "cr123a_all_scenarios": [
+      {
+        "scenario": "Continuous Monitoring",
+        "runtime_days": 1.0416666666666667,
+        "average_current_ma": 59.05
+      },
+      {
+        "scenario": "Frequent Detection",
+        "runtime_days": 7.458333333333333,
+        "average_current_ma": 8.158333333333333
+      },
+      {
+        "scenario": "Moderate Detection",
+        "runtime_days": 14.208333333333334,
+        "average_current_ma": 4.271111111111111
+      },
+      {
+        "scenario": "Rare Detection",
+        "runtime_days": 45.5,
+        "average_current_ma": 1.3327777777777776
+      },
+      {
+        "scenario": "Battery Saver",
+        "runtime_days": 89.91666666666667,
+        "average_current_ma": 0.6739583333333333
+      }
+    ],
+    "duty_cycle_result": {
+      "scenario": "Moderate Detection",
+      "runtime_days": 14.208333333333334,
+      "average_current_ma": 4.271111111111111
+    },
+    "goal_achievement": {
+      "target_days": 9.1,
+      "achieved_days": 14.208333333333334,
+      "difference_days": 5.108333333333334,
+      "percentage_achievement": 156.13553113553115,
+      "status": "ACHIEVED",
+      "improvement_factor": 1.5613553113553116
+    }
+  },
+  "simulation_vs_measurement_comparison": {
+    "measurement_data_available": false,
+    "comparison_results": null,
+    "validation_status": "NO_REAL_DATA",
+    "note": "No real measurement data available. Analysis based on simulation only."
+  },
+  "energy_efficiency_analysis": {
+    "energy_hotspots_summary": {
+      "total_hotspots_identified": 5,
+      "top_consumer": {
+        "rank": 1,
+        "component": "Image Preprocessing",
+        "category": "Data Processing",
+        "energy_score": 3135.28,
+        "energy_percentage": 71.6,
+        "performance_metrics": {
+          "average_execution_time_ms": 82.944,
+          "cpu_intensity_ratio": 0.7,
+          "memory_intensity_ratio": 0.9
+        },
+        "description": "Image resizing, normalization, and format conversion operations",
+        "specific_functions": [
+          "image_resize",
+          "pixel_normalization",
+          "color_space_conversion",
+          "clahe_preprocessing"
+        ],
+        "optimization_potential": "Medium - hardware acceleration and lookup tables possible",
+        "energy_impact": "High"
+      },
+      "optimization_potential": "Good - 53.9% improvement over baseline"
+    },
+    "battery_performance_ranking": [
+      {
+        "combination": "18650 Li-Ion + Battery Saver",
+        "runtime_days": 205.04166666666666,
+        "runtime_hours": 4921.0,
+        "average_current_ma": 0.6739583333333333,
+        "battery_weight_g": 47,
+        "energy_per_detection_wh": 0.015977443609022556,
+        "battery_key": "18650",
+        "scenario_key": "battery_saver"
+      },
+      {
+        "combination": "AA Alkaline + Battery Saver",
+        "runtime_days": 148.08333333333334,
+        "runtime_hours": 3554.0,
+        "average_current_ma": 0.6739583333333333,
+        "battery_weight_g": 23,
+        "energy_per_detection_wh": 0.0065946820483961735,
+        "battery_key": "AA_ALKALINE",
+        "scenario_key": "battery_saver"
+      },
+      {
+        "combination": "18650 Li-Ion + Rare Detection",
+        "runtime_days": 103.70833333333333,
+        "runtime_hours": 2489.0,
+        "average_current_ma": 1.3327777777777776,
+        "battery_weight_g": 47,
+        "energy_per_detection_wh": 0.005054238650060265,
+        "battery_key": "18650",
+        "scenario_key": "rare"
+      }
+    ]
+  },
+  "detailed_findings": {
+    "simulation_results": {
+      "best_combinations": [
+        {
+          "combination": "18650 Li-Ion + Battery Saver",
+          "runtime_days": 205.04166666666666,
+          "runtime_hours": 4921.0,
+          "average_current_ma": 0.6739583333333333,
+          "battery_weight_g": 47,
+          "energy_per_detection_wh": 0.015977443609022556,
+          "battery_key": "18650",
+          "scenario_key": "battery_saver"
+        },
+        {
+          "combination": "AA Alkaline + Battery Saver",
+          "runtime_days": 148.08333333333334,
+          "runtime_hours": 3554.0,
+          "average_current_ma": 0.6739583333333333,
+          "battery_weight_g": 23,
+          "energy_per_detection_wh": 0.0065946820483961735,
+          "battery_key": "AA_ALKALINE",
+          "scenario_key": "battery_saver"
+        },
+        {
+          "combination": "18650 Li-Ion + Rare Detection",
+          "runtime_days": 103.70833333333333,
+          "runtime_hours": 2489.0,
+          "average_current_ma": 1.3327777777777776,
+          "battery_weight_g": 47,
+          "energy_per_detection_wh": 0.005054238650060265,
+          "battery_key": "18650",
+          "scenario_key": "rare"
+        }
+      ],
+      "worst_combinations": [
+        {
+          "combination": "AA Alkaline + Continuous Monitoring",
+          "runtime_days": 1.7083333333333333,
+          "runtime_hours": 41.0,
+          "average_current_ma": 59.05,
+          "battery_weight_g": 23,
+          "energy_per_detection_wh": 7.621951219512195e-05,
+          "battery_key": "AA_ALKALINE",
+          "scenario_key": "continuous"
+        },
+        {
+          "combination": "CR123A Lithium + Continuous Monitoring",
+          "runtime_days": 1.0416666666666667,
+          "runtime_hours": 25.0,
+          "average_current_ma": 59.05,
+          "battery_weight_g": 17,
+          "energy_per_detection_wh": 0.00015,
+          "battery_key": "CR123A",
+          "scenario_key": "continuous"
+        },
+        {
+          "combination": "LiPo 500mAh + Continuous Monitoring",
+          "runtime_days": 0.375,
+          "runtime_hours": 9.0,
+          "average_current_ma": 59.05,
+          "battery_weight_g": 10,
+          "energy_per_detection_wh": 0.00017129629629629632,
+          "battery_key": "LIPO_500",
+          "scenario_key": "continuous"
+        }
+      ],
+      "recommendations": [
+        "\ud83c\udfc6 Best Overall: 18650 Li-Ion + Battery Saver provides 205.0 days runtime",
+        "\u26a1 Most Efficient: AA Alkaline + Continuous Monitoring uses 0.0001 Wh per detection",
+        "\ud83e\udeb6 Best Weight Efficiency: AA Alkaline + Battery Saver provides 6.44 days per gram",
+        "\ud83d\udcca For rare: 18650 Li-Ion provides 103.7 days",
+        "\ud83d\udcca For battery_saver: 18650 Li-Ion provides 205.0 days",
+        "\ud83d\udcca For continuous: 18650 Li-Ion provides 2.4 days",
+        "\ud83d\udcca For moderate: 18650 Li-Ion provides 32.4 days",
+        "\ud83d\udcca For frequent: 18650 Li-Ion provides 17.0 days"
+      ]
+    },
+    "energy_hotspots": {
+      "metadata": {
+        "timestamp": "2025-05-24T13:08:56.764685",
+        "analysis_version": "1.0",
+        "project": "Pizza Detection System Energy Analysis",
+        "description": "Analysis of the top 5 most energy-intensive code areas based on execution time, CPU usage, and memory access patterns",
+        "methodology": "Energy scoring based on computational complexity, memory access patterns, CPU utilization, and execution time"
+      },
+      "system_overview": {
+        "total_system_energy_score": 4378.264109090909,
+        "average_inference_time_ms": 17.6,
+        "total_ram_usage_kb": 170.6,
+        "optimization_status": "CMSIS-NN optimization enabled",
+        "energy_efficiency_rating": "Good - 53.9% improvement over baseline"
+      },
+      "energy_hotspots": [
+        {
+          "rank": 1,
+          "component": "Image Preprocessing",
+          "category": "Data Processing",
+          "energy_score": 3135.28,
+          "energy_percentage": 71.6,
+          "performance_metrics": {
+            "average_execution_time_ms": 82.944,
+            "cpu_intensity_ratio": 0.7,
+            "memory_intensity_ratio": 0.9
+          },
+          "description": "Image resizing, normalization, and format conversion operations",
+          "specific_functions": [
+            "image_resize",
+            "pixel_normalization",
+            "color_space_conversion",
+            "clahe_preprocessing"
+          ],
+          "optimization_potential": "Medium - hardware acceleration and lookup tables possible",
+          "energy_impact": "High"
+        },
+        {
+          "rank": 2,
+          "component": "Neural Network Inference",
+          "category": "Model Execution",
+          "energy_score": 1203.84,
+          "energy_percentage": 27.5,
+          "performance_metrics": {
+            "average_execution_time_ms": 17.6,
+            "cpu_intensity_ratio": 0.95,
+            "memory_intensity_ratio": 0.8
+          },
+          "description": "Forward pass through the CNN model including convolution, activation, and pooling operations",
+          "specific_functions": [
+            "arm_convolve_HWC_q7_basic",
+            "arm_depthwise_separable_conv_HWC_q7",
+            "arm_fully_connected_q7",
+            "activation_functions"
+          ],
+          "optimization_potential": "High - further quantization, pruning, and operator fusion possible",
+          "energy_impact": "High"
+        },
+        {
+          "rank": 3,
+          "component": "Memory Management",
+          "category": "System Operations",
+          "energy_score": 27.14,
+          "energy_percentage": 0.6,
+          "performance_metrics": {
+            "average_execution_time_ms": 0.5,
+            "cpu_intensity_ratio": 0.4,
+            "memory_intensity_ratio": 0.7
+          },
+          "description": "Dynamic memory allocation, garbage collection, and buffer management",
+          "specific_functions": [
+            "malloc/free_operations",
+            "tensor_arena_management",
+            "framebuffer_operations",
+            "stack_management"
+          ],
+          "optimization_potential": "Medium - static allocation and memory pools can reduce overhead",
+          "energy_impact": "Low"
+        },
+        {
+          "rank": 4,
+          "component": "I/O Operations",
+          "category": "Hardware Interface",
+          "energy_score": 10.8,
+          "energy_percentage": 0.2,
+          "performance_metrics": {
+            "average_execution_time_ms": 2.0,
+            "cpu_intensity_ratio": 0.3,
+            "memory_intensity_ratio": 0.6
+          },
+          "description": "Camera data acquisition, UART communication, and SD card operations",
+          "specific_functions": [
+            "camera_capture",
+            "uart_transmission",
+            "sd_card_logging",
+            "gpio_operations"
+          ],
+          "optimization_potential": "Low - already hardware-accelerated, limited optimization potential",
+          "energy_impact": "Low"
+        },
+        {
+          "rank": 5,
+          "component": "System Overhead",
+          "category": "Operating System",
+          "energy_score": 1.2,
+          "energy_percentage": 0.0,
+          "performance_metrics": {
+            "average_execution_time_ms": 0.1,
+            "cpu_intensity_ratio": 0.2,
+            "memory_intensity_ratio": 0.3
+          },
+          "description": "Task scheduling, interrupt handling, and system service operations",
+          "specific_functions": [
+            "task_scheduler",
+            "interrupt_handlers",
+            "timer_services",
+            "power_management"
+          ],
+          "optimization_potential": "Low - system overhead is already minimal in embedded environment",
+          "energy_impact": "Low"
+        }
+      ],
+      "optimization_recommendations": {
+        "immediate_actions": [
+          "Enable additional CMSIS-NN optimizations for remaining operations",
+          "Implement static memory allocation where possible",
+          "Optimize image preprocessing with lookup tables"
+        ],
+        "medium_term_actions": [
+          "Implement early exit mechanisms in neural network",
+          "Use more aggressive quantization (INT4) for selected layers",
+          "Optimize memory layout for better cache performance"
+        ],
+        "long_term_actions": [
+          "Hardware acceleration for preprocessing operations",
+          "Custom silicon optimizations",
+          "Advanced power management strategies"
+        ]
+      },
+      "energy_distribution": {
+        "Image Preprocessing": {
+          "percentage": 71.6,
+          "category": "Data Processing"
+        },
+        "Neural Network Inference": {
+          "percentage": 27.5,
+          "category": "Model Execution"
+        },
+        "Memory Management": {
+          "percentage": 0.6,
+          "category": "System Operations"
+        },
+        "I/O Operations": {
+          "percentage": 0.2,
+          "category": "Hardware Interface"
+        },
+        "System Overhead": {
+          "percentage": 0.0,
+          "category": "Operating System"
+        }
+      }
+    },
+    "battery_analysis": {
+      "total_combinations": 20,
+      "scenarios_analyzed": 5,
+      "battery_types_analyzed": 4,
+      "best_combination": {
+        "combination": "18650 Li-Ion + Battery Saver",
+        "runtime_days": 205.04166666666666,
+        "current_ma": 0.6739583333333333
+      },
+      "worst_combination": {
+        "combination": "LiPo 500mAh + Continuous Monitoring",
+        "runtime_days": 0.375,
+        "current_ma": 59.05
+      },
+      "runtime_statistics": {
+        "mean_days": 41.58958333333334,
+        "median_days": 16.083333333333332,
+        "std_days": 55.89388944903752,
+        "min_days": 0.375,
+        "max_days": 205.04166666666666
+      },
+      "current_statistics": {
+        "mean_ma": 14.697236111111113,
+        "median_ma": 4.271111111111111,
+        "std_ma": 22.913521922827464,
+        "min_ma": 0.6739583333333333,
+        "max_ma": 59.05
+      }
+    }
+  },
+  "optimization_recommendations": [
+    {
+      "priority": "HIGH",
+      "category": "Energy Optimization",
+      "title": "Optimize Image Preprocessing",
+      "description": "Image Preprocessing consumes 71.6% of total energy",
+      "energy_score": 3135.28,
+      "suggested_actions": [
+        "Implement algorithmic optimizations",
+        "Consider hardware acceleration",
+        "Optimize memory access patterns",
+        "Reduce computational complexity"
+      ]
+    },
+    {
+      "priority": "MEDIUM",
+      "category": "Battery Selection",
+      "title": "Consider Alternative Battery Types",
+      "description": "18650 Li-Ion + Battery Saver provides 205.0 days maximum runtime",
+      "comparison": "vs CR123A configurations",
+      "suggested_actions": [
+        "Evaluate size/weight constraints",
+        "Consider hybrid battery configurations",
+        "Analyze cost implications"
+      ]
+    }
+  ],
+  "conclusion": {
+    "overall_assessment": "EXCELLENT: Project goal exceeded by 1.6x",
+    "critical_actions_required": [],
+    "future_work_needed": [
+      "Validate simulation with real hardware measurements"
+    ]
+  }
+}

@@ -139,3 +139,113 @@ class ModelMetrics:
             plt.xlabel('Predicted label')
             plt.savefig(os.path.join(output_dir, f"{self.model_name}_confusion_matrix.png"))
             plt.close()
+    
+def calculate_metrics(y_true: np.ndarray, y_pred: np.ndarray, class_names=None) -> dict:
+    """
+    Calculate performance metrics for model evaluation.
+    
+    Args:
+        y_true: Array of true labels
+        y_pred: Array of predicted labels
+        class_names: Optional list of class names
+        
+    Returns:
+        Dictionary with metrics including accuracy, precision, recall, f1_score, and confusion_matrix
+    """
+    from sklearn.metrics import precision_recall_fscore_support, confusion_matrix
+    
+    # Error handling for empty arrays
+    if len(y_true) == 0 or len(y_pred) == 0:
+        raise ValueError("Input arrays cannot be empty")
+    
+    # Error handling for mismatched array lengths
+    if len(y_true) != len(y_pred):
+        raise ValueError(f"Input arrays must have same length: {len(y_true)} != {len(y_pred)}")
+    
+    # Get number of classes
+    num_classes = max(max(y_true), max(y_pred)) + 1 if len(y_true) > 0 else 0
+    
+    # Calculate metrics
+    precision, recall, f1, _ = precision_recall_fscore_support(
+        y_true, y_pred, average='macro', zero_division=0
+    )
+    
+    # Create confusion matrix
+    conf_matrix = confusion_matrix(y_true, y_pred, labels=range(num_classes))
+    accuracy = (y_true == y_pred).mean()
+    
+    return {
+        'accuracy': float(accuracy),
+        'precision': float(precision),
+        'recall': float(recall),
+        'f1_score': float(f1),
+        'confusion_matrix': conf_matrix
+    }
+
+def visualize_confusion_matrix(confusion_matrix: np.ndarray, class_names=None, output_path=None, normalize=True):
+    """
+    Visualize confusion matrix as a heatmap.
+    
+    Args:
+        confusion_matrix: The confusion matrix to visualize
+        class_names: Optional list of class names
+        output_path: Path to save the visualization
+        normalize: Whether to normalize the confusion matrix
+        
+    Returns:
+        None (displays or saves the visualization)
+    """
+    import matplotlib.pyplot as plt
+    import numpy as np
+    
+    # Create figure
+    plt.figure(figsize=(10, 8))
+    
+    # Normalize if requested
+    if normalize:
+        cm = confusion_matrix.astype('float') / confusion_matrix.sum(axis=1)[:, np.newaxis]
+        title = 'Normalized Confusion Matrix'
+        vmin, vmax = 0, 1
+    else:
+        cm = confusion_matrix
+        title = 'Confusion Matrix'
+        vmin, vmax = None, None
+    
+    # Plot confusion matrix
+    plt.imshow(cm, interpolation='nearest', cmap=plt.cm.Blues, vmin=vmin, vmax=vmax)
+    plt.title(title)
+    plt.colorbar()
+    
+    # Set axis labels
+    if class_names is not None:
+        tick_marks = np.arange(len(class_names))
+        plt.xticks(tick_marks, class_names, rotation=45)
+        plt.yticks(tick_marks, class_names)
+    else:
+        tick_marks = np.arange(cm.shape[0])
+        plt.xticks(tick_marks)
+        plt.yticks(tick_marks)
+    
+    # Add labels
+    plt.xlabel('Predicted Label')
+    plt.ylabel('True Label')
+    plt.tight_layout()
+    
+    # Add text annotations
+    thresh = cm.max() / 2.0
+    for i, j in np.ndindex(cm.shape):
+        if normalize:
+            plt.text(j, i, f"{cm[i, j]:.2f}",
+                    horizontalalignment="center",
+                    color="white" if cm[i, j] > thresh else "black")
+        else:
+            plt.text(j, i, f"{cm[i, j]}",
+                    horizontalalignment="center",
+                    color="white" if cm[i, j] > thresh else "black")
+    
+    # Save if output path is provided
+    if output_path:
+        plt.savefig(output_path)
+        plt.close()
+    else:
+        plt.show()

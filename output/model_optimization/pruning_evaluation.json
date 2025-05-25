@@ -1,0 +1,63 @@
+{
+  "timestamp": "2025-05-21T16:45:00",
+  "base_model": {
+    "parameters": 152834,
+    "size_kb": 245.6,
+    "accuracy": 92.5,
+    "ram_usage_kb": 182.3,
+    "inference_time_ms": 325.7
+  },
+  "pruned_models": {
+    "sparsity_10": {
+      "sparsity": 0.1,
+      "pruned": {
+        "parameters": 137550,
+        "size_kb": 221.0,
+        "accuracy": 91.8,
+        "ram_usage_kb": 168.5,
+        "inference_time_ms": 310.2
+      },
+      "quantized": {
+        "size_kb": 55.3,
+        "accuracy": 90.9,
+        "ram_usage_kb": 142.1,
+        "inference_time_ms": 286.5,
+        "tensor_arena_kb": 124.7
+      }
+    },
+    "sparsity_20": {
+      "sparsity": 0.2,
+      "pruned": {
+        "parameters": 122267,
+        "size_kb": 196.5,
+        "accuracy": 90.1,
+        "ram_usage_kb": 154.2,
+        "inference_time_ms": 290.3
+      },
+      "quantized": {
+        "size_kb": 49.1,
+        "accuracy": 89.3,
+        "ram_usage_kb": 130.8,
+        "inference_time_ms": 268.9,
+        "tensor_arena_kb": 118.2
+      }
+    },
+    "sparsity_30": {
+      "sparsity": 0.3,
+      "pruned": {
+        "parameters": 106984,
+        "size_kb": 171.9,
+        "accuracy": 87.4,
+        "ram_usage_kb": 140.3,
+        "inference_time_ms": 265.8
+      },
+      "quantized": {
+        "size_kb": 43.0,
+        "accuracy": 86.2,
+        "ram_usage_kb": 118.9,
+        "inference_time_ms": 245.7,
+        "tensor_arena_kb": 107.4
+      }
+    }
+  }
+}

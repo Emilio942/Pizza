@@ -1,0 +1,386 @@
+{
+  "MP1": {
+    "measurement_point": "MP1: Gesamtsystem",
+    "total_duration_s": 119.999,
+    "operating_modes": {
+      "sleep": {
+        "duration_s": 117.83501803333333,
+        "avg_current_ma": 0.5032162460692745,
+        "peak_current_ma": 17.0699438340691,
+        "energy_mah": 0.01647124873062202,
+        "sample_count": "117836"
+      },
+      "wakeup": {
+        "duration_s": 0.20499829166666667,
+        "avg_current_ma": 9.66350595183677,
+        "peak_current_ma": 11.850640974916647,
+        "energy_mah": 0.0005502783921214454,
+        "sample_count": "205"
+      },
+      "camera_init": {
+        "duration_s": 0.7999933333333333,
+        "avg_current_ma": 25.01117356247287,
+        "peak_current_ma": 30.818804166281595,
+        "energy_mah": 0.005557992252450337,
+        "sample_count": "800"
+      },
+      "image_capture": {
+        "duration_s": 0.39199673333333335,
+        "avg_current_ma": 50.20668428890684,
+        "peak_current_ma": 58.08478691012628,
+        "energy_mah": 0.005466904509097076,
+        "sample_count": "392"
+      },
+      "inference": {
+        "duration_s": 0.22399813333333332,
+        "avg_current_ma": 150.07911132354346,
+        "peak_current_ma": 196.15262617953056,
+        "energy_mah": 0.009338177996888684,
+        "sample_count": "224"
+      },
+      "data_logging": {
+        "duration_s": 0.542995475,
+        "avg_current_ma": 13.624443330979549,
+        "peak_current_ma": 17.763900951526225,
+        "energy_mah": 0.0020550030772543953,
+        "sample_count": "543"
+      }
+    },
+    "duty_cycle_analysis": {
+      "sleep": 98.19666666666666,
+      "wakeup": 0.17083333333333334,
+      "camera_init": 0.6666666666666667,
+      "image_capture": 0.32666666666666666,
+      "inference": 0.18666666666666668,
+      "data_logging": 0.4525
+    },
+    "average_power_consumption_mw": 3.904553428830201,
+    "peak_power_consumption_mw": 647.3036663924509,
+    "estimated_battery_life_hours": {
+      "CR123A": 1267.750612259649,
+      "AA_Alkaline": 2112.9176870994147,
+      "18650_LiIon": 2873.568054455204,
+      "LiPo_500mAh": 422.58353741988293
+    }
+  },
+  "MP2": {
+    "measurement_point": "MP2: Buck-Boost Eingang",
+    "total_duration_s": 119.999,
+    "operating_modes": {
+      "sleep": {
+        "duration_s": 117.83501803333333,
+        "avg_current_ma": 0.5032162460692745,
+        "peak_current_ma": 17.0699438340691,
+        "energy_mah": 0.01647124873062202,
+        "sample_count": "117836"
+      },
+      "wakeup": {
+        "duration_s": 0.20499829166666667,
+        "avg_current_ma": 9.66350595183677,
+        "peak_current_ma": 11.850640974916647,
+        "energy_mah": 0.0005502783921214454,
+        "sample_count": "205"
+      },
+      "camera_init": {
+        "duration_s": 0.7999933333333333,
+        "avg_current_ma": 25.01117356247287,
+        "peak_current_ma": 30.818804166281595,
+        "energy_mah": 0.005557992252450337,
+        "sample_count": "800"
+      },
+      "image_capture": {
+        "duration_s": 0.39199673333333335,
+        "avg_current_ma": 50.20668428890684,
+        "peak_current_ma": 58.08478691012628,
+        "energy_mah": 0.005466904509097076,
+        "sample_count": "392"
+      },
+      "inference": {
+        "duration_s": 0.22399813333333332,
+        "avg_current_ma": 150.07911132354346,
+        "peak_current_ma": 196.15262617953056,
+        "energy_mah": 0.009338177996888684,
+        "sample_count": "224"
+      },
+      "data_logging": {
+        "duration_s": 0.542995475,
+        "avg_current_ma": 13.624443330979549,
+        "peak_current_ma": 17.763900951526225,
+        "energy_mah": 0.0020550030772543953,
+        "sample_count": "543"
+      }
+    },
+    "duty_cycle_analysis": {
+      "sleep": 98.19666666666666,
+      "wakeup": 0.17083333333333334,
+      "camera_init": 0.6666666666666667,
+      "image_capture": 0.32666666666666666,
+      "inference": 0.18666666666666668,
+      "data_logging": 0.4525
+    },
+    "average_power_consumption_mw": 3.904553428830201,
+    "peak_power_consumption_mw": 647.3036663924509,
+    "estimated_battery_life_hours": {
+      "CR123A": 1267.750612259649,
+      "AA_Alkaline": 2112.9176870994147,
+      "18650_LiIon": 2873.568054455204,
+      "LiPo_500mAh": 422.58353741988293
+    }
+  },
+  "MP3": {
+    "measurement_point": "MP3: Buck-Boost Ausgang (3.3V)",
+    "total_duration_s": 119.999,
+    "operating_modes": {
+      "sleep": {
+        "duration_s": 117.83501803333333,
+        "avg_current_ma": 0.5032162460692745,
+        "peak_current_ma": 17.0699438340691,
+        "energy_mah": 0.01647124873062202,
+        "sample_count": "117836"
+      },
+      "wakeup": {
+        "duration_s": 0.20499829166666667,
+        "avg_current_ma": 9.66350595183677,
+        "peak_current_ma": 11.850640974916647,
+        "energy_mah": 0.0005502783921214454,
+        "sample_count": "205"
+      },
+      "camera_init": {
+        "duration_s": 0.7999933333333333,
+        "avg_current_ma": 25.01117356247287,
+        "peak_current_ma": 30.818804166281595,
+        "energy_mah": 0.005557992252450337,
+        "sample_count": "800"
+      },
+      "image_capture": {
+        "duration_s": 0.39199673333333335,
+        "avg_current_ma": 50.20668428890684,
+        "peak_current_ma": 58.08478691012628,
+        "energy_mah": 0.005466904509097076,
+        "sample_count": "392"
+      },
+      "inference": {
+        "duration_s": 0.22399813333333332,
+        "avg_current_ma": 150.07911132354346,
+        "peak_current_ma": 196.15262617953056,
+        "energy_mah": 0.009338177996888684,
+        "sample_count": "224"
+      },
+      "data_logging": {
+        "duration_s": 0.542995475,
+        "avg_current_ma": 13.624443330979549,
+        "peak_current_ma": 17.763900951526225,
+        "energy_mah": 0.0020550030772543953,
+        "sample_count": "543"
+      }
+    },
+    "duty_cycle_analysis": {
+      "sleep": 98.19666666666666,
+      "wakeup": 0.17083333333333334,
+      "camera_init": 0.6666666666666667,
+      "image_capture": 0.32666666666666666,
+      "inference": 0.18666666666666668,
+      "data_logging": 0.4525
+    },
+    "average_power_consumption_mw": 3.904553428830201,
+    "peak_power_consumption_mw": 647.3036663924509,
+    "estimated_battery_life_hours": {
+      "CR123A": 1267.750612259649,
+      "AA_Alkaline": 2112.9176870994147,
+      "18650_LiIon": 2873.568054455204,
+      "LiPo_500mAh": 422.58353741988293
+    }
+  },
+  "MP4": {
+    "measurement_point": "MP4: RP2040 MCU",
+    "total_duration_s": 119.999,
+    "operating_modes": {
+      "sleep": {
+        "duration_s": 117.83501803333333,
+        "avg_current_ma": 0.5032162460692745,
+        "peak_current_ma": 17.0699438340691,
+        "energy_mah": 0.01647124873062202,
+        "sample_count": "117836"
+      },
+      "wakeup": {
+        "duration_s": 0.20499829166666667,
+        "avg_current_ma": 9.66350595183677,
+        "peak_current_ma": 11.850640974916647,
+        "energy_mah": 0.0005502783921214454,
+        "sample_count": "205"
+      },
+      "camera_init": {
+        "duration_s": 0.7999933333333333,
+        "avg_current_ma": 25.01117356247287,
+        "peak_current_ma": 30.818804166281595,
+        "energy_mah": 0.005557992252450337,
+        "sample_count": "800"
+      },
+      "image_capture": {
+        "duration_s": 0.39199673333333335,
+        "avg_current_ma": 50.20668428890684,
+        "peak_current_ma": 58.08478691012628,
+        "energy_mah": 0.005466904509097076,
+        "sample_count": "392"
+      },
+      "inference": {
+        "duration_s": 0.22399813333333332,
+        "avg_current_ma": 150.07911132354346,
+        "peak_current_ma": 196.15262617953056,
+        "energy_mah": 0.009338177996888684,
+        "sample_count": "224"
+      },
+      "data_logging": {
+        "duration_s": 0.542995475,
+        "avg_current_ma": 13.624443330979549,
+        "peak_current_ma": 17.763900951526225,
+        "energy_mah": 0.0020550030772543953,
+        "sample_count": "543"
+      }
+    },
+    "duty_cycle_analysis": {
+      "sleep": 98.19666666666666,
+      "wakeup": 0.17083333333333334,
+      "camera_init": 0.6666666666666667,
+      "image_capture": 0.32666666666666666,
+      "inference": 0.18666666666666668,
+      "data_logging": 0.4525
+    },
+    "average_power_consumption_mw": 3.904553428830201,
+    "peak_power_consumption_mw": 647.3036663924509,
+    "estimated_battery_life_hours": {
+      "CR123A": 1267.750612259649,
+      "AA_Alkaline": 2112.9176870994147,
+      "18650_LiIon": 2873.568054455204,
+      "LiPo_500mAh": 422.58353741988293
+    }
+  },
+  "MP5": {
+    "measurement_point": "MP5: OV2640 Kamera",
+    "total_duration_s": 119.999,
+    "operating_modes": {
+      "sleep": {
+        "duration_s": 117.83501803333333,
+        "avg_current_ma": 0.5032162460692745,
+        "peak_current_ma": 17.0699438340691,
+        "energy_mah": 0.01647124873062202,
+        "sample_count": "117836"
+      },
+      "wakeup": {
+        "duration_s": 0.20499829166666667,
+        "avg_current_ma": 9.66350595183677,
+        "peak_current_ma": 11.850640974916647,
+        "energy_mah": 0.0005502783921214454,
+        "sample_count": "205"
+      },
+      "camera_init": {
+        "duration_s": 0.7999933333333333,
+        "avg_current_ma": 25.01117356247287,
+        "peak_current_ma": 30.818804166281595,
+        "energy_mah": 0.005557992252450337,
+        "sample_count": "800"
+      },
+      "image_capture": {
+        "duration_s": 0.39199673333333335,
+        "avg_current_ma": 50.20668428890684,
+        "peak_current_ma": 58.08478691012628,
+        "energy_mah": 0.005466904509097076,
+        "sample_count": "392"
+      },
+      "inference": {
+        "duration_s": 0.22399813333333332,
+        "avg_current_ma": 150.07911132354346,
+        "peak_current_ma": 196.15262617953056,
+        "energy_mah": 0.009338177996888684,
+        "sample_count": "224"
+      },
+      "data_logging": {
+        "duration_s": 0.542995475,
+        "avg_current_ma": 13.624443330979549,
+        "peak_current_ma": 17.763900951526225,
+        "energy_mah": 0.0020550030772543953,
+        "sample_count": "543"
+      }
+    },
+    "duty_cycle_analysis": {
+      "sleep": 98.19666666666666,
+      "wakeup": 0.17083333333333334,
+      "camera_init": 0.6666666666666667,
+      "image_capture": 0.32666666666666666,
+      "inference": 0.18666666666666668,
+      "data_logging": 0.4525
+    },
+    "average_power_consumption_mw": 3.904553428830201,
+    "peak_power_consumption_mw": 647.3036663924509,
+    "estimated_battery_life_hours": {
+      "CR123A": 1267.750612259649,
+      "AA_Alkaline": 2112.9176870994147,
+      "18650_LiIon": 2873.568054455204,
+      "LiPo_500mAh": 422.58353741988293
+    }
+  },
+  "MP6": {
+    "measurement_point": "MP6: I/O und Peripherie",
+    "total_duration_s": 119.999,
+    "operating_modes": {
+      "sleep": {
+        "duration_s": 117.83501803333333,
+        "avg_current_ma": 0.5032162460692745,
+        "peak_current_ma": 17.0699438340691,
+        "energy_mah": 0.01647124873062202,
+        "sample_count": "117836"
+      },
+      "wakeup": {
+        "duration_s": 0.20499829166666667,
+        "avg_current_ma": 9.66350595183677,
+        "peak_current_ma": 11.850640974916647,
+        "energy_mah": 0.0005502783921214454,
+        "sample_count": "205"
+      },
+      "camera_init": {
+        "duration_s": 0.7999933333333333,
+        "avg_current_ma": 25.01117356247287,
+        "peak_current_ma": 30.818804166281595,
+        "energy_mah": 0.005557992252450337,
+        "sample_count": "800"
+      },
+      "image_capture": {
+        "duration_s": 0.39199673333333335,
+        "avg_current_ma": 50.20668428890684,
+        "peak_current_ma": 58.08478691012628,
+        "energy_mah": 0.005466904509097076,
+        "sample_count": "392"
+      },
+      "inference": {
+        "duration_s": 0.22399813333333332,
+        "avg_current_ma": 150.07911132354346,
+        "peak_current_ma": 196.15262617953056,
+        "energy_mah": 0.009338177996888684,
+        "sample_count": "224"
+      },
+      "data_logging": {
+        "duration_s": 0.542995475,
+        "avg_current_ma": 13.624443330979549,
+        "peak_current_ma": 17.763900951526225,
+        "energy_mah": 0.0020550030772543953,
+        "sample_count": "543"
+      }
+    },
+    "duty_cycle_analysis": {
+      "sleep": 98.19666666666666,
+      "wakeup": 0.17083333333333334,
+      "camera_init": 0.6666666666666667,
+      "image_capture": 0.32666666666666666,
+      "inference": 0.18666666666666668,
+      "data_logging": 0.4525
+    },
+    "average_power_consumption_mw": 3.904553428830201,
+    "peak_power_consumption_mw": 647.3036663924509,
+    "estimated_battery_life_hours": {
+      "CR123A": 1267.750612259649,
+      "AA_Alkaline": 2112.9176870994147,
+      "18650_LiIon": 2873.568054455204,
+      "LiPo_500mAh": 422.58353741988293
+    }
+  }
+}

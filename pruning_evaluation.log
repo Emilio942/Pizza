@@ -1,3 +1,0 @@
-2025-05-18 17:36:54,916 - pruned_model_evaluation - INFO - Evaluiere gepruntes Modell: /home/emilio/Documents/ai/pizza/models/micropizzanetv2_quantized_s30.tflite
-2025-05-18 17:36:54,917 - pruned_model_evaluation - INFO - Bericht gespeichert: /home/emilio/Documents/ai/pizza/output/evaluation/pruned_model_s30_evaluation.json
-2025-05-18 17:36:54,917 - pruned_model_evaluation - INFO - Markdown-Bericht gespeichert: /home/emilio/Documents/ai/pizza/output/evaluation/pruned_model_s30_evaluation.md

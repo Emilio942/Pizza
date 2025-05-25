@@ -1,0 +1,3 @@
+[2025-05-25 14:51:25.126] UART initialized with 115200 baud
+[2025-05-25 14:51:25.201] [2025-05-25T14:51:25.201] [INFO] [SYS] RP2040 Emulator initialized
+[2025-05-25 14:51:26.294] UART connection closed

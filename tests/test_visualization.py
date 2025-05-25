@@ -12,7 +12,7 @@ import torch
 import torch.nn as nn
 from typing import Dict
 
-from src.visualization import (
+from src.visualization.visualization import (
     plot_inference_result,
     plot_confusion_matrix,
     plot_training_progress,
@@ -22,12 +22,12 @@ from src.visualization import (
     create_report,
     annotate_image
 )
-from src.types import (
+from src.utils.types import (
     InferenceResult,
     ResourceUsage,
     PowerProfile
 )
-from src.constants import CLASS_NAMES
+from src.constants import DEFAULT_CLASSES as CLASS_NAMES
 
 @pytest.fixture
 def sample_image():

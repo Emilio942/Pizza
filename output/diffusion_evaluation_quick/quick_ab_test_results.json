@@ -1,0 +1,11 @@
+{
+  "experiment_type": "quick_demonstration",
+  "training_epochs": 3,
+  "results": {
+    "real_only_accuracy": 0.7272727272727273,
+    "mixed_data_accuracy": 0.5454545454545454,
+    "improvement_percent": -25.000000000000007,
+    "synthetic_data_beneficial": false
+  },
+  "note": "This is a quick demonstration with reduced epochs. Full training would take longer."
+}

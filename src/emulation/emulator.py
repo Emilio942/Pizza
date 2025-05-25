@@ -9,6 +9,7 @@ import numpy as np
 from pathlib import Path
 from typing import Dict, Optional, Tuple, Union
 from enum import Enum
+from datetime import datetime
 
 # Import from utils
 from src.utils.constants import (
@@ -26,8 +27,12 @@ from .simple_power_manager import PowerManager, PowerUsage, AdaptiveMode
 # Local imports
 from .frame_buffer import FrameBuffer, PixelFormat
 from .temperature_sensor import TemperatureSensor, SensorType
+from .voltage_sensor import VoltageSensor, VoltageSensorType
 from .uart_emulator import UARTEmulator
+from .sd_card_emulator import SDCardEmulator
 from .logging_system import LoggingSystem, LogLevel, LogType
+from .ov2640_timing_emulator import OV2640TimingEmulator
+from .rp2040_dma_emulator import RP2040DMAEmulator, DVPInterfaceEmulator
 
 logger = logging.getLogger(__name__)
 
@@ -43,9 +48,9 @@ class HardwareError(Exception):
 logger = logging.getLogger(__name__)
 
 class CameraEmulator:
-    """Emuliert OV2640 Kamera."""
+    """Emuliert OV2640 Kamera mit detaillierter Timing-Simulation."""
     
-    def __init__(self):
+    def __init__(self, log_dir: Optional[str] = None):
         self.width = CAMERA_WIDTH
         self.height = CAMERA_HEIGHT
         self.rgb = True
@@ -54,6 +59,13 @@ class CameraEmulator:
         self.startup_time = 0.1  # 100ms Startup-Zeit
         self.frame_time = 1.0 / 7  # ~7 FPS
         self.last_capture = 0
+        
+        # Pizza detection specific settings
+        self.pizza_detection_width = 48
+        self.pizza_detection_height = 48
+        
+        # Initialize OV2640 timing emulator
+        self.ov2640_emulator = OV2640TimingEmulator(log_dir)
         
         # Erstelle einen Framebuffer mit dem richtigen Format
         pixel_format = PixelFormat.RGB888 if self.rgb else PixelFormat.GRAYSCALE
@@ -66,15 +78,46 @@ class CameraEmulator:
         )
     
     def initialize(self) -> bool:
-        """Emuliert Kamera-Initialisierung."""
+        """Emuliert vollständige OV2640-Initialisierung mit Timing."""
         if not self.initialized:
-            time.sleep(self.startup_time)
-            self.initialized = True
-            self.last_capture = time.time()
+            logger.info("Starte OV2640 Initialisierung mit Timing-Emulation...")
+            
+            # Run the detailed initialization sequence with timing
+            success = self.ov2640_emulator.emulate_camera_init_sequence()
+            
+            if success:
+                self.initialized = True
+                self.last_capture = time.time()
+                
+                # Configure for pizza detection (48x48 RGB565)
+                self.configure_for_pizza_detection()
+                
+                logger.info("OV2640 Initialisierung erfolgreich abgeschlossen")
+            else:
+                logger.error("OV2640 Initialisierung fehlgeschlagen")
+            
+            return success
         return True
     
+    def configure_for_pizza_detection(self):
+        """Konfiguriert die Kamera speziell für Pizza-Erkennung."""
+        logger.info("Konfiguriere Kamera für Pizza-Erkennung (48x48 RGB565)...")
+        
+        # Set format to RGB565 for pizza detection
+        self.width = self.pizza_detection_width
+        self.height = self.pizza_detection_height
+        self.rgb = True
+        
+        # Update framebuffer for new resolution
+        pixel_format = PixelFormat.RGB565  # Use RGB565 for efficiency
+        self.frame_buffer = FrameBuffer(self.width, self.height, pixel_format)
+        
+        # Log the configuration change
+        self.ov2640_emulator.log_timing_event("CONFIG_PIZZA", 
+            f"Camera configured for pizza detection: {self.width}x{self.height} RGB565")
+    
     def capture_frame(self) -> np.ndarray:
-        """Emuliert Bildaufnahme."""
+        """Emuliert Bildaufnahme mit OV2640 Timing."""
         if not self.initialized:
             raise HardwareError("Kamera nicht initialisiert")
         
@@ -83,14 +126,32 @@ class CameraEmulator:
         if (elapsed < self.frame_time):
             time.sleep(self.frame_time - elapsed)
         
-        # Generiere simuliertes Bild
-        channels = 3 if self.rgb else 1
-        frame = np.random.randint(0, 256, (self.height, self.width, channels), dtype=np.uint8)
+        # Emulate the actual frame capture with timing
+        format_name = "RGB565" if self.rgb else "GRAYSCALE"
+        success = self.ov2640_emulator.emulate_frame_capture(
+            self.width, self.height, format_name
+        )
         
-        # Schreibe das Bild in den Framebuffer
-        self.frame_buffer.begin_frame_write()
-        self.frame_buffer.write_pixel_data(frame)
-        self.frame_buffer.end_frame_write()
+        if not success:
+            raise HardwareError("Frame capture failed")
+        
+        # Generiere simuliertes Bild (für Pizza-Detektion optimiert)
+        if self.width == 48 and self.height == 48:
+            # Generate pizza-like patterns for testing
+            frame = self._generate_pizza_test_image()
+        else:
+            # Standard random image
+            channels = 3 if self.rgb else 1
+            frame = np.random.randint(0, 256, (self.height, self.width, channels), dtype=np.uint8)
+        
+        # Use DMA transfer if DMA emulator is available, otherwise use CPU-based transfer
+        if hasattr(self, 'dma_emulator') and self.dma_emulator:
+            success = self._capture_frame_with_dma(frame)
+            if not success:
+                logger.warning("DMA transfer failed, falling back to CPU-based transfer")
+                self._capture_frame_cpu_based(frame)
+        else:
+            self._capture_frame_cpu_based(frame)
         
         self.frames_captured += 1
         self.last_capture = time.time()
@@ -98,20 +159,33 @@ class CameraEmulator:
         # Lese das Bild aus dem Framebuffer zurück
         return self.frame_buffer.get_frame_as_numpy()
     
-    def set_format(self, width: int, height: int, rgb: bool = True) -> None:
-        """Konfiguriert Bildformat."""
-        self.width = width
-        self.height = height
-        self.rgb = rgb
+    def _generate_pizza_test_image(self) -> np.ndarray:
+        """Generiert ein Test-Bild das einer Pizza ähnelt."""
+        # Create a simple pizza-like test pattern
+        frame = np.zeros((self.height, self.width, 3), dtype=np.uint8)
         
-        # Aktualisiere den Framebuffer mit dem neuen Format
-        pixel_format = PixelFormat.RGB888 if rgb else PixelFormat.GRAYSCALE
-        self.frame_buffer = FrameBuffer(width, height, pixel_format)
+        # Pizza base (brownish)
+        frame[:, :, 0] = 139  # Red
+        frame[:, :, 1] = 69   # Green
+        frame[:, :, 2] = 19   # Blue
         
-        logger.info(
-            f"Kameraformat geändert: {width}x{height}, {'RGB' if rgb else 'Grayscale'}, "
-            f"Framebuffer-Größe: {self.frame_buffer.total_size_bytes/1024:.1f} KB"
-        )
+        # Add some random "toppings" (red and green spots)
+        num_toppings = np.random.randint(3, 8)
+        for _ in range(num_toppings):
+            x = np.random.randint(5, self.width - 5)
+            y = np.random.randint(5, self.height - 5)
+            color = [255, 0, 0] if np.random.rand() > 0.5 else [0, 255, 0]  # Red or green
+            frame[y-2:y+3, x-2:x+3] = color
+        
+        return frame
+    
+    def get_timing_summary(self) -> Dict:
+        """Liefert eine Zusammenfassung der Timing-Messungen."""
+        return self.ov2640_emulator.get_timing_summary()
+    
+    def save_timing_logs(self):
+        """Speichert detaillierte Timing-Logs."""
+        self.ov2640_emulator.save_detailed_log()
     
     def get_frame_buffer_size_bytes(self) -> int:
         """Liefert die Größe des Framebuffers in Bytes."""
@@ -120,6 +194,31 @@ class CameraEmulator:
     def get_frame_buffer_stats(self) -> Dict:
         """Liefert Statistiken über den Framebuffer."""
         return self.frame_buffer.get_statistics()
+
+    def set_format(self, width: int, height: int, rgb: bool = True) -> None:
+        """Ändert das Kameraformat."""
+        self.width = width
+        self.height = height
+        self.rgb = rgb
+        
+        # Erstelle neuen Framebuffer mit neuem Format
+        pixel_format = PixelFormat.RGB565 if rgb else PixelFormat.GRAYSCALE
+        self.frame_buffer = FrameBuffer(width, height, pixel_format)
+        
+        logger.info(f"Kameraformat geändert auf {width}x{height}, {'RGB565' if rgb else 'GRAYSCALE'}")
+    
+    def enable_dma_mode(self, dma_emulator, dvp_interface):
+        """Enables DMA mode for camera data transfers."""
+        self.dma_emulator = dma_emulator
+        self.dvp_interface = dvp_interface
+        logger.info("DMA mode enabled for camera captures")
+    
+    def get_dma_statistics(self) -> Dict:
+        """Gets DMA transfer statistics if DMA mode is enabled."""
+        if hasattr(self, 'dma_emulator') and self.dma_emulator:
+            return self.dma_emulator.get_statistics()
+        return {"dma_enabled": False}
+    
 
 class RP2040Emulator:
     """Emuliert RP2040 Mikrocontroller."""
@@ -140,6 +239,19 @@ class RP2040Emulator:
         # Frame Buffer RAM wird jetzt explizit verfolgt
         self.framebuffer_ram_bytes = self.camera.get_frame_buffer_size_bytes()
         
+        # Initialize DMA controller emulator (12-channel DMA controller of RP2040)
+        self.dma_emulator = RP2040DMAEmulator()
+        
+        # Initialize DVP interface emulator for camera data capture
+        self.dvp_interface = DVPInterfaceEmulator()
+        
+        # Connect camera to DMA/DVP interface
+        self.camera.dma_emulator = self.dma_emulator
+        self.camera.dvp_interface = self.dvp_interface
+        
+        logger.info("DMA controller and DVP interface initialized")
+        logger.info(f"DMA channels available: {len(self.dma_emulator.channels)}")
+        
         self.start_time = time.time()
         self.firmware = None
         self.firmware_loaded = False
@@ -156,6 +268,12 @@ class RP2040Emulator:
         self.uart = UARTEmulator(log_to_file=True, log_dir="output/emulator_logs")
         self.uart.initialize(baudrate=115200)
         
+        # Initialisiere SD-Karte
+        self.sd_card = SDCardEmulator(root_dir="output/sd_card", capacity_mb=1024)
+        self.sd_card.initialize()
+        self.sd_card.mount()
+        logger.info(f"SD-Karte initialisiert und gemountet: {self.sd_card.get_status()}")
+        
         # Initialisiere Temperatursensor
         self.temperature_sensor = TemperatureSensor(
             sensor_type=SensorType.INTERNAL,  # Internen Sensor des RP2040 verwenden
@@ -166,10 +284,32 @@ class RP2040Emulator:
         self.temperature_sensor.initialize()
         self.current_temperature_c = self.temperature_sensor.read_temperature()
         
+        # Initialisiere Spannungssensoren
+        self.voltage_sensor_vdd = VoltageSensor(
+            sensor_type=VoltageSensorType.INTERNAL,  # Interne VDD-Spannung des RP2040
+            accuracy_mv=10.0,                        # Genauigkeit in mV
+            update_interval=1.0,                     # Minimales Intervall in Sekunden
+            noise_level_mv=2.0                       # Rauschen in den Messwerten
+        )
+        self.voltage_sensor_vdd.initialize()
+        
+        self.voltage_sensor_battery = VoltageSensor(
+            sensor_type=VoltageSensorType.BATTERY,   # Batteriespannung
+            accuracy_mv=15.0,                        # Genauigkeit in mV
+            update_interval=5.0,                     # Minimales Intervall in Sekunden
+            noise_level_mv=5.0                       # Rauschen in den Messwerten
+        )
+        self.voltage_sensor_battery.initialize()
+        
+        self.current_vdd_voltage_mv = self.voltage_sensor_vdd.read_voltage()
+        self.current_battery_voltage_mv = self.voltage_sensor_battery.read_voltage()
+        
         # Initialisiere Logging-System
         self.logging_system = LoggingSystem(
             uart=self.uart, 
             log_to_file=True,
+            log_to_sd=True,
+            sd_card=self.sd_card,
             log_dir="output/emulator_logs"
         )
         self.logging_system.log("RP2040 Emulator initialized", LogLevel.INFO, LogType.SYSTEM)
@@ -177,6 +317,20 @@ class RP2040Emulator:
         # Aktiviere periodisches Temperaturlogging
         self.last_temp_log_time = time.time()
         self.temp_log_interval = 60.0  # Log temperature every 60 seconds
+        
+        # Initialisiere Performance-Metrics-Datei auf SD-Karte
+        if self.sd_card and self.sd_card.mounted:
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            self.sd_performance_metrics_file = f"logs/performance_metrics_{timestamp}.csv"
+            self.sd_performance_metrics_handle = self.sd_card.open_file(self.sd_performance_metrics_file, "w")
+            
+            if self.sd_performance_metrics_handle:
+                # Schreibe CSV-Header
+                header = "Timestamp,InferenceTime,PeakRamUsage,CpuLoad,Temperature,VddVoltage,BatteryVoltage,Prediction,Confidence\n"
+                self.sd_card.write_file(self.sd_performance_metrics_handle, header)
+                logger.info(f"Performance-Metrics-Logging auf SD-Karte aktiviert: {self.sd_performance_metrics_file}")
+            else:
+                logger.warning("Konnte Performance-Metrics-Datei auf SD-Karte nicht öffnen")
         
         # Inizialisierung des Power Managers
         self.power_usage = PowerUsage(
@@ -194,8 +348,76 @@ class RP2040Emulator:
             adaptive_mode=adaptive_mode
         )
         
+        # Initialize new trigger systems for ENERGIE-2.2 adaptive duty-cycle logic
+        from .motion_sensor import MotionSensorController
+        from .rtc_scheduler import ScheduleManager
+        from .interrupt_emulator import InterruptController
+        from .adaptive_state_machine import DutyCycleStateMachine
+        
+        # Initialize trigger controllers
+        self.motion_controller = MotionSensorController()
+        self.schedule_manager = ScheduleManager()
+        self.interrupt_controller = InterruptController()
+        
+        # Initialize enhanced adaptive state machine
+        self.adaptive_state_machine = DutyCycleStateMachine(
+            emulator=self,
+            power_manager=self.power_manager,
+            motion_controller=self.motion_controller,
+            schedule_manager=self.schedule_manager,
+            interrupt_controller=self.interrupt_controller
+        )
+        
+        # Start trigger systems
+        self.motion_controller.start()
+        self.schedule_manager.start()
+        
+        # Setup common interrupts
+        self.interrupt_controls = self.interrupt_controller.setup_common_interrupts()
+        
+        # Start adaptive state machine
+        self.adaptive_state_machine.start()
+        
         # Initialisiere die Temperatur im PowerManager
         self.power_manager.update_temperature(self.current_temperature_c)
+        
+        # Initialize adaptive clock frequency management (HWEMU-2.2)
+        self.adaptive_clock_enabled = True
+        self.adaptive_clock_config = {
+            'enabled': True,
+            'update_interval_ms': 1000,  # Update every second
+            'verbose_logging': False
+        }
+        
+        # Temperature thresholds for clock adjustment (°C)
+        self.temp_thresholds = {
+            'low': 40.0,        # Below this: maximum performance (133 MHz)
+            'medium': 60.0,     # Above this: balanced mode (100 MHz)
+            'high': 75.0,       # Above this: conservative mode (75 MHz)
+            'critical': 85.0    # Above this: emergency mode (48 MHz)
+        }
+        
+        # Clock frequencies (MHz)
+        self.clock_frequencies = {
+            'max': 133,         # Maximum performance
+            'balanced': 100,    # Balanced performance/thermal
+            'conservative': 75, # Conservative mode
+            'emergency': 48     # Emergency thermal protection
+        }
+        
+        # Adaptive clock state
+        self.current_frequency_mhz = self.cpu_speed_mhz  # Track current frequency
+        self.target_frequency_mhz = self.cpu_speed_mhz   # Target frequency
+        self.last_clock_adjustment_time = time.time()
+        self.last_adjustment_direction = None  # 'up', 'down', or None
+        self.thermal_protection_active = False
+        self.total_clock_adjustments = 0
+        self.emergency_mode_activations = 0
+        self.temp_hysteresis = 2.0  # 2°C hysteresis to prevent oscillation
+        
+        logger.info(f"Adaptive clock frequency management initialized")
+        logger.info(f"  Temperature thresholds: {self.temp_thresholds}")
+        logger.info(f"  Clock frequencies: {self.clock_frequencies}")
         
         # Tracking für Erkennungsänderungen
         self.last_detection_class = None
@@ -208,6 +430,7 @@ class RP2040Emulator:
         logger.info(f"Framebuffer-Größe: {self.framebuffer_ram_bytes/1024:.1f}KB")
         logger.info(f"Energiemanagement-Modus: {adaptive_mode.value}")
         logger.info(f"Geschätzte Batterielebensdauer: {self.power_manager.estimated_runtime_hours:.1f} Stunden")
+        logger.info("Adaptive duty-cycle trigger systems initialized")
     
     def load_firmware(self, firmware: Dict) -> bool:
         """Lädt simulierte Firmware."""
@@ -285,6 +508,20 @@ class RP2040Emulator:
         # Aktualisiere Tracking für die nächste Inferenz
         self.last_detection_class = current_class_id
         self.last_detection_time = current_time
+        
+        # Aktualisiere die Temperatur, um realistische Werte zu simulieren
+        # Nach einer Inferenz steigt die Temperatur leicht an
+        self.current_temperature_c = self.temperature_sensor.read_temperature()
+        
+        # Logge Performance-Metriken auf SD-Karte
+        self._log_performance_metrics_to_sd(
+            inference_time_us=int(inference_time * 1000000),
+            ram_usage_bytes=self.get_ram_usage(),
+            cpu_load_percent=int(self.power_manager.get_current_cpu_load() * 100),
+            temperature_c=int(self.current_temperature_c * 100),
+            prediction=current_class_id,
+            confidence=int(confidence * 100)
+        )
         
         # Überprüfe, ob nach der Inferenz in den Sleep-Modus gewechselt werden sollte
         if self.power_manager.should_enter_sleep():
@@ -425,41 +662,77 @@ class RP2040Emulator:
         self.start_time = time.time()
     
     def enter_sleep_mode(self) -> None:
-        """Versetzt den Emulator in den Sleep-Mode für Energieeinsparung."""
+        """Versetzt den Emulator in den optimierten Sleep-Mode für maximale Energieeinsparung."""
         if not self.sleep_mode:
-            logger.info("Emulator geht in Sleep-Mode")
+            # Performance measurement - start timing
+            sleep_transition_start = time.perf_counter()
+            
+            logger.info("Emulator geht in optimierten Sleep-Mode")
             self.sleep_mode = True
             self.sleep_start_time = time.time()
             
-            # Speichere aktuellen RAM-Verbrauch VOR Anwendung der sleep_mode Variable
+            # Speichere aktuellen Zustand für schnelle Wiederherstellung
             self.original_ram_used = self.ram_used
+            self._save_peripheral_states()
+            
+            # Systematisches Herunterfahren aller Peripheriegeräte für maximale Energieeinsparung
+            self._shutdown_peripherals()
             
             # Reduziere RAM-Verbrauch im Sleep-Mode (deaktivierte Komponenten)
-            self.ram_used = int(self.original_ram_used * (1 - self.sleep_ram_reduction))
+            # Erhöhe Reduktion für tieferen Sleep-Zustand
+            enhanced_sleep_reduction = min(0.8, self.sleep_ram_reduction + 0.2)  # 80% max reduction
+            self.ram_used = int(self.original_ram_used * (1 - enhanced_sleep_reduction))
             
             # Aktualisiere den PowerManager
             active_duration = time.time() - self.last_detection_time if self.last_detection_time > 0 else 0
             if active_duration > 0:
                 self.power_manager.update_energy_consumption(active_duration, True)
                 self.power_manager.sleep_start_time = time.time()
+            
+            # Performance measurement - end timing
+            sleep_transition_time = (time.perf_counter() - sleep_transition_start) * 1000
+            logger.debug(f"Sleep transition completed in {sleep_transition_time:.3f}ms")
+            
+            # Store transition time for performance tracking
+            if not hasattr(self, 'sleep_transition_times'):
+                self.sleep_transition_times = []
+            self.sleep_transition_times.append(sleep_transition_time)
     
     def wake_up(self) -> None:
-        """Weckt den Emulator aus dem Sleep-Mode auf."""
+        """Weckt den Emulator aus dem optimierten Sleep-Mode auf mit schneller Wiederherstellung."""
         if self.sleep_mode:
+            # Performance measurement - start timing
+            wake_transition_start = time.perf_counter()
+            
             # Berechne Schlafzeit für Energieberechnung
             sleep_duration = time.time() - self.sleep_start_time
             self.total_sleep_time += sleep_duration
             
-            # Stelle originalen RAM-Verbrauch wieder her
+            # Schnelle Wiederherstellung des RAM-Verbrauchs
             self.ram_used = self.original_ram_used
+            
+            # Schnelle Wiederherstellung der Peripheriegeräte
+            self._restore_peripherals()
             
             # Aktualisiere den PowerManager mit der Schlafzeit
             self.power_manager.update_energy_consumption(sleep_duration, False)
             self.power_manager.total_sleep_time += sleep_duration
             self.power_manager.last_wakeup_time = time.time()
             
-            logger.info(f"Emulator aufgeweckt (war {sleep_duration:.2f}s im Sleep-Mode)")
+            # Performance measurement - end timing
+            wake_transition_time = (time.perf_counter() - wake_transition_start) * 1000
+            logger.info(f"Emulator aufgeweckt (war {sleep_duration:.2f}s im Sleep-Mode, Wake-up: {wake_transition_time:.3f}ms)")
+            
+            # Store transition time for performance tracking
+            if not hasattr(self, 'wake_transition_times'):
+                self.wake_transition_times = []
+            self.wake_transition_times.append(wake_transition_time)
+            
+            # Clear sleep mode flag first
             self.sleep_mode = False
+            
+            # Verifiziere erfolgreiche Wiederherstellung
+            self._verify_wake_up_restoration()
     
     def execute_operation(self, memory_usage_bytes, operation_time_ms):
         """
@@ -609,6 +882,9 @@ class RP2040Emulator:
             # Aktualisiere PowerManager
             self.power_manager.update_temperature(temperature)
             
+            # Aktualisiere adaptive Taktfrequenz basierend auf Temperatur (HWEMU-2.2)
+            self.update_adaptive_clock_frequency()
+            
             # Überprüfe, ob ein Temperaturlogging fällig ist
             current_time = time.time()
             if current_time - self.last_temp_log_time >= self.temp_log_interval:
@@ -678,11 +954,243 @@ class RP2040Emulator:
             LogType.SYSTEM
         )
     
+    def set_temperature_for_testing(self, temperature: float) -> None:
+        """
+        Setzt die Temperatur direkt für Testzwecke.
+        Dies überschreibt die normale Temperatur-Simulation und 
+        löst sofort ein Update der adaptiven Taktfrequenz aus.
+        
+        Args:
+            temperature: Gewünschte Temperatur in °C
+        """
+        # Setze die Temperatur im Sensor
+        self.temperature_sensor.set_temperature_for_testing(temperature)
+        
+        # Aktualisiere die interne Temperatur
+        self.current_temperature_c = temperature
+        
+        # Aktualisiere PowerManager
+        self.power_manager.update_temperature(temperature)
+        
+        # Triggere sofort ein Update der adaptiven Taktfrequenz
+        self.update_adaptive_clock_frequency()
+        
+        logger.debug(f"Emulator-Temperatur für Tests auf {temperature:.1f}°C gesetzt")
+    
+    def _determine_target_frequency(self, temperature: float) -> int:
+        """
+        Bestimmt die Ziel-Taktfrequenz basierend auf der Temperatur.
+        
+        Args:
+            temperature: Aktuelle Temperatur in °C
+            
+        Returns:
+            Ziel-Taktfrequenz in MHz
+        """
+        # Wende Hysterese an, um Oszillation zu verhindern
+        temp_adjusted = temperature
+        if self.last_adjustment_direction == 'up':
+            temp_adjusted -= self.temp_hysteresis
+        elif self.last_adjustment_direction == 'down':
+            temp_adjusted += self.temp_hysteresis
+        
+        # Bestimme Frequenz basierend auf Temperaturschwellen
+        if temp_adjusted >= self.temp_thresholds['critical']:
+            self.thermal_protection_active = True
+            return self.clock_frequencies['emergency']
+        elif temp_adjusted >= self.temp_thresholds['high']:
+            self.thermal_protection_active = True
+            return self.clock_frequencies['emergency']
+        elif temp_adjusted >= self.temp_thresholds['medium']:
+            self.thermal_protection_active = False
+            return self.clock_frequencies['conservative']
+        elif temp_adjusted >= self.temp_thresholds['low']:
+            self.thermal_protection_active = False
+            return self.clock_frequencies['balanced']
+        else:
+            self.thermal_protection_active = False
+            return self.clock_frequencies['max']
+    
+    def _apply_clock_frequency_change(self, target_freq: int) -> bool:
+        """
+        Wendet eine Taktfrequenz-Änderung an.
+        
+        Args:
+            target_freq: Ziel-Taktfrequenz in MHz
+            
+        Returns:
+            True wenn erfolgreich, False bei Fehler
+        """
+        if target_freq == self.current_frequency_mhz:
+            return True  # Bereits auf Zielfrequenz
+        
+        # Logge die Frequenzänderung
+        logger.info(f"[ADAPTIVE_CLOCK] Changing system clock: {self.current_frequency_mhz} MHz -> {target_freq} MHz")
+        
+        # Simuliere das Ändern der Systemtaktfrequenz
+        # In einer echten Implementierung würde hier die RP2040 SDK verwendet
+        old_freq = self.current_frequency_mhz
+        self.current_frequency_mhz = target_freq
+        self.cpu_speed_mhz = target_freq  # Aktualisiere auch die CPU-Geschwindigkeit für Inferenz-Simulation
+        
+        # Bestimme Anpassungsrichtung
+        if target_freq > old_freq:
+            self.last_adjustment_direction = 'up'
+        else:
+            self.last_adjustment_direction = 'down'
+        
+        # Aktualisiere Statistiken
+        self.total_clock_adjustments += 1
+        
+        if target_freq == self.clock_frequencies['emergency']:
+            self.emergency_mode_activations += 1
+            logger.warning(f"[ADAPTIVE_CLOCK] EMERGENCY: Thermal protection activated at {self.current_temperature_c:.1f}°C")
+        
+        # Logge die erfolgreiche Änderung
+        if self.adaptive_clock_config['verbose_logging']:
+            logger.info(f"[ADAPTIVE_CLOCK] Frequency adjusted: {target_freq} MHz (temp: {self.current_temperature_c:.1f}°C)")
+        
+        # Logge über das Logging-System
+        self.logging_system.log(
+            f"Clock frequency changed: {old_freq} MHz -> {target_freq} MHz (temp: {self.current_temperature_c:.1f}°C)",
+            LogLevel.INFO,
+            LogType.SYSTEM
+        )
+        
+        return True
+    
+    def update_adaptive_clock_frequency(self) -> bool:
+        """
+        Aktualisiert die adaptive Taktfrequenz basierend auf der aktuellen Temperatur.
+        
+        Returns:
+            True wenn erfolgreich, False bei Fehler
+        """
+        if not self.adaptive_clock_enabled or not self.adaptive_clock_config['enabled']:
+            return True
+        
+        current_time = time.time()
+        
+        # Prüfe, ob genug Zeit seit der letzten Anpassung vergangen ist
+        time_since_last = (current_time - self.last_clock_adjustment_time) * 1000  # ms
+        if time_since_last < self.adaptive_clock_config['update_interval_ms']:
+            return True  # Noch nicht Zeit für Update
+        
+        # Lese aktuelle Temperatur
+        temperature = self.current_temperature_c
+        
+        # Bestimme Zielfrequenz
+        target_freq = self._determine_target_frequency(temperature)
+        self.target_frequency_mhz = target_freq
+        
+        # Prüfe, ob Frequenzanpassung nötig ist
+        if target_freq != self.current_frequency_mhz:
+            if self._apply_clock_frequency_change(target_freq):
+                # Erfolgreiche Anpassung
+                pass
+            else:
+                logger.error(f"[ADAPTIVE_CLOCK] ERROR: Failed to set frequency to {target_freq} MHz")
+                return False
+        elif self.adaptive_clock_config['verbose_logging'] and int(current_time) % 10 == 0:
+            # Logge Status alle 10 Sekunden wenn verbose
+            logger.debug(f"[ADAPTIVE_CLOCK] Status: {self.current_frequency_mhz} MHz, {temperature:.1f}°C")
+        
+        self.last_clock_adjustment_time = current_time
+        return True
+    
+    def get_adaptive_clock_state(self) -> Dict:
+        """
+        Liefert den aktuellen Zustand des adaptiven Taktfrequenz-Systems.
+        
+        Returns:
+            Dictionary mit dem aktuellen Zustand
+        """
+        return {
+            'current_frequency_mhz': self.current_frequency_mhz,
+            'target_frequency_mhz': self.target_frequency_mhz,
+            'last_temperature': self.current_temperature_c,
+            'thermal_protection_active': self.thermal_protection_active,
+            'total_adjustments': self.total_clock_adjustments,
+            'emergency_activations': self.emergency_mode_activations,
+            'enabled': self.adaptive_clock_enabled and self.adaptive_clock_config['enabled']
+        }
+    
+    def get_adaptive_clock_stats(self) -> Dict:
+        """
+        Liefert Statistiken des adaptiven Taktfrequenz-Systems.
+        
+        Returns:
+            Dictionary mit Statistiken
+        """
+        return {
+            'total_adjustments': self.total_clock_adjustments,
+            'emergency_activations': self.emergency_mode_activations,
+            'current_frequency_mhz': self.current_frequency_mhz,
+            'current_temperature': self.current_temperature_c,
+            'thermal_protection_active': self.thermal_protection_active
+        }
+    
+    def force_clock_frequency(self, freq_mhz: int) -> bool:
+        """
+        Erzwingt eine bestimmte Taktfrequenz (für Tests).
+        
+        Args:
+            freq_mhz: Ziel-Taktfrequenz in MHz
+            
+        Returns:
+            True wenn erfolgreich, False bei Fehler
+        """
+        logger.info(f"[ADAPTIVE_CLOCK] Forcing frequency to {freq_mhz} MHz")
+        
+        if self._apply_clock_frequency_change(freq_mhz):
+            self.target_frequency_mhz = freq_mhz
+            return True
+        
+        return False
+    
+    def set_adaptive_clock_enabled(self, enabled: bool) -> None:
+        """
+        Aktiviert oder deaktiviert das adaptive Taktfrequenz-Management.
+        
+        Args:
+            enabled: True zum Aktivieren, False zum Deaktivieren
+        """
+        self.adaptive_clock_enabled = enabled
+        logger.info(f"[ADAPTIVE_CLOCK] Adaptive clock management {'enabled' if enabled else 'disabled'}")
+        
+        self.logging_system.log(
+            f"Adaptive clock management {'enabled' if enabled else 'disabled'}",
+            LogLevel.INFO,
+            LogType.SYSTEM
+        )
+    
+    def is_thermal_protection_active(self) -> bool:
+        """
+        Prüft, ob der thermische Schutz aktiv ist.
+        
+        Returns:
+            True wenn thermischer Schutz aktiv, False sonst
+        """
+        return self.thermal_protection_active
+    
     def close(self) -> None:
         """
         Schließt den Emulator und gibt alle Ressourcen frei.
         Diese Methode sollte aufgerufen werden, wenn der Emulator nicht mehr benötigt wird.
         """
+        # Stop adaptive trigger systems first
+        if hasattr(self, 'adaptive_state_machine') and self.adaptive_state_machine:
+            self.adaptive_state_machine.stop()
+            logger.info("Adaptive state machine stopped")
+        
+        if hasattr(self, 'motion_controller') and self.motion_controller:
+            self.motion_controller.stop()
+            logger.info("Motion controller stopped")
+        
+        if hasattr(self, 'schedule_manager') and self.schedule_manager:
+            self.schedule_manager.stop()
+            logger.info("Schedule manager stopped")
+        
         if hasattr(self, 'uart') and self.uart:
             self.uart.close()
         
@@ -712,3 +1220,299 @@ class RP2040Emulator:
             temp_history = [(t, temp) for t, temp in self.temperature_sensor.reading_history]
             if temp_history:
                 logger.info(f"Temperaturverlauf: {len(temp_history)} Messwerte erfasst")
+    
+    def _log_performance_metrics_to_sd(self, 
+                              inference_time_us: int, 
+                              ram_usage_bytes: int, 
+                              cpu_load_percent: int, 
+                              temperature_c: int, 
+                              prediction: int, 
+                              confidence: int) -> bool:
+        """
+        Loggt Performance-Metriken auf die SD-Karte im CSV-Format.
+        
+        Args:
+            inference_time_us: Inferenzzeit in Mikrosekunden
+            ram_usage_bytes: RAM-Nutzung in Bytes
+            cpu_load_percent: CPU-Last in Prozent (0-100)
+            temperature_c: Temperatur in 1/100 Grad Celsius
+            prediction: Klassifikationsergebnis (Klassen-ID)
+            confidence: Konfidenz in Prozent (0-100)
+            
+        Returns:
+            bool: True bei Erfolg, False bei Fehler
+        """
+        if not hasattr(self, 'sd_performance_metrics_handle') or not self.sd_performance_metrics_handle:
+            return False
+            
+        if not self.sd_card or not self.sd_card.mounted:
+            return False
+            
+        try:
+            # Lese aktuelle Spannungswerte
+            vdd_voltage_mv = self.voltage_sensor_vdd.read_voltage()
+            battery_voltage_mv = self.voltage_sensor_battery.read_voltage()
+            
+            # Erzeuge CSV-Zeile: Timestamp,InferenceTime,PeakRamUsage,CpuLoad,Temperature,VddVoltage,BatteryVoltage,Prediction,Confidence
+            timestamp = int(time.time() * 1000)  # Millisekunden seit Epoch
+            csv_line = f"{timestamp},{inference_time_us},{ram_usage_bytes},{cpu_load_percent},{temperature_c},{int(vdd_voltage_mv)},{int(battery_voltage_mv)},{prediction},{confidence}\n"
+            
+            # Schreibe in SD-Karten-Datei
+            self.sd_card.write_file(self.sd_performance_metrics_handle, csv_line)
+            
+            return True
+        except Exception as e:
+            logger.error(f"Fehler beim Loggen von Performance-Metriken auf SD-Karte: {e}")
+            return False
+    
+    def log_performance_metrics(self, inference_time_ms: float, peak_ram_kb: float, 
+                               cpu_load: float, prediction: float, confidence: float) -> None:
+        """
+        Logs performance metrics to both logging system and SD card.
+        
+        Args:
+            inference_time_ms: Inference time in milliseconds
+            peak_ram_kb: Peak RAM usage in kilobytes
+            cpu_load: CPU load in percentage
+            prediction: Prediction result (0 or 1 for pizza/not pizza)
+            confidence: Confidence score (0.0-1.0)
+        """
+        # Get current temperature
+        temperature = self.read_temperature()
+        
+        # Create metrics dictionary for logging system
+        metrics = {
+            'inference_time_ms': inference_time_ms,
+            'peak_ram_kb': peak_ram_kb,
+            'cpu_usage_percent': cpu_load,
+            'temperature_c': temperature,
+            'prediction': prediction,
+            'confidence': confidence
+        }
+        
+        # Log to the logging system
+        self.logging_system.log_performance(metrics)
+        
+        # Log to SD card performance metrics file if available
+        if self.sd_card and self.sd_card.mounted and hasattr(self, 'sd_performance_metrics_handle'):
+            timestamp = datetime.now().isoformat(timespec='milliseconds')
+            log_entry = f"{timestamp},{inference_time_ms:.2f},{peak_ram_kb:.1f},{cpu_load:.1f},{temperature:.2f},{prediction:.0f},{confidence:.4f}\n"
+            self.sd_card.write_file(self.sd_performance_metrics_handle, log_entry)
+            
+            logger.debug(f"Performance metrics logged to SD card: {log_entry.strip()}")
+    
+    def _save_peripheral_states(self) -> None:
+        """Speichert den Zustand aller Peripheriegeräte für schnelle Wiederherstellung."""
+        if not hasattr(self, 'peripheral_states'):
+            self.peripheral_states = {}
+        
+        # Speichere Kamera-Zustand
+        self.peripheral_states['camera_initialized'] = self.camera.initialized
+        self.peripheral_states['camera_fps'] = getattr(self.camera, 'max_fps', 10)
+        
+        # Speichere Sensor-Zustände
+        self.peripheral_states['temp_sensor_active'] = self.temperature_sensor.is_initialized if hasattr(self.temperature_sensor, 'is_initialized') else True
+        self.peripheral_states['voltage_sensors_active'] = True
+        
+        # Speichere UART-Zustand (minimal für Logging)
+        self.peripheral_states['uart_active'] = getattr(self.uart, 'initialized', True)
+        
+        # Speichere SD-Karte-Zustand
+        self.peripheral_states['sd_mounted'] = self.sd_card.mounted if hasattr(self.sd_card, 'mounted') else False
+        
+        logger.debug("Peripheral states saved for sleep mode")
+    
+    def _shutdown_peripherals(self) -> None:
+        """Fährt alle nicht-essentiellen Peripheriegeräte für maximale Energieeinsparung herunter."""
+        # Kamera deaktivieren (größter Energieverbraucher)
+        if hasattr(self.camera, 'initialized') and self.camera.initialized:
+            self.camera.initialized = False
+            logger.debug("Camera shut down for sleep mode")
+        
+        # Reduziere Sensor-Aktivität auf Minimum
+        # Temperatursensor bleibt minimal aktiv für Sicherheit
+        if hasattr(self.temperature_sensor, 'set_low_power_mode'):
+            self.temperature_sensor.set_low_power_mode(True)
+        
+        # Spannungssensoren reduzieren
+        # Batteriespannung minimal überwachen für kritische Zustände
+        if hasattr(self.voltage_sensor_vdd, 'set_low_power_mode'):
+            self.voltage_sensor_vdd.set_low_power_mode(True)
+        if hasattr(self.voltage_sensor_battery, 'set_low_power_mode'):
+            self.voltage_sensor_battery.set_low_power_mode(True)
+        
+        # UART bleibt minimal aktiv für kritische Logs
+        # SD-Karte kann in Standby gehen
+        if hasattr(self.sd_card, 'enter_standby'):
+            self.sd_card.enter_standby()
+        
+        logger.debug("Peripherals shut down for deep sleep mode")
+    
+    def _restore_peripherals(self) -> None:
+        """Stellt alle Peripheriegeräte nach dem Aufwachen schnell wieder her."""
+        if not hasattr(self, 'peripheral_states'):
+            logger.warning("No peripheral states saved, using defaults")
+            self.peripheral_states = {}
+        
+        # Kamera schnell reaktivieren
+        if self.peripheral_states.get('camera_initialized', True):
+            self.camera.initialized = True
+            logger.debug("Camera restored from sleep mode")
+        
+        # Sensoren reaktivieren
+        if hasattr(self.temperature_sensor, 'set_low_power_mode'):
+            self.temperature_sensor.set_low_power_mode(False)
+        
+        if hasattr(self.voltage_sensor_vdd, 'set_low_power_mode'):
+            self.voltage_sensor_vdd.set_low_power_mode(False)
+        if hasattr(self.voltage_sensor_battery, 'set_low_power_mode'):
+            self.voltage_sensor_battery.set_low_power_mode(False)
+        
+        # SD-Karte reaktivieren
+        if hasattr(self.sd_card, 'exit_standby'):
+            self.sd_card.exit_standby()
+        
+        logger.debug("Peripherals restored from sleep mode")
+    
+    def _verify_wake_up_restoration(self) -> bool:
+        """Verifiziert, dass alle Systemkomponenten nach dem Aufwachen korrekt funktionieren."""
+        verification_success = True
+        
+        # Überprüfe Kamera-Zustand - sollte dem ursprünglich gespeicherten Zustand entsprechen
+        if hasattr(self, 'peripheral_states') and 'camera_initialized' in self.peripheral_states:
+            expected_camera_state = self.peripheral_states['camera_initialized']
+            actual_camera_state = getattr(self.camera, 'initialized', False)
+            if actual_camera_state != expected_camera_state:
+                logger.warning(f"Camera restoration verification failed: expected {expected_camera_state}, got {actual_camera_state}")
+                verification_success = False
+        
+        # Überprüfe RAM-Wiederherstellung
+        ram_restored = abs(self.ram_used - self.original_ram_used) < 1024  # 1KB Toleranz
+        if not ram_restored:
+            logger.warning(f"RAM restoration verification failed: expected {self.original_ram_used}, got {self.ram_used}")
+            verification_success = False
+        
+        # Überprüfe Sleep-Mode-Flag (sollte bereits False sein zu diesem Zeitpunkt)
+        if self.sleep_mode:
+            logger.warning("Sleep mode flag still active after wake-up")
+            verification_success = False
+        
+        # Überprüfe Temperatursensor
+        try:
+            temp = self.temperature_sensor.read_temperature()
+            if temp <= 0:
+                logger.warning("Temperature sensor verification failed")
+                verification_success = False
+        except Exception as e:
+            logger.warning(f"Temperature sensor verification error: {e}")
+            verification_success = False
+        
+        if verification_success:
+            logger.debug("Wake-up restoration verification successful")
+        else:
+            logger.error("Wake-up restoration verification failed")
+        
+        return verification_success
+    
+    def get_sleep_performance_metrics(self) -> Dict:
+        """Liefert Performance-Metriken für Sleep-Wake-Zyklen."""
+        metrics = {
+            'sleep_transition_times': getattr(self, 'sleep_transition_times', []),
+            'wake_transition_times': getattr(self, 'wake_transition_times', []),
+            'total_sleep_cycles': len(getattr(self, 'sleep_transition_times', [])),
+            'total_sleep_time': self.total_sleep_time
+        }
+        
+        if metrics['sleep_transition_times']:
+            metrics['avg_sleep_transition_ms'] = sum(metrics['sleep_transition_times']) / len(metrics['sleep_transition_times'])
+            metrics['max_sleep_transition_ms'] = max(metrics['sleep_transition_times'])
+        
+        if metrics['wake_transition_times']:
+            metrics['avg_wake_transition_ms'] = sum(metrics['wake_transition_times']) / len(metrics['wake_transition_times'])
+            metrics['max_wake_transition_ms'] = max(metrics['wake_transition_times'])
+            metrics['wake_time_under_10ms'] = all(t < 10.0 for t in metrics['wake_transition_times'])
+        
+        return metrics
+    
+    def _capture_frame_with_dma(self, frame: np.ndarray) -> bool:
+        """Captures camera frame using DMA transfer (emulated)."""
+        try:
+            # Configure DMA channel for camera data transfer
+            channel_id = 0  # Use DMA channel 0 for camera data
+            
+            # Calculate buffer size based on frame format
+            bytes_per_pixel = 2 if self.rgb else 1  # RGB565 = 2, GRAYSCALE = 1
+            buffer_size = self.width * self.height * bytes_per_pixel
+            
+            # Generate DVP data (simulate camera data from DVP interface)
+            dvp_data = self.dvp_interface.generate_camera_data(
+                width=self.width, 
+                height=self.height,
+                pixel_format="RGB565" if self.rgb else "GRAYSCALE",
+                test_pattern="pizza" if (self.width == 48 and self.height == 48) else "random"
+            )
+            
+            # Configure DMA channel for camera data transfer
+            from .rp2040_dma_emulator import DMAChannelConfig, DMATransferSize, DMARequest
+            
+            config = DMAChannelConfig(
+                read_addr=0x50000000,  # DVP FIFO register address (simulated)
+                write_addr=0x20000000,  # RAM framebuffer address (simulated)
+                trans_count=buffer_size // 4,  # Transfer in 32-bit words
+                data_size=DMATransferSize.SIZE_32,
+                treq_sel=DMARequest.TREQ_DVP_FIFO,
+                chain_to=0,
+                incr_read=False,   # DVP FIFO is at fixed address
+                incr_write=True,   # Increment RAM address
+                enable=True
+            )
+            
+            # Configure and start DMA transfer
+            success = self.dma_emulator.configure_channel(channel_id, config)
+            if not success:
+                return False
+            
+            # Start DMA transfer
+            transfer_id = self.dma_emulator.start_transfer(
+                channel_id=channel_id,
+                source_data=dvp_data,
+                description=f"Camera frame capture {self.width}x{self.height}"
+            )
+            
+            if transfer_id is None:
+                return False
+            
+            # Wait for DMA transfer completion (simulate)
+            success = self.dma_emulator.wait_for_completion(transfer_id, timeout_ms=100)
+            
+            if success:
+                # Verify data integrity
+                integrity_ok = self.dma_emulator.verify_transfer_integrity(transfer_id)
+                if integrity_ok:
+                    logger.debug(f"DMA transfer completed successfully for frame {self.frames_captured}")
+                    
+                    # Copy the DMA transferred data to the framebuffer
+                    transfer_data = self.dma_emulator.get_transfer_data(transfer_id)
+                    if transfer_data:
+                        self.frame_buffer.begin_frame_write()
+                        self.frame_buffer.write_pixel_data(transfer_data)
+                        self.frame_buffer.end_frame_write()
+                    
+                    return True
+                else:
+                    logger.error("DMA transfer data integrity check failed")
+                    return False
+            else:
+                logger.error("DMA transfer timeout")
+                return False
+                
+        except Exception as e:
+            logger.error(f"DMA capture failed: {e}")
+            return False
+    
+    def _capture_frame_cpu_based(self, frame: np.ndarray):
+        """Fallback CPU-based frame capture (original method)."""
+        # Schreibe das Bild in den Framebuffer
+        self.frame_buffer.begin_frame_write()
+        self.frame_buffer.write_pixel_data(frame)
+        self.frame_buffer.end_frame_write()

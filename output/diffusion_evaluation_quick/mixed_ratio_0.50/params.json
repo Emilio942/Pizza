@@ -1,0 +1,13 @@
+{
+  "batch_size": 16,
+  "epochs": 3,
+  "learning_rate": 0.001,
+  "weight_decay": 1e-05,
+  "synthetic_ratio": 0.5,
+  "augment_real": true,
+  "early_stopping": 2,
+  "mixup_alpha": 0.2,
+  "optimizer": "adam",
+  "scheduler": "cosine",
+  "experiment_name": "mixed_ratio_0.50"
+}

@@ -132,6 +132,8 @@ class PowerManager:
     def enter_sleep_mode(self) -> None:
         """Setzt den PowerManager in den Sleep-Modus."""
         self.sleep_start_time = time.time()
+        # Call the emulator's enter_sleep_mode method to actually enter sleep
+        self.emulator.enter_sleep_mode()
     
     def should_enter_sleep(self) -> bool:
         """
@@ -143,6 +145,36 @@ class PowerManager:
         # Bei niedriger Aktivität empfehle Sleep-Modus
         return self.activity_level < 0.3
     
+    def wake_up(self) -> None:
+        """Weckt das System aus dem Sleep-Modus auf."""
+        if hasattr(self.emulator, 'sleep_mode') and self.emulator.sleep_mode:
+            sleep_duration = time.time() - self.sleep_start_time
+            self.total_sleep_time += sleep_duration
+            self.last_wakeup_time = time.time()
+            
+            # Aktualisiere Energieverbrauch für Sleep-Phase
+            self.update_energy_consumption(sleep_duration, False)
+            
+            # Rufe die Emulator wake_up Methode auf
+            self.emulator.wake_up()
+    
+    def should_wake_up(self) -> bool:
+        """
+        Entscheidet, ob das System aufgeweckt werden sollte.
+        
+        Returns:
+            True, wenn das System aufgeweckt werden sollte
+        """
+        if not hasattr(self.emulator, 'sleep_mode') or not self.emulator.sleep_mode:
+            return False
+            
+        # Einfache Logik: wecke nach einer bestimmten Zeit auf
+        if hasattr(self, 'sleep_start_time'):
+            sleep_duration = time.time() - self.sleep_start_time
+            return sleep_duration >= 1.0  # Wake up after 1 second
+        
+        return False
+
     def _calculate_estimated_runtime(self) -> float:
         """
         Berechnet die geschätzte Batterielebensdauer.
@@ -178,3 +210,62 @@ class PowerManager:
             'duty_cycle': 0.3,  # Fester Wert für Tests
             'sampling_interval_s': 30.0  # Fester Wert für Tests
         }
+    
+    def get_battery_voltage_mv(self) -> int:
+        """
+        Gibt die simulierte Batteriespannung in Millivolt zurück.
+        Die Spannung sinkt linear mit dem Energieverbrauch von 3.0V (voll) bis 2.0V (leer).
+        """
+        FULL_MV = 3000
+        CRITICAL_MV = 2000
+        # Linearer Abfall je nach verbrauchter Kapazität
+        used_fraction = min(1.0, self.energy_consumed_mah / self.battery_capacity_mah)
+        voltage_mv = int(FULL_MV - (FULL_MV - CRITICAL_MV) * used_fraction)
+        return voltage_mv
+    
+    def set_adaptive_mode(self, mode: AdaptiveMode) -> None:
+        """
+        Set the adaptive power management mode.
+        
+        Args:
+            mode: New adaptive mode
+        """
+        self.mode = mode
+        # Adjust parameters based on mode
+        if mode == AdaptiveMode.PERFORMANCE:
+            self.activity_level = 1.0
+        elif mode == AdaptiveMode.POWER_SAVE:
+            self.activity_level = 0.3
+        elif mode == AdaptiveMode.ULTRA_LOW_POWER:
+            self.activity_level = 0.1
+        else:  # BALANCED, ADAPTIVE, CONTEXT_AWARE
+            self.activity_level = 0.6
+    
+    def get_statistics(self) -> Dict[str, Any]:
+        """
+        Get comprehensive power management statistics.
+        
+        Returns:
+            Dictionary with power statistics including current consumption
+        """
+        # Calculate current power consumption based on mode
+        base_power = {
+            AdaptiveMode.PERFORMANCE: 150.0,
+            AdaptiveMode.BALANCED: 100.0, 
+            AdaptiveMode.POWER_SAVE: 50.0,
+            AdaptiveMode.ULTRA_LOW_POWER: 20.0,
+            AdaptiveMode.ADAPTIVE: 80.0,
+            AdaptiveMode.CONTEXT_AWARE: 90.0
+        }.get(self.mode, 100.0)
+        
+        current_power_mw = base_power * (0.5 + 0.5 * self.activity_level)
+        
+        stats = self.get_power_statistics()
+        stats.update({
+            'current_power_mw': current_power_mw,
+            'current_temperature_c': self.current_temperature_c,
+            'last_activity_time': self.last_activity_time,
+            'adaptive_mode': self.mode.value
+        })
+        
+        return stats

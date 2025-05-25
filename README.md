@@ -7,6 +7,7 @@ Ein minimalistisches Bilderkennungssystem für den RP2040 Mikrocontroller zur Er
 ```
 .
 ├── config/           # Konfigurationsdateien
+│   └── *.json        # JSON-Konfigurationsdateien
 ├── data/             # Datensätze
 │   ├── augmented/    # Augmentierte Bilder
 │   ├── classified/   # Klassifizierte Bilder
@@ -15,6 +16,9 @@ Ein minimalistisches Bilderkennungssystem für den RP2040 Mikrocontroller zur Er
 │   ├── synthetic/    # Synthetische Bilder
 │   └── videos/       # Video-Dateien
 ├── docs/             # Dokumentation
+│   ├── completed_tasks/ # Dokumentation abgeschlossener Aufgaben
+│   ├── status/       # Projektstatusdateien
+│   └── *.md          # Allgemeine Dokumentation
 ├── hardware/         # Hardware-Dateien
 │   ├── datasheets/   # Datenblätter
 │   ├── docs/         # Hardware-Dokumentation
@@ -29,6 +33,10 @@ Ein minimalistisches Bilderkennungssystem für den RP2040 Mikrocontroller zur Er
 ├── output/           # Ausgabeverzeichnisse
 │   ├── logs/         # Logdateien
 │   └── temp/         # Temporäre Dateien
+├── scripts/          # Skripte für verschiedene Aufgaben
+│   ├── evaluation/   # Evaluierungsskripte
+│   ├── processing/   # Verarbeitungsskripte
+│   └── utility/      # Hilfsskripte
 ├── src/              # Quellcode
 │   ├── augmentation/ # Code für Datenaugmentierung
 │   ├── chatlist_ki/  # KI-Chat-Schnittstelle
@@ -93,7 +101,7 @@ python src/emulation/emulator.py
 python -m tests.test_temperature_logging
 ```
 
-Die Temperaturmessung simuliert die Erfassung und Aufzeichnung von Temperaturdaten im RP2040. Die Logs werden im CSV-Format und über UART gespeichert und können für die Analyse der Temperaturentwicklung unter verschiedenen Lastbedingungen verwendet werden. Weitere Details finden Sie in der [Temperaturmessung-Dokumentation](docs/temperature_monitoring.md).
+Die Temperaturmessung simuliert die Erfassung und Aufzeichnung von Temperaturdaten im RP2040. Die Logs werden im CSV-Format und über UART gespeichert und können für die Analyse der Temperaturentwicklung unter verschiedenen Lastbedingungen verwendet werden. Visualisierungen finden Sie im [Bildverzeichnis](docs/images/). Weitere Details finden Sie in der [Temperaturmessung-Dokumentation](docs/temperature_monitoring.md).
 
 ## Hardware-Anforderungen
 
@@ -108,3 +116,12 @@ Weitere Details finden Sie in der [ausführlichen Dokumentation](docs/RP2040%20P
 - [Standard Augmentierungspipeline](docs/standard_augmentation_pipeline.md) - Detaillierte Beschreibung der implementierten Augmentierungstechniken und Parameter
 - [RP2040 Hardware-Integration](docs/hardware-integration.md) - Hardware-Integrationsanleitung
 - [Temperaturmessung](docs/temperature_monitoring.md) - Informationen zur Temperaturerfassung und -analyse
+
+## Projektstatus und Aufgaben
+
+Der aktuelle Projektstatus wird in folgenden Dateien dokumentiert:
+- [Projektstatus](docs/status/PROJECT_STATUS.txt) - Aktuelle Projektstatus mit Details zu abgeschlossenen und laufenden Aufgaben
+- [Aufgabenliste](docs/status/aufgaben.txt) - Liste aller Aufgaben des Projekts
+- [Abgeschlossene Aufgaben](docs/status/COMPLETED_TASKS.md) - Detaillierte Dokumentation aller abgeschlossenen Aufgaben
+
+Symlinks zu diesen Dateien sind im Hauptverzeichnis des Projekts verfügbar.

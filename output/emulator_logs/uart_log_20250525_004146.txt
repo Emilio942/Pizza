@@ -1,0 +1,6 @@
+[2025-05-25 00:41:46.955] UART initialized with 115200 baud
+[2025-05-25 00:41:47.028] [2025-05-25T00:41:47.028] [INFO] [SYS] RP2040 Emulator initialized
+[2025-05-25 00:41:47.099] [2025-05-25T00:41:47.099] [INFO] [SYS] Temperatur-Logging aktiviert (Intervall: 5.0s)
+[2025-05-25 00:41:53.411] [2025-05-25T00:41:53.411] [INFO] [TEMP] Temperature: 24.00°C (sensor: internal, status: OK)
+[2025-05-25 00:41:53.421] [2025-05-25T00:41:53.421] [DEBUG] [TEMP] Temperatur-Statistik: Min 24.0°C, Max 26.0°C, Avg 25.0°C, Messungen: 4
+[2025-05-25 00:41:58.102] UART connection closed

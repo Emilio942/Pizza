@@ -1,0 +1,797 @@
+{
+  "baseline_accuracy": 0.0,
+  "baseline_early_accuracy": 0.0,
+  "thresholds_evaluated": [
+    0.5,
+    0.6,
+    0.7,
+    0.8,
+    0.9,
+    0.95,
+    0.99
+  ],
+  "best_accuracy": {
+    "threshold": 0.5,
+    "accuracy": 0.0,
+    "early_exit_rate": 0.0,
+    "time_saved_percent": 0.0
+  },
+  "best_compromise": {
+    "threshold": 0.5,
+    "accuracy": 0.0,
+    "early_exit_rate": 0.0,
+    "time_saved_percent": 0.0
+  },
+  "results_by_threshold": {
+    "0.5": {
+      "accuracy": 0.0,
+      "baseline_accuracy": 0.0,
+      "accuracy_diff": 0.0,
+      "early_exit_rate": 0.0,
+      "early_exit_accuracy": 0,
+      "early_exit_correct": 0,
+      "early_exit_incorrect": 0,
+      "time_saved_percent": 0.0,
+      "confusion_matrix": [
+        [
+          0,
+          4,
+          0,
+          4,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          2,
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "confusion_matrix_norm": [
+        [
+          0.0,
+          0.5,
+          0.0,
+          0.5,
+          0.0,
+          0.0
+        ],
+        [
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN
+        ],
+        [
+          0.0,
+          0.6666666666666666,
+          0.0,
+          0.3333333333333333,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN
+        ],
+        [
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN
+        ]
+      ]
+    },
+    "0.6": {
+      "accuracy": 0.0,
+      "baseline_accuracy": 0.0,
+      "accuracy_diff": 0.0,
+      "early_exit_rate": 0.0,
+      "early_exit_accuracy": 0,
+      "early_exit_correct": 0,
+      "early_exit_incorrect": 0,
+      "time_saved_percent": 0.0,
+      "confusion_matrix": [
+        [
+          0,
+          4,
+          0,
+          4,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          2,
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "confusion_matrix_norm": [
+        [
+          0.0,
+          0.5,
+          0.0,
+          0.5,
+          0.0,
+          0.0
+        ],
+        [
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN
+        ],
+        [
+          0.0,
+          0.6666666666666666,
+          0.0,
+          0.3333333333333333,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN
+        ],
+        [
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN
+        ]
+      ]
+    },
+    "0.7": {
+      "accuracy": 0.0,
+      "baseline_accuracy": 0.0,
+      "accuracy_diff": 0.0,
+      "early_exit_rate": 0.0,
+      "early_exit_accuracy": 0,
+      "early_exit_correct": 0,
+      "early_exit_incorrect": 0,
+      "time_saved_percent": 0.0,
+      "confusion_matrix": [
+        [
+          0,
+          4,
+          0,
+          4,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          2,
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "confusion_matrix_norm": [
+        [
+          0.0,
+          0.5,
+          0.0,
+          0.5,
+          0.0,
+          0.0
+        ],
+        [
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN
+        ],
+        [
+          0.0,
+          0.6666666666666666,
+          0.0,
+          0.3333333333333333,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN
+        ],
+        [
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN
+        ]
+      ]
+    },
+    "0.8": {
+      "accuracy": 0.0,
+      "baseline_accuracy": 0.0,
+      "accuracy_diff": 0.0,
+      "early_exit_rate": 0.0,
+      "early_exit_accuracy": 0,
+      "early_exit_correct": 0,
+      "early_exit_incorrect": 0,
+      "time_saved_percent": 0.0,
+      "confusion_matrix": [
+        [
+          0,
+          4,
+          0,
+          4,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          2,
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "confusion_matrix_norm": [
+        [
+          0.0,
+          0.5,
+          0.0,
+          0.5,
+          0.0,
+          0.0
+        ],
+        [
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN
+        ],
+        [
+          0.0,
+          0.6666666666666666,
+          0.0,
+          0.3333333333333333,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN
+        ],
+        [
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN
+        ]
+      ]
+    },
+    "0.9": {
+      "accuracy": 0.0,
+      "baseline_accuracy": 0.0,
+      "accuracy_diff": 0.0,
+      "early_exit_rate": 0.0,
+      "early_exit_accuracy": 0,
+      "early_exit_correct": 0,
+      "early_exit_incorrect": 0,
+      "time_saved_percent": 0.0,
+      "confusion_matrix": [
+        [
+          0,
+          4,
+          0,
+          4,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          2,
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "confusion_matrix_norm": [
+        [
+          0.0,
+          0.5,
+          0.0,
+          0.5,
+          0.0,
+          0.0
+        ],
+        [
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN
+        ],
+        [
+          0.0,
+          0.6666666666666666,
+          0.0,
+          0.3333333333333333,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN
+        ],
+        [
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN
+        ]
+      ]
+    },
+    "0.95": {
+      "accuracy": 0.0,
+      "baseline_accuracy": 0.0,
+      "accuracy_diff": 0.0,
+      "early_exit_rate": 0.0,
+      "early_exit_accuracy": 0,
+      "early_exit_correct": 0,
+      "early_exit_incorrect": 0,
+      "time_saved_percent": 0.0,
+      "confusion_matrix": [
+        [
+          0,
+          4,
+          0,
+          4,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          2,
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "confusion_matrix_norm": [
+        [
+          0.0,
+          0.5,
+          0.0,
+          0.5,
+          0.0,
+          0.0
+        ],
+        [
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN
+        ],
+        [
+          0.0,
+          0.6666666666666666,
+          0.0,
+          0.3333333333333333,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN
+        ],
+        [
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN
+        ]
+      ]
+    },
+    "0.99": {
+      "accuracy": 0.0,
+      "baseline_accuracy": 0.0,
+      "accuracy_diff": 0.0,
+      "early_exit_rate": 0.0,
+      "early_exit_accuracy": 0,
+      "early_exit_correct": 0,
+      "early_exit_incorrect": 0,
+      "time_saved_percent": 0.0,
+      "confusion_matrix": [
+        [
+          0,
+          4,
+          0,
+          4,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          2,
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "confusion_matrix_norm": [
+        [
+          0.0,
+          0.5,
+          0.0,
+          0.5,
+          0.0,
+          0.0
+        ],
+        [
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN
+        ],
+        [
+          0.0,
+          0.6666666666666666,
+          0.0,
+          0.3333333333333333,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN
+        ],
+        [
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN,
+          NaN
+        ]
+      ]
+    }
+  }
+}

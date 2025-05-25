@@ -1,0 +1,310 @@
+{
+  "dataset_balancing_config": {
+    "version": "DIFFUSION-3.1",
+    "created": "2025-01-28",
+    "description": "Configuration for dataset balancing using targeted diffusion generation",
+    
+    "target_distribution": {
+      "basic": {
+        "current_count": 30,
+        "target_count": 50,
+        "generate_count": 20,
+        "priority": "medium"
+      },
+      "burnt": {
+        "current_count": 26,
+        "target_count": 50,
+        "generate_count": 24,
+        "priority": "high"
+      },
+      "combined": {
+        "current_count": 0,
+        "target_count": 50,
+        "generate_count": 50,
+        "priority": "critical"
+      },
+      "mixed": {
+        "current_count": 0,
+        "target_count": 50,
+        "generate_count": 50,
+        "priority": "critical"
+      },
+      "progression": {
+        "current_count": 0,
+        "target_count": 50,
+        "generate_count": 50,
+        "priority": "critical"
+      },
+      "segment": {
+        "current_count": 0,
+        "target_count": 50,
+        "generate_count": 50,
+        "priority": "critical"
+      }
+    },
+    
+    "generation_parameters": {
+      "model_id": "stabilityai/stable-diffusion-xl-base-1.0",
+      "model_type": "sdxl",
+      "image_size": 512,
+      "guidance_scale": 7.5,
+      "num_inference_steps": 30,
+      "quality_threshold": 0.6,
+      "max_retries": 3,
+      "batch_size": 1,
+      "verify_target_properties": true,
+      "property_verification_threshold": 0.6,
+      "save_metadata": true,
+      "output_dir": "data/synthetic/balanced",
+      "enable_cpu_offload": true,
+      "enable_attention_slicing": true
+    },
+    
+    "lighting_distribution": {
+      "overhead_harsh": 0.25,
+      "side_dramatic": 0.25,
+      "dim_ambient": 0.25,
+      "backlit_rim": 0.25
+    },
+    
+    "burn_level_distribution": {
+      "slightly_burnt": 0.40,
+      "moderately_burnt": 0.35,
+      "severely_burnt": 0.25
+    },
+    
+    "class_specific_prompts": {
+      "basic": {
+        "base_prompts": [
+          "simple pizza dough, basic ingredients, professional food photography",
+          "plain pizza base with minimal toppings, clean presentation",
+          "basic pizza with simple cheese and sauce, studio lighting",
+          "traditional pizza with basic toppings, restaurant quality",
+          "fundamental pizza with essential ingredients, food styling"
+        ],
+        "negative_prompts": [
+          "burnt, charred, overcooked, complex toppings, elaborate presentation"
+        ],
+        "variations": [
+          "thin crust texture",
+          "thick crust texture", 
+          "medium crust texture",
+          "light sauce application",
+          "moderate sauce coverage",
+          "minimal cheese distribution",
+          "even cheese coverage"
+        ]
+      },
+      
+      "burnt": {
+        "base_prompts": [
+          "burnt pizza with charred areas and dark spots",
+          "overcooked pizza with burning patterns and brown edges",
+          "pizza with burn marks and overcooking evidence",
+          "charred pizza showing heat damage and burning",
+          "pizza with various degrees of burning and browning"
+        ],
+        "negative_prompts": [
+          "perfect cooking, golden brown, properly cooked, appetizing"
+        ],
+        "burn_specific": {
+          "slightly_burnt": [
+            "pizza slightly burnt with light browning on edges, still appetizing",
+            "pizza with gentle browning and minimal burn spots, golden-brown",
+            "pizza lightly overcooked with subtle burn marks, artisanal"
+          ],
+          "moderately_burnt": [
+            "pizza moderately burnt with visible brown and dark spots",
+            "pizza with noticeable burn marks and darker browning, rustic",
+            "pizza with moderate burning, mix of golden and dark brown"
+          ],
+          "severely_burnt": [
+            "pizza severely burnt with black charred areas, overcooked",
+            "pizza with heavy burning and black spots, charred crust",
+            "pizza completely overcooked with dark charred patterns"
+          ]
+        }
+      },
+      
+      "combined": {
+        "base_prompts": [
+          "complete pizza with sauce, cheese, and toppings, professional photography",
+          "fully assembled pizza with multiple toppings, restaurant presentation",
+          "finished pizza with all ingredients combined, appetizing appearance",
+          "gourmet pizza with complete toppings configuration, food styling",
+          "assembled pizza with comprehensive ingredient layering, studio quality"
+        ],
+        "negative_prompts": [
+          "incomplete, missing toppings, plain, basic, unfinished"
+        ],
+        "variations": [
+          "multiple cheese varieties",
+          "diverse topping combinations",
+          "layered ingredient presentation",
+          "complex flavor profiles",
+          "gourmet ingredient arrangements"
+        ]
+      },
+      
+      "mixed": {
+        "base_prompts": [
+          "pizza with mixed cooking states, uneven preparation patterns",
+          "pizza with varying toppings distribution, irregular configuration",
+          "pizza with mixed ingredient applications, diverse surface patterns",
+          "pizza showing varied cooking stages across surface, documentary style",
+          "pizza with inconsistent preparation, mixed texture presentation"
+        ],
+        "negative_prompts": [
+          "uniform, consistent, even cooking, regular pattern"
+        ],
+        "variations": [
+          "uneven cooking distribution",
+          "mixed topping densities",
+          "varied ingredient concentrations",
+          "irregular surface patterns",
+          "asymmetric presentations"
+        ]
+      },
+      
+      "progression": {
+        "base_prompts": [
+          "pizza in cooking progression, transitioning from raw to cooked",
+          "pizza showing cooking sequence, time-lapse style documentation",
+          "pizza with gradient cooking effect, progression from uncooked areas",
+          "pizza demonstrating cooking stages, educational food photography",
+          "pizza with visible cooking progression, step-by-step documentation"
+        ],
+        "negative_prompts": [
+          "static, single state, uniform cooking, finished product"
+        ],
+        "transitions": [
+          "raw_to_light_cooking",
+          "light_to_moderate_cooking",
+          "moderate_to_well_done",
+          "well_done_to_slightly_burnt",
+          "gradient_cooking_patterns"
+        ]
+      },
+      
+      "segment": {
+        "base_prompts": [
+          "pizza slice or segment, detailed close-up view, professional photography",
+          "individual pizza portion, cross-section view, studio lighting",
+          "pizza wedge showing internal structure, food photography",
+          "cut pizza segment with visible layers, appetizing presentation",
+          "pizza piece with detailed texture and ingredient visibility"
+        ],
+        "negative_prompts": [
+          "whole pizza, complete circle, uncut, full pizza view"
+        ],
+        "variations": [
+          "triangular slice presentation",
+          "square segment cutting",
+          "irregular portion shapes",
+          "cross-section layer visibility",
+          "close-up texture details"
+        ]
+      }
+    },
+    
+    "generation_sequence": [
+      {
+        "phase": 1,
+        "description": "Critical classes with zero representation",
+        "classes": ["combined", "mixed", "progression", "segment"],
+        "priority": "critical",
+        "parallel_execution": false
+      },
+      {
+        "phase": 2,
+        "description": "Burnt class enhancement with burn levels",
+        "classes": ["burnt"],
+        "priority": "high",
+        "burn_level_focus": true
+      },
+      {
+        "phase": 3,
+        "description": "Basic class completion",
+        "classes": ["basic"],
+        "priority": "medium",
+        "lighting_focus": true
+      }
+    ],
+    
+    "output_structure": {
+      "base_directory": "data/synthetic/balanced",
+      "subdirectories": {
+        "by_class": "data/synthetic/balanced/{class_name}/",
+        "by_lighting": "data/synthetic/balanced/lighting/{lighting_condition}/",
+        "by_burn_level": "data/synthetic/balanced/burn_levels/{burn_level}/",
+        "metadata": "data/synthetic/balanced/metadata/"
+      }
+    },
+    
+    "quality_control": {
+      "verification_enabled": true,
+      "verification_threshold": 0.6,
+      "manual_review_percentage": 0.1,
+      "success_rate_target": 0.8,
+      "fallback_strategies": {
+        "lower_threshold": 0.5,
+        "alternative_prompts": true,
+        "traditional_augmentation": false
+      }
+    },
+    
+    "execution_commands": {
+      "single_class_generation": [
+        "python -m src.augmentation.targeted_diffusion_pipeline",
+        "--mode generate_for_class",
+        "--class {class_name}",
+        "--count {generate_count}",
+        "--lighting-distribution uniform",
+        "--output-dir data/synthetic/balanced/{class_name}",
+        "--config-file diffusion_balance_config.json"
+      ],
+      
+      "burn_level_generation": [
+        "python -m src.augmentation.targeted_diffusion_pipeline",
+        "--mode generate_burn_level",
+        "--burn-level {burn_level}",
+        "--lighting {lighting_condition}",
+        "--count {count}",
+        "--stage burnt",
+        "--output-dir data/synthetic/balanced/burnt"
+      ],
+      
+      "lighting_specific": [
+        "python -m src.augmentation.targeted_diffusion_pipeline",
+        "--mode generate_lighting",
+        "--lighting {lighting_condition}",
+        "--count {count}",
+        "--stage {class_name}",
+        "--output-dir data/synthetic/balanced/{class_name}"
+      ]
+    },
+    
+    "estimated_resources": {
+      "total_images_to_generate": 244,
+      "estimated_time_minutes": 610,
+      "estimated_storage_gb": 2.0,
+      "gpu_memory_required_gb": 8,
+      "recommended_batch_size": 1
+    },
+    
+    "validation_metrics": {
+      "primary_success": {
+        "min_images_per_class": 40,
+        "class_balance_ratio": 0.8,
+        "verification_success_rate": 0.8,
+        "metadata_completeness": 1.0
+      },
+      "secondary_success": {
+        "target_images_per_class": 50,
+        "perfect_balance_ratio": 1.0,
+        "lighting_distribution_evenness": 0.9,
+        "visual_quality_score": 0.8
+      }
+    }
+  }
+}

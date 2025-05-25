@@ -1,0 +1,199 @@
+{
+  "system_info": {
+    "timestamp": "2025-05-22T20:33:46.986342",
+    "cpu_count": 16,
+    "total_ram_gb": 31.16,
+    "python_version": "3.12.3 (main, Feb  4 2025, 14:48:35) [GCC 13.3.0]",
+    "torch_version": "2.6.0+cu124",
+    "cuda_available": true,
+    "cuda_version": "12.4",
+    "gpu_count": 1,
+    "gpu_devices": [
+      {
+        "device_id": 0,
+        "name": "NVIDIA GeForce RTX 3060",
+        "total_memory_gb": 11.63,
+        "major": 8,
+        "minor": 6
+      }
+    ]
+  },
+  "measurements": [
+    {
+      "timestamp": "2025-05-22T20:33:47.058941",
+      "stage": "start",
+      "description": "Initial memory state",
+      "system_memory": {
+        "used_gb": 6.06,
+        "available_gb": 24.33,
+        "percent": 21.9
+      },
+      "gpu_memory": {
+        "gpu_0": {
+          "allocated_gb": 0.0,
+          "cached_gb": 0.0,
+          "max_allocated_gb": 0.0,
+          "total_gb": 11.63
+        }
+      }
+    },
+    {
+      "timestamp": "2025-05-22T20:33:47.150788",
+      "stage": "imports",
+      "description": "After importing diffusion libraries",
+      "system_memory": {
+        "used_gb": 6.14,
+        "available_gb": 24.25,
+        "percent": 22.2
+      },
+      "gpu_memory": {
+        "gpu_0": {
+          "allocated_gb": 0.0,
+          "cached_gb": 0.0,
+          "max_allocated_gb": 0.0,
+          "total_gb": 11.63
+        }
+      }
+    },
+    {
+      "timestamp": "2025-05-22T20:33:53.158866",
+      "stage": "diffusers_imported",
+      "description": "After importing diffusers",
+      "system_memory": {
+        "used_gb": 6.44,
+        "available_gb": 23.95,
+        "percent": 23.1
+      },
+      "gpu_memory": {
+        "gpu_0": {
+          "allocated_gb": 0.0,
+          "cached_gb": 0.0,
+          "max_allocated_gb": 0.0,
+          "total_gb": 11.63
+        }
+      }
+    },
+    {
+      "timestamp": "2025-05-22T20:33:53.163849",
+      "stage": "pre_model_load",
+      "description": "Before loading model stable-diffusion-v1-5/stable-diffusion-v1-5",
+      "system_memory": {
+        "used_gb": 6.44,
+        "available_gb": 23.95,
+        "percent": 23.1
+      },
+      "gpu_memory": {
+        "gpu_0": {
+          "allocated_gb": 0.0,
+          "cached_gb": 0.0,
+          "max_allocated_gb": 0.0,
+          "total_gb": 11.63
+        }
+      }
+    },
+    {
+      "timestamp": "2025-05-22T20:36:21.672128",
+      "stage": "model_loaded",
+      "description": "After loading model (took 148.5s)",
+      "system_memory": {
+        "used_gb": 8.61,
+        "available_gb": 21.79,
+        "percent": 30.1
+      },
+      "gpu_memory": {
+        "gpu_0": {
+          "allocated_gb": 0.0,
+          "cached_gb": 0.0,
+          "max_allocated_gb": 2.008,
+          "total_gb": 11.63
+        }
+      }
+    },
+    {
+      "timestamp": "2025-05-22T20:36:21.672835",
+      "stage": "pre_generation_0",
+      "description": "Before generating image 1",
+      "system_memory": {
+        "used_gb": 8.61,
+        "available_gb": 21.79,
+        "percent": 30.1
+      },
+      "gpu_memory": {
+        "gpu_0": {
+          "allocated_gb": 0.0,
+          "cached_gb": 0.0,
+          "max_allocated_gb": 2.008,
+          "total_gb": 11.63
+        }
+      }
+    },
+    {
+      "timestamp": "2025-05-22T20:36:26.815266",
+      "stage": "post_generation_0",
+      "description": "After generating image 1 (took 5.1s)",
+      "system_memory": {
+        "used_gb": 9.43,
+        "available_gb": 20.96,
+        "percent": 32.7
+      },
+      "gpu_memory": {
+        "gpu_0": {
+          "allocated_gb": 0.008,
+          "cached_gb": 0.029,
+          "max_allocated_gb": 2.008,
+          "total_gb": 11.63
+        }
+      }
+    },
+    {
+      "timestamp": "2025-05-22T20:36:26.872241",
+      "stage": "complete",
+      "description": "Generation complete",
+      "system_memory": {
+        "used_gb": 9.42,
+        "available_gb": 20.97,
+        "percent": 32.7
+      },
+      "gpu_memory": {
+        "gpu_0": {
+          "allocated_gb": 0.008,
+          "cached_gb": 0.023,
+          "max_allocated_gb": 2.008,
+          "total_gb": 11.63
+        }
+      }
+    },
+    {
+      "timestamp": "2025-05-22T20:36:26.875301",
+      "stage": "cleanup",
+      "description": "After cleanup",
+      "system_memory": {
+        "used_gb": 9.42,
+        "available_gb": 20.97,
+        "percent": 32.7
+      },
+      "gpu_memory": {
+        "gpu_0": {
+          "allocated_gb": 0.008,
+          "cached_gb": 0.02,
+          "max_allocated_gb": 2.008,
+          "total_gb": 11.63
+        }
+      }
+    }
+  ],
+  "analysis": {
+    "total_measurements": 9,
+    "duration_seconds": 159.81636,
+    "gpu_analysis": {
+      "gpu_0": {
+        "peak_allocated_gb": 0.008,
+        "peak_cached_gb": 0.029,
+        "peak_total_usage_gb": 0.037000000000000005,
+        "final_allocated_gb": 0.008,
+        "total_capacity_gb": 11.63,
+        "peak_utilization_percent": 0.3
+      }
+    }
+  }
+}

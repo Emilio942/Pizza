@@ -1,0 +1,26 @@
+{
+    "class_counts": {
+        "progression": 0,
+        "mixed": 7,
+        "basic": 29,
+        "segment": 0,
+        "combined": 17,
+        "burnt": 4
+    },
+    "class_weights": {
+        "progression": 0.0,
+        "mixed": 1.3571428571428572,
+        "basic": 0.3275862068965517,
+        "segment": 0.0,
+        "combined": 0.5588235294117647,
+        "burnt": 2.375
+    },
+    "class_weights_list": [
+        0.3275862068965517,
+        2.375,
+        0.5588235294117647,
+        1.3571428571428572,
+        0.0,
+        0.0
+    ]
+}

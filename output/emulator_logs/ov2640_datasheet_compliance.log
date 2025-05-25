@@ -1,0 +1,118 @@
+OV2640 Datasheet Compliance Verification Report
+============================================================
+Generated: 2025-05-25 00:18:31
+
+SUMMARY:
+  Total Tests: 14
+  Compliant Tests: 12
+  Compliance Rate: 85.7%
+  Overall Status: PASS
+
+DETAILED RESULTS:
+----------------------------------------
+Event: power_up_delay
+  Measured: 2282.9 µs
+  Specification: 1000-10000 µs
+  Status: COMPLIANT
+  Message: Compliant: 2282.9µs within [1000-10000]µs
+  Description: Time from power-up to stable operation
+
+Event: reset_delay
+  Measured: 5482.0 µs
+  Specification: 1000-10000 µs
+  Status: COMPLIANT
+  Message: Compliant: 5482.0µs within [1000-10000]µs
+  Description: Time for reset signal to take effect
+
+Event: xclk_stabilization
+  Measured: 100.0 µs
+  Specification: 100-1000 µs
+  Status: COMPLIANT
+  Message: Compliant: 100.0µs within [100-1000]µs
+  Description: Time for external clock to stabilize
+
+Event: i2c_transaction
+  Measured: 30.0 µs
+  Specification: 10-1000 µs
+  Status: COMPLIANT
+  Message: Compliant: 30.0µs within [10-1000]µs
+  Description: Time for single I2C/SCCB register write
+
+Event: i2c_transaction
+  Measured: 30.0 µs
+  Specification: 10-1000 µs
+  Status: COMPLIANT
+  Message: Compliant: 30.0µs within [10-1000]µs
+  Description: Time for single I2C/SCCB register write
+
+Event: i2c_transaction
+  Measured: 30.0 µs
+  Specification: 10-1000 µs
+  Status: COMPLIANT
+  Message: Compliant: 30.0µs within [10-1000]µs
+  Description: Time for single I2C/SCCB register write
+
+Event: i2c_transaction
+  Measured: 30.0 µs
+  Specification: 10-1000 µs
+  Status: COMPLIANT
+  Message: Compliant: 30.0µs within [10-1000]µs
+  Description: Time for single I2C/SCCB register write
+
+Event: i2c_transaction
+  Measured: 30.0 µs
+  Specification: 10-1000 µs
+  Status: COMPLIANT
+  Message: Compliant: 30.0µs within [10-1000]µs
+  Description: Time for single I2C/SCCB register write
+
+Event: register_write_delay
+  Measured: 122.3 µs
+  Specification: 10-100 µs
+  Status: TOO_SLOW
+  Message: Too slow: 122.3µs > 100µs maximum
+  Description: Delay between consecutive register writes
+
+Event: register_write_delay
+  Measured: 98.5 µs
+  Specification: 10-100 µs
+  Status: COMPLIANT
+  Message: Compliant: 98.5µs within [10-100]µs
+  Description: Delay between consecutive register writes
+
+Event: register_write_delay
+  Measured: 95.1 µs
+  Specification: 10-100 µs
+  Status: COMPLIANT
+  Message: Compliant: 95.1µs within [10-100]µs
+  Description: Delay between consecutive register writes
+
+Event: register_write_delay
+  Measured: 92.5 µs
+  Specification: 10-100 µs
+  Status: COMPLIANT
+  Message: Compliant: 92.5µs within [10-100]µs
+  Description: Delay between consecutive register writes
+
+Event: register_write_delay
+  Measured: 107.0 µs
+  Specification: 10-100 µs
+  Status: TOO_SLOW
+  Message: Too slow: 107.0µs > 100µs maximum
+  Description: Delay between consecutive register writes
+
+Event: frame_capture_48x48_rgb565
+  Measured: 5760.0 µs
+  Specification: 1000-50000 µs
+  Status: COMPLIANT
+  Message: Compliant: 5760.0µs within [1000-50000]µs
+  Description: 48x48 RGB565 frame capture time
+
+EMULATOR STATE:
+--------------------
+  state: ready
+  i2c_transactions: 45
+  gpio_events: 5
+  frames_captured: 1
+  current_bank: 1
+  registers_written: 35
