@@ -27,18 +27,22 @@ IMAGE_STD = (0.229, 0.224, 0.225)
 IMAGE_EXTENSIONS: Set[str] = {'.jpg', '.jpeg', '.png', '.bmp'}
 
 # Modellparameter
-NUM_CLASSES = 4                  # Anzahl Klassen
+NUM_CLASSES = 6                  # Anzahl Klassen
 CLASS_NAMES: List[str] = [
-    'basic',                     # Basic
-    'burnt',                     # Verbrannt
-    'undercooked',               # Nicht fertig
-    'perfect'                    # Perfekt
+    "basic",
+    "burnt",
+    "combined",
+    "mixed",
+    "progression",
+    "segment"
 ]
 CLASS_COLORS: Dict[str, Tuple[int, int, int]] = {
-    'basic': (0, 255, 0),          # Grün
-    'burnt': (255, 0, 0),          # Rot
-    'undercooked': (255, 255, 0),  # Gelb
-    'perfect': (0, 0, 255)         # Blau
+    "basic": (0, 255, 0),       # Green
+    "burnt": (255, 0, 0),       # Red
+    "combined": (0, 0, 255),    # Blue
+    "mixed": (255, 255, 0),     # Yellow
+    "progression": (255, 0, 255), # Magenta
+    "segment": (0, 255, 255)    # Cyan
 }
 
 # Modellarchitektur
