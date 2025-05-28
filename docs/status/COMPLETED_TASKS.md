@@ -2,7 +2,7 @@
 
 Dieses Dokument enthält alle abgeschlossenen Aufgaben des Pizza-Erkennungsprojekts mit Implementierungsdetails und Verweisen auf die relevanten Dateien. Es dient als Referenz und Nachschlagewerk, während der PROJECT_STATUS.txt den aktuellen Projektstatus und die noch zu erledigenden Aufgaben enthält.
 
-Zuletzt aktualisiert: 2025-05-24
+Zuletzt aktualisiert: 2025-05-29
 
 ## DIFFUSION-2.1: Targeted Image Generation Pipeline ✅
 **Ziel**: Entwicklung einer zielgerichteten Bildgenerierungs-Pipeline für spezifische Eigenschaften
@@ -321,3 +321,117 @@ Weitere Details: [DATEN-3.1 Dokumentation](/docs/completed_tasks/DATEN-3.1.md)
 - Konfigurationsparameter validiert und Pipeline-Integration bestätigt
 - Qualitätssicherungsmaßnahmen definiert und implementiert
 - Ausführungsbereit für sofortige Implementierung
+
+## Projektorganisation (Abgeschlossen am 2025-05-26)
+**TASK:** Projektorganisation und Aufräumarbeiten
+**STATUS:** ✅ FERTIG
+**DATUM:** 2025-05-26
+
+### Implementierte Maßnahmen:
+1. ✅ Projektstruktur gemäß README.md reorganisiert
+2. ✅ Skripte in separate Verzeichnisse sortiert
+3. ✅ Logdateien in output/logs verschoben
+4. ✅ Dokumentationsdateien in docs/ organisiert
+5. ✅ Konfigurationsdateien in config/ zentralisiert
+6. ✅ Symlinks für wichtige Statusdateien im Hauptverzeichnis erstellt
+7. ✅ Statusdateien in docs/status/ organisiert
+
+### Ergebnisse:
+- Aufgeräumte Projektstruktur mit klarer Ordnerhierarchie
+- Verbesserte Auffindbarkeit von Dateien
+- Konsistente Organisation gemäß Projektdokumentation
+- Zentralisierte Dokumentation und Status-Tracking
+(Ursprünglich dokumentiert in PROJECT_STATUS.txt)
+
+## HWEMU-2.2 Adaptive Clock Frequency Adjustment Logic (Abgeschlossen am 2025-05-25)
+**TASK:** Adaptive Clock Frequency Adjustment Logic
+**STATUS:** ✅ FERTIG - Alle 7 Tests bestanden
+**DATUM:** 2025-05-25
+
+### Implementierte Features:
+1. ✅ Temperaturschwellen-basierte Taktfrequenz-Anpassung:
+   - 25°C → 133 MHz (max performance)
+   - 45°C → 100 MHz (balanced mode)
+   - 65°C → 75 MHz (conservative mode)
+   - 80°C → 48 MHz (emergency mode)
+2. ✅ Emergency Thermal Protection bei kritischen Temperaturen (≥75°C)
+3. ✅ Hysterese-Verhalten zur Vermeidung von Oszillation
+4. ✅ Systemregister-Abfragen zur Verifikation der Frequenzänderungen
+5. ✅ Enable/Disable-Funktionalität für adaptives Clock Management
+6. ✅ Temperatur-Spike-Injektion für erweiterte Testzwecke
+7. ✅ Umfassende Logging- und Monitoring-Funktionen
+
+### Gefixte Bugs (HWEMU-2.2):
+- **Bug #1:** Incorrekte Temperatur-zu-Frequenz-Mapping in `_determine_target_frequency()`
+  - Fixed: Line 984 - Korrekte Rückgabe von `max` frequency für niedrige Temperaturen
+  - Fixed: Line 978 - Korrekte Aktivierung des thermal protection für hohe Temperaturen
+- **Bug #2:** Test-Infrastruktur trigger fehlende adaptive clock updates
+  - Fixed: Neue `set_temperature_for_testing()` Methoden hinzugefügt
+- **Bug #3:** Temperatur-Spike-Injektion funktionierte nicht korrekt
+  - Fixed: Erweiterte Temperaturlimits und direkte current_temperature Updates
+(Ursprünglich dokumentiert in PROJECT_STATUS.txt)
+
+## Test-Status: Behobene Probleme (Stand 2025-05-26)
+Folgende Probleme wurden im Rahmen der Tests behoben (Details ursprünglich in PROJECT_STATUS.txt):
+- `_replace()`-Methode zur `ResourceUsage`-Dataclass hinzugefügt
+- Korrektur der Speicherberechnungen in der `MemoryEstimator`-Klasse
+- Validierung für negative Speicherallokationen implementiert
+- `ModelMetrics`-Klasse und Konfusionsmatrix-Format korrigiert (NumPy-Array)
+- `enter_sleep_mode()` und `wake_up()` in der `RP2040Emulator`-Klasse implementiert
+- Ressourcenprüfungen im Emulator für Flash und RAM verbessert
+- Fehler im Sleep-Mode-Management beseitigt (RAM-Wiederherstellung)
+- Visualisierungsfunktionen für neues Konfusionsmatrix-Format angepasst
+
+## Speicheroptimierungs-Aufgaben (Abgeschlossen vor 2025-05-29)
+(Ursprünglich dokumentiert in aufgaben.txt)
+
+### [x] SPEICHER-1.1: Framebuffer-Simulationsgenauigkeit verifizieren
+**Beschreibung:** Überprüfe und korrigiere bei Bedarf die Simulation des Kamera-Framebuffer-RAM-Bedarfs im RP2040-Emulator (EMU-01). Stelle sicher, dass die simulierte Nutzung exakt mit der erwarteten Nutzung auf Hardware übereinstimmt.
+**Aufgabe für Agent:**
+Referenziere Code/Simulation für Framebuffer-RAM-Berechnung.
+Wenn Hardware-Messungen verfügbar sind (siehe Checklist "RP2040-Hardware-Integration"), vergleiche den simulierten Wert mit dem gemessenen Wert.
+Dokumentiere den Unterschied.
+Wenn die Abweichung > 5% ist, analysiere die Ursache in der Simulation und korrigiere sie.
+**Kriterium "Fertig":** Die Abweichung zwischen simuliertem und (falls verfügbar) gemessenem Framebuffer-RAM-Bedarf ist kleiner oder gleich 5%. Die Logik der Berechnung in der Simulation ist nachvollziehbar und dokumentiert.
+
+### [x] SPEICHER-1.2: Tensor-Arena-Schätzgenauigkeit verifizieren
+**Beschreibung:** Überprüfe und korrigiere bei Bedarf die Schätzung der Tensor-Arena-Größe für das quantisierte Modell im RP2040-Emulator (EMU-02). Stelle sicher, dass die Schätzung den tatsächlich benötigten RAM für die Modellinferenz korrekt widerspiegelt.
+**Aufgabe für Agent:**
+Führe das Skript scripts/test_pizza_classification.py oder ein spezifisches Emulator-Skript aus, das die Modellinferenz mit dem quantisierten Modell lädt und durchführt.
+Extrahiere die gemeldete oder gemessene Tensor-Arena-Größe aus dem Emulator-Log/Output.
+Vergleiche diesen Wert mit dem in der Speicherbedarfsschätzung verwendeten Wert.
+Dokumentiere den Unterschied.
+Wenn die Abweichung > 5% ist, analysiere die Ursache in der Schätzung und korrigiere sie.
+**Kriterium "Fertig":** Die Abweichung zwischen geschätzter und im Emulator gemessener Tensor-Arena-Sch Größe ist kleiner oder gleich 5%. Die Schätzlogik ist nachvollziehbar und dokumentiert.
+
+### [x] SPEICHER-1.3: Detaillierte RAM-Nutzungsanalyse durchführen
+**Beschreibung:** Ermittle den detaillierten RAM-Verbrauch aller relevanten Komponenten (Tensor Arena, Framebuffer, Zwischenpuffer für Vorverarbeitung/Ausgabe, Stack, Heap, globale Variablen, statische Puffer etc.) für den kritischsten Betriebsfall (z.B. eine einzelne Inferenz inklusive Vorverarbeitung).
+**Aufgabe für Agent:**
+Nutze das Performance-Logging des Emulators oder spezifische Debugging-Features, um RAM-Profile während eines Inferenzlaufs zu erstellen.
+Analysiere die Log-Dateien oder den Output, um die Nutzung der verschiedenen RAM-Bereiche zu identifizieren.
+Aggregiere die Ergebnisse und berechne die Gesamt-RAM-Nutzung.
+Generiere einen Bericht (Text/JSON), der die Aufteilung der RAM-Nutzung zeigt und den Gesamtwert angibt.
+**Kriterium "Fertig":** Ein strukturierter Bericht (output/ram_analysis/ram_usage_report.json oder ähnlich) existiert, der den RAM-Verbrauch der Hauptkomponenten auflistet und die Gesamt-RAM-Nutzung für einen Inferenzzyklus dokumentiert.
+
+### [x] SPEICHER-2.1: Strukturbasiertes Pruning implementieren/anwenden
+**Beschreibung:** Implementiere oder integriere Tools für strukturbasiertes Pruning und wende es auf das MicroPizzaNetV2-Modell an, um nicht benötigte Kanäle oder Filter zu entfernen.
+**Aufgabe für Agent:**
+Referenziere das Skript oder Tool für strukturbasiertes Pruning (z.B. scripts/pruning_tool.py).
+Führe das Pruning-Skript mit vordefinierten Parametern (z.B. Ziel-Sparsity) aus.
+Das Skript sollte ein neues, gepruntes Modell erzeugen.
+**Kriterium "Fertig":** Das Skript wurde erfolgreich ausgeführt. Ein neues Modell-Datei (models/pruned_model.tflite oder ähnlich) wurde erstellt. Der Log des Skripts bestätigt den angewendeten Pruning-Grad.
+
+### [x] SPEICHER-2.2: Genauigkeit des geprunten Modells evaluieren
+**Beschreibung:** Evaluiere die Klassifikationsgenauigkeit des geprunten Modells auf dem Test-Datensatz.
+**Aufgabe für Agent:**
+Führe das Standard-Evaluierungsskript (scripts/run_pizza_tests.py oder ähnlich) für das geprunte Modell aus.
+Sammle die Genauigkeitsmetriken (Accuracy, F1-Score etc.) aus dem Testbericht.
+**Kriterium "Fertig":** Das Test-Skript wurde erfolgreich ausgeführt. Ein Evaluierungsbericht für das geprunte Modell (output/evaluation/pruned_model_evaluation.json) existiert und enthält die Genauigkeitsmetriken.
+
+### [x] SPEICHER-2.3: RAM-Bedarf des geprunten Modells evaluieren
+**Beschreibung:** Ermittle den RAM-Bedarf (Tensor Arena) des geprunten und quantisierten Modells.
+**Aufgabe für Agent:**
+Quantisiere das geprunte Modell (falls noch nicht geschehen).
+Führe das Skript zur Tensor-Arena-Schätzung (siehe SPEICHER-1.2) für das geprunte und quantisierte Modell aus.
+Extrahiere den geschätzten/gemessenen RAM-Bedarf.
+**Kriterium "Fertig":** Der RAM-Bedarf des geprunten und quantisierten Modells ist dokumentiert.
