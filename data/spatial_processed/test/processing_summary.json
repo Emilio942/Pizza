@@ -1,0 +1,37 @@
+{
+  "processing_statistics": {
+    "total_images": 2,
+    "successful": 0,
+    "failed": 2,
+    "success_rate": 0.0
+  },
+  "performance_metrics": {
+    "average_processing_time": 0,
+    "total_processing_time": 0,
+    "min_processing_time": 0,
+    "max_processing_time": 0
+  },
+  "quality_analysis": {
+    "no_data": true
+  },
+  "configuration": {
+    "output_size": [
+      224,
+      224
+    ],
+    "depth_estimation_method": "edge_based",
+    "enable_validation": true
+  },
+  "output_directory": "data/spatial_processed/test",
+  "timestamp": "2025-06-02T15:28:03.973748",
+  "failed_images": [
+    "data/test_new_images/progression/test_progression_challenging_backlit_angle_diagonal_blurry_20250520_211411_012.jpg",
+    "data/test_new_images/progression/test_progression_challenging_low_contrast_angle_top_normal_20250520_211411_009.jpg"
+  ],
+  "error_analysis": {
+    "error_categories": {
+      "size_error": 2
+    },
+    "most_common_error": "size_error"
+  }
+}

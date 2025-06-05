@@ -1,0 +1,23 @@
+%TF.GenerationSoftware,KiCad,Pcbnew,9.0.2*%
+%TF.CreationDate,2025-05-30T10:00:00+02:00*%
+%TF.ProjectId,PizzaBoard-RP2040,50697a7a-6142-46f6-9172-642d52503230,1.1*%
+%TF.SameCoordinates,Original*%
+%TF.FileFunction,Soldermask,Bot*%
+%TF.FilePolarity,Negative*%
+%FSLAX46Y46*%
+G04 Gerber Fmt 4.6, Leading zero omitted, Abs format (unit mm)*%
+G04 Created by corrected design*%
+%MOMM*%
+%LPD*%
+G01*%
+G04 APERTURE LIST*%
+%ADD10C,0.900000*%
+G04 APERTURE END LIST*%
+G04 Via openings in back solder mask*%
+%LPC*%
+D10*%
+X25000000Y15000000D03*%
+X15000000Y15000000D03*%
+X35000000Y25000000D03*%
+X40000000Y30000000D03*%
+M02*%

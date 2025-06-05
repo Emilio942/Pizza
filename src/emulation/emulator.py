@@ -12,7 +12,7 @@ from enum import Enum
 from datetime import datetime
 
 # Import from utils
-from src.utils.constants import (
+from ..constants import (
     RP2040_FLASH_SIZE_KB,
     RP2040_RAM_SIZE_KB,
     RP2040_CLOCK_SPEED_MHZ,

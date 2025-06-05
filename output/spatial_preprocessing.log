@@ -1,0 +1,299 @@
+2025-06-02 15:17:10,742 - INFO - Initialized transform pipelines for dual-encoder preprocessing
+2025-06-02 15:17:10,742 - INFO - Edge-based depth estimation initialized
+2025-06-02 15:17:10,742 - INFO - Initialized SpatialPreprocessingPipeline with output_size=(518, 518), depth_method=edge_based
+2025-06-02 15:17:10,744 - INFO - Found 5 images to process in data/classified/accepted
+2025-06-02 15:17:10,744 - INFO - Processing image 1/5: pizza_6_basic_9_0.jpg
+2025-06-02 15:17:10,748 - INFO - Processing image: data/classified/accepted/pizza_6_basic_9_0.jpg
+2025-06-02 15:17:10,815 - ERROR - Failed to process data/classified/accepted/pizza_6_basic_9_0.jpg: OpenCV(4.11.0) /io/opencv/modules/imgproc/src/color.simd_helpers.hpp:94: error: (-2:Unspecified error) in function 'cv::impl::{anonymous}::CvtHelper<VScn, VDcn, VDepth, sizePolicy>::CvtHelper(cv::InputArray, cv::OutputArray, int) [with VScn = cv::impl::{anonymous}::Set<3, 4>; VDcn = cv::impl::{anonymous}::Set<1>; VDepth = cv::impl::{anonymous}::Set<0, 2, 5>; cv::impl::{anonymous}::SizePolicy sizePolicy = cv::impl::<unnamed>::NONE; cv::InputArray = const cv::_InputArray&; cv::OutputArray = const cv::_OutputArray&]'
+> Unsupported depth of input image:
+>     'VDepth::contains(depth)'
+> where
+>     'depth' is 6 (CV_64F)
+
+2025-06-02 15:17:10,816 - INFO - Processing image 2/5: synthetic_40_81.jpg
+2025-06-02 15:17:10,817 - INFO - Processing image: data/classified/accepted/synthetic_40_81.jpg
+2025-06-02 15:17:10,856 - ERROR - Failed to process data/classified/accepted/synthetic_40_81.jpg: OpenCV(4.11.0) /io/opencv/modules/imgproc/src/color.simd_helpers.hpp:94: error: (-2:Unspecified error) in function 'cv::impl::{anonymous}::CvtHelper<VScn, VDcn, VDepth, sizePolicy>::CvtHelper(cv::InputArray, cv::OutputArray, int) [with VScn = cv::impl::{anonymous}::Set<3, 4>; VDcn = cv::impl::{anonymous}::Set<1>; VDepth = cv::impl::{anonymous}::Set<0, 2, 5>; cv::impl::{anonymous}::SizePolicy sizePolicy = cv::impl::<unnamed>::NONE; cv::InputArray = const cv::_InputArray&; cv::OutputArray = const cv::_OutputArray&]'
+> Unsupported depth of input image:
+>     'VDepth::contains(depth)'
+> where
+>     'depth' is 6 (CV_64F)
+
+2025-06-02 15:17:10,857 - INFO - Processing image 3/5: pizza_9_basic_3_0.jpg
+2025-06-02 15:17:10,858 - INFO - Processing image: data/classified/accepted/pizza_9_basic_3_0.jpg
+2025-06-02 15:17:10,890 - ERROR - Failed to process data/classified/accepted/pizza_9_basic_3_0.jpg: OpenCV(4.11.0) /io/opencv/modules/imgproc/src/color.simd_helpers.hpp:94: error: (-2:Unspecified error) in function 'cv::impl::{anonymous}::CvtHelper<VScn, VDcn, VDepth, sizePolicy>::CvtHelper(cv::InputArray, cv::OutputArray, int) [with VScn = cv::impl::{anonymous}::Set<3, 4>; VDcn = cv::impl::{anonymous}::Set<1>; VDepth = cv::impl::{anonymous}::Set<0, 2, 5>; cv::impl::{anonymous}::SizePolicy sizePolicy = cv::impl::<unnamed>::NONE; cv::InputArray = const cv::_InputArray&; cv::OutputArray = const cv::_OutputArray&]'
+> Unsupported depth of input image:
+>     'VDepth::contains(depth)'
+> where
+>     'depth' is 6 (CV_64F)
+
+2025-06-02 15:17:10,891 - INFO - Processing image 4/5: pizza_9_basic_8_0.jpg
+2025-06-02 15:17:10,892 - INFO - Processing image: data/classified/accepted/pizza_9_basic_8_0.jpg
+2025-06-02 15:17:10,923 - ERROR - Failed to process data/classified/accepted/pizza_9_basic_8_0.jpg: OpenCV(4.11.0) /io/opencv/modules/imgproc/src/color.simd_helpers.hpp:94: error: (-2:Unspecified error) in function 'cv::impl::{anonymous}::CvtHelper<VScn, VDcn, VDepth, sizePolicy>::CvtHelper(cv::InputArray, cv::OutputArray, int) [with VScn = cv::impl::{anonymous}::Set<3, 4>; VDcn = cv::impl::{anonymous}::Set<1>; VDepth = cv::impl::{anonymous}::Set<0, 2, 5>; cv::impl::{anonymous}::SizePolicy sizePolicy = cv::impl::<unnamed>::NONE; cv::InputArray = const cv::_InputArray&; cv::OutputArray = const cv::_OutputArray&]'
+> Unsupported depth of input image:
+>     'VDepth::contains(depth)'
+> where
+>     'depth' is 6 (CV_64F)
+
+2025-06-02 15:17:10,924 - INFO - Processing image 5/5: pizza_4_basic_1_0.jpg
+2025-06-02 15:17:10,925 - INFO - Processing image: data/classified/accepted/pizza_4_basic_1_0.jpg
+2025-06-02 15:17:10,961 - ERROR - Failed to process data/classified/accepted/pizza_4_basic_1_0.jpg: OpenCV(4.11.0) /io/opencv/modules/imgproc/src/color.simd_helpers.hpp:94: error: (-2:Unspecified error) in function 'cv::impl::{anonymous}::CvtHelper<VScn, VDcn, VDepth, sizePolicy>::CvtHelper(cv::InputArray, cv::OutputArray, int) [with VScn = cv::impl::{anonymous}::Set<3, 4>; VDcn = cv::impl::{anonymous}::Set<1>; VDepth = cv::impl::{anonymous}::Set<0, 2, 5>; cv::impl::{anonymous}::SizePolicy sizePolicy = cv::impl::<unnamed>::NONE; cv::InputArray = const cv::_InputArray&; cv::OutputArray = const cv::_OutputArray&]'
+> Unsupported depth of input image:
+>     'VDepth::contains(depth)'
+> where
+>     'depth' is 6 (CV_64F)
+
+2025-06-02 15:17:10,962 - INFO - Processing complete. Summary saved to data/spatial_processed/processing_summary.json
+2025-06-02 15:28:03,944 - INFO - Initialized transform pipelines for dual-encoder preprocessing
+2025-06-02 15:28:03,944 - INFO - Edge-based depth estimation initialized
+2025-06-02 15:28:03,944 - INFO - Initialized SpatialPreprocessingPipeline with output_size=(224, 224), depth_method=edge_based
+2025-06-02 15:28:03,945 - INFO - Found 2 images to process in data/test_new_images/progression
+2025-06-02 15:28:03,945 - INFO - Processing image 1/2: test_progression_challenging_backlit_angle_diagonal_blurry_20250520_211411_012.jpg
+2025-06-02 15:28:03,949 - INFO - Processing image: data/test_new_images/progression/test_progression_challenging_backlit_angle_diagonal_blurry_20250520_211411_012.jpg
+2025-06-02 15:28:03,961 - ERROR - Failed to process data/test_new_images/progression/test_progression_challenging_backlit_angle_diagonal_blurry_20250520_211411_012.jpg: OpenCV(4.11.0) /io/opencv/modules/imgproc/src/color.simd_helpers.hpp:94: error: (-2:Unspecified error) in function 'cv::impl::{anonymous}::CvtHelper<VScn, VDcn, VDepth, sizePolicy>::CvtHelper(cv::InputArray, cv::OutputArray, int) [with VScn = cv::impl::{anonymous}::Set<3, 4>; VDcn = cv::impl::{anonymous}::Set<1>; VDepth = cv::impl::{anonymous}::Set<0, 2, 5>; cv::impl::{anonymous}::SizePolicy sizePolicy = cv::impl::<unnamed>::NONE; cv::InputArray = const cv::_InputArray&; cv::OutputArray = const cv::_OutputArray&]'
+> Unsupported depth of input image:
+>     'VDepth::contains(depth)'
+> where
+>     'depth' is 6 (CV_64F)
+
+2025-06-02 15:28:03,962 - INFO - Processing image 2/2: test_progression_challenging_low_contrast_angle_top_normal_20250520_211411_009.jpg
+2025-06-02 15:28:03,963 - INFO - Processing image: data/test_new_images/progression/test_progression_challenging_low_contrast_angle_top_normal_20250520_211411_009.jpg
+2025-06-02 15:28:03,973 - ERROR - Failed to process data/test_new_images/progression/test_progression_challenging_low_contrast_angle_top_normal_20250520_211411_009.jpg: OpenCV(4.11.0) /io/opencv/modules/imgproc/src/color.simd_helpers.hpp:94: error: (-2:Unspecified error) in function 'cv::impl::{anonymous}::CvtHelper<VScn, VDcn, VDepth, sizePolicy>::CvtHelper(cv::InputArray, cv::OutputArray, int) [with VScn = cv::impl::{anonymous}::Set<3, 4>; VDcn = cv::impl::{anonymous}::Set<1>; VDepth = cv::impl::{anonymous}::Set<0, 2, 5>; cv::impl::{anonymous}::SizePolicy sizePolicy = cv::impl::<unnamed>::NONE; cv::InputArray = const cv::_InputArray&; cv::OutputArray = const cv::_OutputArray&]'
+> Unsupported depth of input image:
+>     'VDepth::contains(depth)'
+> where
+>     'depth' is 6 (CV_64F)
+
+2025-06-02 15:28:03,973 - INFO - Processing complete. Summary saved to data/spatial_processed/test/processing_summary.json
+2025-06-02 15:38:31,123 - INFO - Initialized transform pipelines for dual-encoder preprocessing
+2025-06-02 15:38:31,124 - INFO - Edge-based depth estimation initialized
+2025-06-02 15:38:31,124 - INFO - Initialized SpatialPreprocessingPipeline with output_size=(224, 224), depth_method=edge_based
+2025-06-02 15:38:31,126 - INFO - Found 10 images to process in augmented_pizza
+2025-06-02 15:38:31,126 - INFO - Processing image 1/10: augmentation_preview.png
+2025-06-02 15:38:31,198 - INFO - Processing image: augmented_pizza/lighting_perspective_test/augmentation_preview.png
+2025-06-02 15:38:31,320 - ERROR - Failed to process augmented_pizza/lighting_perspective_test/augmentation_preview.png: OpenCV(4.11.0) /io/opencv/modules/imgproc/src/color.simd_helpers.hpp:94: error: (-2:Unspecified error) in function 'cv::impl::{anonymous}::CvtHelper<VScn, VDcn, VDepth, sizePolicy>::CvtHelper(cv::InputArray, cv::OutputArray, int) [with VScn = cv::impl::{anonymous}::Set<3, 4>; VDcn = cv::impl::{anonymous}::Set<1>; VDepth = cv::impl::{anonymous}::Set<0, 2, 5>; cv::impl::{anonymous}::SizePolicy sizePolicy = cv::impl::<unnamed>::NONE; cv::InputArray = const cv::_InputArray&; cv::OutputArray = const cv::_OutputArray&]'
+> Unsupported depth of input image:
+>     'VDepth::contains(depth)'
+> where
+>     'depth' is 6 (CV_64F)
+
+2025-06-02 15:38:31,321 - INFO - Processing image 2/10: sample_pizza_image.jpg
+2025-06-02 15:38:31,329 - INFO - Processing image: augmented_pizza/raw/sample_pizza_image.jpg
+2025-06-02 15:38:31,374 - ERROR - Failed to process augmented_pizza/raw/sample_pizza_image.jpg: OpenCV(4.11.0) /io/opencv/modules/imgproc/src/color.simd_helpers.hpp:94: error: (-2:Unspecified error) in function 'cv::impl::{anonymous}::CvtHelper<VScn, VDcn, VDepth, sizePolicy>::CvtHelper(cv::InputArray, cv::OutputArray, int) [with VScn = cv::impl::{anonymous}::Set<3, 4>; VDcn = cv::impl::{anonymous}::Set<1>; VDepth = cv::impl::{anonymous}::Set<0, 2, 5>; cv::impl::{anonymous}::SizePolicy sizePolicy = cv::impl::<unnamed>::NONE; cv::InputArray = const cv::_InputArray&; cv::OutputArray = const cv::_OutputArray&]'
+> Unsupported depth of input image:
+>     'VDepth::contains(depth)'
+> where
+>     'depth' is 6 (CV_64F)
+
+2025-06-02 15:38:31,374 - INFO - Processing image 3/10: sample_pizza_image.jpg
+2025-06-02 15:38:31,382 - INFO - Processing image: augmented_pizza/raw/baked/sample_pizza_image.jpg
+2025-06-02 15:38:31,425 - ERROR - Failed to process augmented_pizza/raw/baked/sample_pizza_image.jpg: OpenCV(4.11.0) /io/opencv/modules/imgproc/src/color.simd_helpers.hpp:94: error: (-2:Unspecified error) in function 'cv::impl::{anonymous}::CvtHelper<VScn, VDcn, VDepth, sizePolicy>::CvtHelper(cv::InputArray, cv::OutputArray, int) [with VScn = cv::impl::{anonymous}::Set<3, 4>; VDcn = cv::impl::{anonymous}::Set<1>; VDepth = cv::impl::{anonymous}::Set<0, 2, 5>; cv::impl::{anonymous}::SizePolicy sizePolicy = cv::impl::<unnamed>::NONE; cv::InputArray = const cv::_InputArray&; cv::OutputArray = const cv::_OutputArray&]'
+> Unsupported depth of input image:
+>     'VDepth::contains(depth)'
+> where
+>     'depth' is 6 (CV_64F)
+
+2025-06-02 15:38:31,425 - INFO - Processing image 4/10: basic_augmented_0000_0001.jpg
+2025-06-02 15:38:31,426 - INFO - Processing image: augmented_pizza/lighting_perspective_test/basic/basic_augmented_0000_0001.jpg
+2025-06-02 15:38:31,434 - ERROR - Failed to process augmented_pizza/lighting_perspective_test/basic/basic_augmented_0000_0001.jpg: OpenCV(4.11.0) /io/opencv/modules/imgproc/src/color.simd_helpers.hpp:94: error: (-2:Unspecified error) in function 'cv::impl::{anonymous}::CvtHelper<VScn, VDcn, VDepth, sizePolicy>::CvtHelper(cv::InputArray, cv::OutputArray, int) [with VScn = cv::impl::{anonymous}::Set<3, 4>; VDcn = cv::impl::{anonymous}::Set<1>; VDepth = cv::impl::{anonymous}::Set<0, 2, 5>; cv::impl::{anonymous}::SizePolicy sizePolicy = cv::impl::<unnamed>::NONE; cv::InputArray = const cv::_InputArray&; cv::OutputArray = const cv::_OutputArray&]'
+> Unsupported depth of input image:
+>     'VDepth::contains(depth)'
+> where
+>     'depth' is 6 (CV_64F)
+
+2025-06-02 15:38:31,434 - INFO - Processing image 5/10: basic_augmented_0002_0001.jpg
+2025-06-02 15:38:31,435 - INFO - Processing image: augmented_pizza/lighting_perspective_test/basic/basic_augmented_0002_0001.jpg
+2025-06-02 15:38:31,446 - ERROR - Failed to process augmented_pizza/lighting_perspective_test/basic/basic_augmented_0002_0001.jpg: OpenCV(4.11.0) /io/opencv/modules/imgproc/src/color.simd_helpers.hpp:94: error: (-2:Unspecified error) in function 'cv::impl::{anonymous}::CvtHelper<VScn, VDcn, VDepth, sizePolicy>::CvtHelper(cv::InputArray, cv::OutputArray, int) [with VScn = cv::impl::{anonymous}::Set<3, 4>; VDcn = cv::impl::{anonymous}::Set<1>; VDepth = cv::impl::{anonymous}::Set<0, 2, 5>; cv::impl::{anonymous}::SizePolicy sizePolicy = cv::impl::<unnamed>::NONE; cv::InputArray = const cv::_InputArray&; cv::OutputArray = const cv::_OutputArray&]'
+> Unsupported depth of input image:
+>     'VDepth::contains(depth)'
+> where
+>     'depth' is 6 (CV_64F)
+
+2025-06-02 15:38:31,446 - INFO - Processing image 6/10: basic_augmented_0006_0000.jpg
+2025-06-02 15:38:31,447 - INFO - Processing image: augmented_pizza/lighting_perspective_test/basic/basic_augmented_0006_0000.jpg
+2025-06-02 15:38:31,460 - ERROR - Failed to process augmented_pizza/lighting_perspective_test/basic/basic_augmented_0006_0000.jpg: OpenCV(4.11.0) /io/opencv/modules/imgproc/src/color.simd_helpers.hpp:94: error: (-2:Unspecified error) in function 'cv::impl::{anonymous}::CvtHelper<VScn, VDcn, VDepth, sizePolicy>::CvtHelper(cv::InputArray, cv::OutputArray, int) [with VScn = cv::impl::{anonymous}::Set<3, 4>; VDcn = cv::impl::{anonymous}::Set<1>; VDepth = cv::impl::{anonymous}::Set<0, 2, 5>; cv::impl::{anonymous}::SizePolicy sizePolicy = cv::impl::<unnamed>::NONE; cv::InputArray = const cv::_InputArray&; cv::OutputArray = const cv::_OutputArray&]'
+> Unsupported depth of input image:
+>     'VDepth::contains(depth)'
+> where
+>     'depth' is 6 (CV_64F)
+
+2025-06-02 15:38:31,460 - INFO - Processing image 7/10: basic_augmented_0003_0000.jpg
+2025-06-02 15:38:31,465 - INFO - Processing image: augmented_pizza/lighting_perspective_test/basic/basic_augmented_0003_0000.jpg
+2025-06-02 15:38:31,473 - ERROR - Failed to process augmented_pizza/lighting_perspective_test/basic/basic_augmented_0003_0000.jpg: OpenCV(4.11.0) /io/opencv/modules/imgproc/src/color.simd_helpers.hpp:94: error: (-2:Unspecified error) in function 'cv::impl::{anonymous}::CvtHelper<VScn, VDcn, VDepth, sizePolicy>::CvtHelper(cv::InputArray, cv::OutputArray, int) [with VScn = cv::impl::{anonymous}::Set<3, 4>; VDcn = cv::impl::{anonymous}::Set<1>; VDepth = cv::impl::{anonymous}::Set<0, 2, 5>; cv::impl::{anonymous}::SizePolicy sizePolicy = cv::impl::<unnamed>::NONE; cv::InputArray = const cv::_InputArray&; cv::OutputArray = const cv::_OutputArray&]'
+> Unsupported depth of input image:
+>     'VDepth::contains(depth)'
+> where
+>     'depth' is 6 (CV_64F)
+
+2025-06-02 15:38:31,474 - INFO - Processing image 8/10: basic_augmented_0002_0000.jpg
+2025-06-02 15:38:31,474 - INFO - Processing image: augmented_pizza/lighting_perspective_test/basic/basic_augmented_0002_0000.jpg
+2025-06-02 15:38:31,488 - ERROR - Failed to process augmented_pizza/lighting_perspective_test/basic/basic_augmented_0002_0000.jpg: OpenCV(4.11.0) /io/opencv/modules/imgproc/src/color.simd_helpers.hpp:94: error: (-2:Unspecified error) in function 'cv::impl::{anonymous}::CvtHelper<VScn, VDcn, VDepth, sizePolicy>::CvtHelper(cv::InputArray, cv::OutputArray, int) [with VScn = cv::impl::{anonymous}::Set<3, 4>; VDcn = cv::impl::{anonymous}::Set<1>; VDepth = cv::impl::{anonymous}::Set<0, 2, 5>; cv::impl::{anonymous}::SizePolicy sizePolicy = cv::impl::<unnamed>::NONE; cv::InputArray = const cv::_InputArray&; cv::OutputArray = const cv::_OutputArray&]'
+> Unsupported depth of input image:
+>     'VDepth::contains(depth)'
+> where
+>     'depth' is 6 (CV_64F)
+
+2025-06-02 15:38:31,488 - INFO - Processing image 9/10: basic_augmented_0004_0000.jpg
+2025-06-02 15:38:31,489 - INFO - Processing image: augmented_pizza/lighting_perspective_test/basic/basic_augmented_0004_0000.jpg
+2025-06-02 15:38:31,502 - ERROR - Failed to process augmented_pizza/lighting_perspective_test/basic/basic_augmented_0004_0000.jpg: OpenCV(4.11.0) /io/opencv/modules/imgproc/src/color.simd_helpers.hpp:94: error: (-2:Unspecified error) in function 'cv::impl::{anonymous}::CvtHelper<VScn, VDcn, VDepth, sizePolicy>::CvtHelper(cv::InputArray, cv::OutputArray, int) [with VScn = cv::impl::{anonymous}::Set<3, 4>; VDcn = cv::impl::{anonymous}::Set<1>; VDepth = cv::impl::{anonymous}::Set<0, 2, 5>; cv::impl::{anonymous}::SizePolicy sizePolicy = cv::impl::<unnamed>::NONE; cv::InputArray = const cv::_InputArray&; cv::OutputArray = const cv::_OutputArray&]'
+> Unsupported depth of input image:
+>     'VDepth::contains(depth)'
+> where
+>     'depth' is 6 (CV_64F)
+
+2025-06-02 15:38:31,502 - INFO - Processing image 10/10: basic_augmented_0005_0000.jpg
+2025-06-02 15:38:31,503 - INFO - Processing image: augmented_pizza/lighting_perspective_test/basic/basic_augmented_0005_0000.jpg
+2025-06-02 15:38:31,516 - ERROR - Failed to process augmented_pizza/lighting_perspective_test/basic/basic_augmented_0005_0000.jpg: OpenCV(4.11.0) /io/opencv/modules/imgproc/src/color.simd_helpers.hpp:94: error: (-2:Unspecified error) in function 'cv::impl::{anonymous}::CvtHelper<VScn, VDcn, VDepth, sizePolicy>::CvtHelper(cv::InputArray, cv::OutputArray, int) [with VScn = cv::impl::{anonymous}::Set<3, 4>; VDcn = cv::impl::{anonymous}::Set<1>; VDepth = cv::impl::{anonymous}::Set<0, 2, 5>; cv::impl::{anonymous}::SizePolicy sizePolicy = cv::impl::<unnamed>::NONE; cv::InputArray = const cv::_InputArray&; cv::OutputArray = const cv::_OutputArray&]'
+> Unsupported depth of input image:
+>     'VDepth::contains(depth)'
+> where
+>     'depth' is 6 (CV_64F)
+
+2025-06-02 15:38:31,516 - INFO - Processing complete. Summary saved to data/spatial_processed/processing_summary.json
+2025-06-02 15:41:45,595 - INFO - Initialized transform pipelines for dual-encoder preprocessing
+2025-06-02 15:41:45,595 - INFO - Edge-based depth estimation initialized
+2025-06-02 15:41:45,595 - INFO - Initialized SpatialPreprocessingPipeline with output_size=(518, 518), depth_method=edge_based
+2025-06-02 15:41:45,595 - INFO - Found 0 images to process in augmented_pizza/basic
+2025-06-02 15:41:45,596 - INFO - Processing complete. Summary saved to data/spatial_processed/processing_summary.json
+2025-06-02 21:48:34,709 - INFO - Initialized transform pipelines for dual-encoder preprocessing
+2025-06-02 21:48:34,709 - INFO - Edge-based depth estimation initialized
+2025-06-02 21:48:34,709 - INFO - Initialized SpatialPreprocessingPipeline with output_size=(518, 518), depth_method=edge_based
+2025-06-02 21:48:34,710 - INFO - Found 2 images to process in augmented_pizza/raw
+2025-06-02 21:48:34,710 - INFO - Processing image 1/2: sample_pizza_image.jpg
+2025-06-02 21:48:34,733 - INFO - Processing image: augmented_pizza/raw/sample_pizza_image.jpg
+2025-06-02 21:48:34,858 - ERROR - Failed to process augmented_pizza/raw/sample_pizza_image.jpg: OpenCV(4.11.0) /io/opencv/modules/imgproc/src/color.simd_helpers.hpp:94: error: (-2:Unspecified error) in function 'cv::impl::{anonymous}::CvtHelper<VScn, VDcn, VDepth, sizePolicy>::CvtHelper(cv::InputArray, cv::OutputArray, int) [with VScn = cv::impl::{anonymous}::Set<3, 4>; VDcn = cv::impl::{anonymous}::Set<1>; VDepth = cv::impl::{anonymous}::Set<0, 2, 5>; cv::impl::{anonymous}::SizePolicy sizePolicy = cv::impl::<unnamed>::NONE; cv::InputArray = const cv::_InputArray&; cv::OutputArray = const cv::_OutputArray&]'
+> Unsupported depth of input image:
+>     'VDepth::contains(depth)'
+> where
+>     'depth' is 6 (CV_64F)
+
+2025-06-02 21:48:34,859 - INFO - Processing image 2/2: sample_pizza_image.jpg
+2025-06-02 21:48:34,870 - INFO - Processing image: augmented_pizza/raw/baked/sample_pizza_image.jpg
+2025-06-02 21:48:34,938 - ERROR - Failed to process augmented_pizza/raw/baked/sample_pizza_image.jpg: OpenCV(4.11.0) /io/opencv/modules/imgproc/src/color.simd_helpers.hpp:94: error: (-2:Unspecified error) in function 'cv::impl::{anonymous}::CvtHelper<VScn, VDcn, VDepth, sizePolicy>::CvtHelper(cv::InputArray, cv::OutputArray, int) [with VScn = cv::impl::{anonymous}::Set<3, 4>; VDcn = cv::impl::{anonymous}::Set<1>; VDepth = cv::impl::{anonymous}::Set<0, 2, 5>; cv::impl::{anonymous}::SizePolicy sizePolicy = cv::impl::<unnamed>::NONE; cv::InputArray = const cv::_InputArray&; cv::OutputArray = const cv::_OutputArray&]'
+> Unsupported depth of input image:
+>     'VDepth::contains(depth)'
+> where
+>     'depth' is 6 (CV_64F)
+
+2025-06-02 21:48:34,939 - INFO - Processing complete. Summary saved to data/spatial_processed/processing_summary.json
+2025-06-02 21:50:52,042 - INFO - Initialized transform pipelines for dual-encoder preprocessing
+2025-06-02 21:50:52,042 - INFO - Edge-based depth estimation initialized
+2025-06-02 21:50:52,042 - INFO - Initialized SpatialPreprocessingPipeline with output_size=(518, 518), depth_method=edge_based
+2025-06-02 21:50:52,043 - INFO - Found 2 images to process in augmented_pizza/raw
+2025-06-02 21:50:52,043 - INFO - Processing image 1/2: sample_pizza_image.jpg
+2025-06-02 21:50:52,056 - INFO - Processing image: augmented_pizza/raw/sample_pizza_image.jpg
+2025-06-02 21:50:52,133 - ERROR - Failed to process augmented_pizza/raw/sample_pizza_image.jpg: OpenCV(4.11.0) /io/opencv/modules/imgproc/src/color.simd_helpers.hpp:94: error: (-2:Unspecified error) in function 'cv::impl::{anonymous}::CvtHelper<VScn, VDcn, VDepth, sizePolicy>::CvtHelper(cv::InputArray, cv::OutputArray, int) [with VScn = cv::impl::{anonymous}::Set<3, 4>; VDcn = cv::impl::{anonymous}::Set<1>; VDepth = cv::impl::{anonymous}::Set<0, 2, 5>; cv::impl::{anonymous}::SizePolicy sizePolicy = cv::impl::<unnamed>::NONE; cv::InputArray = const cv::_InputArray&; cv::OutputArray = const cv::_OutputArray&]'
+> Unsupported depth of input image:
+>     'VDepth::contains(depth)'
+> where
+>     'depth' is 6 (CV_64F)
+
+2025-06-02 21:50:52,133 - INFO - Processing image 2/2: sample_pizza_image.jpg
+2025-06-02 21:50:52,142 - INFO - Processing image: augmented_pizza/raw/baked/sample_pizza_image.jpg
+2025-06-02 21:50:52,208 - ERROR - Failed to process augmented_pizza/raw/baked/sample_pizza_image.jpg: OpenCV(4.11.0) /io/opencv/modules/imgproc/src/color.simd_helpers.hpp:94: error: (-2:Unspecified error) in function 'cv::impl::{anonymous}::CvtHelper<VScn, VDcn, VDepth, sizePolicy>::CvtHelper(cv::InputArray, cv::OutputArray, int) [with VScn = cv::impl::{anonymous}::Set<3, 4>; VDcn = cv::impl::{anonymous}::Set<1>; VDepth = cv::impl::{anonymous}::Set<0, 2, 5>; cv::impl::{anonymous}::SizePolicy sizePolicy = cv::impl::<unnamed>::NONE; cv::InputArray = const cv::_InputArray&; cv::OutputArray = const cv::_OutputArray&]'
+> Unsupported depth of input image:
+>     'VDepth::contains(depth)'
+> where
+>     'depth' is 6 (CV_64F)
+
+2025-06-02 21:50:52,209 - INFO - Processing complete. Summary saved to data/spatial_processed/processing_summary.json
+2025-06-02 21:52:01,662 - INFO - Initialized transform pipelines for dual-encoder preprocessing
+2025-06-02 21:52:01,663 - INFO - Edge-based depth estimation initialized
+2025-06-02 21:52:01,663 - INFO - Initialized SpatialPreprocessingPipeline with output_size=(518, 518), depth_method=edge_based
+2025-06-02 21:52:01,676 - INFO - Processing image: augmented_pizza/raw/sample_pizza_image.jpg
+2025-06-02 21:52:01,755 - ERROR - Failed to process augmented_pizza/raw/sample_pizza_image.jpg: OpenCV(4.11.0) /io/opencv/modules/imgproc/src/color.simd_helpers.hpp:94: error: (-2:Unspecified error) in function 'cv::impl::{anonymous}::CvtHelper<VScn, VDcn, VDepth, sizePolicy>::CvtHelper(cv::InputArray, cv::OutputArray, int) [with VScn = cv::impl::{anonymous}::Set<3, 4>; VDcn = cv::impl::{anonymous}::Set<1>; VDepth = cv::impl::{anonymous}::Set<0, 2, 5>; cv::impl::{anonymous}::SizePolicy sizePolicy = cv::impl::<unnamed>::NONE; cv::InputArray = const cv::_InputArray&; cv::OutputArray = const cv::_OutputArray&]'
+> Unsupported depth of input image:
+>     'VDepth::contains(depth)'
+> where
+>     'depth' is 6 (CV_64F)
+
+2025-06-02 21:52:40,084 - INFO - Initialized transform pipelines for dual-encoder preprocessing
+2025-06-02 21:52:40,084 - INFO - Edge-based depth estimation initialized
+2025-06-02 21:52:40,084 - INFO - Initialized SpatialPreprocessingPipeline with output_size=(518, 518), depth_method=edge_based
+2025-06-02 21:52:40,085 - INFO - Found 2 images to process in augmented_pizza/raw
+2025-06-02 21:52:40,085 - INFO - Processing image 1/2: sample_pizza_image.jpg
+2025-06-02 21:52:40,098 - INFO - Processing image: augmented_pizza/raw/sample_pizza_image.jpg
+2025-06-02 21:52:40,185 - INFO - Successfully processed augmented_pizza/raw/sample_pizza_image.jpg in 0.10s (quality: good)
+2025-06-02 21:52:40,219 - INFO - Saved processed data to data/spatial_processed/sample_pizza_image_spatial.pt
+2025-06-02 21:52:40,219 - INFO - Processing image 2/2: sample_pizza_image.jpg
+2025-06-02 21:52:40,227 - INFO - Processing image: augmented_pizza/raw/baked/sample_pizza_image.jpg
+2025-06-02 21:52:40,303 - INFO - Successfully processed augmented_pizza/raw/baked/sample_pizza_image.jpg in 0.08s (quality: good)
+2025-06-02 21:52:40,356 - INFO - Saved processed data to data/spatial_processed/sample_pizza_image_spatial.pt
+2025-06-02 21:52:40,357 - INFO - Processing complete. Summary saved to data/spatial_processed/processing_summary.json
+2025-06-02 22:30:39,498 - INFO - Initialized transform pipelines for dual-encoder preprocessing
+2025-06-02 22:30:39,498 - INFO - Edge-based depth estimation initialized
+2025-06-02 22:30:39,498 - INFO - Initialized SpatialPreprocessingPipeline with output_size=(518, 518), depth_method=edge_based
+2025-06-02 22:30:39,499 - INFO - Found 2 images to process in augmented_pizza/raw
+2025-06-02 22:30:39,499 - INFO - Processing image 1/2: sample_pizza_image.jpg
+2025-06-02 22:30:39,512 - INFO - Processing image: augmented_pizza/raw/sample_pizza_image.jpg
+2025-06-02 22:30:39,614 - INFO - Successfully processed augmented_pizza/raw/sample_pizza_image.jpg in 0.12s (quality: good)
+2025-06-02 22:30:39,670 - INFO - Saved processed data to data/spatial_processed/sample_pizza_image_spatial.pt
+2025-06-02 22:30:39,670 - INFO - Processing image 2/2: sample_pizza_image.jpg
+2025-06-02 22:30:39,678 - INFO - Processing image: augmented_pizza/raw/baked/sample_pizza_image.jpg
+2025-06-02 22:30:39,755 - INFO - Successfully processed augmented_pizza/raw/baked/sample_pizza_image.jpg in 0.08s (quality: good)
+2025-06-02 22:30:39,785 - INFO - Saved processed data to data/spatial_processed/sample_pizza_image_spatial.pt
+2025-06-02 22:30:39,813 - INFO - Processing complete. Summary saved to data/spatial_processed/processing_summary.json
+2025-06-02 22:35:32,400 - INFO - Initialized transform pipelines for dual-encoder preprocessing
+2025-06-02 22:35:32,400 - INFO - Edge-based depth estimation initialized
+2025-06-02 22:35:32,400 - INFO - Initialized SpatialPreprocessingPipeline with output_size=(518, 518), depth_method=edge_based
+2025-06-02 22:35:32,401 - INFO - Found 15 images to process in augmented_pizza_legacy
+2025-06-02 22:35:32,401 - INFO - Processing image 1/15: pizza_1_basic_4_0.jpg
+2025-06-02 22:35:32,405 - INFO - Processing image: augmented_pizza_legacy/pizza_1_basic_4_0.jpg
+2025-06-02 22:35:32,453 - INFO - Successfully processed augmented_pizza_legacy/pizza_1_basic_4_0.jpg in 0.05s (quality: good)
+2025-06-02 22:35:32,489 - INFO - Saved processed data to data/spatial_processed/pizza_1_basic_4_0_spatial.pt
+2025-06-02 22:35:32,489 - INFO - Processing image 2/15: pizza_1_basic_8_0.jpg
+2025-06-02 22:35:32,490 - INFO - Processing image: augmented_pizza_legacy/pizza_1_basic_8_0.jpg
+2025-06-02 22:35:32,530 - INFO - Successfully processed augmented_pizza_legacy/pizza_1_basic_8_0.jpg in 0.04s (quality: good)
+2025-06-02 22:35:32,564 - INFO - Saved processed data to data/spatial_processed/pizza_1_basic_8_0_spatial.pt
+2025-06-02 22:35:32,565 - INFO - Processing image 3/15: pizza_1_basic_5_0.jpg
+2025-06-02 22:35:32,565 - INFO - Processing image: augmented_pizza_legacy/pizza_1_basic_5_0.jpg
+2025-06-02 22:35:32,603 - INFO - Successfully processed augmented_pizza_legacy/pizza_1_basic_5_0.jpg in 0.04s (quality: good)
+2025-06-02 22:35:32,637 - INFO - Saved processed data to data/spatial_processed/pizza_1_basic_5_0_spatial.pt
+2025-06-02 22:35:32,637 - INFO - Processing image 4/15: pizza_1_basic_0_0.jpg
+2025-06-02 22:35:32,638 - INFO - Processing image: augmented_pizza_legacy/pizza_1_basic_0_0.jpg
+2025-06-02 22:35:32,675 - INFO - Successfully processed augmented_pizza_legacy/pizza_1_basic_0_0.jpg in 0.04s (quality: good)
+2025-06-02 22:35:32,707 - INFO - Saved processed data to data/spatial_processed/pizza_1_basic_0_0_spatial.pt
+2025-06-02 22:35:32,707 - INFO - Processing image 5/15: pizza_2_basic_9_0.jpg
+2025-06-02 22:35:32,708 - INFO - Processing image: augmented_pizza_legacy/pizza_2_basic_9_0.jpg
+2025-06-02 22:35:32,749 - INFO - Successfully processed augmented_pizza_legacy/pizza_2_basic_9_0.jpg in 0.04s (quality: good)
+2025-06-02 22:35:32,782 - INFO - Saved processed data to data/spatial_processed/pizza_2_basic_9_0_spatial.pt
+2025-06-02 22:35:32,782 - INFO - Processing image 6/15: pizza_0_basic_2_0.jpg
+2025-06-02 22:35:32,783 - INFO - Processing image: augmented_pizza_legacy/pizza_0_basic_2_0.jpg
+2025-06-02 22:35:32,821 - INFO - Successfully processed augmented_pizza_legacy/pizza_0_basic_2_0.jpg in 0.04s (quality: good)
+2025-06-02 22:35:32,854 - INFO - Saved processed data to data/spatial_processed/pizza_0_basic_2_0_spatial.pt
+2025-06-02 22:35:32,854 - INFO - Processing image 7/15: pizza_1_basic_3_0.jpg
+2025-06-02 22:35:32,855 - INFO - Processing image: augmented_pizza_legacy/pizza_1_basic_3_0.jpg
+2025-06-02 22:35:32,893 - INFO - Successfully processed augmented_pizza_legacy/pizza_1_basic_3_0.jpg in 0.04s (quality: good)
+2025-06-02 22:35:32,925 - INFO - Saved processed data to data/spatial_processed/pizza_1_basic_3_0_spatial.pt
+2025-06-02 22:35:32,925 - INFO - Processing image 8/15: pizza_0_burnt_1_0.jpg
+2025-06-02 22:35:32,926 - INFO - Processing image: augmented_pizza_legacy/pizza_0_burnt_1_0.jpg
+2025-06-02 22:35:32,965 - INFO - Successfully processed augmented_pizza_legacy/pizza_0_burnt_1_0.jpg in 0.04s (quality: good)
+2025-06-02 22:35:32,999 - INFO - Saved processed data to data/spatial_processed/pizza_0_burnt_1_0_spatial.pt
+2025-06-02 22:35:32,999 - INFO - Processing image 9/15: pizza_1_burnt_8_0.jpg
+2025-06-02 22:35:33,000 - INFO - Processing image: augmented_pizza_legacy/pizza_1_burnt_8_0.jpg
+2025-06-02 22:35:33,038 - INFO - Successfully processed augmented_pizza_legacy/pizza_1_burnt_8_0.jpg in 0.04s (quality: good)
+2025-06-02 22:35:33,070 - INFO - Saved processed data to data/spatial_processed/pizza_1_burnt_8_0_spatial.pt
+2025-06-02 22:35:33,071 - INFO - Processing image 10/15: pizza_1_burnt_4_0.jpg
+2025-06-02 22:35:33,071 - INFO - Processing image: augmented_pizza_legacy/pizza_1_burnt_4_0.jpg
+2025-06-02 22:35:33,111 - INFO - Successfully processed augmented_pizza_legacy/pizza_1_burnt_4_0.jpg in 0.04s (quality: good)
+2025-06-02 22:35:33,144 - INFO - Saved processed data to data/spatial_processed/pizza_1_burnt_4_0_spatial.pt
+2025-06-02 22:35:33,144 - INFO - Processing image 11/15: pizza_0_burnt_4_0.jpg
+2025-06-02 22:35:33,145 - INFO - Processing image: augmented_pizza_legacy/pizza_0_burnt_4_0.jpg
+2025-06-02 22:35:33,185 - INFO - Successfully processed augmented_pizza_legacy/pizza_0_burnt_4_0.jpg in 0.04s (quality: good)
+2025-06-02 22:35:33,217 - INFO - Saved processed data to data/spatial_processed/pizza_0_burnt_4_0_spatial.pt
+2025-06-02 22:35:33,217 - INFO - Processing image 12/15: pizza_0_burnt_2_0.jpg
+2025-06-02 22:35:33,218 - INFO - Processing image: augmented_pizza_legacy/pizza_0_burnt_2_0.jpg
+2025-06-02 22:35:33,257 - INFO - Successfully processed augmented_pizza_legacy/pizza_0_burnt_2_0.jpg in 0.04s (quality: good)
+2025-06-02 22:35:33,290 - INFO - Saved processed data to data/spatial_processed/pizza_0_burnt_2_0_spatial.pt
+2025-06-02 22:35:33,290 - INFO - Processing image 13/15: pizza_2_burnt_1_0.jpg
+2025-06-02 22:35:33,291 - INFO - Processing image: augmented_pizza_legacy/pizza_2_burnt_1_0.jpg
+2025-06-02 22:35:33,331 - INFO - Successfully processed augmented_pizza_legacy/pizza_2_burnt_1_0.jpg in 0.04s (quality: good)
+2025-06-02 22:35:33,364 - INFO - Saved processed data to data/spatial_processed/pizza_2_burnt_1_0_spatial.pt
+2025-06-02 22:35:33,364 - INFO - Processing image 14/15: pizza_2_basic_8_0.jpg
+2025-06-02 22:35:33,365 - INFO - Processing image: augmented_pizza_legacy/pizza_2_basic_8_0.jpg
+2025-06-02 22:35:33,404 - INFO - Successfully processed augmented_pizza_legacy/pizza_2_basic_8_0.jpg in 0.04s (quality: good)
+2025-06-02 22:35:33,437 - INFO - Saved processed data to data/spatial_processed/pizza_2_basic_8_0_spatial.pt
+2025-06-02 22:35:33,437 - INFO - Processing image 15/15: pizza_2_burnt_5_0.jpg
+2025-06-02 22:35:33,438 - INFO - Processing image: augmented_pizza_legacy/pizza_2_burnt_5_0.jpg
+2025-06-02 22:35:33,481 - INFO - Successfully processed augmented_pizza_legacy/pizza_2_burnt_5_0.jpg in 0.04s (quality: good)
+2025-06-02 22:35:33,514 - INFO - Saved processed data to data/spatial_processed/pizza_2_burnt_5_0_spatial.pt
+2025-06-02 22:35:33,515 - INFO - Processing complete. Summary saved to data/spatial_processed/processing_summary.json

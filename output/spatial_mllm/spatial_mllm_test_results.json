@@ -1,0 +1,24 @@
+{
+  "test_info": {
+    "timestamp": "2025-06-02 14:27:39",
+    "device": "cuda",
+    "python_version": "3.12.3 (main, Feb  4 2025, 14:48:35) [GCC 13.3.0]"
+  },
+  "tests": {
+    "basic_imports": {
+      "success": true,
+      "description": "Test basic dependency imports"
+    },
+    "model_availability": {
+      "success": true,
+      "model_name": "Diankun/Spatial-MLLM-subset-sft",
+      "description": "Test if model is available on Hugging Face"
+    },
+    "image_processing": {
+      "success": true,
+      "description": "Test basic image processing capabilities"
+    }
+  },
+  "overall_success": true,
+  "success_rate": 1.0
+}

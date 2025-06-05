@@ -1,0 +1,43 @@
+{
+  "processing_statistics": {
+    "total_images": 15,
+    "successful": 15,
+    "failed": 0,
+    "success_rate": 1.0
+  },
+  "performance_metrics": {
+    "average_processing_time": 0.040999533333333324,
+    "total_processing_time": 0.614993,
+    "min_processing_time": 0.037826,
+    "max_processing_time": 0.052125
+  },
+  "quality_analysis": {
+    "overall_quality": {
+      "mean": 0.745769179891037,
+      "std": 0.018718964797363184,
+      "min": 0.7029132576452726,
+      "max": 0.7709990835230772
+    },
+    "quality_distribution": {
+      "good": 15
+    },
+    "depth_variance_stats": {
+      "mean": 0.029721690466006596,
+      "std": 0.007199793932772385
+    },
+    "visual_similarity_stats": {
+      "mean": 0.9998822446179566,
+      "std": 6.564760841074644e-05
+    }
+  },
+  "configuration": {
+    "output_size": [
+      518,
+      518
+    ],
+    "depth_estimation_method": "edge_based",
+    "enable_validation": true
+  },
+  "output_directory": "data/spatial_processed",
+  "timestamp": "2025-06-02T22:35:33.515248"
+}

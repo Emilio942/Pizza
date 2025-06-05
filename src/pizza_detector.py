@@ -546,10 +546,11 @@ class MemoryEstimator:
 
 class BalancedPizzaDataset(Dataset):
     """Erweiterter Dataset mit Augmentierung und Klassenbalancierung für Pizza-Erkennung"""
-    def __init__(self, root_dir, transform=None, split='train'):
+    def __init__(self, root_dir, transform=None, split='train', config=None):
         self.root_dir = root_dir
         self.transform = transform
         self.split = split
+        self.config = config or RP2040Config()
         
         # Finde alle Klassen (Verzeichnisse im Hauptverzeichnis)
         self.classes = [d for d in os.listdir(root_dir) 
@@ -668,11 +669,11 @@ class BalancedPizzaDataset(Dataset):
             if self.transform:
                 # Size depends on the transform, but most end with ToTensor
                 channels = 3  # RGB
-                h, w = config.IMG_SIZE, config.IMG_SIZE  # Default size
+                h, w = self.config.IMG_SIZE, self.config.IMG_SIZE  # Default size
                 return torch.zeros(channels, h, w), label
             else:
                 # Return PIL image if no transform
-                return Image.new('RGB', (config.IMG_SIZE, config.IMG_SIZE), (0, 0, 0)), label
+                return Image.new('RGB', (self.config.IMG_SIZE, self.config.IMG_SIZE), (0, 0, 0)), label
 # def create_optimized_dataloaders(config, preprocessing_params=None):
 #     """Erstellt optimierte DataLoader mit Klassenbalancierung und angepasster Vorverarbeitung"""
 #     logger.info("Bereite optimierte Datenlader vor...")

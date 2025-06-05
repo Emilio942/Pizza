@@ -1,0 +1,69 @@
+{
+  "test_info": {
+    "timestamp": "2025-06-02 14:09:20",
+    "device": "cuda",
+    "python_version": "3.12.3 (main, Feb  4 2025, 14:48:35) [GCC 13.3.0]"
+  },
+  "tests": {
+    "basic_imports": {
+      "success": true,
+      "description": "Test basic dependency imports"
+    },
+    "model_availability": {
+      "success": true,
+      "model_name": "Diankun/Spatial-MLLM-subset-sft",
+      "description": "Test if model is available on Hugging Face"
+    },
+    "image_processing": {
+      "success": true,
+      "description": "Test basic image processing capabilities"
+    },
+    "model_loading": {
+      "success": true,
+      "load_time": 2.5711829662323,
+      "description": "Test actual model loading"
+    },
+    "vision_language_inference": {
+      "success": true,
+      "inference_time": 2.1373813152313232,
+      "output_sample": "system\nYou are a helpful assistant.\nuser\nWhat type of pizza cooking state is shown in this image? Cl",
+      "description": "Test vision-language model inference with pizza image"
+    },
+    "pizza_classification": {
+      "success": true,
+      "results": [
+        {
+          "class": "basic",
+          "image_path": "/home/emilio/Documents/ai/pizza/data/test/basic/challenging_basic_combined_013.jpg",
+          "inference_time": 0.33024001121520996,
+          "output": "system\nYou are a helpful assistant.\nuser\nIs this pizza basic? Analyze the cooking state and classify this pizza image. What type of pizza cooking state is shown?\nassistant\n<points>45</points>",
+          "prompt": "Is this pizza basic? Analyze the cooking state and classify this pizza image. What type of pizza cooking state is shown?"
+        },
+        {
+          "class": "burnt",
+          "image_path": "/home/emilio/Documents/ai/pizza/data/test/burnt/test_burnt_challenging_uneven_angle_diagonal_blurry_20250520_211411_012.jpg",
+          "inference_time": 0.3284587860107422,
+          "output": "system\nYou are a helpful assistant.\nuser\nIs this pizza burnt? Analyze the cooking state and classify this pizza image. What type of pizza cooking state is shown?\nassistant\n<answer>Burnt</answer>",
+          "prompt": "Is this pizza burnt? Analyze the cooking state and classify this pizza image. What type of pizza cooking state is shown?"
+        },
+        {
+          "class": "mixed",
+          "image_path": "/home/emilio/Documents/ai/pizza/data/test/mixed/test_mixed_challenging_backlit_angle_diagonal_jpeg_artifact_20250520_211427_014.jpg",
+          "inference_time": 0.3431107997894287,
+          "output": "system\nYou are a helpful assistant.\nuser\nIs this pizza mixed? Analyze the cooking state and classify this pizza image. What type of pizza cooking state is shown?\nassistant\n\nanswer<answer>A</answer>",
+          "prompt": "Is this pizza mixed? Analyze the cooking state and classify this pizza image. What type of pizza cooking state is shown?"
+        },
+        {
+          "class": "combined",
+          "image_path": "/home/emilio/Documents/ai/pizza/data/test/combined/challenging_combined_lighting_bright_008.jpg",
+          "inference_time": 0.28418636322021484,
+          "output": "system\nYou are a helpful assistant.\nuser\nIs this pizza combined? Analyze the cooking state and classify this pizza image. What type of pizza cooking state is shown?\nassistant\n<points>79</points>",
+          "prompt": "Is this pizza combined? Analyze the cooking state and classify this pizza image. What type of pizza cooking state is shown?"
+        }
+      ],
+      "description": "Test pizza classification on different pizza types"
+    }
+  },
+  "overall_success": true,
+  "success_rate": 1.0
+}

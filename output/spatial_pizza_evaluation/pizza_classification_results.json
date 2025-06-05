@@ -1,0 +1,194 @@
+{
+  "basic": {
+    "accuracy": 0.0,
+    "correct": 0,
+    "total": 5,
+    "avg_inference_time": 0.37864084243774415,
+    "results": [
+      {
+        "image": "basic_augmented_0001.jpg",
+        "true_class": "basic",
+        "predicted_class": "combined",
+        "correct": false,
+        "inference_time": 0.6492106914520264,
+        "full_response": "<answer>D</answer>"
+      },
+      {
+        "image": "challenging_basic_perspective_010.jpg",
+        "true_class": "basic",
+        "predicted_class": "combined",
+        "correct": false,
+        "inference_time": 0.31189417839050293,
+        "full_response": "<answer>D</answer>"
+      },
+      {
+        "image": "challenging_basic_perspective_002.jpg",
+        "true_class": "basic",
+        "predicted_class": "combined",
+        "correct": false,
+        "inference_time": 0.31088709831237793,
+        "full_response": "<answer>D</answer>"
+      },
+      {
+        "image": "challenging_basic_perspective_012.jpg",
+        "true_class": "basic",
+        "predicted_class": "combined",
+        "correct": false,
+        "inference_time": 0.313626766204834,
+        "full_response": "<answer>D</answer>"
+      },
+      {
+        "image": "test_basic_challenging_low_contrast_angle_top_motion_blur_20250520_211411_006.jpg",
+        "true_class": "basic",
+        "predicted_class": "combined",
+        "correct": false,
+        "inference_time": 0.3075854778289795,
+        "full_response": "<answer>D</answer>"
+      }
+    ]
+  },
+  "burnt": {
+    "accuracy": 0.0,
+    "correct": 0,
+    "total": 5,
+    "avg_inference_time": 0.30678911209106446,
+    "results": [
+      {
+        "image": "test_burnt_challenging_uneven_angle_side_blurry_20250520_211411_008.jpg",
+        "true_class": "burnt",
+        "predicted_class": "combined",
+        "correct": false,
+        "inference_time": 0.3094754219055176,
+        "full_response": "<answer>D</answer>"
+      },
+      {
+        "image": "test_burnt_challenging_bright_normal_normal_20250520_211427_005.jpg",
+        "true_class": "burnt",
+        "predicted_class": "combined",
+        "correct": false,
+        "inference_time": 0.3063392639160156,
+        "full_response": "<answer>D</answer>"
+      },
+      {
+        "image": "test_burnt_challenging_uneven_angle_top_jpeg_artifact_20250520_211427_004.jpg",
+        "true_class": "burnt",
+        "predicted_class": "combined",
+        "correct": false,
+        "inference_time": 0.30562901496887207,
+        "full_response": "<answer>D</answer>"
+      },
+      {
+        "image": "sample_burnt_rotated.jpg",
+        "true_class": "burnt",
+        "predicted_class": "combined",
+        "correct": false,
+        "inference_time": 0.3064572811126709,
+        "full_response": "<answer>D</answer>"
+      },
+      {
+        "image": "test_burnt_challenging_uneven_normal_normal_20250520_211411_003.jpg",
+        "true_class": "burnt",
+        "predicted_class": "combined",
+        "correct": false,
+        "inference_time": 0.3060445785522461,
+        "full_response": "<answer>D</answer>"
+      }
+    ]
+  },
+  "mixed": {
+    "accuracy": 0.0,
+    "correct": 0,
+    "total": 5,
+    "avg_inference_time": 0.26794023513793946,
+    "results": [
+      {
+        "image": "challenging_mixed_blur_006.jpg",
+        "true_class": "mixed",
+        "predicted_class": "combined",
+        "correct": false,
+        "inference_time": 0.2624342441558838,
+        "full_response": "<answer>D</answer>"
+      },
+      {
+        "image": "sample_mixed_0007.jpg",
+        "true_class": "mixed",
+        "predicted_class": "combined",
+        "correct": false,
+        "inference_time": 0.2632613182067871,
+        "full_response": "<answer>D</answer>"
+      },
+      {
+        "image": "sample_mixed_0000.jpg",
+        "true_class": "mixed",
+        "predicted_class": "combined",
+        "correct": false,
+        "inference_time": 0.25391364097595215,
+        "full_response": "<answer>D</answer>"
+      },
+      {
+        "image": "test_mixed_challenging_shadowed_angle_close_jpeg_artifact_20250520_211427_010.jpg",
+        "true_class": "mixed",
+        "predicted_class": "combined",
+        "correct": false,
+        "inference_time": 0.25753021240234375,
+        "full_response": "<answer>D</answer>"
+      },
+      {
+        "image": "test_mixed_challenging_backlit_angle_close_jpeg_artifact_20250520_211411_003.jpg",
+        "true_class": "mixed",
+        "predicted_class": "combined",
+        "correct": false,
+        "inference_time": 0.30256175994873047,
+        "full_response": "<answer>D</answer>"
+      }
+    ]
+  },
+  "combined": {
+    "accuracy": 1.0,
+    "correct": 5,
+    "total": 5,
+    "avg_inference_time": 0.26291732788085936,
+    "results": [
+      {
+        "image": "test_combined_challenging_low_contrast_angle_top_motion_blur_20250520_211411_010.jpg",
+        "true_class": "combined",
+        "predicted_class": "combined",
+        "correct": true,
+        "inference_time": 0.26405787467956543,
+        "full_response": "<answer>D</answer>"
+      },
+      {
+        "image": "test_combined_challenging_uneven_normal_motion_blur_20250520_211411_016.jpg",
+        "true_class": "combined",
+        "predicted_class": "combined",
+        "correct": true,
+        "inference_time": 0.2690718173980713,
+        "full_response": "<answer>D</answer>"
+      },
+      {
+        "image": "test_combined_challenging_bright_angle_close_jpeg_artifact_20250520_211411_014.jpg",
+        "true_class": "combined",
+        "predicted_class": "combined",
+        "correct": true,
+        "inference_time": 0.26069068908691406,
+        "full_response": "<answer>D</answer>"
+      },
+      {
+        "image": "challenging_combined_noise_016.jpg",
+        "true_class": "combined",
+        "predicted_class": "combined",
+        "correct": true,
+        "inference_time": 0.26239705085754395,
+        "full_response": "<answer>D</answer>"
+      },
+      {
+        "image": "test_combined_challenging_bright_angle_close_motion_blur_20250520_211427_004.jpg",
+        "true_class": "combined",
+        "predicted_class": "combined",
+        "correct": true,
+        "inference_time": 0.25836920738220215,
+        "full_response": "<answer>D</answer>"
+      }
+    ]
+  }
+}

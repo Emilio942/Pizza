@@ -1,0 +1,40 @@
+{
+  "test_info": {
+    "timestamp": "2025-06-02 14:08:00",
+    "device": "cuda",
+    "python_version": "3.12.3 (main, Feb  4 2025, 14:48:35) [GCC 13.3.0]"
+  },
+  "tests": {
+    "basic_imports": {
+      "success": true,
+      "description": "Test basic dependency imports"
+    },
+    "model_availability": {
+      "success": true,
+      "model_name": "Diankun/Spatial-MLLM-subset-sft",
+      "description": "Test if model is available on Hugging Face"
+    },
+    "image_processing": {
+      "success": true,
+      "description": "Test basic image processing capabilities"
+    },
+    "model_loading": {
+      "success": true,
+      "load_time": 2.4894356727600098,
+      "description": "Test actual model loading"
+    },
+    "vision_language_inference": {
+      "success": false,
+      "inference_time": null,
+      "output_sample": null,
+      "description": "Test vision-language model inference with pizza image"
+    },
+    "pizza_classification": {
+      "success": false,
+      "results": null,
+      "description": "Test pizza classification on different pizza types"
+    }
+  },
+  "overall_success": false,
+  "success_rate": 0.6666666666666666
+}
