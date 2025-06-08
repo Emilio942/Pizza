@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2025-06-08T10:41:58.391934",
+  "dataset_type": "hard_negatives",
+  "description": "Hard negative examples with challenging pizza recognition errors",
+  "statistics": {
+    "total_samples": 2,
+    "average_quality_score": 0.15000000000000002,
+    "food_safety_critical_samples": 1
+  },
+  "samples": [
+    {
+      "pizza_image_path": "test_images/basic_002.jpg",
+      "model_prediction": "burnt",
+      "ground_truth_class": "basic",
+      "confidence_score": 0.82,
+      "quality_score": 0.1,
+      "temporal_smoothing_applied": true,
+      "cmsis_nn_optimized": true,
+      "hardware_platform": "rp2040_emulator",
+      "food_safety_critical": true,
+      "error_type": "safety_critical",
+      "prediction_metadata": {
+        "model_version": "MicroPizzaNetV2_1.0",
+        "timestamp": "2025-06-08T10:41:58.391785"
+      }
+    },
+    {
+      "pizza_image_path": "test_images/combined_001.jpg",
+      "model_prediction": "mixed",
+      "ground_truth_class": "combined",
+      "confidence_score": 0.75,
+      "quality_score": 0.2,
+      "temporal_smoothing_applied": true,
+      "cmsis_nn_optimized": true,
+      "hardware_platform": "rp2040_emulator",
+      "food_safety_critical": false,
+      "error_type": "safety_critical",
+      "prediction_metadata": {
+        "model_version": "MicroPizzaNetV2_1.0",
+        "timestamp": "2025-06-08T10:41:58.391787"
+      }
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "total_images_processed": 3,
+  "successful_augmentations": 3,
+  "total_processing_time": 0.08724832534790039,
+  "average_processing_time": 0.029082775115966797,
+  "average_quality_score": 0.6773981998558267,
+  "average_spatial_consistency": 0.6644689011517692,
+  "augmentation_type_distribution": {
+    "total_count": 6,
+    "distribution": {
+      "perspective_3d": {
+        "count": 3,
+        "percentage": 50.0,
+        "avg_quality": 0.39533594377425746,
+        "min_quality": 0.3718195772133728,
+        "max_quality": 0.43995057153355305
+      },
+      "depth_based_lighting": {
+        "count": 3,
+        "percentage": 50.0,
+        "avg_quality": 0.9594604559373959,
+        "min_quality": 0.9324242069704477,
+        "max_quality": 0.9860014411383865
+      }
+    },
+    "most_common_type": "perspective_3d",
+    "average_quality_overall": 0.6773981998558268
+  },
+  "config": {
+    "perspective_distortion_range": [
+      0.1,
+      0.4
+    ],
+    "depth_variation_intensity": 0.3,
+    "lighting_3d_aware": true,
+    "spatial_feature_guidance": true,
+    "synthetic_depth_variations": 5,
+    "spatial_complexity_threshold": 0.5,
+    "quality_evaluation_enabled": true,
+    "output_variations_per_image": 2,
+    "spatial_resolution": [
+      518,
+      518
+    ],
+    "preserve_spatial_features": true,
+    "use_existing_augmentation": true,
+    "fallback_to_standard": true
+  }
+}

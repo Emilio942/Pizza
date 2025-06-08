@@ -1,0 +1,547 @@
+2025-06-07 11:36:46,715 - INFO - 🍕 Starting Multi-Frame Spatial Analysis Pipeline...
+2025-06-07 11:36:47,199 - INFO - Initialized transform pipelines for dual-encoder preprocessing
+2025-06-07 11:36:47,199 - INFO - Edge-based depth estimation initialized
+2025-06-07 11:36:47,199 - INFO - Initialized SpatialPreprocessingPipeline with output_size=(518, 518), depth_method=edge_based
+2025-06-07 11:36:47,199 - INFO - ✅ Spatial preprocessing pipeline loaded
+2025-06-07 11:36:51,520 - INFO - set VIDEO_TOTAL_PIXELS: 90316800
+2025-06-07 11:36:51,556 - INFO - ✅ Initialized OptimizedSpatialInference on cuda
+2025-06-07 11:36:51,556 - INFO - ✅ Spatial inference system loaded
+2025-06-07 11:36:51,570 - INFO - 📷 Using existing pizza image: /home/emilio/Documents/ai/pizza/augmented_pizza/raw/sample_pizza_image.jpg
+2025-06-07 11:36:51,570 - INFO - 
+============================================================
+2025-06-07 11:36:51,570 - INFO - 🎬 Testing scenario: normal_baking
+2025-06-07 11:36:51,570 - INFO - ============================================================
+2025-06-07 11:36:51,570 - INFO - 🎬 Generating baking process video: normal_baking
+2025-06-07 11:36:51,575 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7B3933B8F0B0>: 'Image' object has no attribute 'read'
+2025-06-07 11:36:51,575 - WARNING - Spatial processing failed: 'visual_features', using fallback
+2025-06-07 11:38:00,799 - INFO - 🍕 Starting Multi-Frame Spatial Analysis Pipeline...
+2025-06-07 11:38:01,245 - INFO - Initialized transform pipelines for dual-encoder preprocessing
+2025-06-07 11:38:01,245 - INFO - Edge-based depth estimation initialized
+2025-06-07 11:38:01,245 - INFO - Initialized SpatialPreprocessingPipeline with output_size=(518, 518), depth_method=edge_based
+2025-06-07 11:38:01,245 - INFO - ✅ Spatial preprocessing pipeline loaded
+2025-06-07 11:38:02,814 - INFO - set VIDEO_TOTAL_PIXELS: 90316800
+2025-06-07 11:38:02,878 - INFO - ✅ Initialized OptimizedSpatialInference on cuda
+2025-06-07 11:38:02,878 - INFO - ✅ Spatial inference system loaded
+2025-06-07 11:38:02,888 - INFO - 📷 Using existing pizza image: /home/emilio/Documents/ai/pizza/augmented_pizza/raw/sample_pizza_image.jpg
+2025-06-07 11:38:02,888 - INFO - 
+============================================================
+2025-06-07 11:38:02,888 - INFO - 🎬 Testing scenario: normal_baking
+2025-06-07 11:38:02,888 - INFO - ============================================================
+2025-06-07 11:38:02,888 - INFO - 🎬 Generating baking process video: normal_baking
+2025-06-07 11:38:02,893 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x756B4E1AB860>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:02,893 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:30,624 - INFO - 🍕 Starting Multi-Frame Spatial Analysis Pipeline...
+2025-06-07 11:38:31,083 - INFO - Initialized transform pipelines for dual-encoder preprocessing
+2025-06-07 11:38:31,083 - INFO - Edge-based depth estimation initialized
+2025-06-07 11:38:31,083 - INFO - Initialized SpatialPreprocessingPipeline with output_size=(518, 518), depth_method=edge_based
+2025-06-07 11:38:31,083 - INFO - ✅ Spatial preprocessing pipeline loaded
+2025-06-07 11:38:32,613 - INFO - set VIDEO_TOTAL_PIXELS: 90316800
+2025-06-07 11:38:32,668 - INFO - ✅ Initialized OptimizedSpatialInference on cuda
+2025-06-07 11:38:32,668 - INFO - ✅ Spatial inference system loaded
+2025-06-07 11:38:32,678 - INFO - 📷 Using existing pizza image: /home/emilio/Documents/ai/pizza/augmented_pizza/raw/sample_pizza_image.jpg
+2025-06-07 11:38:32,678 - INFO - 
+============================================================
+2025-06-07 11:38:32,679 - INFO - 🎬 Testing scenario: normal_baking
+2025-06-07 11:38:32,679 - INFO - ============================================================
+2025-06-07 11:38:32,679 - INFO - 🎬 Generating baking process video: normal_baking
+2025-06-07 11:38:32,683 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5CB6EFC0>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:32,683 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:32,694 - INFO -   Frame 0/60: raw (200.0°C)
+2025-06-07 11:38:32,698 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5CB0E660>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:32,698 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:32,708 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E608F2D80>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:32,708 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:32,718 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5C82D8E0>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:32,718 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:32,727 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5C94A390>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:32,727 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:32,739 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5C82D340>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:32,740 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:32,749 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5CA78D10>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:32,749 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:32,758 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5CC551C0>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:32,758 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:32,768 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5C94A390>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:32,768 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:32,778 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E64B2E330>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:32,779 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:32,788 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5C94A390>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:32,788 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:32,794 - INFO -   Frame 10/60: rising (232.0°C)
+2025-06-07 11:38:32,800 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5C82D8E0>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:32,800 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:32,809 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5C9481D0>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:32,809 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:32,821 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5F9152B0>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:32,821 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:32,833 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5C82D340>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:32,833 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:32,866 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5C94A510>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:32,866 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:32,878 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5CCEAD50>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:32,878 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:32,890 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5C9481D0>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:32,890 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:32,899 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E60131940>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:32,899 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:32,912 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5C94A390>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:32,912 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:32,924 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5CB39340>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:32,924 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:32,932 - INFO -   Frame 20/60: rising (236.8°C)
+2025-06-07 11:38:32,936 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5FA69670>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:32,937 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:32,946 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5C94A390>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:32,946 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:32,956 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5C94A510>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:32,956 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:32,967 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5C87B050>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:32,967 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:32,976 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5C87B230>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:32,977 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:32,989 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5C87B200>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:32,990 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:33,000 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5C87B740>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:33,000 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:33,009 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5C87B6B0>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:33,009 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:33,019 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5C87B200>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:33,019 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:33,035 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5C87B950>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:33,035 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:33,040 - INFO -   Frame 30/60: browning (241.7°C)
+2025-06-07 11:38:33,050 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5C87B890>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:33,050 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:33,067 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5C87B6E0>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:33,067 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:33,081 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5C87B770>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:33,082 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:33,097 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5C87B860>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:33,097 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:33,113 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5C87B7D0>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:33,113 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:33,128 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5C87BAA0>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:33,128 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:33,144 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5C87B8C0>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:33,144 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:33,160 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5C87B260>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:33,161 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:33,176 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5C87B7A0>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:33,176 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:33,193 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5C87B830>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:33,193 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:33,198 - INFO -   Frame 40/60: browning (246.5°C)
+2025-06-07 11:38:33,209 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5C87B9E0>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:33,209 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:33,225 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5C87B8F0>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:33,225 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:33,241 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5C87B230>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:33,241 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:33,257 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5C87B050>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:33,258 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:33,275 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5C87B710>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:33,275 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:33,293 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5C87B830>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:33,293 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:33,309 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5C87BAD0>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:33,309 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:33,325 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5C87B8F0>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:33,325 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:33,342 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5C87BB00>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:33,342 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:33,358 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5C87B9B0>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:33,359 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:33,364 - INFO -   Frame 50/60: golden (247.6°C)
+2025-06-07 11:38:33,375 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5C87B9E0>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:33,375 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:33,391 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5C87BA70>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:33,391 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:33,409 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5C87B740>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:33,409 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:33,421 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5C87B800>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:33,421 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:33,434 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5C87BB90>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:33,434 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:33,446 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5C87BC80>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:33,447 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:33,458 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5C87BBF0>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:33,458 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:33,469 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5C87BCE0>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:33,469 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:33,483 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5C87BB30>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:33,483 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:33,490 - INFO - ✅ Generated 60 frames for video normal_baking
+2025-06-07 11:38:33,490 - INFO - 📊 Starting multi-frame spatial analysis for video: normal_baking
+2025-06-07 11:38:33,490 - INFO - 🔍 Analyzing temporal spatial features...
+2025-06-07 11:38:33,518 - INFO - 🎯 Sampled 8 key frames using space_aware method
+2025-06-07 11:38:33,518 - INFO - 🧠 Running Spatial-MLLM inference on 8 frames...
+2025-06-07 11:38:33,522 - INFO - DEBUG: _extract_visual_features input shape = torch.Size([8, 1, 3, 518, 518])
+2025-06-07 11:38:33,523 - INFO - DEBUG: _extract_spatial_features input shape = torch.Size([8, 1, 4, 518, 518])
+2025-06-07 11:38:33,523 - WARNING - No visual encoder found in model. Available attributes:
+2025-06-07 11:38:33,523 - WARNING - No VGGT/spatial encoder found in model. Processing spatial input as visual data.
+2025-06-07 11:38:33,523 - WARNING - []
+2025-06-07 11:38:33,523 - WARNING - Returning processed spatial input as fallback
+2025-06-07 11:38:33,829 - INFO - DEBUG: Created fallback features with shape = torch.Size([8, 1, 1024])
+2025-06-07 11:38:33,829 - INFO - DEBUG: Created fallback features with shape = torch.Size([8, 1, 1024])
+2025-06-07 11:38:33,829 - INFO - ✅ Spatial-MLLM inference completed
+2025-06-07 11:38:33,831 - INFO - ✅ Multi-frame spatial analysis completed for normal_baking
+2025-06-07 11:38:33,831 - INFO -    📈 Quality trend: stable
+2025-06-07 11:38:33,831 - INFO -    🎯 Optimal frame: 45
+2025-06-07 11:38:33,831 - INFO -    🔥 Burn detected in 2 frames
+2025-06-07 11:38:33,831 - INFO - 🔍 Analyzing temporal spatial features...
+2025-06-07 11:38:34,874 - INFO - 📊 Visualizations saved:
+2025-06-07 11:38:34,874 - INFO -    - Feature evolution: /home/emilio/Documents/ai/pizza/output/multi_frame_analysis/normal_baking_feature_evolution.png
+2025-06-07 11:38:34,874 - INFO -    - Baking timeline: /home/emilio/Documents/ai/pizza/output/multi_frame_analysis/normal_baking_baking_timeline.png
+2025-06-07 11:38:34,875 - INFO - 
+============================================================
+2025-06-07 11:38:34,875 - INFO - 🎬 Testing scenario: fast_baking
+2025-06-07 11:38:34,875 - INFO - ============================================================
+2025-06-07 11:38:34,875 - INFO - 🎬 Generating baking process video: fast_baking
+2025-06-07 11:38:34,879 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E3BB411F0>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:34,879 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:34,886 - INFO -   Frame 0/40: raw (200.0°C)
+2025-06-07 11:38:34,890 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E3BCBC6B0>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:34,891 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:34,901 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E3BB40B30>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:34,901 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:34,910 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5C8A5700>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:34,910 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:34,919 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E3BB42D80>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:34,919 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:34,929 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E3BB411F0>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:34,930 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:34,939 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E3BB40650>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:34,939 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:34,949 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E3BB42D80>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:34,949 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:34,959 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E3BB411F0>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:34,959 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:34,969 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E3BB40650>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:34,969 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:34,980 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E3BB42D80>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:34,980 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:34,986 - INFO -   Frame 10/40: rising (234.5°C)
+2025-06-07 11:38:34,991 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E3BC79850>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:34,991 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:35,005 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E3BC7AE10>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:35,005 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:35,015 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E3BC79130>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:35,015 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:35,024 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E3BC7A780>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:35,024 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:35,033 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E3BC7A240>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:35,033 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:35,044 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E3BC7AFF0>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:35,044 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:35,054 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E3BC79850>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:35,054 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:35,064 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E3BC7AE10>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:35,064 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:35,072 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E3BC7B320>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:35,073 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:35,090 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E58130E00>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:35,090 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:35,095 - INFO -   Frame 20/40: browning (241.8°C)
+2025-06-07 11:38:35,106 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E58131CA0>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:35,106 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:35,122 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E58131C70>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:35,122 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:35,136 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E581321E0>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:35,136 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:35,153 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E58130E30>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:35,153 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:35,168 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E58131CA0>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:35,168 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:35,184 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E58131EB0>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:35,184 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:35,199 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E581321E0>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:35,199 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:35,215 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E58130E30>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:35,215 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:35,231 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E58131CA0>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:35,231 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:35,251 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E58131EB0>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:35,251 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:35,256 - INFO -   Frame 30/40: golden (249.1°C)
+2025-06-07 11:38:35,271 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E58130F80>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:35,271 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:35,288 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E58132000>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:35,288 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:35,304 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E58131E20>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:35,304 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:35,321 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E58130EF0>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:35,321 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:35,337 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E58132120>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:35,337 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:35,348 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E58130FB0>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:35,348 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:35,360 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E58131010>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:35,360 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:35,371 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E581321E0>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:35,371 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:35,382 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E58130F80>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:35,382 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:35,387 - INFO - ✅ Generated 40 frames for video fast_baking
+2025-06-07 11:38:35,390 - INFO - 📊 Starting multi-frame spatial analysis for video: fast_baking
+2025-06-07 11:38:35,390 - INFO - 🔍 Analyzing temporal spatial features...
+2025-06-07 11:38:35,390 - INFO - 🎯 Sampled 8 key frames using adaptive method
+2025-06-07 11:38:35,390 - INFO - 🧠 Running Spatial-MLLM inference on 8 frames...
+2025-06-07 11:38:35,394 - INFO - DEBUG: _extract_visual_features input shape = torch.Size([8, 1, 3, 518, 518])
+2025-06-07 11:38:35,394 - INFO - DEBUG: _extract_spatial_features input shape = torch.Size([8, 1, 4, 518, 518])
+2025-06-07 11:38:35,394 - WARNING - No visual encoder found in model. Available attributes:
+2025-06-07 11:38:35,395 - WARNING - No VGGT/spatial encoder found in model. Processing spatial input as visual data.
+2025-06-07 11:38:35,395 - WARNING - []
+2025-06-07 11:38:35,395 - WARNING - Returning processed spatial input as fallback
+2025-06-07 11:38:35,402 - INFO - DEBUG: Created fallback features with shape = torch.Size([8, 1, 1024])
+2025-06-07 11:38:35,402 - INFO - DEBUG: Created fallback features with shape = torch.Size([8, 1, 1024])
+2025-06-07 11:38:35,402 - INFO - ✅ Spatial-MLLM inference completed
+2025-06-07 11:38:35,402 - INFO - ✅ Multi-frame spatial analysis completed for fast_baking
+2025-06-07 11:38:35,402 - INFO -    📈 Quality trend: stable
+2025-06-07 11:38:35,402 - INFO -    🎯 Optimal frame: 30
+2025-06-07 11:38:35,402 - INFO -    🔥 Burn detected in 1 frames
+2025-06-07 11:38:35,402 - INFO - 🔍 Analyzing temporal spatial features...
+2025-06-07 11:38:36,241 - INFO - 📊 Visualizations saved:
+2025-06-07 11:38:36,241 - INFO -    - Feature evolution: /home/emilio/Documents/ai/pizza/output/multi_frame_analysis/fast_baking_feature_evolution.png
+2025-06-07 11:38:36,241 - INFO -    - Baking timeline: /home/emilio/Documents/ai/pizza/output/multi_frame_analysis/fast_baking_baking_timeline.png
+2025-06-07 11:38:36,241 - INFO - 
+============================================================
+2025-06-07 11:38:36,242 - INFO - 🎬 Testing scenario: slow_baking
+2025-06-07 11:38:36,242 - INFO - ============================================================
+2025-06-07 11:38:36,242 - INFO - 🎬 Generating baking process video: slow_baking
+2025-06-07 11:38:36,245 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E3BB50A10>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:36,245 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:36,250 - INFO -   Frame 0/90: raw (200.0°C)
+2025-06-07 11:38:36,254 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E3BB520F0>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:36,255 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:36,267 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E3BB505F0>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:36,267 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:36,280 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E3BB52B70>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:36,280 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:36,296 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E3BB50440>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:36,296 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:36,309 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E3BB53260>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:36,309 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:36,324 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E3BB52B70>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:36,324 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:36,347 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E3BB50A10>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:36,348 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:36,360 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5855E2D0>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:36,361 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:36,373 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E3BB52030>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:36,373 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:36,387 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5855F080>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:36,387 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:36,395 - INFO -   Frame 10/90: raw (230.4°C)
+2025-06-07 11:38:36,400 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E3BB52B10>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:36,400 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:36,413 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E3BB52030>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:36,413 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:36,429 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E3BB505F0>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:36,429 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:36,445 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5855E120>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:36,445 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:36,461 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E3BB505F0>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:36,461 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:36,477 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E3BB53260>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:36,477 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:36,490 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E58547440>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:36,490 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:36,505 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5C87B7D0>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:36,506 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:36,518 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5C87BA70>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:36,518 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:36,530 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5C87B9B0>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:36,530 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:36,538 - INFO -   Frame 20/90: rising (233.6°C)
+2025-06-07 11:38:36,545 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5C87B830>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:36,545 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:36,560 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5C87BB00>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:36,560 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:36,576 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5C87BC80>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:36,576 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:36,591 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5C87B740>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:36,591 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:36,607 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5C87B6E0>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:36,607 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:36,622 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5C87B770>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:36,622 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:36,638 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5C87B260>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:36,638 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:36,653 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5C87BAD0>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:36,653 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:36,668 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5C87B710>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:36,669 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:36,684 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5C87B9B0>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:36,684 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:36,693 - INFO -   Frame 30/90: rising (236.8°C)
+2025-06-07 11:38:36,700 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5C87B200>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:36,700 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:36,714 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5C87BC80>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:36,714 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:36,727 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5C87BB00>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:36,727 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:36,740 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5C87B7D0>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:36,741 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:36,754 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5C87B8F0>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:36,754 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:36,767 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5C87B200>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:36,768 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:36,781 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5C87BA70>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:36,781 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:36,795 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E583F2F00>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:36,795 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:36,808 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5C87B8F0>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:36,809 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:36,824 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E5C87B800>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:36,824 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:36,833 - INFO -   Frame 40/90: setting (240.0°C)
+2025-06-07 11:38:36,838 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E3BBA50D0>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:36,838 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:36,852 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E3BBA4800>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:36,852 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:36,865 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E3BBA4F50>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:36,865 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:36,881 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E3BBA50A0>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:36,882 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:36,909 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E58506E70>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:36,909 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:36,930 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E58505E80>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:36,930 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:36,946 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E58506D50>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:36,946 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:36,961 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E58505D30>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:36,961 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:36,977 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E58506E70>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:36,977 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:36,991 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E58507320>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:36,991 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:36,997 - INFO -   Frame 50/90: browning (243.2°C)
+2025-06-07 11:38:37,006 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E58505E80>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:37,006 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:37,020 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E58506D50>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:37,020 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:37,035 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E58507170>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:37,035 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:37,049 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E3BB6DA90>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:37,049 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:37,063 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E3BB6DB50>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:37,063 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:37,077 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E3BB6E090>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:37,078 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:37,092 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E3BB6DA90>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:37,092 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:37,110 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E3BB6DB50>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:37,110 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:37,125 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E3BB6EB40>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:37,125 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:37,142 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E3BB6E4B0>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:37,142 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:37,148 - INFO -   Frame 60/90: browning (246.4°C)
+2025-06-07 11:38:37,157 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E3BB6DA90>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:37,157 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:37,173 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E3BB6E690>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:37,173 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:37,189 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E3BB6DB50>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:37,190 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:37,204 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E3BB6EB40>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:37,204 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:37,219 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E3BB6DBB0>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:37,219 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:37,234 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E3BB6E690>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:37,234 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:37,249 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E3BB6EA80>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:37,249 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:37,264 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E58130E30>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:37,264 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:37,282 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E3BB6D5B0>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:37,282 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:37,297 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E58130FE0>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:37,298 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:37,304 - INFO -   Frame 70/90: golden (249.6°C)
+2025-06-07 11:38:37,314 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E58130E30>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:37,314 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:37,330 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E58131580>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:37,330 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:37,344 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E58130FE0>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:37,344 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:37,359 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E581313A0>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:37,359 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:37,374 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E58131520>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:37,374 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:37,389 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E58131580>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:37,389 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:37,405 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E58131370>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:37,405 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:37,422 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E58131250>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:37,422 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:37,437 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E581313A0>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:37,437 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:37,453 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E58130F80>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:37,453 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:37,459 - INFO -   Frame 80/90: golden (245.1°C)
+2025-06-07 11:38:37,464 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E58131370>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:37,464 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:37,476 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E58130E90>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:37,476 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:37,487 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E58131C70>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:37,487 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:37,498 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E58131370>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:37,498 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:37,510 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E58130E90>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:37,510 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:37,524 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E58131040>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:37,524 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:37,536 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E58131520>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:37,536 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:37,548 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E58130E90>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:37,548 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:37,558 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7D9E58131580>: 'Image' object has no attribute 'read'
+2025-06-07 11:38:37,558 - WARNING - Spatial processing failed: 'Missing visual or spatial features', using fallback
+2025-06-07 11:38:37,567 - INFO - ✅ Generated 90 frames for video slow_baking
+2025-06-07 11:38:37,568 - INFO - 📊 Starting multi-frame spatial analysis for video: slow_baking
+2025-06-07 11:38:37,568 - INFO - 🔍 Analyzing temporal spatial features...
+2025-06-07 11:38:37,568 - INFO - 🎯 Sampled 8 key frames using uniform method
+2025-06-07 11:38:37,568 - INFO - 🧠 Running Spatial-MLLM inference on 8 frames...
+2025-06-07 11:38:37,576 - INFO - DEBUG: _extract_visual_features input shape = torch.Size([8, 1, 3, 518, 518])
+2025-06-07 11:38:37,576 - INFO - DEBUG: _extract_spatial_features input shape = torch.Size([8, 1, 4, 518, 518])
+2025-06-07 11:38:37,576 - WARNING - No visual encoder found in model. Available attributes:
+2025-06-07 11:38:37,576 - WARNING - No VGGT/spatial encoder found in model. Processing spatial input as visual data.
+2025-06-07 11:38:37,576 - WARNING - []
+2025-06-07 11:38:37,576 - WARNING - Returning processed spatial input as fallback
+2025-06-07 11:38:37,584 - INFO - DEBUG: Created fallback features with shape = torch.Size([8, 1, 1024])
+2025-06-07 11:38:37,585 - INFO - DEBUG: Created fallback features with shape = torch.Size([8, 1, 1024])
+2025-06-07 11:38:37,585 - INFO - ✅ Spatial-MLLM inference completed
+2025-06-07 11:38:37,585 - INFO - ✅ Multi-frame spatial analysis completed for slow_baking
+2025-06-07 11:38:37,585 - INFO -    📈 Quality trend: stable
+2025-06-07 11:38:37,585 - INFO -    🎯 Optimal frame: 67
+2025-06-07 11:38:37,585 - INFO -    🔥 Burn detected in 2 frames
+2025-06-07 11:38:37,585 - INFO - 🔍 Analyzing temporal spatial features...
+2025-06-07 11:38:38,408 - INFO - 📊 Visualizations saved:
+2025-06-07 11:38:38,408 - INFO -    - Feature evolution: /home/emilio/Documents/ai/pizza/output/multi_frame_analysis/slow_baking_feature_evolution.png
+2025-06-07 11:38:38,408 - INFO -    - Baking timeline: /home/emilio/Documents/ai/pizza/output/multi_frame_analysis/slow_baking_baking_timeline.png
+2025-06-07 11:38:38,408 - INFO - 
+============================================================
+2025-06-07 11:38:38,408 - INFO - ✅ Multi-Frame Spatial Analysis Pipeline Completed!
+2025-06-07 11:38:38,408 - INFO - 📊 Results saved to: /home/emilio/Documents/ai/pizza/output/multi_frame_analysis/multi_frame_analysis_results.json
+2025-06-07 11:38:38,408 - INFO - 🎨 Visualizations saved to: /home/emilio/Documents/ai/pizza/output/multi_frame_analysis
+2025-06-07 11:38:38,408 - INFO - ============================================================
+2025-06-07 11:38:38,408 - INFO - 
+📋 ANALYSIS SUMMARY:
+2025-06-07 11:38:38,408 - INFO -   1. normal_baking:
+2025-06-07 11:38:38,408 - INFO -      • Duration: 29.5s (60 frames)
+2025-06-07 11:38:38,408 - INFO -      • Quality trend: stable
+2025-06-07 11:38:38,408 - INFO -      • Temporal consistency: 0.969
+2025-06-07 11:38:38,408 - INFO -      • Burn detection: 2 frames
+2025-06-07 11:38:38,408 - INFO -      • Optimal baking frame: 45
+2025-06-07 11:38:38,408 - INFO -   2. fast_baking:
+2025-06-07 11:38:38,408 - INFO -      • Duration: 19.5s (40 frames)
+2025-06-07 11:38:38,408 - INFO -      • Quality trend: stable
+2025-06-07 11:38:38,408 - INFO -      • Temporal consistency: 0.972
+2025-06-07 11:38:38,408 - INFO -      • Burn detection: 1 frames
+2025-06-07 11:38:38,408 - INFO -      • Optimal baking frame: 30
+2025-06-07 11:38:38,408 - INFO -   3. slow_baking:
+2025-06-07 11:38:38,408 - INFO -      • Duration: 44.5s (90 frames)
+2025-06-07 11:38:38,408 - INFO -      • Quality trend: stable
+2025-06-07 11:38:38,408 - INFO -      • Temporal consistency: 0.973
+2025-06-07 11:38:38,408 - INFO -      • Burn detection: 2 frames
+2025-06-07 11:38:38,408 - INFO -      • Optimal baking frame: 67

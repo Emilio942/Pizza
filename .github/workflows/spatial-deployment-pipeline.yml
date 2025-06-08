@@ -1,0 +1,434 @@
+name: Spatial-MLLM Deployment Pipeline
+
+on:
+  push:
+    branches: [ main, master, develop ]
+    paths:
+      - 'src/**'
+      - 'scripts/spatial_*.py'
+      - 'scripts/ci/**'
+      - 'models/spatial_mllm/**'
+      - 'Dockerfile.spatial'
+      - 'docker-compose.yml'
+      - '.github/workflows/spatial-deployment-pipeline.yml'
+  pull_request:
+    branches: [ main, master ]
+    paths:
+      - 'src/**'
+      - 'scripts/spatial_*.py'
+      - 'models/spatial_mllm/**'
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Target deployment environment'
+        required: true
+        default: 'staging'
+        type: choice
+        options:
+          - staging
+          - production
+          - test
+      skip_model_validation:
+        description: 'Skip intensive model validation tests'
+        required: false
+        default: false
+        type: boolean
+
+env:
+  PYTHON_VERSION: '3.10'
+  CUDA_VERSION: '12.4'
+  PYTORCH_VERSION: '2.6.0'
+  DOCKER_REGISTRY: 'pizza-detection'
+  SPATIAL_MODEL_TAG: 'spatial-mllm-v1.0'
+
+jobs:
+  # Pre-deployment validation
+  validate-environment:
+    runs-on: ubuntu-latest
+    outputs:
+      cuda-available: ${{ steps.cuda-check.outputs.available }}
+      deployment-ready: ${{ steps.validation.outputs.ready }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+
+      - name: Install base dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install torch torchvision --extra-index-url https://download.pytorch.org/whl/cpu
+          pip install -r requirements.txt
+          pip install pytest pytest-cov
+
+      - name: Check CUDA availability
+        id: cuda-check
+        run: |
+          if command -v nvidia-smi &> /dev/null; then
+            echo "available=true" >> $GITHUB_OUTPUT
+            nvidia-smi
+          else
+            echo "available=false" >> $GITHUB_OUTPUT
+            echo "CUDA not available - will use CPU fallback"
+          fi
+
+      - name: Validate spatial dependencies
+        id: validation
+        run: |
+          python scripts/ci/spatial_deployment_tests.py --validate-env
+          echo "ready=true" >> $GITHUB_OUTPUT
+
+  # Spatial-MLLM specific tests
+  spatial-tests:
+    runs-on: ubuntu-latest
+    needs: validate-environment
+    if: needs.validate-environment.outputs.deployment-ready == 'true'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install spatial dependencies
+        run: |
+          pip install --no-cache-dir -r requirements.txt
+          pip install --no-cache-dir -r spatial_requirements.txt
+
+      - name: Run spatial feature tests
+        run: |
+          python scripts/ci/spatial_deployment_tests.py --test-features
+          
+      - name: Run spatial preprocessing tests
+        run: |
+          python scripts/ci/spatial_deployment_tests.py --test-preprocessing
+
+      - name: Run spatial inference tests
+        if: github.event.inputs.skip_model_validation != 'true'
+        run: |
+          python scripts/ci/spatial_deployment_tests.py --test-inference
+
+      - name: Upload test artifacts
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: spatial-test-results
+          path: |
+            output/spatial_tests/
+            logs/spatial_*.log
+
+  # Model validation and versioning
+  model-validation:
+    runs-on: ubuntu-latest
+    needs: [validate-environment, spatial-tests]
+    if: needs.validate-environment.outputs.deployment-ready == 'true'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install -r spatial_requirements.txt
+
+      - name: Validate dual-encoder models
+        if: github.event.inputs.skip_model_validation != 'true'
+        run: |
+          python scripts/spatial_model_validation.py --comprehensive
+
+      - name: Test model versioning
+        run: |
+          python scripts/spatial_model_versioning.py --validate
+
+      - name: Generate model compatibility report
+        run: |
+          python scripts/ci/generate_spatial_compatibility_report.py
+
+      - name: Upload model validation results
+        uses: actions/upload-artifact@v3
+        with:
+          name: model-validation-results
+          path: |
+            output/model_validation/
+            reports/spatial_compatibility_report.json
+
+  # Docker container build and test
+  docker-build-test:
+    runs-on: ubuntu-latest
+    needs: [validate-environment, spatial-tests]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build spatial Docker image
+        run: |
+          docker build -f Dockerfile.spatial -t ${{ env.DOCKER_REGISTRY }}/pizza-spatial:${{ github.sha }} .
+
+      - name: Test Docker container
+        run: |
+          # Start container in background
+          docker run -d --name pizza-spatial-test \
+            -e MODEL_TYPE=spatial \
+            -e LOG_LEVEL=DEBUG \
+            ${{ env.DOCKER_REGISTRY }}/pizza-spatial:${{ github.sha }}
+          
+          # Wait for container to be ready
+          sleep 30
+          
+          # Test container health
+          docker exec pizza-spatial-test python -c "import torch; print('Container ready:', torch.cuda.is_available() or True)"
+          
+          # Run container-specific tests
+          docker exec pizza-spatial-test python scripts/ci/spatial_deployment_tests.py --docker-mode
+          
+          # Clean up
+          docker stop pizza-spatial-test
+          docker rm pizza-spatial-test
+
+      - name: Save Docker image
+        run: |
+          docker save ${{ env.DOCKER_REGISTRY }}/pizza-spatial:${{ github.sha }} | gzip > pizza-spatial-image.tar.gz
+
+      - name: Upload Docker artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: docker-image
+          path: pizza-spatial-image.tar.gz
+
+  # Multi-environment deployment test
+  deployment-test:
+    runs-on: ubuntu-latest
+    needs: [model-validation, docker-build-test]
+    strategy:
+      matrix:
+        environment: [development, staging]
+        include:
+          - environment: development
+            compose_file: docker-compose.yml
+            test_endpoints: true
+          - environment: staging
+            compose_file: docker-compose.yml
+            test_endpoints: true
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download Docker image
+        uses: actions/download-artifact@v3
+        with:
+          name: docker-image
+
+      - name: Load Docker image
+        run: |
+          docker load < pizza-spatial-image.tar.gz
+
+      - name: Start deployment stack
+        run: |
+          # Use environment-specific configuration
+          export MODEL_TYPE=spatial
+          export ENVIRONMENT=${{ matrix.environment }}
+          docker-compose -f ${{ matrix.compose_file }} up -d pizza-api-spatial redis
+          
+          # Wait for services to be ready
+          sleep 60
+
+      - name: Test deployment endpoints
+        if: matrix.test_endpoints
+        run: |
+          # Test spatial API endpoints
+          python scripts/ci/test_deployment_endpoints.py --environment ${{ matrix.environment }}
+
+      - name: Run integration tests
+        run: |
+          python scripts/ci/spatial_integration_tests.py --environment ${{ matrix.environment }}
+
+      - name: Test model versioning in deployment
+        run: |
+          python scripts/spatial_model_versioning.py --test-deployment
+
+      - name: Collect deployment logs
+        if: always()
+        run: |
+          mkdir -p deployment-logs/${{ matrix.environment }}
+          docker-compose logs pizza-api-spatial > deployment-logs/${{ matrix.environment }}/spatial-api.log
+          docker-compose logs redis > deployment-logs/${{ matrix.environment }}/redis.log
+
+      - name: Cleanup deployment
+        if: always()
+        run: |
+          docker-compose down -v
+
+      - name: Upload deployment logs
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: deployment-logs-${{ matrix.environment }}
+          path: deployment-logs/${{ matrix.environment }}/
+
+  # Performance and load testing
+  performance-test:
+    runs-on: ubuntu-latest
+    needs: deployment-test
+    if: github.event.inputs.environment == 'production' || github.ref == 'refs/heads/main'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download Docker image
+        uses: actions/download-artifact@v3
+        with:
+          name: docker-image
+
+      - name: Load Docker image
+        run: |
+          docker load < pizza-spatial-image.tar.gz
+
+      - name: Start performance test environment
+        run: |
+          docker-compose up -d pizza-api-spatial
+          sleep 60
+
+      - name: Run performance benchmarks
+        run: |
+          python scripts/spatial_performance_benchmark.py --load-test
+
+      - name: Test spatial inference optimization
+        run: |
+          python scripts/spatial_inference_optimized.py --benchmark
+
+      - name: Generate performance report
+        run: |
+          python scripts/ci/generate_performance_report.py --spatial
+
+      - name: Upload performance results
+        uses: actions/upload-artifact@v3
+        with:
+          name: performance-test-results
+          path: |
+            output/benchmarks/
+            reports/performance_report.json
+
+  # Security and compliance checks
+  security-scan:
+    runs-on: ubuntu-latest
+    needs: docker-build-test
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download Docker image
+        uses: actions/download-artifact@v3
+        with:
+          name: docker-image
+
+      - name: Load Docker image
+        run: |
+          docker load < pizza-spatial-image.tar.gz
+
+      - name: Run container security scan
+        run: |
+          # Install trivy for container scanning
+          sudo apt-get update
+          sudo apt-get install wget apt-transport-https gnupg lsb-release
+          wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | sudo apt-key add -
+          echo "deb https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main" | sudo tee -a /etc/apt/sources.list.d/trivy.list
+          sudo apt-get update
+          sudo apt-get install trivy
+          
+          # Scan the Docker image
+          trivy image --format json --output security-scan-results.json ${{ env.DOCKER_REGISTRY }}/pizza-spatial:${{ github.sha }}
+
+      - name: Check spatial dependencies security
+        run: |
+          pip install safety
+          safety check -r spatial_requirements.txt --json --output safety-results.json || true
+
+      - name: Upload security scan results
+        uses: actions/upload-artifact@v3
+        with:
+          name: security-scan-results
+          path: |
+            security-scan-results.json
+            safety-results.json
+
+  # Production deployment (only on main branch or manual trigger)
+  production-deployment:
+    runs-on: ubuntu-latest
+    needs: [performance-test, security-scan]
+    if: (github.ref == 'refs/heads/main' && github.event_name == 'push') || github.event.inputs.environment == 'production'
+    environment: production
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download all artifacts
+        uses: actions/download-artifact@v3
+
+      - name: Validate deployment readiness
+        run: |
+          python scripts/ci/validate_production_readiness.py --spatial
+
+      - name: Deploy to production
+        run: |
+          echo "🚀 Deploying Spatial-MLLM to production environment"
+          # Add your production deployment commands here
+          # This could include:
+          # - Pushing to container registry
+          # - Updating Kubernetes deployments
+          # - Rolling updates with health checks
+          # - Rollback mechanisms
+
+      - name: Post-deployment validation
+        run: |
+          python scripts/ci/post_deployment_validation.py --spatial --environment production
+
+      - name: Generate deployment report
+        run: |
+          python scripts/ci/generate_deployment_report.py --spatial --environment production
+
+      - name: Upload deployment report
+        uses: actions/upload-artifact@v3
+        with:
+          name: production-deployment-report
+          path: reports/production_deployment_report.json
+
+  # Cleanup and notification
+  cleanup-notify:
+    runs-on: ubuntu-latest
+    needs: [spatial-tests, model-validation, docker-build-test, deployment-test]
+    if: always()
+    steps:
+      - name: Cleanup old artifacts
+        run: |
+          echo "Cleaning up temporary artifacts and containers"
+          docker system prune -f || true
+
+      - name: Generate final pipeline report
+        run: |
+          echo "Pipeline Status Summary:" > pipeline_summary.txt
+          echo "- Spatial Tests: ${{ needs.spatial-tests.result }}" >> pipeline_summary.txt
+          echo "- Model Validation: ${{ needs.model-validation.result }}" >> pipeline_summary.txt
+          echo "- Docker Build: ${{ needs.docker-build-test.result }}" >> pipeline_summary.txt
+          echo "- Deployment Test: ${{ needs.deployment-test.result }}" >> pipeline_summary.txt
+
+      - name: Upload pipeline summary
+        uses: actions/upload-artifact@v3
+        with:
+          name: pipeline-summary
+          path: pipeline_summary.txt

@@ -1,0 +1,50 @@
+{
+  "timestamp": "2025-06-07T13:28:08.135199",
+  "test_duration_seconds": 1.917553186416626,
+  "environment": {
+    "docker_mode": false,
+    "device": "cuda",
+    "cuda_available": true,
+    "python_version": "3.12.3"
+  },
+  "test_results": {
+    "environment_validation": {
+      "python_version": true,
+      "cuda_available": true,
+      "cuda_memory_sufficient": true,
+      "cuda_device_count": true,
+      "package_torch": true,
+      "package_transformers": true,
+      "package_accelerate": true,
+      "package_flash_attn": true,
+      "package_qwen_vl_utils": true,
+      "package_decord": true,
+      "package_Levenshtein": true,
+      "package_ray": true,
+      "all_packages_available": true,
+      "path_spatial_mllm": true,
+      "path_spatial_preprocessing.py": true,
+      "path_spatial_model_validation.py": true
+    },
+    "spatial_features": {
+      "test_error": "cannot import name 'SpatialPreprocessor' from 'scripts.spatial_preprocessing' (/home/emilio/Documents/ai/pizza/scripts/spatial_preprocessing.py)"
+    },
+    "model_versioning": {
+      "test_error": "No module named 'git'"
+    },
+    "performance_metrics": {
+      "avg_inference_time_ms": 1.456904411315918,
+      "max_inference_time_ms": 13.318538665771484,
+      "min_inference_time_ms": 0.11849403381347656,
+      "inference_within_threshold": true,
+      "test_error": "CUDA out of memory. Tried to allocate 9.77 GiB. GPU 0 has a total capacity of 11.63 GiB of which 3.23 GiB is free. Process 137926 has 7.76 GiB memory in use. Including non-PyTorch memory, this process has 160.00 MiB memory in use. Of the allocated memory 15.48 MiB is allocated by PyTorch, and 26.52 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)"
+    }
+  },
+  "summary": {
+    "total_tests": 17,
+    "passed_tests": 17,
+    "failed_tests": 0,
+    "success_rate": 1.0,
+    "deployment_ready": true
+  }
+}

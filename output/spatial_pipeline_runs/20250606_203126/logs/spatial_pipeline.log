@@ -1,0 +1,13 @@
+[2025-06-06 20:31:26] [INFO] [SPATIAL] ======= SPATIAL-4.2 DEPLOYMENT PIPELINE START =======
+[2025-06-06 20:31:26] [INFO] [SPATIAL] Pipeline timestamp: 20250606_203126
+[2025-06-06 20:31:26] [INFO] [SPATIAL] Output directory: /home/emilio/Documents/ai/pizza/output/spatial_pipeline_runs/20250606_203126
+[2025-06-06 20:31:26] [INFO] [SPATIAL] ======= PHASE 1: ENVIRONMENT VALIDATION =======
+[2025-06-06 20:31:26] [INFO] [SPATIAL] Checking CUDA availability...
+[2025-06-06 20:31:26] [INFO] [SPATIAL] CUDA detected: NVIDIA GeForce RTX 3060
+[2025-06-06 20:31:27] [INFO] [SPATIAL] Validating Spatial-MLLM environment...
+[2025-06-06 20:31:29] [SUCCESS] [SPATIAL] Spatial-MLLM environment validated
+[2025-06-06 20:31:29] [INFO] [SPATIAL] ======= PHASE 2: MODEL VALIDATION =======
+[2025-06-06 20:31:29] [INFO] [SPATIAL] Validating Spatial-MLLM models...
+[2025-06-06 20:31:30] [ERROR] [SPATIAL] Spatial model validation failed
+[2025-06-06 20:31:30] [ERROR] [SPATIAL] Model validation failed
+[2025-06-06 20:31:30] [INFO] [SPATIAL] Cleaning up pipeline resources...

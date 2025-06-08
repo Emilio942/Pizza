@@ -1,0 +1,61 @@
+{
+  "development": {
+    "name": "development",
+    "supported_architectures": [
+      "dual-encoder",
+      "visual-encoder",
+      "spatial-encoder"
+    ],
+    "memory_requirements_gb": 8.0,
+    "compute_requirements": {
+      "min_gpu_memory_gb": 4.0,
+      "cuda_compatible": false
+    },
+    "performance_requirements": {
+      "accuracy": 0.7,
+      "inference_time_ms": 3000
+    },
+    "validation_config": {
+      "skip_heavy_tests": true,
+      "allow_cpu_only": true
+    }
+  },
+  "staging": {
+    "name": "staging",
+    "supported_architectures": [
+      "dual-encoder"
+    ],
+    "memory_requirements_gb": 16.0,
+    "compute_requirements": {
+      "min_gpu_memory_gb": 8.0,
+      "cuda_compatible": true
+    },
+    "performance_requirements": {
+      "accuracy": 0.8,
+      "inference_time_ms": 2000
+    },
+    "validation_config": {
+      "skip_heavy_tests": false,
+      "allow_cpu_only": false
+    }
+  },
+  "production": {
+    "name": "production",
+    "supported_architectures": [
+      "dual-encoder"
+    ],
+    "memory_requirements_gb": 32.0,
+    "compute_requirements": {
+      "min_gpu_memory_gb": 16.0,
+      "cuda_compatible": true
+    },
+    "performance_requirements": {
+      "accuracy": 0.85,
+      "inference_time_ms": 1500
+    },
+    "validation_config": {
+      "skip_heavy_tests": false,
+      "allow_cpu_only": false
+    }
+  }
+}

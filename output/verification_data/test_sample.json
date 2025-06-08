@@ -1,0 +1,16 @@
+{
+  "samples": [
+    {
+      "pizza_image_path": "test_images/basic_001.jpg",
+      "model_prediction": "basic",
+      "ground_truth_class": "basic",
+      "confidence_score": 0.95,
+      "quality_score": 0.95,
+      "temporal_smoothing_applied": true,
+      "cmsis_nn_optimized": true,
+      "hardware_platform": "rp2040_emulator",
+      "food_safety_critical": false,
+      "error_type": "none"
+    }
+  ]
+}

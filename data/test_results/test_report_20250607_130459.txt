@@ -1,0 +1,63 @@
+================================================================================
+🍕 PIZZA QUALITY ASSESSMENT SYSTEM - TEST REPORT
+================================================================================
+Test Date: 2025-06-07 13:04:59
+Hardware Backend: cuda
+
+📊 SINGLE IMAGE INFERENCE TESTS
+----------------------------------------
+✅ IMG_20250326_125055_237.jpg
+   Size: (8000, 6000)
+   Load time: 0.242s
+   Inference time: 3.129s
+   Total time: 3.371s
+✅ IMG_20250326_125053_324.jpg
+   Size: (8000, 6000)
+   Load time: 0.226s
+   Inference time: 2.758s
+   Total time: 2.984s
+✅ IMG_20250326_125040_326.jpg
+   Size: (6000, 8000)
+   Load time: 0.251s
+   Inference time: 2.856s
+   Total time: 3.107s
+✅ test_basic_challenging_backlit_angle_side_motion_blur_20250520_211427_000.jpg
+   Size: (320, 240)
+   Load time: 0.005s
+   Inference time: 0.293s
+   Total time: 0.298s
+✅ test_basic_challenging_dark_angle_top_jpeg_artifact_20250520_211427_008.jpg
+   Size: (320, 240)
+   Load time: 0.002s
+   Inference time: 0.285s
+   Total time: 0.287s
+
+🚀 BATCH INFERENCE TESTS
+----------------------------------------
+✅ Batch size 1: 0.28 images/sec
+✅ Batch size 2: 0.37 images/sec
+✅ Batch size 4: 0.67 images/sec
+
+🧠 MEMORY OPTIMIZATION TESTS
+----------------------------------------
+✅ batch_1: 0.29 images/sec
+   GPU Memory: 7303.7 MB
+✅ batch_2: 0.37 images/sec
+   GPU Memory: 7303.7 MB
+✅ batch_4: 0.65 images/sec
+   GPU Memory: 7303.7 MB
+✅ batch_8: 0.79 images/sec
+   GPU Memory: 7303.7 MB
+
+💻 DEVICE COMPATIBILITY TESTS
+----------------------------------------
+✅ CPU: 16.871s
+✅ CUDA: 0.485s
+
+⚡ QUANTIZATION OPTIMIZATION TESTS
+----------------------------------------
+Without optimization: 4.60 images/sec
+With optimization: 4.69 images/sec
+Speedup: 1.02x
+
+================================================================================

@@ -297,7 +297,7 @@ Kriterium "Fertig": Die Firmware/Emulator kann Temperatur und Spannung auslesen.
 
 
 
-[x]?DIFFUSION-1.1: Diffusionsmodell-Generator-Basis einrichten und VRAM analysieren
+[x] DIFFUSION-1.1: Diffusionsmodell-Generator-Basis einrichten und VRAM analysieren
 
 Beschreibung: Richte die grundlegende Umgebung und das Skript zum Ausführen eines Diffusionsmodells (wie Stable Diffusion oder ein spezialisiertes Modell) für die Bildgenerierung ein. Analysiere den anfänglichen VRAM-Bedarf.
 Aufgabe für Agent:
@@ -324,7 +324,7 @@ Entwickle oder verfeinere die Prompt-Erstellung, um gezielte Eigenschaften zu st
 Implementiere die Nutzung von Kontrollmechanismen, falls das Diffusionsmodell dies unterstützt (z.B. ControlNet für Haltung/Struktur, falls für Pizza relevant).
 Stelle sicher, dass das Skript die Metadaten der Generierung (verwendeter Prompt, Seed, Parameter) zusammen mit dem Bild speichert.
 Kriterium "Fertig": Das Generierungsskript unterstützt die Erstellung von Bildern basierend auf strukturierten Prompts oder Templates. Generierte Bilder werden zusammen mit ihren Metadaten gespeichert. Ein Testlauf erzeugt Bilder, die visuell den gewünschten Eigenschaften entsprechen (ggf. manuelle Überprüfung notwendig).
-[x]? DIFFUSION-3.1: Strategie zur Datensatzbalance mit generierten Bildern definieren
+[x] DIFFUSION-3.1: Strategie zur Datensatzbalance mit generierten Bildern definieren
 
 Beschreibung: Definiere eine Strategie, wie die generierten Bilder genutzt werden, um die Balance des Trainingsdatensatzes zu verbessern oder spezifische, schwer zu sammelnde Szenarien abzudecken (z.B. Übergangszustände wie "Progression_heavy").
 Aufgabe für Agent:
@@ -333,7 +333,7 @@ Definiere, wie viele Bilder für jede Zielklasse/jedes Zielszenario generiert we
 Definiere die notwendigen Prompts oder Generierungsparameter für diese Bilder.
 Kriterium "Fertig": Ein Plan existiert, der definiert, welche Arten von Bildern in welcher Menge generiert werden sollen, um den Trainingsdatensatz zu verbessern. Die notwendigen Prompts sind dokumentiert.
 
-[x]? DIFFUSION-4.1: Tool zur Bildevaluierung (Metriken) entwickeln
+[x] DIFFUSION-4.1: Tool zur Bildevaluierung (Metriken) entwickeln
 
 Beschreibung: Entwickle objektivere Metriken und ein Tool, um die Qualität und Realistik der generierten Bilder jenseits der reinen visuellen Inspektion zu bewerten.
 Aufgabe für Agent:
@@ -532,7 +532,7 @@ Kriterium "Fertig": Die UART-Initialisierung und Log-Ausgabe-Funktionalität ist
 
 
 
-[x]? PERF-2.1: Graphviz installieren und Testabdeckung ermöglichen
+[x] PERF-2.1: Graphviz installieren und Testabdeckung ermöglichen
 
 Beschreibung: Installiere die Graphviz-Bibliothek in der Entwicklungsumgebung und behebe den übersprungenen Test (Nr. 50), der Graphviz benötigt. Dies stellt die volle Testabdeckung der existierenden Test-Suite sicher.
 Aufgabe für Agent:
@@ -542,7 +542,7 @@ Installiere Graphviz im System/in der Entwicklungsumgebung (systemweit oder in e
 Stelle sicher, dass die Python-Bindungen für Graphviz verfügbar sind.
 Führe das Testskript (scripts/run_pizza_tests.py) erneut aus, um zu verifizieren, dass der zuvor übersprungene Test nun läuft und besteht.
 Kriterium "Fertig": Graphviz ist erfolgreich in der Entwicklungsumgebung installiert und über Python zugänglich. Der Testlauf (scripts/run_pizza_tests.py) berichtet 0 übersprungene Tests und alle 50 Tests sind bestanden.
-[ ] PERF-2.3: SQLAlchemy-Warnungen beheben
+[x] PERF-2.3: SQLAlchemy-Warnungen beheben
 
 Beschreibung: Aktualisiere den Code, der SQLAlchemy verwendet, um veraltete Funktionen oder Aufrufe zu ersetzen, die Warnungen generieren. Dies verbessert die Codebasis und verhindert Probleme bei zukünftigen SQLAlchemy-Updates.
 Aufgabe für Agent:
@@ -554,7 +554,7 @@ Kriterium "Fertig": Die Codebasis wurde angepasst. Beim Ausführen der Anwendung
 
 
 
-[ ] PERF-4.1: Workflow für automatisierte Regressionstests einrichten
+[x] PERF-4.1: Workflow für automatisierte Regressionstests einrichten
 Beschreibung: Richte einen automatisierten Workflow (z.B. in GitHub Actions, basierend auf .github/workflows/model_pipeline.yml) ein, der bei Codeänderungen (insb. am Modell oder der Firmware) automatisch die Test-Suite ausführt und die Performance-Metriken erfasst, um Regressionen (Verschlechterung der Leistung oder Genauigkeit) frühzeitig zu erkennen.
 Aufgabe für Agent:
 Analysiere den bestehenden CI/CD-Workflow.

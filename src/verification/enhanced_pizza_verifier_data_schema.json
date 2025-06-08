@@ -1,0 +1,108 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Enhanced Pizza Verifier Data",
+  "description": "Extended schema for pizza-specific verifier data including temporal smoothing and CMSIS-NN performance considerations.",
+  "type": "object",
+  "properties": {
+    "pizza_image_path": {
+      "description": "Path to the pizza image file.",
+      "type": "string"
+    },
+    "model_prediction": {
+      "description": "The prediction made by the model.",
+      "type": "string",
+      "enum": ["basic", "burnt", "combined", "mixed", "progression", "segment"]
+    },
+    "ground_truth_class": {
+      "description": "The actual class of the pizza.",
+      "type": "string",
+      "enum": ["basic", "burnt", "combined", "mixed", "progression", "segment"]
+    },
+    "confidence_score": {
+      "description": "The confidence score of the model's prediction.",
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0
+    },
+    "quality_score": {
+      "description": "A score representing the quality of the prediction, ranging from 0.0 (poor) to 1.0 (excellent).",
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0
+    },
+    "temporal_smoothing_applied": {
+      "description": "Whether temporal smoothing was applied to this prediction.",
+      "type": "boolean",
+      "default": false
+    },
+    "temporal_smoothing_factor": {
+      "description": "The smoothing factor used for temporal averaging (if applicable).",
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0
+    },
+    "cmsis_nn_optimized": {
+      "description": "Whether the prediction was made using CMSIS-NN optimized operations.",
+      "type": "boolean",
+      "default": false
+    },
+    "inference_time_ms": {
+      "description": "Time taken for model inference in milliseconds.",
+      "type": "number",
+      "minimum": 0.0
+    },
+    "energy_consumption_mj": {
+      "description": "Estimated energy consumption for inference in millijoules.",
+      "type": "number",
+      "minimum": 0.0
+    },
+    "hardware_platform": {
+      "description": "The hardware platform used for inference.",
+      "type": "string",
+      "enum": ["rp2040_emulator", "rp2040_hardware", "host_simulation"],
+      "default": "host_simulation"
+    },
+    "prediction_metadata": {
+      "description": "Additional metadata about the prediction process.",
+      "type": "object",
+      "properties": {
+        "model_version": {
+          "description": "Version identifier of the model used.",
+          "type": "string"
+        },
+        "preprocessing_version": {
+          "description": "Version of preprocessing pipeline used.",
+          "type": "string"
+        },
+        "timestamp": {
+          "description": "ISO 8601 timestamp when the prediction was made.",
+          "type": "string",
+          "format": "date-time"
+        },
+        "session_id": {
+          "description": "Unique identifier for the inference session.",
+          "type": "string"
+        }
+      }
+    },
+    "food_safety_critical": {
+      "description": "Whether this prediction involves food safety critical decisions (e.g., raw vs cooked detection).",
+      "type": "boolean",
+      "default": false
+    },
+    "error_type": {
+      "description": "Type of prediction error for hard negative examples.",
+      "type": "string",
+      "enum": ["none", "burnt_vs_basic", "combined_vs_mixed", "progression_stage", "safety_critical", "temporal_inconsistency"],
+      "default": "none"
+    }
+  },
+  "required": [
+    "pizza_image_path",
+    "model_prediction", 
+    "ground_truth_class",
+    "confidence_score",
+    "quality_score"
+  ],
+  "additionalProperties": false
+}

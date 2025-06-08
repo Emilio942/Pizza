@@ -1,0 +1,391 @@
+{
+  "dashboard": {
+    "id": null,
+    "title": "Spatial Anomaly Alert Dashboard",
+    "tags": ["spatial", "anomaly", "alerts", "monitoring"],
+    "style": "dark",
+    "timezone": "browser",
+    "editable": true,
+    "hideControls": false,
+    "graphTooltip": 1,
+    "time": {
+      "from": "now-6h",
+      "to": "now"
+    },
+    "timepicker": {
+      "refresh_intervals": ["5s", "10s", "30s", "1m", "5m", "15m", "30m", "1h", "2h", "1d"],
+      "time_options": ["5m", "15m", "1h", "6h", "12h", "24h", "2d", "7d", "30d"]
+    },
+    "refresh": "10s",
+    "schemaVersion": 30,
+    "version": 1,
+    "panels": [
+      {
+        "id": 1,
+        "title": "Critical Anomaly Overview",
+        "type": "stat",
+        "gridPos": {"h": 6, "w": 6, "x": 0, "y": 0},
+        "targets": [
+          {
+            "expr": "sum(spatial_anomalies_detected_total{severity=\"critical\"})",
+            "legendFormat": "Critical Anomalies",
+            "refId": "A"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "short",
+            "min": 0,
+            "color": {"mode": "thresholds"},
+            "thresholds": {
+              "steps": [
+                {"color": "green", "value": null},
+                {"color": "red", "value": 1}
+              ]
+            }
+          }
+        }
+      },
+      {
+        "id": 2,
+        "title": "High Severity Anomalies",
+        "type": "stat",
+        "gridPos": {"h": 6, "w": 6, "x": 6, "y": 0},
+        "targets": [
+          {
+            "expr": "sum(spatial_anomalies_detected_total{severity=\"high\"})",
+            "legendFormat": "High Severity",
+            "refId": "A"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "short",
+            "min": 0,
+            "color": {"mode": "thresholds"},
+            "thresholds": {
+              "steps": [
+                {"color": "green", "value": null},
+                {"color": "yellow", "value": 5},
+                {"color": "orange", "value": 10}
+              ]
+            }
+          }
+        }
+      },
+      {
+        "id": 3,
+        "title": "Recent Anomaly Rate",
+        "type": "stat",
+        "gridPos": {"h": 6, "w": 6, "x": 12, "y": 0},
+        "targets": [
+          {
+            "expr": "rate(spatial_anomalies_detected_total[5m]) * 60",
+            "legendFormat": "Anomalies/min",
+            "refId": "A"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "short",
+            "min": 0,
+            "decimals": 2
+          }
+        }
+      },
+      {
+        "id": 4,
+        "title": "Affected Pizza Types",
+        "type": "stat",
+        "gridPos": {"h": 6, "w": 6, "x": 18, "y": 0},
+        "targets": [
+          {
+            "expr": "count(count by (pizza_type) (spatial_anomalies_detected_total))",
+            "legendFormat": "Pizza Types",
+            "refId": "A"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "short",
+            "min": 0
+          }
+        }
+      },
+      {
+        "id": 5,
+        "title": "Anomaly Timeline",
+        "type": "graph",
+        "gridPos": {"h": 10, "w": 24, "x": 0, "y": 6},
+        "yAxes": [
+          {"label": "Count", "min": 0},
+          {"show": false}
+        ],
+        "targets": [
+          {
+            "expr": "increase(spatial_anomalies_detected_total{severity=\"critical\"}[1m])",
+            "legendFormat": "Critical",
+            "refId": "A"
+          },
+          {
+            "expr": "increase(spatial_anomalies_detected_total{severity=\"high\"}[1m])",
+            "legendFormat": "High",
+            "refId": "B"
+          },
+          {
+            "expr": "increase(spatial_anomalies_detected_total{severity=\"medium\"}[1m])",
+            "legendFormat": "Medium",
+            "refId": "C"
+          },
+          {
+            "expr": "increase(spatial_anomalies_detected_total{severity=\"low\"}[1m])",
+            "legendFormat": "Low",
+            "refId": "D"
+          }
+        ],
+        "seriesOverrides": [
+          {
+            "alias": "Critical",
+            "color": "#d44a3a",
+            "lineWidth": 3
+          },
+          {
+            "alias": "High",
+            "color": "#ff7f0e",
+            "lineWidth": 2
+          }
+        ],
+        "alert": {
+          "conditions": [
+            {
+              "evaluator": {"params": [3], "type": "gt"},
+              "operator": {"type": "and"},
+              "query": {"params": ["A", "1m", "now"], "queryType": ""},
+              "reducer": {"params": [], "type": "sum"},
+              "type": "query"
+            }
+          ],
+          "executionErrorState": "alerting",
+          "for": "30s",
+          "frequency": "10s",
+          "handler": 1,
+          "name": "Critical Spatial Anomaly Burst",
+          "noDataState": "no_data",
+          "notifications": []
+        }
+      },
+      {
+        "id": 6,
+        "title": "Anomaly Types Breakdown",
+        "type": "table",
+        "gridPos": {"h": 10, "w": 12, "x": 0, "y": 16},
+        "targets": [
+          {
+            "expr": "sum by (anomaly_type, severity) (spatial_anomalies_detected_total)",
+            "legendFormat": "",
+            "refId": "A",
+            "format": "table",
+            "instant": true
+          }
+        ],
+        "transformations": [
+          {
+            "id": "organize",
+            "options": {
+              "excludeByName": {
+                "Time": true,
+                "__name__": true,
+                "job": true,
+                "instance": true
+              },
+              "indexByName": {},
+              "renameByName": {
+                "anomaly_type": "Anomaly Type",
+                "severity": "Severity",
+                "Value": "Count"
+              }
+            }
+          }
+        ],
+        "fieldConfig": {
+          "overrides": [
+            {
+              "matcher": {"id": "byName", "options": "Severity"},
+              "properties": [
+                {
+                  "id": "color",
+                  "value": {
+                    "mode": "thresholds"
+                  }
+                },
+                {
+                  "id": "thresholds",
+                  "value": {
+                    "steps": [
+                      {"color": "green", "value": null},
+                      {"color": "yellow", "value": "medium"},
+                      {"color": "orange", "value": "high"},
+                      {"color": "red", "value": "critical"}
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": 7,
+        "title": "Spatial Location Heatmap",
+        "type": "heatmap",
+        "gridPos": {"h": 10, "w": 12, "x": 12, "y": 16},
+        "targets": [
+          {
+            "expr": "increase(spatial_anomaly_location_bucket[5m])",
+            "legendFormat": "{{spatial_region}}",
+            "refId": "A"
+          }
+        ],
+        "heatmap": {
+          "yAxis": {
+            "unit": "short",
+            "decimals": 0
+          },
+          "colorMode": "spectrum",
+          "colorScale": "linear"
+        }
+      },
+      {
+        "id": 8,
+        "title": "Pizza Type Anomaly Distribution",
+        "type": "bargauge",
+        "gridPos": {"h": 8, "w": 8, "x": 0, "y": 26},
+        "targets": [
+          {
+            "expr": "sum by (pizza_type) (spatial_anomalies_detected_total{severity=~\"high|critical\"})",
+            "legendFormat": "{{pizza_type}}",
+            "refId": "A"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "short",
+            "min": 0,
+            "thresholds": {
+              "steps": [
+                {"color": "green", "value": null},
+                {"color": "yellow", "value": 5},
+                {"color": "red", "value": 10}
+              ]
+            }
+          }
+        },
+        "options": {
+          "orientation": "horizontal"
+        }
+      },
+      {
+        "id": 9,
+        "title": "Detection Confidence",
+        "type": "graph",
+        "gridPos": {"h": 8, "w": 8, "x": 8, "y": 26},
+        "yAxes": [
+          {"label": "Confidence", "min": 0, "max": 1},
+          {"show": false}
+        ],
+        "targets": [
+          {
+            "expr": "histogram_quantile(0.50, rate(spatial_anomaly_confidence_score_bucket[5m]))",
+            "legendFormat": "Median Confidence",
+            "refId": "A"
+          },
+          {
+            "expr": "histogram_quantile(0.95, rate(spatial_anomaly_confidence_score_bucket[5m]))",
+            "legendFormat": "95th percentile",
+            "refId": "B"
+          }
+        ]
+      },
+      {
+        "id": 10,
+        "title": "Processing Status",
+        "type": "stat",
+        "gridPos": {"h": 8, "w": 8, "x": 16, "y": 26},
+        "targets": [
+          {
+            "expr": "spatial_anomaly_detection_active",
+            "legendFormat": "Detection Active",
+            "refId": "A"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "bool",
+            "color": {"mode": "thresholds"},
+            "thresholds": {
+              "steps": [
+                {"color": "red", "value": 0},
+                {"color": "green", "value": 1}
+              ]
+            }
+          }
+        }
+      },
+      {
+        "id": 11,
+        "title": "Recent Anomalies Log",
+        "type": "logs",
+        "gridPos": {"h": 12, "w": 24, "x": 0, "y": 34},
+        "targets": [
+          {
+            "expr": "{job=\"spatial-anomaly-logger\", severity=~\"high|critical\"}",
+            "refId": "A"
+          }
+        ],
+        "options": {
+          "showTime": true,
+          "showLabels": true,
+          "showCommonLabels": false,
+          "wrapLogMessage": true,
+          "prettifyLogMessage": false,
+          "enableLogDetails": true,
+          "dedupe": false,
+          "sortOrder": "Descending"
+        }
+      }
+    ],
+    "annotations": {
+      "list": [
+        {
+          "name": "Critical Anomalies",
+          "datasource": "Prometheus",
+          "enable": true,
+          "expr": "spatial_anomalies_detected_total{severity=\"critical\"} > 0",
+          "iconColor": "red",
+          "titleFormat": "Critical Anomaly",
+          "textFormat": "{{anomaly_type}} detected in {{pizza_type}}"
+        }
+      ]
+    },
+    "templating": {
+      "list": [
+        {
+          "name": "severity",
+          "type": "query",
+          "query": "label_values(spatial_anomalies_detected_total, severity)",
+          "refresh": 1,
+          "includeAll": true,
+          "allValue": ".*"
+        },
+        {
+          "name": "anomaly_type",
+          "type": "query",
+          "query": "label_values(spatial_anomalies_detected_total, anomaly_type)",
+          "refresh": 1,
+          "includeAll": true,
+          "allValue": ".*"
+        }
+      ]
+    }
+  }
+}

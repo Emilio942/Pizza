@@ -1,0 +1,34 @@
+SPATIAL-MLLM PERFORMANCE BENCHMARK REPORT
+==================================================
+
+Benchmark Date: 2025-06-07T13:31:57.956975
+Total Duration: 4.0s
+Tests Run: 7 (3 successful)
+Success Rate: 42.9%
+
+SYSTEM INFORMATION
+--------------------
+CPU: x86_64 (16 cores)
+RAM: 31.2 GB
+GPU: NVIDIA GeForce RTX 3060 (11.6 GB)
+CUDA: 12.4
+PyTorch: 2.6.0+cu124
+
+PERFORMANCE METRICS
+--------------------
+Average Inference Time: 0.003s
+Best Inference Time: 0.001s
+Average Throughput: 0.0 images/sec
+Average Memory Usage: 0.0 MB
+Peak GPU Memory: 0.0 MB
+Average CPU Utilization: 0.0%
+
+DETAILED RESULTS
+--------------------
+model_loading: FAILED - CUDA out of memory. Tried to allocate 44.00 MiB. GPU 0 has a total capacity of 11.63 GiB of which 65.56 MiB is free. Process 137926 has 7.76 GiB memory in use. Including non-PyTorch memory, this process has 3.28 GiB memory in use. Of the allocated memory 3.16 GiB is allocated by PyTorch, and 17.28 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+single_inference: FAILED - OptimizedSpatialInference.__init__() missing 1 required positional argument: 'config'
+batch_inference_size_1: FAILED - OptimizedSpatialInference.__init__() missing 1 required positional argument: 'config'
+memory_optimized_inference: FAILED - cannot import name 'SpatialInferenceMemoryOptimized' from 'scripts.spatial_inference_memory_optimized' (/home/emilio/Documents/ai/pizza/scripts/spatial_inference_memory_optimized.py)
+api__health: 0.006s | GPU: 0.0MB
+api__predict_spatial: 0.003s | GPU: 0.0MB
+api__predict_standard: 0.001s | GPU: 0.0MB

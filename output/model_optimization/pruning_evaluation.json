@@ -1,63 +1,52 @@
 {
-  "timestamp": "2025-05-21T16:45:00",
   "base_model": {
-    "parameters": 152834,
-    "size_kb": 245.6,
-    "accuracy": 92.5,
-    "ram_usage_kb": 182.3,
-    "inference_time_ms": 325.7
+    "path": "/home/emilio/Documents/ai/pizza/models/micro_pizza_model.pth",
+    "size_kb": 9.3359375,
+    "accuracy": 50.0,
+    "ram_usage_kb": 29.28515625,
+    "inference_time_ms": 0.18967628479003906
   },
   "pruned_models": {
     "sparsity_10": {
       "sparsity": 0.1,
-      "pruned": {
-        "parameters": 137550,
-        "size_kb": 221.0,
-        "accuracy": 91.8,
-        "ram_usage_kb": 168.5,
-        "inference_time_ms": 310.2
-      },
-      "quantized": {
-        "size_kb": 55.3,
-        "accuracy": 90.9,
-        "ram_usage_kb": 142.1,
-        "inference_time_ms": 286.5,
-        "tensor_arena_kb": 124.7
-      }
+      "path": "/home/emilio/Documents/ai/pizza/models/pruned_model/micropizzanetv2_pruned_s10.pth",
+      "size_kb": 9.3359375,
+      "size_reduction_percent": 0.0,
+      "accuracy": 50.0,
+      "accuracy_loss_percent": 0.0,
+      "ram_usage_kb": 29.28515625,
+      "ram_reduction_percent": 0.0,
+      "inference_time_ms": 0.1952958106994629,
+      "time_improvement_percent": -2.9626929458494544
     },
     "sparsity_20": {
       "sparsity": 0.2,
-      "pruned": {
-        "parameters": 122267,
-        "size_kb": 196.5,
-        "accuracy": 90.1,
-        "ram_usage_kb": 154.2,
-        "inference_time_ms": 290.3
-      },
-      "quantized": {
-        "size_kb": 49.1,
-        "accuracy": 89.3,
-        "ram_usage_kb": 130.8,
-        "inference_time_ms": 268.9,
-        "tensor_arena_kb": 118.2
-      }
+      "path": "/home/emilio/Documents/ai/pizza/models/pruned_model/micropizzanetv2_pruned_s20.pth",
+      "size_kb": 9.3359375,
+      "size_reduction_percent": 0.0,
+      "accuracy": 50.0,
+      "accuracy_loss_percent": 0.0,
+      "ram_usage_kb": 29.28515625,
+      "ram_reduction_percent": 0.0,
+      "inference_time_ms": 0.20557880401611328,
+      "time_improvement_percent": -8.3840313741264
     },
     "sparsity_30": {
       "sparsity": 0.3,
-      "pruned": {
-        "parameters": 106984,
-        "size_kb": 171.9,
-        "accuracy": 87.4,
-        "ram_usage_kb": 140.3,
-        "inference_time_ms": 265.8
-      },
-      "quantized": {
-        "size_kb": 43.0,
-        "accuracy": 86.2,
-        "ram_usage_kb": 118.9,
-        "inference_time_ms": 245.7,
-        "tensor_arena_kb": 107.4
-      }
+      "path": "/home/emilio/Documents/ai/pizza/models/pruned_model/micropizzanetv2_pruned_s30.pth",
+      "size_kb": 9.3359375,
+      "size_reduction_percent": 0.0,
+      "accuracy": 50.0,
+      "accuracy_loss_percent": 0.0,
+      "ram_usage_kb": 29.28515625,
+      "ram_reduction_percent": 0.0,
+      "inference_time_ms": 0.1618480682373047,
+      "time_improvement_percent": 14.6714264166122
     }
+  },
+  "metadata": {
+    "timestamp": "2025-06-08T11:43:19.343347",
+    "script": "modell_1_1_structured_pruning.py",
+    "task": "MODELL-1.1: Strukturbasiertes Pruning implementieren und evaluieren"
   }
 }

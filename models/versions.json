@@ -1,0 +1,54 @@
+{
+  "spatial_models": {
+    "test_spatial_v1": {
+      "version": "test_spatial_v1",
+      "hash": "da6683ff2a29c158",
+      "description": "Test spatial model for CI/CD pipeline",
+      "model_path": "/home/emilio/Documents/ai/pizza/models/spatial_mllm/test_models",
+      "registered": "2025-06-07T00:50:20.535900",
+      "performance_metrics": {},
+      "training_config": {},
+      "model_type": "spatial_dual_encoder",
+      "status": "active",
+      "validation": {
+        "valid": true,
+        "errors": [],
+        "warnings": [],
+        "model_info": {
+          "architecture": "qwen2_vl",
+          "hidden_size": 3584,
+          "size_mb": 0.00042247772216796875
+        }
+      },
+      "versioned_path": "models/spatial_mllm/test_spatial_v1_da6683ff2a29c158"
+    }
+  },
+  "standard_models": {
+    "test_standard_v1": {
+      "version": "test_standard_v1",
+      "hash": "5ed5bfaa90790b22",
+      "description": "Test standard model for CI/CD pipeline",
+      "model_path": "/home/emilio/Documents/ai/pizza/models/standard/test_models/standard_model.py",
+      "registered": "2025-06-07T00:50:38.820155",
+      "performance_metrics": {},
+      "model_type": "standard_classifier",
+      "status": "registered",
+      "versioned_path": "models/standard/test_standard_v1_5ed5bfaa90790b22"
+    }
+  },
+  "active_versions": {
+    "spatial": "test_spatial_v1",
+    "standard": null
+  },
+  "deployment_history": [
+    {
+      "timestamp": "2025-06-07T00:50:49.841291",
+      "model_type": "spatial",
+      "version": "test_spatial_v1",
+      "previous_version": null,
+      "deployment_reason": "manual_activation"
+    }
+  ],
+  "created": "2025-06-07T00:50:20.535744",
+  "last_updated": "2025-06-07T00:50:49.841300"
+}

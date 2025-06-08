@@ -1,0 +1,71 @@
+{
+  "spatial_features_original": {
+    "depth_variance": 6.840433175149343,
+    "surface_roughness": 0.11483150656846211,
+    "edge_density": 0.3421199743593566,
+    "spatial_complexity": 7.314852712588211,
+    "dominant_depth_regions": [
+      [
+        0.3,
+        0.3,
+        0.4
+      ]
+    ],
+    "surface_texture_complexity": 0.163784090002175
+  },
+  "spatial_features_augmented": [
+    {
+      "depth_variance": 27.22179916021006,
+      "surface_roughness": 0.15115155561697383,
+      "edge_density": 0.12656713525439395,
+      "spatial_complexity": 27.554286596856755,
+      "dominant_depth_regions": [
+        [
+          0.3,
+          0.3,
+          0.4
+        ]
+      ],
+      "surface_texture_complexity": 0.3267294807167716
+    },
+    {
+      "depth_variance": 5.343717255487188,
+      "surface_roughness": 0.10326415282976012,
+      "edge_density": 0.3403720874763346,
+      "spatial_complexity": 5.817551540383644,
+      "dominant_depth_regions": [
+        [
+          0.3,
+          0.3,
+          0.4
+        ]
+      ],
+      "surface_texture_complexity": 0.14476102356327483
+    },
+    {
+      "depth_variance": 6.8710122885945335,
+      "surface_roughness": 0.11499223228581723,
+      "edge_density": 0.34276844411979546,
+      "spatial_complexity": 7.345647135435229,
+      "dominant_depth_regions": [
+        [
+          0.3,
+          0.3,
+          0.4
+        ]
+      ],
+      "surface_texture_complexity": 0.16414976768117123
+    }
+  ],
+  "augmentation_types": [
+    "perspective_3d",
+    "depth_based_lighting",
+    "volumetric_texture_mapping"
+  ],
+  "quality_scores": [
+    0.35731521891419704,
+    0.9867857341573281,
+    0.9824208325073234
+  ],
+  "spatial_consistency_score": 0.7587620252169405
+}

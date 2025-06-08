@@ -1,0 +1,7 @@
+✅ torch
+✅ transformers
+✅ accelerate
+✅ qwen_vl_utils
+✅ decord
+✅ flash_attn
+All required packages available

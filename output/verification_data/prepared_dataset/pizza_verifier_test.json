@@ -1,0 +1,177 @@
+{
+  "split_info": {
+    "split_name": "test",
+    "total_samples": 6,
+    "positive_samples": 2,
+    "negative_samples": 4,
+    "food_safety_critical": 3,
+    "class_distribution": {
+      "mixed": 1,
+      "basic": 2,
+      "segment": 1,
+      "burnt": 2
+    },
+    "quality_statistics": {
+      "mean": 0.3483,
+      "std": 0.2595,
+      "min": 0.1075,
+      "max": 0.7228
+    },
+    "positive_ratio": 0.3333,
+    "food_safety_ratio": 0.5
+  },
+  "samples": [
+    {
+      "pizza_image_path": "data/synthetic/synthetic_8_177.jpg",
+      "model_prediction": "mixed",
+      "ground_truth_class": "mixed",
+      "confidence_score": 0.7654,
+      "quality_score": 0.6979,
+      "temporal_smoothing_applied": false,
+      "cmsis_nn_optimized": true,
+      "inference_time_ms": 178.09,
+      "energy_consumption_mj": 1.521,
+      "hardware_platform": "rp2040",
+      "prediction_metadata": {
+        "brightness": 161.81236049107142,
+        "contrast": 78.67111451915737,
+        "texture_quality": 0.3561731107942776,
+        "burn_level_consistency": 0.735092474489796,
+        "pizza_likelihood": 1.0,
+        "sharpness": 317.14821213218187,
+        "source": "diffusion_analysis"
+      },
+      "food_safety_critical": false,
+      "error_type": null,
+      "sample_weight": 1.0,
+      "priority": "normal"
+    },
+    {
+      "pizza_image_path": "data/synthetic/hard_negative_synthetic_488.jpg.jpg",
+      "model_prediction": "basic",
+      "ground_truth_class": "progression",
+      "confidence_score": 0.7749279524555558,
+      "quality_score": 0.19914987074677692,
+      "temporal_smoothing_applied": false,
+      "cmsis_nn_optimized": false,
+      "inference_time_ms": 141.39,
+      "energy_consumption_mj": 1.885,
+      "hardware_platform": "rp2040",
+      "prediction_metadata": {
+        "burn_level_consistency": 0.4716850015517196,
+        "confusion_type": "food_safety_critical",
+        "ground_truth_class": "progression",
+        "predicted_class": "basic",
+        "original_pizza_likelihood": 1.0,
+        "texture_quality": 0.3238548721606835,
+        "source": "hard_negative_generation"
+      },
+      "food_safety_critical": true,
+      "error_type": "food_safety_critical",
+      "sample_weight": 2.0,
+      "priority": "high"
+    },
+    {
+      "pizza_image_path": "data/synthetic/subtle_synthetic_32_518.jpg.jpg",
+      "model_prediction": "segment",
+      "ground_truth_class": "progression",
+      "confidence_score": 0.7682089702255822,
+      "quality_score": 0.2326427239220096,
+      "temporal_smoothing_applied": false,
+      "cmsis_nn_optimized": true,
+      "inference_time_ms": 127.56,
+      "energy_consumption_mj": 2.357,
+      "hardware_platform": "arduino_nano33",
+      "prediction_metadata": {
+        "pizza_likelihood": 0.9943797831632653,
+        "texture_quality": 0.39270899049439373,
+        "confusion_type": "subtle_misclassification",
+        "ground_truth_class": "progression",
+        "predicted_class": "segment",
+        "brightness": 74.71869021045919,
+        "contrast": 57.75467052387574,
+        "source": "hard_negative_generation"
+      },
+      "food_safety_critical": false,
+      "error_type": "misclassification",
+      "sample_weight": 1.0,
+      "priority": "normal"
+    },
+    {
+      "pizza_image_path": "data/synthetic/hard_negative_synthetic_35.jpg.jpg",
+      "model_prediction": "burnt",
+      "ground_truth_class": "basic",
+      "confidence_score": 0.7195068989825797,
+      "quality_score": 0.10753048072706198,
+      "temporal_smoothing_applied": false,
+      "cmsis_nn_optimized": true,
+      "inference_time_ms": 95.08,
+      "energy_consumption_mj": 2.722,
+      "hardware_platform": "esp32",
+      "prediction_metadata": {
+        "burn_level_consistency": 0.2948614496355275,
+        "confusion_type": "food_safety_critical",
+        "ground_truth_class": "basic",
+        "predicted_class": "burnt",
+        "original_pizza_likelihood": 0.0,
+        "texture_quality": 0.0,
+        "source": "hard_negative_generation"
+      },
+      "food_safety_critical": true,
+      "error_type": "food_safety_critical",
+      "sample_weight": 2.0,
+      "priority": "high"
+    },
+    {
+      "pizza_image_path": "data/synthetic/synthetic_454.jpg",
+      "model_prediction": "basic",
+      "ground_truth_class": "basic",
+      "confidence_score": 0.8472,
+      "quality_score": 0.7228,
+      "temporal_smoothing_applied": true,
+      "cmsis_nn_optimized": true,
+      "inference_time_ms": 188.45,
+      "energy_consumption_mj": 1.211,
+      "hardware_platform": "rp2040",
+      "prediction_metadata": {
+        "brightness": 94.67430644132654,
+        "contrast": 74.87727676119555,
+        "texture_quality": 0.4090999705068946,
+        "burn_level_consistency": 0.19826211734693877,
+        "pizza_likelihood": 1.0,
+        "sharpness": 418.40696467185506,
+        "source": "diffusion_analysis"
+      },
+      "food_safety_critical": false,
+      "error_type": null,
+      "sample_weight": 1.0,
+      "priority": "normal"
+    },
+    {
+      "pizza_image_path": "data/synthetic/hard_negative_synthetic_300.jpg.jpg",
+      "model_prediction": "burnt",
+      "ground_truth_class": "basic",
+      "confidence_score": 0.6250999951722628,
+      "quality_score": 0.12948079742800775,
+      "temporal_smoothing_applied": false,
+      "cmsis_nn_optimized": false,
+      "inference_time_ms": 121.98,
+      "energy_consumption_mj": 1.084,
+      "hardware_platform": "rp2040",
+      "prediction_metadata": {
+        "burn_level_consistency": 0.25195203118184595,
+        "confusion_type": "food_safety_critical",
+        "ground_truth_class": "basic",
+        "predicted_class": "burnt",
+        "original_pizza_likelihood": 0.0,
+        "texture_quality": 0.0,
+        "source": "hard_negative_generation"
+      },
+      "food_safety_critical": true,
+      "error_type": "food_safety_critical",
+      "sample_weight": 1.5,
+      "priority": "high",
+      "duplicate_id": 1
+    }
+  ]
+}

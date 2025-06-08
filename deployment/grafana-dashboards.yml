@@ -1,0 +1,15 @@
+# SPATIAL-6.2: Grafana Dashboards Configuration
+# Automatic provisioning of monitoring dashboards
+
+apiVersion: 1
+
+providers:
+  - name: 'default'
+    orgId: 1
+    folder: ''
+    type: file
+    disableDeletion: false
+    updateIntervalSeconds: 10
+    allowUiUpdates: true
+    options:
+      path: /var/lib/grafana/dashboards

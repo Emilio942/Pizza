@@ -1,0 +1,121 @@
+{
+  "output_dir": "/home/emilio/Documents/ai/pizza/results/pizza_rl_training_comprehensive",
+  "total_timesteps": 500000,
+  "save_interval": 25,
+  "eval_interval": 50,
+  "eval_episodes": 100,
+  "max_episodes_per_eval": 200,
+  
+  "environment": {
+    "max_steps_per_episode": 15,
+    "battery_capacity_mah": 2500.0,
+    "initial_battery_level": 0.9,
+    "task_dataset_path": "/home/emilio/Documents/ai/pizza/test_data",
+    "enable_logging": true,
+    "energy_weight": 0.25,
+    "accuracy_weight": 0.55,
+    "speed_weight": 0.20
+  },
+  
+  "ppo_hyperparams": {
+    "learning_rate": 2.5e-4,
+    "batch_size": 512,
+    "ppo_epochs": 15,
+    "rollout_steps": 4096,
+    "gamma": 0.995,
+    "gae_lambda": 0.98,
+    "clip_ratio": 0.15,
+    "value_loss_coef": 0.6,
+    "entropy_coef": 0.008,
+    "max_grad_norm": 0.3,
+    "advantage_normalization": true,
+    "reward_normalization": true,
+    "adaptive_entropy": true
+  },
+  
+  "multi_objective": {
+    "enable": true,
+    "accuracy_target": 0.88,
+    "energy_efficiency_target": 0.75,
+    "inference_speed_target": 85.0,
+    "safety_penalty_weight": 3.0,
+    "adaptive_weights": true,
+    "food_safety_priority": true,
+    "real_time_constraints": true
+  },
+  
+  "evaluation": {
+    "scenarios": [
+      "standard_lighting",
+      "low_light_conditions",
+      "high_contrast_lighting", 
+      "temporal_sequence_analysis",
+      "energy_constrained_operation",
+      "speed_critical_detection",
+      "food_safety_critical",
+      "production_environment",
+      "burnt_vs_basic_confusion",
+      "combined_vs_mixed_detection",
+      "progression_stage_tracking"
+    ],
+    "deterministic": true,
+    "save_trajectories": true,
+    "pizza_specific_metrics": true
+  },
+  
+  "pizza_scenarios": {
+    "standard_lighting": {
+      "description": "Normal lighting conditions in typical kitchen environment",
+      "lighting_modifier": 0.0,
+      "noise_level": 0.1,
+      "time_pressure": false
+    },
+    "low_light_conditions": {
+      "description": "Poor lighting conditions simulating industrial environments",
+      "lighting_modifier": -0.4,
+      "noise_level": 0.25,
+      "time_pressure": false
+    },
+    "high_contrast_lighting": {
+      "description": "High contrast lighting with strong shadows",
+      "lighting_modifier": 0.3,
+      "contrast_boost": 0.4,
+      "noise_level": 0.15
+    },
+    "energy_constrained_operation": {
+      "description": "Low battery scenarios requiring energy-efficient inference",
+      "initial_battery": 0.15,
+      "energy_penalty_multiplier": 2.5,
+      "prefer_efficiency": true
+    },
+    "speed_critical_detection": {
+      "description": "Time-critical scenarios for production line integration",
+      "max_inference_time_ms": 50,
+      "speed_penalty_multiplier": 2.0,
+      "accuracy_tolerance": 0.02
+    },
+    "food_safety_critical": {
+      "description": "Safety-critical detection focusing on raw vs cooked classification",
+      "safety_classes": ["raw", "cooked", "burnt"],
+      "safety_penalty_multiplier": 5.0,
+      "minimum_confidence": 0.9
+    }
+  },
+  
+  "performance_monitoring": {
+    "track_energy_consumption": true,
+    "track_inference_time": true,
+    "track_memory_usage": true,
+    "track_accuracy_degradation": true,
+    "log_detailed_metrics": true,
+    "save_model_performance_profiles": true
+  },
+  
+  "checkpointing": {
+    "save_best_model": true,
+    "save_every_n_iterations": 50,
+    "keep_last_n_checkpoints": 5,
+    "early_stopping_patience": 100,
+    "min_improvement_threshold": 0.01
+  }
+}

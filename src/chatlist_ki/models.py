@@ -2,7 +2,7 @@ from datetime import datetime, timezone
 from enum import Enum
 from typing import Optional
 from sqlalchemy import Column, Integer, String, DateTime, Enum as SQLEnum
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import declarative_base
 
 Base = declarative_base()
 
@@ -20,8 +20,8 @@ class Task(Base):
     title = Column(String(255), nullable=False)
     priority = Column(Integer, nullable=False)
     status = Column(SQLEnum(TaskStatus), default=TaskStatus.OPEN)
-    created_at = Column(DateTime, default=lambda: datetime.now(timezone.UTC))
-    updated_at = Column(DateTime, default=lambda: datetime.now(timezone.UTC), onupdate=lambda: datetime.now(timezone.UTC))
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
+    updated_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))
     due_date = Column(DateTime, nullable=True)
     notes = Column(String(1000), nullable=True)
 

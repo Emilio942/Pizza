@@ -1,0 +1,77 @@
+{
+  "dataset_info": {
+    "task": "Aufgabe 2.1: Vorbereitung des gesamten Pizza-Verifier-Datensatzes",
+    "description": "Combined pizza verifier dataset with food safety weighting and train/val/test splits",
+    "total_samples": 60,
+    "positive_samples": 29,
+    "negative_samples": 31,
+    "food_safety_critical": 16,
+    "splits": {
+      "train": {
+        "samples": 48,
+        "percentage": 80.0
+      },
+      "validation": {
+        "samples": 6,
+        "percentage": 10.0
+      },
+      "test": {
+        "samples": 6,
+        "percentage": 10.0
+      }
+    },
+    "quality_distribution": {
+      "positive_ratio": 0.4833,
+      "negative_ratio": 0.5167,
+      "food_safety_ratio": 0.2667
+    }
+  },
+  "split_details": {
+    "train": {
+      "total_count": 48,
+      "class_distribution": {
+        "combined": 8,
+        "progression": 10,
+        "burnt": 8,
+        "basic": 6,
+        "mixed": 7,
+        "segment": 9
+      },
+      "quality_statistics": {
+        "mean": 0.4715,
+        "std": 0.2846,
+        "min": 0.0583,
+        "max": 0.8497
+      }
+    },
+    "validation": {
+      "total_count": 6,
+      "class_distribution": {
+        "mixed": 2,
+        "basic": 2,
+        "combined": 2
+      },
+      "quality_statistics": {
+        "mean": 0.5763,
+        "std": 0.1837,
+        "min": 0.3353,
+        "max": 0.7769
+      }
+    },
+    "test": {
+      "total_count": 6,
+      "class_distribution": {
+        "mixed": 1,
+        "basic": 2,
+        "segment": 1,
+        "burnt": 2
+      },
+      "quality_statistics": {
+        "mean": 0.3483,
+        "std": 0.2595,
+        "min": 0.1075,
+        "max": 0.7228
+      }
+    }
+  }
+}

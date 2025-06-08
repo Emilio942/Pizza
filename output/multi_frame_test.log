@@ -1,0 +1,54 @@
+2025-06-07 11:36:46,715 - INFO - 🍕 Starting Multi-Frame Spatial Analysis Pipeline...
+2025-06-07 11:36:47,199 - INFO - Initialized transform pipelines for dual-encoder preprocessing
+2025-06-07 11:36:47,199 - INFO - Edge-based depth estimation initialized
+2025-06-07 11:36:47,199 - INFO - Initialized SpatialPreprocessingPipeline with output_size=(518, 518), depth_method=edge_based
+2025-06-07 11:36:47,199 - INFO - ✅ Spatial preprocessing pipeline loaded
+2025-06-07 11:36:49.254505: I tensorflow/core/util/port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+2025-06-07 11:36:49.497934: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:467] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1749289009.596123   84165 cuda_dnn.cc:8579] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1749289009.621496   84165 cuda_blas.cc:1407] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+W0000 00:00:1749289009.850898   84165 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1749289009.850922   84165 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1749289009.850923   84165 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1749289009.850924   84165 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+2025-06-07 11:36:49.870172: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 AVX_VNNI FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2025-06-07 11:36:51,520 - INFO - set VIDEO_TOTAL_PIXELS: 90316800
+⚠️  Partial import: qwen_vl_utils available, using standard transformers models
+/home/emilio/Documents/ai/pizza/scripts/spatial_inference_optimized.py:134: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  self.scaler = GradScaler() if config.enable_amp and self.device.type == 'cuda' else None
+2025-06-07 11:36:51,556 - INFO - ✅ Initialized OptimizedSpatialInference on cuda
+2025-06-07 11:36:51,556 - INFO - ✅ Spatial inference system loaded
+2025-06-07 11:36:51,570 - INFO - 📷 Using existing pizza image: /home/emilio/Documents/ai/pizza/augmented_pizza/raw/sample_pizza_image.jpg
+2025-06-07 11:36:51,570 - INFO - 
+============================================================
+2025-06-07 11:36:51,570 - INFO - 🎬 Testing scenario: normal_baking
+2025-06-07 11:36:51,570 - INFO - ============================================================
+2025-06-07 11:36:51,570 - INFO - 🎬 Generating baking process video: normal_baking
+2025-06-07 11:36:51,575 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=1024x768 at 0x7B3933B8F0B0>: 'Image' object has no attribute 'read'
+2025-06-07 11:36:51,575 - WARNING - Spatial processing failed: 'visual_features', using fallback
+Traceback (most recent call last):
+  File "/home/emilio/Documents/ai/pizza/scripts/multi_frame_spatial_analysis.py", line 332, in process_video_frame
+    visual_tensor = spatial_result['visual_features'].squeeze(0)  # Remove batch dim
+                    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+KeyError: 'visual_features'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/emilio/Documents/ai/pizza/scripts/multi_frame_spatial_analysis.py", line 887, in <module>
+    main()
+  File "/home/emilio/Documents/ai/pizza/scripts/multi_frame_spatial_analysis.py", line 819, in main
+    video_frames = analyzer.generate_baking_process_video(pizza_image, scenario['video_id'])
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/emilio/Documents/ai/pizza/scripts/multi_frame_spatial_analysis.py", line 449, in generate_baking_process_video
+    spatial_frame = self.video_preprocessor.process_video_frame(pizza_image, frame_metadata)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/emilio/Documents/ai/pizza/scripts/multi_frame_spatial_analysis.py", line 337, in process_video_frame
+    spatial_tensor = self._create_fallback_spatial_data(visual_tensor)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/emilio/Documents/ai/pizza/scripts/multi_frame_spatial_analysis.py", line 358, in _create_fallback_spatial_data
+    B, F, C, H, W = visual_tensor.shape
+    ^^^^^^^^^^^^^
+ValueError: not enough values to unpack (expected 5, got 4)

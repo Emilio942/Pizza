@@ -1,0 +1,24 @@
+{
+  "timestamp": "2025-06-08 11:40:00",
+  "base_model": {
+    "path": null,
+    "size_kb": null,
+    "accuracy": null,
+    "ram_usage_kb": null,
+    "inference_time_ms": null
+  },
+  "pruned_models": {
+    "sparsity_10": {
+      "sparsity": 0.1,
+      "error": "Command '['/home/emilio/Documents/ai/pizza/.venv/bin/python', '/home/emilio/Documents/ai/pizza/scripts/pruning_tool.py', '--sparsity=0.1', '--fine_tune', '--fine_tune_epochs=5', '--quantize', '--output_dir=/home/emilio/Documents/ai/pizza/models/pruned_model']' returned non-zero exit status 1."
+    },
+    "sparsity_20": {
+      "sparsity": 0.2,
+      "error": "Command '['/home/emilio/Documents/ai/pizza/.venv/bin/python', '/home/emilio/Documents/ai/pizza/scripts/pruning_tool.py', '--sparsity=0.2', '--fine_tune', '--fine_tune_epochs=5', '--quantize', '--output_dir=/home/emilio/Documents/ai/pizza/models/pruned_model']' returned non-zero exit status 1."
+    },
+    "sparsity_30": {
+      "sparsity": 0.3,
+      "error": "Command '['/home/emilio/Documents/ai/pizza/.venv/bin/python', '/home/emilio/Documents/ai/pizza/scripts/pruning_tool.py', '--sparsity=0.3', '--fine_tune', '--fine_tune_epochs=5', '--quantize', '--output_dir=/home/emilio/Documents/ai/pizza/models/pruned_model']' returned non-zero exit status 1."
+    }
+  }
+}

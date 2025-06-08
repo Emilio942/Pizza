@@ -1,0 +1,218 @@
+WARNING:root:RP2040 emulator not available, using mock implementation
+INFO:__main__:CUDA available, using GPU: NVIDIA GeForce RTX 3060
+INFO:__main__:Pizza RL Trainer initialized on device: cuda
+INFO:__main__:Initializing Pizza RL components...
+WARNING:src.verification.pizza_verifier:Verifier model not found at None, using random initialization
+INFO:src.verification.pizza_verifier:Pizza verifier initialized on cuda
+INFO:src.integration.compatibility:CMSIS-NN export found: models/rp2040_export/pizza_model.c
+INFO:src.integration.compatibility:Model compatibility manager initialized on cuda
+WARNING:root:α,β-CROWN nicht gefunden. Formale Verifikation wird nicht verfügbar sein. Installiere mit: pip install auto_LiRPA
+INFO:src.integration.compatibility:Verifier integration initialized
+INFO:src.rl.pizza_rl_environment:Pizza verifier initialized successfully
+INFO:src.rl.pizza_rl_environment:Initialized MicroPizzaNet
+INFO:src.rl.pizza_rl_environment:Initialized MicroPizzaNetV2
+INFO:src.rl.pizza_rl_environment:Initialized MicroPizzaNetWithSE
+INFO:src.rl.pizza_rl_environment:Loaded 12 pizza tasks
+INFO:src.rl.pizza_rl_environment:Pizza RL Environment initialized with 15 max steps
+INFO:src.rl.pizza_rl_environment:Updated reward weights: accuracy=0.550, energy=0.250, speed=0.200
+INFO:src.rl.adaptive_pizza_policy:Initialized AdaptivePizzaRecognitionPolicy with 68394 parameters
+INFO:src.rl.ppo_pizza_agent:PPO Pizza Agent initialized with 68394 parameters
+INFO:pizza_rl_performance:Performance logger initialized
+INFO:__main__:✓ All components initialized successfully
+INFO:__main__:Starting Pizza RL Training...
+WARNING:__main__:Failed to initialize wandb: api_key not configured (no-tty). call wandb.login(key=[your_api_key])
+INFO:src.rl.ppo_pizza_agent:Starting PPO training for 500000 timesteps
+INFO:src.rl.ppo_pizza_agent:Iteration 1/122 (Steps: 4096/500000) - Reward: 6.544 - Accuracy: 0.739 - Energy Eff: 0.373 - Time: 71.5s
+INFO:src.rl.ppo_pizza_agent:Iteration 2/122 (Steps: 8192/500000) - Reward: 6.617 - Accuracy: 0.746 - Energy Eff: 0.366 - Time: 68.8s
+INFO:src.rl.ppo_pizza_agent:Iteration 3/122 (Steps: 12288/500000) - Reward: 6.699 - Accuracy: 0.745 - Energy Eff: 0.376 - Time: 73.0s
+INFO:src.rl.ppo_pizza_agent:Iteration 4/122 (Steps: 16384/500000) - Reward: 6.680 - Accuracy: 0.746 - Energy Eff: 0.377 - Time: 73.8s
+INFO:src.rl.ppo_pizza_agent:Iteration 5/122 (Steps: 20480/500000) - Reward: 6.747 - Accuracy: 0.743 - Energy Eff: 0.387 - Time: 73.1s
+INFO:src.rl.ppo_pizza_agent:Iteration 6/122 (Steps: 24576/500000) - Reward: 6.779 - Accuracy: 0.745 - Energy Eff: 0.399 - Time: 67.5s
+INFO:src.rl.ppo_pizza_agent:Iteration 7/122 (Steps: 28672/500000) - Reward: 6.796 - Accuracy: 0.744 - Energy Eff: 0.399 - Time: 72.9s
+INFO:src.rl.ppo_pizza_agent:Iteration 8/122 (Steps: 32768/500000) - Reward: 6.786 - Accuracy: 0.740 - Energy Eff: 0.412 - Time: 71.8s
+INFO:src.rl.ppo_pizza_agent:Iteration 9/122 (Steps: 36864/500000) - Reward: 6.837 - Accuracy: 0.741 - Energy Eff: 0.422 - Time: 69.6s
+INFO:src.rl.ppo_pizza_agent:Iteration 10/122 (Steps: 40960/500000) - Reward: 6.908 - Accuracy: 0.736 - Energy Eff: 0.447 - Time: 67.6s
+INFO:src.rl.ppo_pizza_agent:Iteration 11/122 (Steps: 45056/500000) - Reward: 7.005 - Accuracy: 0.738 - Energy Eff: 0.457 - Time: 67.3s
+INFO:src.rl.ppo_pizza_agent:Iteration 12/122 (Steps: 49152/500000) - Reward: 7.059 - Accuracy: 0.735 - Energy Eff: 0.474 - Time: 66.7s
+INFO:src.rl.ppo_pizza_agent:Iteration 13/122 (Steps: 53248/500000) - Reward: 7.042 - Accuracy: 0.735 - Energy Eff: 0.469 - Time: 66.9s
+INFO:src.rl.ppo_pizza_agent:Iteration 14/122 (Steps: 57344/500000) - Reward: 7.100 - Accuracy: 0.737 - Energy Eff: 0.478 - Time: 65.9s
+INFO:src.rl.ppo_pizza_agent:Iteration 15/122 (Steps: 61440/500000) - Reward: 7.055 - Accuracy: 0.732 - Energy Eff: 0.493 - Time: 66.4s
+INFO:src.rl.ppo_pizza_agent:Iteration 16/122 (Steps: 65536/500000) - Reward: 7.190 - Accuracy: 0.735 - Energy Eff: 0.501 - Time: 67.7s
+INFO:src.rl.ppo_pizza_agent:Iteration 17/122 (Steps: 69632/500000) - Reward: 7.174 - Accuracy: 0.728 - Energy Eff: 0.516 - Time: 72.8s
+INFO:src.rl.ppo_pizza_agent:Iteration 18/122 (Steps: 73728/500000) - Reward: 7.150 - Accuracy: 0.728 - Energy Eff: 0.523 - Time: 72.4s
+INFO:src.rl.ppo_pizza_agent:Iteration 19/122 (Steps: 77824/500000) - Reward: 7.239 - Accuracy: 0.725 - Energy Eff: 0.540 - Time: 74.1s
+INFO:src.rl.ppo_pizza_agent:Iteration 20/122 (Steps: 81920/500000) - Reward: 7.293 - Accuracy: 0.724 - Energy Eff: 0.553 - Time: 73.7s
+INFO:src.rl.ppo_pizza_agent:Iteration 21/122 (Steps: 86016/500000) - Reward: 7.437 - Accuracy: 0.727 - Energy Eff: 0.570 - Time: 76.0s
+INFO:src.rl.ppo_pizza_agent:Iteration 22/122 (Steps: 90112/500000) - Reward: 7.395 - Accuracy: 0.720 - Energy Eff: 0.590 - Time: 71.6s
+INFO:src.rl.ppo_pizza_agent:Iteration 23/122 (Steps: 94208/500000) - Reward: 7.395 - Accuracy: 0.723 - Energy Eff: 0.581 - Time: 70.2s
+INFO:src.rl.ppo_pizza_agent:Iteration 24/122 (Steps: 98304/500000) - Reward: 7.436 - Accuracy: 0.724 - Energy Eff: 0.593 - Time: 73.9s
+INFO:src.rl.ppo_pizza_agent:Iteration 25/122 (Steps: 102400/500000) - Reward: 7.479 - Accuracy: 0.721 - Energy Eff: 0.598 - Time: 71.5s
+INFO:src.rl.ppo_pizza_agent:Checkpoint saved to /home/emilio/Documents/ai/pizza/results/pizza_rl_training_comprehensive/checkpoints/checkpoint_iter_25.pth
+INFO:src.rl.ppo_pizza_agent:Iteration 26/122 (Steps: 106496/500000) - Reward: 7.566 - Accuracy: 0.719 - Energy Eff: 0.614 - Time: 74.2s
+INFO:src.rl.ppo_pizza_agent:Iteration 27/122 (Steps: 110592/500000) - Reward: 7.586 - Accuracy: 0.718 - Energy Eff: 0.628 - Time: 76.1s
+INFO:src.rl.ppo_pizza_agent:Iteration 28/122 (Steps: 114688/500000) - Reward: 7.610 - Accuracy: 0.721 - Energy Eff: 0.623 - Time: 75.6s
+INFO:src.rl.ppo_pizza_agent:Iteration 29/122 (Steps: 118784/500000) - Reward: 7.599 - Accuracy: 0.721 - Energy Eff: 0.623 - Time: 75.4s
+INFO:src.rl.ppo_pizza_agent:Iteration 30/122 (Steps: 122880/500000) - Reward: 7.634 - Accuracy: 0.718 - Energy Eff: 0.630 - Time: 74.6s
+INFO:src.rl.ppo_pizza_agent:Iteration 31/122 (Steps: 126976/500000) - Reward: 7.756 - Accuracy: 0.720 - Energy Eff: 0.650 - Time: 73.8s
+INFO:src.rl.ppo_pizza_agent:Iteration 32/122 (Steps: 131072/500000) - Reward: 7.790 - Accuracy: 0.718 - Energy Eff: 0.652 - Time: 72.0s
+INFO:src.rl.ppo_pizza_agent:Iteration 33/122 (Steps: 135168/500000) - Reward: 7.819 - Accuracy: 0.719 - Energy Eff: 0.653 - Time: 69.3s
+INFO:src.rl.ppo_pizza_agent:Iteration 34/122 (Steps: 139264/500000) - Reward: 7.777 - Accuracy: 0.715 - Energy Eff: 0.662 - Time: 69.4s
+INFO:src.rl.ppo_pizza_agent:Iteration 35/122 (Steps: 143360/500000) - Reward: 7.883 - Accuracy: 0.717 - Energy Eff: 0.671 - Time: 69.7s
+INFO:src.rl.ppo_pizza_agent:Iteration 36/122 (Steps: 147456/500000) - Reward: 7.799 - Accuracy: 0.711 - Energy Eff: 0.676 - Time: 69.9s
+INFO:src.rl.ppo_pizza_agent:Iteration 37/122 (Steps: 151552/500000) - Reward: 7.884 - Accuracy: 0.713 - Energy Eff: 0.679 - Time: 70.3s
+INFO:src.rl.ppo_pizza_agent:Iteration 38/122 (Steps: 155648/500000) - Reward: 7.907 - Accuracy: 0.713 - Energy Eff: 0.688 - Time: 70.5s
+INFO:src.rl.ppo_pizza_agent:Iteration 39/122 (Steps: 159744/500000) - Reward: 7.961 - Accuracy: 0.714 - Energy Eff: 0.687 - Time: 68.7s
+INFO:src.rl.ppo_pizza_agent:Iteration 40/122 (Steps: 163840/500000) - Reward: 7.965 - Accuracy: 0.712 - Energy Eff: 0.690 - Time: 69.3s
+INFO:src.rl.ppo_pizza_agent:Iteration 41/122 (Steps: 167936/500000) - Reward: 7.882 - Accuracy: 0.708 - Energy Eff: 0.692 - Time: 70.0s
+INFO:src.rl.ppo_pizza_agent:Iteration 42/122 (Steps: 172032/500000) - Reward: 7.991 - Accuracy: 0.707 - Energy Eff: 0.709 - Time: 68.5s
+INFO:src.rl.ppo_pizza_agent:Iteration 43/122 (Steps: 176128/500000) - Reward: 8.140 - Accuracy: 0.710 - Energy Eff: 0.720 - Time: 70.4s
+INFO:src.rl.ppo_pizza_agent:Iteration 44/122 (Steps: 180224/500000) - Reward: 8.080 - Accuracy: 0.707 - Energy Eff: 0.714 - Time: 69.9s
+INFO:src.rl.ppo_pizza_agent:Iteration 45/122 (Steps: 184320/500000) - Reward: 8.125 - Accuracy: 0.703 - Energy Eff: 0.730 - Time: 69.8s
+INFO:src.rl.ppo_pizza_agent:Iteration 46/122 (Steps: 188416/500000) - Reward: 8.181 - Accuracy: 0.707 - Energy Eff: 0.732 - Time: 69.5s
+INFO:src.rl.ppo_pizza_agent:Iteration 47/122 (Steps: 192512/500000) - Reward: 8.064 - Accuracy: 0.703 - Energy Eff: 0.726 - Time: 71.1s
+INFO:src.rl.ppo_pizza_agent:Iteration 48/122 (Steps: 196608/500000) - Reward: 8.125 - Accuracy: 0.707 - Energy Eff: 0.725 - Time: 70.4s
+INFO:src.rl.ppo_pizza_agent:Iteration 49/122 (Steps: 200704/500000) - Reward: 8.122 - Accuracy: 0.703 - Energy Eff: 0.729 - Time: 69.3s
+INFO:src.rl.ppo_pizza_agent:Iteration 50/122 (Steps: 204800/500000) - Reward: 8.110 - Accuracy: 0.701 - Energy Eff: 0.731 - Time: 70.4s
+INFO:src.rl.ppo_pizza_agent:Checkpoint saved to /home/emilio/Documents/ai/pizza/results/pizza_rl_training_comprehensive/checkpoints/checkpoint_iter_50.pth
+INFO:src.rl.ppo_pizza_agent:Iteration 51/122 (Steps: 208896/500000) - Reward: 8.228 - Accuracy: 0.709 - Energy Eff: 0.736 - Time: 70.2s
+INFO:src.rl.ppo_pizza_agent:Iteration 52/122 (Steps: 212992/500000) - Reward: 8.167 - Accuracy: 0.701 - Energy Eff: 0.737 - Time: 71.3s
+INFO:src.rl.ppo_pizza_agent:Iteration 53/122 (Steps: 217088/500000) - Reward: 8.262 - Accuracy: 0.707 - Energy Eff: 0.739 - Time: 70.2s
+INFO:src.rl.ppo_pizza_agent:Iteration 54/122 (Steps: 221184/500000) - Reward: 8.250 - Accuracy: 0.707 - Energy Eff: 0.742 - Time: 69.9s
+INFO:src.rl.ppo_pizza_agent:Iteration 55/122 (Steps: 225280/500000) - Reward: 8.254 - Accuracy: 0.710 - Energy Eff: 0.735 - Time: 71.4s
+INFO:src.rl.ppo_pizza_agent:Iteration 56/122 (Steps: 229376/500000) - Reward: 8.295 - Accuracy: 0.711 - Energy Eff: 0.740 - Time: 70.7s
+INFO:src.rl.ppo_pizza_agent:Iteration 57/122 (Steps: 233472/500000) - Reward: 8.266 - Accuracy: 0.707 - Energy Eff: 0.740 - Time: 70.0s
+INFO:src.rl.ppo_pizza_agent:Iteration 58/122 (Steps: 237568/500000) - Reward: 8.285 - Accuracy: 0.711 - Energy Eff: 0.740 - Time: 70.8s
+INFO:src.rl.ppo_pizza_agent:Iteration 59/122 (Steps: 241664/500000) - Reward: 8.319 - Accuracy: 0.710 - Energy Eff: 0.735 - Time: 70.6s
+INFO:src.rl.ppo_pizza_agent:Iteration 60/122 (Steps: 245760/500000) - Reward: 8.369 - Accuracy: 0.710 - Energy Eff: 0.744 - Time: 68.6s
+INFO:src.rl.ppo_pizza_agent:Iteration 61/122 (Steps: 249856/500000) - Reward: 8.311 - Accuracy: 0.710 - Energy Eff: 0.740 - Time: 69.6s
+INFO:src.rl.ppo_pizza_agent:Iteration 62/122 (Steps: 253952/500000) - Reward: 8.383 - Accuracy: 0.712 - Energy Eff: 0.743 - Time: 70.2s
+INFO:src.rl.ppo_pizza_agent:Iteration 63/122 (Steps: 258048/500000) - Reward: 8.357 - Accuracy: 0.711 - Energy Eff: 0.744 - Time: 69.4s
+INFO:src.rl.ppo_pizza_agent:Iteration 64/122 (Steps: 262144/500000) - Reward: 8.247 - Accuracy: 0.712 - Energy Eff: 0.737 - Time: 70.4s
+INFO:src.rl.ppo_pizza_agent:Iteration 65/122 (Steps: 266240/500000) - Reward: 8.319 - Accuracy: 0.709 - Energy Eff: 0.739 - Time: 71.5s
+INFO:src.rl.ppo_pizza_agent:Iteration 66/122 (Steps: 270336/500000) - Reward: 8.413 - Accuracy: 0.713 - Energy Eff: 0.749 - Time: 69.7s
+INFO:src.rl.ppo_pizza_agent:Iteration 67/122 (Steps: 274432/500000) - Reward: 8.414 - Accuracy: 0.716 - Energy Eff: 0.741 - Time: 70.4s
+INFO:src.rl.ppo_pizza_agent:Iteration 68/122 (Steps: 278528/500000) - Reward: 8.376 - Accuracy: 0.715 - Energy Eff: 0.736 - Time: 70.2s
+INFO:src.rl.ppo_pizza_agent:Iteration 69/122 (Steps: 282624/500000) - Reward: 8.431 - Accuracy: 0.716 - Energy Eff: 0.743 - Time: 71.1s
+INFO:src.rl.ppo_pizza_agent:Iteration 70/122 (Steps: 286720/500000) - Reward: 8.362 - Accuracy: 0.715 - Energy Eff: 0.737 - Time: 69.2s
+INFO:src.rl.ppo_pizza_agent:Iteration 71/122 (Steps: 290816/500000) - Reward: 8.318 - Accuracy: 0.713 - Energy Eff: 0.737 - Time: 69.7s
+INFO:src.rl.ppo_pizza_agent:Iteration 72/122 (Steps: 294912/500000) - Reward: 8.338 - Accuracy: 0.710 - Energy Eff: 0.744 - Time: 71.0s
+INFO:src.rl.ppo_pizza_agent:Iteration 73/122 (Steps: 299008/500000) - Reward: 8.376 - Accuracy: 0.716 - Energy Eff: 0.740 - Time: 69.7s
+INFO:src.rl.ppo_pizza_agent:Iteration 74/122 (Steps: 303104/500000) - Reward: 8.370 - Accuracy: 0.712 - Energy Eff: 0.739 - Time: 70.7s
+INFO:src.rl.ppo_pizza_agent:Iteration 75/122 (Steps: 307200/500000) - Reward: 8.346 - Accuracy: 0.713 - Energy Eff: 0.741 - Time: 68.0s
+INFO:src.rl.ppo_pizza_agent:Checkpoint saved to /home/emilio/Documents/ai/pizza/results/pizza_rl_training_comprehensive/checkpoints/checkpoint_iter_75.pth
+INFO:src.rl.ppo_pizza_agent:Iteration 76/122 (Steps: 311296/500000) - Reward: 8.293 - Accuracy: 0.712 - Energy Eff: 0.733 - Time: 69.6s
+INFO:src.rl.ppo_pizza_agent:Iteration 77/122 (Steps: 315392/500000) - Reward: 8.368 - Accuracy: 0.715 - Energy Eff: 0.736 - Time: 70.1s
+INFO:src.rl.ppo_pizza_agent:Iteration 78/122 (Steps: 319488/500000) - Reward: 8.293 - Accuracy: 0.713 - Energy Eff: 0.732 - Time: 69.8s
+INFO:src.rl.ppo_pizza_agent:Iteration 79/122 (Steps: 323584/500000) - Reward: 8.401 - Accuracy: 0.711 - Energy Eff: 0.743 - Time: 69.0s
+INFO:src.rl.ppo_pizza_agent:Iteration 80/122 (Steps: 327680/500000) - Reward: 8.353 - Accuracy: 0.715 - Energy Eff: 0.730 - Time: 69.9s
+INFO:src.rl.ppo_pizza_agent:Iteration 81/122 (Steps: 331776/500000) - Reward: 8.314 - Accuracy: 0.710 - Energy Eff: 0.733 - Time: 70.2s
+INFO:src.rl.ppo_pizza_agent:Iteration 82/122 (Steps: 335872/500000) - Reward: 8.327 - Accuracy: 0.711 - Energy Eff: 0.732 - Time: 69.6s
+INFO:src.rl.ppo_pizza_agent:Iteration 83/122 (Steps: 339968/500000) - Reward: 8.260 - Accuracy: 0.709 - Energy Eff: 0.731 - Time: 70.3s
+INFO:src.rl.ppo_pizza_agent:Iteration 84/122 (Steps: 344064/500000) - Reward: 8.269 - Accuracy: 0.708 - Energy Eff: 0.736 - Time: 70.1s
+INFO:src.rl.ppo_pizza_agent:Iteration 85/122 (Steps: 348160/500000) - Reward: 8.290 - Accuracy: 0.712 - Energy Eff: 0.736 - Time: 68.3s
+INFO:src.rl.ppo_pizza_agent:Iteration 86/122 (Steps: 352256/500000) - Reward: 8.318 - Accuracy: 0.712 - Energy Eff: 0.731 - Time: 71.0s
+INFO:src.rl.ppo_pizza_agent:Iteration 87/122 (Steps: 356352/500000) - Reward: 8.338 - Accuracy: 0.713 - Energy Eff: 0.732 - Time: 69.6s
+INFO:src.rl.ppo_pizza_agent:Iteration 88/122 (Steps: 360448/500000) - Reward: 8.322 - Accuracy: 0.714 - Energy Eff: 0.726 - Time: 69.3s
+INFO:src.rl.ppo_pizza_agent:Iteration 89/122 (Steps: 364544/500000) - Reward: 8.246 - Accuracy: 0.713 - Energy Eff: 0.725 - Time: 69.9s
+INFO:src.rl.ppo_pizza_agent:Iteration 90/122 (Steps: 368640/500000) - Reward: 8.363 - Accuracy: 0.714 - Energy Eff: 0.735 - Time: 72.5s
+INFO:src.rl.ppo_pizza_agent:Iteration 91/122 (Steps: 372736/500000) - Reward: 8.214 - Accuracy: 0.710 - Energy Eff: 0.733 - Time: 73.0s
+INFO:src.rl.ppo_pizza_agent:Iteration 92/122 (Steps: 376832/500000) - Reward: 8.363 - Accuracy: 0.714 - Energy Eff: 0.733 - Time: 74.6s
+INFO:src.rl.ppo_pizza_agent:Iteration 93/122 (Steps: 380928/500000) - Reward: 8.313 - Accuracy: 0.713 - Energy Eff: 0.733 - Time: 73.4s
+INFO:src.rl.ppo_pizza_agent:Iteration 94/122 (Steps: 385024/500000) - Reward: 8.335 - Accuracy: 0.713 - Energy Eff: 0.733 - Time: 72.8s
+INFO:src.rl.ppo_pizza_agent:Iteration 95/122 (Steps: 389120/500000) - Reward: 8.300 - Accuracy: 0.711 - Energy Eff: 0.730 - Time: 73.0s
+INFO:src.rl.ppo_pizza_agent:Iteration 96/122 (Steps: 393216/500000) - Reward: 8.342 - Accuracy: 0.713 - Energy Eff: 0.736 - Time: 70.3s
+INFO:src.rl.ppo_pizza_agent:Iteration 97/122 (Steps: 397312/500000) - Reward: 8.395 - Accuracy: 0.715 - Energy Eff: 0.734 - Time: 68.0s
+INFO:src.rl.ppo_pizza_agent:Iteration 98/122 (Steps: 401408/500000) - Reward: 8.353 - Accuracy: 0.713 - Energy Eff: 0.742 - Time: 68.5s
+INFO:src.rl.ppo_pizza_agent:Iteration 99/122 (Steps: 405504/500000) - Reward: 8.389 - Accuracy: 0.713 - Energy Eff: 0.741 - Time: 68.0s
+INFO:src.rl.ppo_pizza_agent:Iteration 100/122 (Steps: 409600/500000) - Reward: 8.403 - Accuracy: 0.715 - Energy Eff: 0.737 - Time: 72.5s
+INFO:src.rl.ppo_pizza_agent:Checkpoint saved to /home/emilio/Documents/ai/pizza/results/pizza_rl_training_comprehensive/checkpoints/checkpoint_iter_100.pth
+INFO:src.rl.ppo_pizza_agent:Iteration 101/122 (Steps: 413696/500000) - Reward: 8.290 - Accuracy: 0.709 - Energy Eff: 0.739 - Time: 73.1s
+INFO:src.rl.ppo_pizza_agent:Iteration 102/122 (Steps: 417792/500000) - Reward: 8.341 - Accuracy: 0.713 - Energy Eff: 0.736 - Time: 74.3s
+INFO:src.rl.ppo_pizza_agent:Iteration 103/122 (Steps: 421888/500000) - Reward: 8.266 - Accuracy: 0.712 - Energy Eff: 0.731 - Time: 72.6s
+INFO:src.rl.ppo_pizza_agent:Iteration 104/122 (Steps: 425984/500000) - Reward: 8.337 - Accuracy: 0.710 - Energy Eff: 0.736 - Time: 74.2s
+INFO:src.rl.ppo_pizza_agent:Iteration 105/122 (Steps: 430080/500000) - Reward: 8.343 - Accuracy: 0.711 - Energy Eff: 0.736 - Time: 68.7s
+INFO:src.rl.ppo_pizza_agent:Iteration 106/122 (Steps: 434176/500000) - Reward: 8.339 - Accuracy: 0.709 - Energy Eff: 0.746 - Time: 73.8s
+INFO:src.rl.ppo_pizza_agent:Iteration 107/122 (Steps: 438272/500000) - Reward: 8.270 - Accuracy: 0.708 - Energy Eff: 0.740 - Time: 69.7s
+INFO:src.rl.ppo_pizza_agent:Iteration 108/122 (Steps: 442368/500000) - Reward: 8.331 - Accuracy: 0.711 - Energy Eff: 0.739 - Time: 71.9s
+INFO:src.rl.ppo_pizza_agent:Iteration 109/122 (Steps: 446464/500000) - Reward: 8.295 - Accuracy: 0.713 - Energy Eff: 0.737 - Time: 74.3s
+INFO:src.rl.ppo_pizza_agent:Iteration 110/122 (Steps: 450560/500000) - Reward: 8.356 - Accuracy: 0.715 - Energy Eff: 0.734 - Time: 74.8s
+INFO:src.rl.ppo_pizza_agent:Iteration 111/122 (Steps: 454656/500000) - Reward: 8.301 - Accuracy: 0.714 - Energy Eff: 0.736 - Time: 75.7s
+INFO:src.rl.ppo_pizza_agent:Iteration 112/122 (Steps: 458752/500000) - Reward: 8.273 - Accuracy: 0.707 - Energy Eff: 0.740 - Time: 69.3s
+INFO:src.rl.ppo_pizza_agent:Iteration 113/122 (Steps: 462848/500000) - Reward: 8.388 - Accuracy: 0.715 - Energy Eff: 0.730 - Time: 73.8s
+INFO:src.rl.ppo_pizza_agent:Iteration 114/122 (Steps: 466944/500000) - Reward: 8.338 - Accuracy: 0.710 - Energy Eff: 0.740 - Time: 75.6s
+INFO:src.rl.ppo_pizza_agent:Iteration 115/122 (Steps: 471040/500000) - Reward: 8.253 - Accuracy: 0.707 - Energy Eff: 0.742 - Time: 74.1s
+INFO:src.rl.ppo_pizza_agent:Iteration 116/122 (Steps: 475136/500000) - Reward: 8.295 - Accuracy: 0.711 - Energy Eff: 0.738 - Time: 72.5s
+INFO:src.rl.ppo_pizza_agent:Iteration 117/122 (Steps: 479232/500000) - Reward: 8.334 - Accuracy: 0.711 - Energy Eff: 0.735 - Time: 70.8s
+INFO:src.rl.ppo_pizza_agent:Iteration 118/122 (Steps: 483328/500000) - Reward: 8.330 - Accuracy: 0.711 - Energy Eff: 0.736 - Time: 73.3s
+INFO:src.rl.ppo_pizza_agent:Iteration 119/122 (Steps: 487424/500000) - Reward: 8.340 - Accuracy: 0.712 - Energy Eff: 0.741 - Time: 68.7s
+INFO:src.rl.ppo_pizza_agent:Iteration 120/122 (Steps: 491520/500000) - Reward: 8.358 - Accuracy: 0.710 - Energy Eff: 0.745 - Time: 71.2s
+INFO:src.rl.ppo_pizza_agent:Iteration 121/122 (Steps: 495616/500000) - Reward: 8.301 - Accuracy: 0.713 - Energy Eff: 0.740 - Time: 74.6s
+INFO:src.rl.ppo_pizza_agent:Iteration 122/122 (Steps: 499712/500000) - Reward: 8.324 - Accuracy: 0.711 - Energy Eff: 0.745 - Time: 70.3s
+INFO:src.rl.ppo_pizza_agent:Training completed
+INFO:src.rl.ppo_pizza_agent:Evaluating agent for 5 episodes
+INFO:src.rl.ppo_pizza_agent:Evaluation results: {'mean_reward': np.float64(8.506897462290189), 'std_reward': np.float64(0.12268058565840277), 'mean_episode_length': np.float64(15.0), 'average_accuracy': np.float64(0.7051918322100678), 'average_energy_efficiency': np.float64(0.7757785641950707), 'average_inference_time': np.float64(70.0691986890404), 'success_rate': np.float64(1.0)}
+INFO:__main__:Training Summary:
+INFO:__main__:  Total Timesteps: 499712
+INFO:__main__:  Training Episodes: 33306
+INFO:__main__:  Iterations Completed: 122
+INFO:__main__:Final Evaluation:
+INFO:__main__:  Mean Reward: 8.507
+INFO:__main__:  Success Rate: 100.00%
+INFO:__main__:  Average Accuracy: 0.705
+INFO:__main__:  Average Energy Efficiency: 0.776
+INFO:__main__:Performing final comprehensive evaluation...
+INFO:__main__:Evaluating agent for 200 episodes...
+INFO:src.rl.ppo_pizza_agent:Evaluating agent for 200 episodes
+INFO:src.rl.ppo_pizza_agent:Evaluation results: {'mean_reward': np.float64(8.548973979575734), 'std_reward': np.float64(0.38006658726760645), 'mean_episode_length': np.float64(15.0), 'average_accuracy': np.float64(0.7104891773864366), 'average_energy_efficiency': np.float64(0.7759756272175394), 'average_inference_time': np.float64(70.00761649451889), 'success_rate': np.float64(1.0)}
+INFO:__main__:Evaluating scenario: standard_lighting
+INFO:src.rl.ppo_pizza_agent:Evaluating agent for 18 episodes
+INFO:src.rl.ppo_pizza_agent:Evaluation results: {'mean_reward': np.float64(8.55996135755175), 'std_reward': np.float64(0.4704538432171436), 'mean_episode_length': np.float64(15.0), 'average_accuracy': np.float64(0.7127851181096521), 'average_energy_efficiency': np.float64(0.7757437467057164), 'average_inference_time': np.float64(70.08007915446363), 'success_rate': np.float64(1.0)}
+INFO:src.rl.pizza_rl_environment:Environment configuration updated
+INFO:__main__:Evaluating scenario: low_light_conditions
+INFO:src.rl.ppo_pizza_agent:Evaluating agent for 18 episodes
+INFO:src.rl.ppo_pizza_agent:Evaluation results: {'mean_reward': np.float64(8.623785814925945), 'std_reward': np.float64(0.2623621424746806), 'mean_episode_length': np.float64(15.0), 'average_accuracy': np.float64(0.7147082413103998), 'average_energy_efficiency': np.float64(0.7759089333290738), 'average_inference_time': np.float64(70.02845833466442), 'success_rate': np.float64(1.0)}
+INFO:src.rl.pizza_rl_environment:Environment configuration updated
+INFO:__main__:Evaluating scenario: high_contrast_lighting
+INFO:src.rl.ppo_pizza_agent:Evaluating agent for 18 episodes
+INFO:src.rl.ppo_pizza_agent:Evaluation results: {'mean_reward': np.float64(8.551808136383515), 'std_reward': np.float64(0.3108289759529893), 'mean_episode_length': np.float64(15.0), 'average_accuracy': np.float64(0.7076086320680068), 'average_energy_efficiency': np.float64(0.7758000987787094), 'average_inference_time': np.float64(70.06246913165332), 'success_rate': np.float64(1.0)}
+INFO:src.rl.pizza_rl_environment:Environment configuration updated
+INFO:__main__:Evaluating scenario: temporal_sequence_analysis
+INFO:src.rl.ppo_pizza_agent:Evaluating agent for 18 episodes
+INFO:src.rl.ppo_pizza_agent:Evaluation results: {'mean_reward': np.float64(8.543322852114144), 'std_reward': np.float64(0.4311231202485517), 'mean_episode_length': np.float64(15.0), 'average_accuracy': np.float64(0.7094020537673329), 'average_energy_efficiency': np.float64(0.7760108421173579), 'average_inference_time': np.float64(69.99661183832566), 'success_rate': np.float64(1.0)}
+INFO:src.rl.pizza_rl_environment:Environment configuration updated
+INFO:__main__:Evaluating scenario: energy_constrained_operation
+INFO:src.rl.ppo_pizza_agent:Evaluating agent for 18 episodes
+INFO:src.rl.ppo_pizza_agent:Evaluation results: {'mean_reward': np.float64(8.3754468213862), 'std_reward': np.float64(0.37276852668001165), 'mean_episode_length': np.float64(15.0), 'average_accuracy': np.float64(0.704497479836879), 'average_energy_efficiency': np.float64(0.775982091630923), 'average_inference_time': np.float64(70.00559636533653), 'success_rate': np.float64(1.0)}
+INFO:src.rl.pizza_rl_environment:Environment configuration updated
+INFO:__main__:Evaluating scenario: speed_critical_detection
+INFO:src.rl.ppo_pizza_agent:Evaluating agent for 18 episodes
+INFO:src.rl.ppo_pizza_agent:Evaluation results: {'mean_reward': np.float64(8.484056507659643), 'std_reward': np.float64(0.3871628417041501), 'mean_episode_length': np.float64(15.0), 'average_accuracy': np.float64(0.7052091883882361), 'average_energy_efficiency': np.float64(0.775731851857318), 'average_inference_time': np.float64(70.08379629458811), 'success_rate': np.float64(1.0)}
+INFO:src.rl.pizza_rl_environment:Environment configuration updated
+INFO:__main__:Evaluating scenario: food_safety_critical
+INFO:src.rl.ppo_pizza_agent:Evaluating agent for 18 episodes
+INFO:src.rl.ppo_pizza_agent:Evaluation results: {'mean_reward': np.float64(8.45151732132421), 'std_reward': np.float64(0.40106141783043103), 'mean_episode_length': np.float64(15.0), 'average_accuracy': np.float64(0.7041699540194317), 'average_energy_efficiency': np.float64(0.7761328399271119), 'average_inference_time': np.float64(69.95848752277752), 'success_rate': np.float64(1.0)}
+INFO:src.rl.pizza_rl_environment:Environment configuration updated
+INFO:__main__:Evaluating scenario: production_environment
+INFO:src.rl.ppo_pizza_agent:Evaluating agent for 18 episodes
+INFO:src.rl.ppo_pizza_agent:Evaluation results: {'mean_reward': np.float64(8.567009280533593), 'std_reward': np.float64(0.4400559426020579), 'mean_episode_length': np.float64(15.0), 'average_accuracy': np.float64(0.7097729310633929), 'average_energy_efficiency': np.float64(0.7762760779833069), 'average_inference_time': np.float64(69.91372563021656), 'success_rate': np.float64(1.0)}
+INFO:src.rl.pizza_rl_environment:Environment configuration updated
+INFO:__main__:Evaluating scenario: burnt_vs_basic_confusion
+INFO:src.rl.ppo_pizza_agent:Evaluating agent for 18 episodes
+INFO:src.rl.ppo_pizza_agent:Evaluation results: {'mean_reward': np.float64(8.474358649972324), 'std_reward': np.float64(0.3326401864148048), 'mean_episode_length': np.float64(15.0), 'average_accuracy': np.float64(0.7008314077906616), 'average_energy_efficiency': np.float64(0.7760711375133793), 'average_inference_time': np.float64(69.97776952706896), 'success_rate': np.float64(1.0)}
+INFO:src.rl.pizza_rl_environment:Environment configuration updated
+INFO:__main__:Evaluating scenario: combined_vs_mixed_detection
+INFO:src.rl.ppo_pizza_agent:Evaluating agent for 18 episodes
+INFO:src.rl.ppo_pizza_agent:Evaluation results: {'mean_reward': np.float64(8.531928013856263), 'std_reward': np.float64(0.5870757349284589), 'mean_episode_length': np.float64(15.0), 'average_accuracy': np.float64(0.7101177502845396), 'average_energy_efficiency': np.float64(0.7754177746669046), 'average_inference_time': np.float64(70.18194541659227), 'success_rate': np.float64(1.0)}
+INFO:src.rl.pizza_rl_environment:Environment configuration updated
+INFO:__main__:Evaluating scenario: progression_stage_tracking
+INFO:src.rl.ppo_pizza_agent:Evaluating agent for 18 episodes
+INFO:src.rl.ppo_pizza_agent:Evaluation results: {'mean_reward': np.float64(8.415723128924336), 'std_reward': np.float64(0.3467711794307279), 'mean_episode_length': np.float64(15.0), 'average_accuracy': np.float64(0.7022153725594746), 'average_energy_efficiency': np.float64(0.7758547678999235), 'average_inference_time': np.float64(70.0453850312739), 'success_rate': np.float64(1.0)}
+INFO:src.rl.pizza_rl_environment:Environment configuration updated
+INFO:__main__:Evaluation Results:
+INFO:__main__:  Mean Reward: 8.549
+INFO:__main__:  Mean Episode Length: 15.0
+INFO:__main__:  Success Rate: 100.00%
+INFO:__main__:  Average Accuracy: 0.710
+INFO:__main__:  Average Energy Efficiency: 0.776
+INFO:__main__:Final results saved to: /home/emilio/Documents/ai/pizza/results/pizza_rl_training_comprehensive/final_results.json
+INFO:__main__:✓ Pizza RL Training completed successfully!
