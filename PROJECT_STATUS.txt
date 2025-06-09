@@ -1,1 +1,1 @@
-./docs/status/PROJECT_STATUS.txt
+/home/emilio/Documents/ai/pizza/PROJECT_STATUS.txt
