@@ -1,1 +1,1 @@
-docs/status/PROJECT_STATUS.txt
+./docs/status/PROJECT_STATUS.txt
