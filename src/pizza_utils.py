@@ -17,13 +17,15 @@ from typing import List, Tuple, Dict, Any, Optional, Union
 from src.constants import IMAGE_MEAN, IMAGE_STD, INPUT_SIZE
 
 
-def load_model(model_path: str, device: Optional[torch.device] = None) -> torch.nn.Module:
+def load_model(model_path: str, config: Optional[object] = None, device: Optional[torch.device] = None, quantized: bool = False) -> torch.nn.Module:
     """
     Load a pizza detection model from a path
     
     Args:
         model_path: Path to the model file
+        config: Configuration object (for compatibility)
         device: Device to load the model on (cpu or cuda)
+        quantized: Whether to load as quantized model (for compatibility)
         
     Returns:
         The loaded model
@@ -34,9 +36,30 @@ def load_model(model_path: str, device: Optional[torch.device] = None) -> torch.
     try:
         # Load model
         if Path(model_path).exists():
-            model = torch.jit.load(model_path, map_location=device)
-            model.eval()
-            return model
+            if model_path.endswith('.pth'):
+                # Load PyTorch state dict
+                state_dict = torch.load(model_path, map_location=device)
+                
+                # Import the model architecture
+                from .pizza_detector import MicroPizzaNet
+                model = MicroPizzaNet(num_classes=6)
+                
+                if isinstance(state_dict, dict) and 'state_dict' in state_dict:
+                    model.load_state_dict(state_dict['state_dict'])
+                elif isinstance(state_dict, dict):
+                    model.load_state_dict(state_dict)
+                else:
+                    # If it's already a model
+                    model = state_dict
+                
+                model.to(device)
+                model.eval()
+                return model
+            else:
+                # Load TorchScript model
+                model = torch.jit.load(model_path, map_location=device)
+                model.eval()
+                return model
         else:
             raise FileNotFoundError(f"Model file not found: {model_path}")
     except Exception as e:
@@ -72,7 +95,7 @@ def preprocess_image(image_path: Union[str, Path], img_size: int = INPUT_SIZE) -
 
 
 def get_prediction(model: torch.nn.Module, img_input: Union[str, torch.Tensor], 
-                  img_size: int = INPUT_SIZE, class_names: List[str] = None) -> Tuple[str, float]:
+                  img_size: int = INPUT_SIZE, class_names: List[str] = None) -> Tuple[str, Union[float, Dict[str, float]]]:
     """
     Get prediction for an image
     
@@ -83,7 +106,7 @@ def get_prediction(model: torch.nn.Module, img_input: Union[str, torch.Tensor],
         class_names: List of class names
         
     Returns:
-        Tuple of (predicted class name, probability)
+        Tuple of (predicted class name, probability or dict of all probabilities)
     """
     # Set device
     device = next(model.parameters()).device
@@ -110,10 +133,29 @@ def get_prediction(model: torch.nn.Module, img_input: Union[str, torch.Tensor],
     # Get class name
     if class_names is not None:
         predicted_class = class_names[predicted_idx]
+        # Return all class probabilities as dictionary
+        all_probs = {}
+        prob_values = probs[0].cpu().numpy()
+        for i, class_name in enumerate(class_names):
+            all_probs[class_name] = float(prob_values[i])
+        return predicted_class, all_probs
     else:
         predicted_class = str(predicted_idx)
+        return predicted_class, confidence_val
+    confidence_val = confidence.item()
     
-    return predicted_class, confidence_val
+    # Get class name
+    if class_names is not None:
+        predicted_class = class_names[predicted_idx]
+        # Return all class probabilities as dictionary
+        all_probs = {}
+        prob_values = probs[0].cpu().numpy()
+        for i, class_name in enumerate(class_names):
+            all_probs[class_name] = float(prob_values[i])
+        return predicted_class, all_probs
+    else:
+        predicted_class = str(predicted_idx)
+        return predicted_class, confidence_val
 
 
 def evaluate_model(model, data_loader, device=None, class_names=None):

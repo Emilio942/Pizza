@@ -26,10 +26,11 @@ OUTPUT_DIR = os.path.join(PROJECT_ROOT, "output")
 
 # Hardware constants
 RP2040_CLOCK_SPEED = 133  # MHz
+RP2040_CLOCK_SPEED_MHZ = 133  # MHz - for compatibility
 RP2040_RAM = 264  # KB
+RP2040_RAM_SIZE_KB = 264  # KB - for compatibility
 RP2040_FLASH = 2048  # KB
-RP2040_FLASH_SIZE_KB = 2048  # Duplicate for compatibility
-RP2040_RAM_SIZE_KB = 264  # Duplicate for compatibility
+RP2040_FLASH_SIZE_KB = 2048  # KB - for compatibility
 
 # Camera parameters
 CAMERA_WIDTH = 320
