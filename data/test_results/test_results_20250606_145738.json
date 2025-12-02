@@ -1,0 +1,400 @@
+{
+  "test_config": {
+    "num_images": 9,
+    "hardware_backend": "cuda",
+    "batch_size": 4,
+    "mixed_precision": true
+  },
+  "single_image_tests": [
+    {
+      "success": true,
+      "image_path": "/home/emilio/Documents/ai/pizza/data/raw/IMG_20250326_125055_237.jpg",
+      "image_size": [
+        8000,
+        6000
+      ],
+      "load_time": 0.2187197208404541,
+      "inference_time": 2.6353344917297363,
+      "total_time": 2.8540565967559814,
+      "results": {
+        "success": false,
+        "prediction": null,
+        "confidence": 0.0,
+        "processing_time": 0.0,
+        "error": "The size of tensor a (2048) must match the size of tensor b (1024) at non-singleton dimension 2"
+      },
+      "memory_usage": {
+        "cpu_memory_mb": 2013.6484375,
+        "cpu_memory_percent": 6.311198988727247,
+        "gpu_memory_allocated_mb": 7173.671875,
+        "gpu_memory_reserved_mb": 7832.0,
+        "gpu_memory_cached_mb": 7832.0
+      }
+    },
+    {
+      "success": true,
+      "image_path": "/home/emilio/Documents/ai/pizza/data/raw/IMG_20250326_125053_324.jpg",
+      "image_size": [
+        8000,
+        6000
+      ],
+      "load_time": 0.22095608711242676,
+      "inference_time": 2.570829153060913,
+      "total_time": 2.7917861938476562,
+      "results": {
+        "success": false,
+        "prediction": null,
+        "confidence": 0.0,
+        "processing_time": 0.0,
+        "error": "The size of tensor a (2048) must match the size of tensor b (1024) at non-singleton dimension 2"
+      },
+      "memory_usage": {
+        "cpu_memory_mb": 2216.125,
+        "cpu_memory_percent": 6.94580324868311,
+        "gpu_memory_allocated_mb": 7173.671875,
+        "gpu_memory_reserved_mb": 7832.0,
+        "gpu_memory_cached_mb": 7832.0
+      }
+    },
+    {
+      "success": true,
+      "image_path": "/home/emilio/Documents/ai/pizza/data/raw/IMG_20250326_125040_326.jpg",
+      "image_size": [
+        6000,
+        8000
+      ],
+      "load_time": 0.20079684257507324,
+      "inference_time": 2.6634931564331055,
+      "total_time": 2.8642914295196533,
+      "results": {
+        "success": false,
+        "prediction": null,
+        "confidence": 0.0,
+        "processing_time": 0.0,
+        "error": "The size of tensor a (2048) must match the size of tensor b (1024) at non-singleton dimension 2"
+      },
+      "memory_usage": {
+        "cpu_memory_mb": 2221.859375,
+        "cpu_memory_percent": 6.963775989617926,
+        "gpu_memory_allocated_mb": 7173.671875,
+        "gpu_memory_reserved_mb": 7832.0,
+        "gpu_memory_cached_mb": 7832.0
+      }
+    },
+    {
+      "success": true,
+      "image_path": "/home/emilio/Documents/ai/pizza/data/test_new_images/basic/test_basic_challenging_backlit_angle_side_motion_blur_20250520_211427_000.jpg",
+      "image_size": [
+        320,
+        240
+      ],
+      "load_time": 0.0005919933319091797,
+      "inference_time": 0.03339982032775879,
+      "total_time": 0.03399205207824707,
+      "results": {
+        "success": false,
+        "prediction": null,
+        "confidence": 0.0,
+        "processing_time": 0.0,
+        "error": "The size of tensor a (2048) must match the size of tensor b (1024) at non-singleton dimension 2"
+      },
+      "memory_usage": {
+        "cpu_memory_mb": 2014.0,
+        "cpu_memory_percent": 6.312300859765485,
+        "gpu_memory_allocated_mb": 7173.671875,
+        "gpu_memory_reserved_mb": 7832.0,
+        "gpu_memory_cached_mb": 7832.0
+      }
+    },
+    {
+      "success": true,
+      "image_path": "/home/emilio/Documents/ai/pizza/data/test_new_images/basic/test_basic_challenging_dark_angle_top_jpeg_artifact_20250520_211427_008.jpg",
+      "image_size": [
+        320,
+        240
+      ],
+      "load_time": 0.00038242340087890625,
+      "inference_time": 0.031923770904541016,
+      "total_time": 0.03230643272399902,
+      "results": {
+        "success": false,
+        "prediction": null,
+        "confidence": 0.0,
+        "processing_time": 0.0,
+        "error": "The size of tensor a (2048) must match the size of tensor b (1024) at non-singleton dimension 2"
+      },
+      "memory_usage": {
+        "cpu_memory_mb": 2014.0,
+        "cpu_memory_percent": 6.312300859765485,
+        "gpu_memory_allocated_mb": 7173.671875,
+        "gpu_memory_reserved_mb": 7832.0,
+        "gpu_memory_cached_mb": 7832.0
+      }
+    }
+  ],
+  "batch_tests": [
+    {
+      "success": true,
+      "num_images": 2,
+      "batch_size": 1,
+      "total_time": 6.952209949493408,
+      "images_per_second": 0.28767830870034866,
+      "results": [
+        {
+          "success": true,
+          "prediction": "basic",
+          "confidence": 0.9,
+          "processing_time": 3.4681252241134644,
+          "error": null,
+          "image_path": "/home/emilio/Documents/ai/pizza/data/raw/IMG_20250326_125055_237.jpg"
+        },
+        {
+          "success": true,
+          "prediction": "basic",
+          "confidence": 0.9,
+          "processing_time": 3.4682801961898804,
+          "error": null,
+          "image_path": "/home/emilio/Documents/ai/pizza/data/raw/IMG_20250326_125053_324.jpg"
+        }
+      ],
+      "memory_usage": {
+        "cpu_memory_mb": 2317.83984375,
+        "cpu_memory_percent": 7.264599026068433,
+        "gpu_memory_allocated_mb": 7189.921875,
+        "gpu_memory_reserved_mb": 7838.0,
+        "gpu_memory_cached_mb": 7838.0
+      }
+    },
+    {
+      "success": true,
+      "num_images": 4,
+      "batch_size": 2,
+      "total_time": 10.021585941314697,
+      "images_per_second": 0.3991384221443152,
+      "results": [
+        {
+          "success": true,
+          "prediction": "basic",
+          "confidence": 0.9,
+          "processing_time": 2.5051501393318176,
+          "error": null,
+          "image_path": "/home/emilio/Documents/ai/pizza/data/raw/IMG_20250326_125055_237.jpg"
+        },
+        {
+          "success": true,
+          "prediction": "basic",
+          "confidence": 0.9,
+          "processing_time": 2.505226790904999,
+          "error": null,
+          "image_path": "/home/emilio/Documents/ai/pizza/data/raw/IMG_20250326_125053_324.jpg"
+        },
+        {
+          "success": true,
+          "prediction": "basic",
+          "confidence": 0.9,
+          "processing_time": 2.5053086280822754,
+          "error": null,
+          "image_path": "/home/emilio/Documents/ai/pizza/data/raw/IMG_20250326_125040_326.jpg"
+        },
+        {
+          "success": true,
+          "prediction": "basic",
+          "confidence": 0.9,
+          "processing_time": 2.505349814891815,
+          "error": null,
+          "image_path": "/home/emilio/Documents/ai/pizza/data/test_new_images/basic/test_basic_challenging_backlit_angle_side_motion_blur_20250520_211427_000.jpg"
+        }
+      ],
+      "memory_usage": {
+        "cpu_memory_mb": 2520.83203125,
+        "cpu_memory_percent": 7.900819363547046,
+        "gpu_memory_allocated_mb": 7189.921875,
+        "gpu_memory_reserved_mb": 7838.0,
+        "gpu_memory_cached_mb": 7838.0
+      }
+    },
+    {
+      "success": true,
+      "num_images": 8,
+      "batch_size": 4,
+      "total_time": 10.72360897064209,
+      "images_per_second": 0.7460175041724773,
+      "results": [
+        {
+          "success": true,
+          "prediction": "basic",
+          "confidence": 0.9,
+          "processing_time": 1.3402400016784668,
+          "error": null,
+          "image_path": "/home/emilio/Documents/ai/pizza/data/raw/IMG_20250326_125055_237.jpg"
+        },
+        {
+          "success": true,
+          "prediction": "basic",
+          "confidence": 0.9,
+          "processing_time": 1.3402793407440186,
+          "error": null,
+          "image_path": "/home/emilio/Documents/ai/pizza/data/raw/IMG_20250326_125053_324.jpg"
+        },
+        {
+          "success": true,
+          "prediction": "basic",
+          "confidence": 0.9,
+          "processing_time": 1.3403039574623108,
+          "error": null,
+          "image_path": "/home/emilio/Documents/ai/pizza/data/raw/IMG_20250326_125040_326.jpg"
+        },
+        {
+          "success": true,
+          "prediction": "basic",
+          "confidence": 0.9,
+          "processing_time": 1.3403480350971222,
+          "error": null,
+          "image_path": "/home/emilio/Documents/ai/pizza/data/test_new_images/basic/test_basic_challenging_backlit_angle_side_motion_blur_20250520_211427_000.jpg"
+        },
+        {
+          "success": true,
+          "prediction": "basic",
+          "confidence": 0.9,
+          "processing_time": 1.3403675854206085,
+          "error": null,
+          "image_path": "/home/emilio/Documents/ai/pizza/data/test_new_images/basic/test_basic_challenging_dark_angle_top_jpeg_artifact_20250520_211427_008.jpg"
+        },
+        {
+          "success": true,
+          "prediction": "basic",
+          "confidence": 0.9,
+          "processing_time": 1.3403870463371277,
+          "error": null,
+          "image_path": "/home/emilio/Documents/ai/pizza/data/test_new_images/basic/test_basic_challenging_bright_normal_blurry_20250520_211411_008.jpg"
+        },
+        {
+          "success": true,
+          "prediction": "basic",
+          "confidence": 0.9,
+          "processing_time": 1.3404062390327454,
+          "error": null,
+          "image_path": "/home/emilio/Documents/ai/pizza/data/test_new_images/burnt/test_burnt_challenging_uneven_angle_diagonal_blurry_20250520_211411_012.jpg"
+        },
+        {
+          "success": true,
+          "prediction": "basic",
+          "confidence": 0.9,
+          "processing_time": 1.3404255211353302,
+          "error": null,
+          "image_path": "/home/emilio/Documents/ai/pizza/data/test_new_images/burnt/test_burnt_challenging_low_contrast_angle_side_normal_20250520_211427_007.jpg"
+        }
+      ],
+      "memory_usage": {
+        "cpu_memory_mb": 2521.53515625,
+        "cpu_memory_percent": 7.903023105623522,
+        "gpu_memory_allocated_mb": 7189.921875,
+        "gpu_memory_reserved_mb": 7838.0,
+        "gpu_memory_cached_mb": 7838.0
+      }
+    }
+  ],
+  "memory_tests": {
+    "batch_1": {
+      "batch_size": 1,
+      "success": true,
+      "memory_usage": {
+        "cpu_memory_mb": 2324.0234375,
+        "cpu_memory_percent": 7.2839797133298845,
+        "gpu_memory_allocated_mb": 7189.921875,
+        "gpu_memory_reserved_mb": 7838.0,
+        "gpu_memory_cached_mb": 7838.0
+      },
+      "images_per_second": 0.3061858043744458
+    },
+    "batch_2": {
+      "batch_size": 2,
+      "success": true,
+      "memory_usage": {
+        "cpu_memory_mb": 2521.74609375,
+        "cpu_memory_percent": 7.9036842282464645,
+        "gpu_memory_allocated_mb": 7189.921875,
+        "gpu_memory_reserved_mb": 7838.0,
+        "gpu_memory_cached_mb": 7838.0
+      },
+      "images_per_second": 0.4062228559726194
+    },
+    "batch_4": {
+      "batch_size": 4,
+      "success": true,
+      "memory_usage": {
+        "cpu_memory_mb": 2521.546875,
+        "cpu_memory_percent": 7.90305983465813,
+        "gpu_memory_allocated_mb": 7189.921875,
+        "gpu_memory_reserved_mb": 7838.0,
+        "gpu_memory_cached_mb": 7838.0
+      },
+      "images_per_second": 0.7411542826830385
+    },
+    "batch_8": {
+      "batch_size": 8,
+      "success": true,
+      "memory_usage": {
+        "cpu_memory_mb": 2324.10546875,
+        "cpu_memory_percent": 7.28423681657214,
+        "gpu_memory_allocated_mb": 7189.921875,
+        "gpu_memory_reserved_mb": 7838.0,
+        "gpu_memory_cached_mb": 7838.0
+      },
+      "images_per_second": 0.8150329494849413
+    }
+  },
+  "device_tests": {
+    "cpu": {
+      "success": true,
+      "device": "cpu",
+      "total_time": 4.935914993286133,
+      "memory_usage": {
+        "cpu_memory_mb": 17329.171875,
+        "cpu_memory_percent": 54.31328030068836,
+        "gpu_memory_allocated_mb": 7189.921875,
+        "gpu_memory_reserved_mb": 7838.0,
+        "gpu_memory_cached_mb": 7838.0
+      },
+      "mixed_precision": false
+    },
+    "cuda": {
+      "success": true,
+      "device": "cuda",
+      "total_time": 0.5126771926879883,
+      "memory_usage": {
+        "cpu_memory_mb": 8316.734375,
+        "cpu_memory_percent": 26.066399973065373,
+        "gpu_memory_allocated_mb": 10234.97998046875,
+        "gpu_memory_reserved_mb": 11222.0,
+        "gpu_memory_cached_mb": 11222.0
+      },
+      "mixed_precision": true
+    }
+  },
+  "quantization_tests": {
+    "without_opt": {
+      "total_time": 1.0309779644012451,
+      "images_per_second": 3.8798113423530403,
+      "memory_usage": {
+        "cpu_memory_mb": 19910.5,
+        "cpu_memory_percent": 62.4037071838931,
+        "gpu_memory_allocated_mb": 11285.2138671875,
+        "gpu_memory_reserved_mb": 11342.0,
+        "gpu_memory_cached_mb": 11342.0
+      }
+    },
+    "with_opt": {
+      "total_time": 1.0207812786102295,
+      "images_per_second": 3.9185671640117743,
+      "memory_usage": {
+        "cpu_memory_mb": 19910.48046875,
+        "cpu_memory_percent": 62.40364596883542,
+        "gpu_memory_allocated_mb": 11285.2138671875,
+        "gpu_memory_reserved_mb": 11342.0,
+        "gpu_memory_cached_mb": 11342.0
+      }
+    },
+    "speedup": 1.009989099530605
+  }
+}

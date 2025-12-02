@@ -1,0 +1,211 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pizza Verifier Evaluation Report - Aufgabe 2.3</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; line-height: 1.6; }
+        .header { background: #2c3e50; color: white; padding: 20px; border-radius: 8px; }
+        .metric-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin: 20px 0; }
+        .metric-card { background: #f8f9fa; padding: 15px; border-left: 4px solid #3498db; border-radius: 4px; }
+        .metric-value { font-size: 24px; font-weight: bold; color: #2c3e50; }
+        .metric-label { color: #7f8c8d; font-size: 14px; }
+        .visualization { margin: 20px 0; text-align: center; }
+        .visualization img { max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 4px; }
+        .table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        .table th, .table td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
+        .table th { background-color: #f2f2f2; }
+        .warning { background: #fff3cd; border: 1px solid #ffeaa7; padding: 10px; border-radius: 4px; }
+        .success { background: #d4edda; border: 1px solid #c3e6cb; padding: 10px; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🍕 Pizza Verifier Evaluation Report</h1>
+        <h2>Aufgabe 2.3: Evaluation des Pizza-Verifier-Modells</h2>
+        <p>Generated: 20250608_113702</p>
+        <p>Comprehensive evaluation with formal verification integration</p>
+    </div>
+    
+    <h2>📊 Executive Summary</h2>
+    <div class="metric-grid">
+
+        <div class="metric-card">
+            <div class="metric-value">MicroPizzaNet</div>
+            <div class="metric-label">Best Performing Model</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value">0.124</div>
+            <div class="metric-label">Best R² Score</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value">0.000</div>
+            <div class="metric-label">Avg Food Safety Error Rate</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value">1</div>
+            <div class="metric-label">Models Evaluated</div>
+        </div>
+
+    </div>
+    
+    <h2>📈 Pizza-Specific Quality Metrics</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Model Type</th>
+                <th>MSE</th>
+                <th>R² Score</th>
+                <th>Spearman ρ</th>
+                <th>Accuracy</th>
+                <th>Safety Error Rate</th>
+                <th>Sample Count</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            <tr>
+                <td><strong>MicroPizzaNet</strong></td>
+                <td>0.0713</td>
+                <td>0.1238</td>
+                <td>1.0000</td>
+                <td>0.2103</td>
+                <td class="success">0.0000</td>
+                <td>428</td>
+            </tr>
+
+        </tbody>
+    </table>
+
+    <h2>🚨 Food Safety Critical Analysis</h2>
+    <div class="warning">
+        <h3>Food Safety Error Analysis</h3>
+        <p>Special attention to raw vs. cooked misclassifications:</p>
+        <ul>
+
+            <li><strong>MicroPizzaNet</strong>: 0.0% safety errors - <em>ACCEPTABLE</em></li>
+
+        </ul>
+    </div>
+
+    <h2>🎯 Class-Specific Performance Analysis</h2>
+    <p>Performance breakdown by pizza class:</p>
+
+    <h3>MicroPizzaNet</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Pizza Class</th>
+                <th>Sample Count</th>
+                <th>Accuracy</th>
+                <th>Avg Quality (True)</th>
+                <th>Avg Quality (Predicted)</th>
+                <th>Quality Correlation</th>
+            </tr>
+        </thead>
+        <tbody>
+
+                    <tr>
+                        <td><strong>progression</strong></td>
+                        <td>80</td>
+                        <td>0.875</td>
+                        <td>0.663</td>
+                        <td>0.154</td>
+                        <td>1.000</td>
+                    </tr>
+
+                    <tr>
+                        <td><strong>mixed</strong></td>
+                        <td>80</td>
+                        <td>0.000</td>
+                        <td>0.050</td>
+                        <td>0.050</td>
+                        <td>1.000</td>
+                    </tr>
+
+                    <tr>
+                        <td><strong>basic</strong></td>
+                        <td>50</td>
+                        <td>0.400</td>
+                        <td>0.330</td>
+                        <td>0.097</td>
+                        <td>1.000</td>
+                    </tr>
+
+                    <tr>
+                        <td><strong>segment</strong></td>
+                        <td>80</td>
+                        <td>0.000</td>
+                        <td>0.050</td>
+                        <td>0.050</td>
+                        <td>1.000</td>
+                    </tr>
+
+                    <tr>
+                        <td><strong>combined</strong></td>
+                        <td>80</td>
+                        <td>0.000</td>
+                        <td>0.050</td>
+                        <td>0.050</td>
+                        <td>1.000</td>
+                    </tr>
+
+                    <tr>
+                        <td><strong>burnt</strong></td>
+                        <td>58</td>
+                        <td>0.000</td>
+                        <td>0.050</td>
+                        <td>0.050</td>
+                        <td>1.000</td>
+                    </tr>
+
+                </tbody>
+            </table>
+
+    <h2>📊 Visualizations</h2>
+
+    <div class="visualization">
+        <h3>Quality Score Correlation.Png</h3>
+        <img src="quality_score_correlation.png" alt="quality_score_correlation.png">
+    </div>
+
+    <div class="visualization">
+        <h3>Model Performance Comparison.Png</h3>
+        <img src="model_performance_comparison.png" alt="model_performance_comparison.png">
+    </div>
+
+    <div class="visualization">
+        <h3>Class Performance Heatmap.Png</h3>
+        <img src="class_performance_heatmap.png" alt="class_performance_heatmap.png">
+    </div>
+
+    <h2>💡 Recommendations</h2>
+    <div class="success">
+        <h3>Key Findings and Recommendations:</h3>
+        <ul>
+<li>⚠️ Quality prediction needs improvement - best R² is only 0.124</li><li>✅ Food safety error rate is acceptable (0.0%)</li>
+            <li>🔄 Continue monitoring verifier performance with production data</li>
+            <li>📈 Consider retraining with expanded dataset for improved generalization</li>
+            <li>🎯 Focus on class-specific improvements for underperforming pizza types</li>
+        </ul>
+    </div>
+    
+    <h2>🔧 Technical Details</h2>
+    <p><strong>Evaluation Configuration:</strong></p>
+    <ul>
+        <li>Test Data Directory: data/test/</li>
+        <li>Formal Verification: Enabled</li>
+        <li>Device: cpu</li>
+        <li>Pizza Classes: basic, burnt, combined, mixed, progression, segment</li>
+    </ul>
+    
+    <p><strong>Metrics Explained:</strong></p>
+    <ul>
+        <li><strong>MSE</strong>: Mean Squared Error between predicted and true quality scores</li>
+        <li><strong>R² Score</strong>: Coefficient of determination (higher is better, max 1.0)</li>
+        <li><strong>Spearman ρ</strong>: Rank correlation coefficient for quality score ordering</li>
+        <li><strong>Safety Error Rate</strong>: Proportion of food safety critical misclassifications</li>
+    </ul>
+    
+</body>
+</html>

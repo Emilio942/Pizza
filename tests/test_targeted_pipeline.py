@@ -22,9 +22,7 @@ def test_basic_imports():
         print("✓ Core dependencies available")
     except ImportError as e:
         print(f"✗ Core dependency missing: {e}")
-        return False
-    
-    return True
+        assert False, f"Core dependency missing: {e}"
 
 def test_configuration():
     """Test the configuration dataclass"""
@@ -47,11 +45,10 @@ def test_configuration():
         
         config = TestTargetedGenerationConfig()
         print(f"✓ Configuration created: {config.model_type}")
-        return True
         
     except Exception as e:
         print(f"✗ Configuration test failed: {e}")
-        return False
+        assert False, f"Configuration test failed: {e}"
 
 def test_property_templates():
     """Test the property template definitions"""
@@ -84,11 +81,10 @@ def test_property_templates():
         }
         
         print(f"✓ Templates defined: {len(LIGHTING_CONDITION_TEMPLATES)} lighting, {len(BURN_LEVEL_TEMPLATES)} burn levels")
-        return True
         
     except Exception as e:
         print(f"✗ Template test failed: {e}")
-        return False
+        assert False, f"Template test failed: {e}"
 
 def test_property_verification():
     """Test the property verification logic"""
@@ -136,13 +132,11 @@ def test_property_verification():
         verified, score, metrics = verifier.verify_lighting_condition(test_image, "overhead_harsh")
         print(f"✓ Verification test completed: verified={verified}, score={score:.3f}")
         
-        return True
-        
     except Exception as e:
         print(f"✗ Property verification test failed: {e}")
         import traceback
         traceback.print_exc()
-        return False
+        assert False, f"Property verification test failed: {e}"
 
 def test_output_structure():
     """Test output directory structure creation"""
@@ -169,48 +163,8 @@ def test_output_structure():
         import shutil
         shutil.rmtree(test_output_dir)
         
-        return True
-        
     except Exception as e:
         print(f"✗ Output structure test failed: {e}")
-        return False
+        assert False, f"Output structure test failed: {e}"
 
-def main():
-    """Run all tests"""
-    print("=== Testing Targeted Diffusion Pipeline ===\n")
-    
-    tests = [
-        test_basic_imports,
-        test_configuration,
-        test_property_templates,
-        test_property_verification,
-        test_output_structure
-    ]
-    
-    passed = 0
-    total = len(tests)
-    
-    for test in tests:
-        try:
-            if test():
-                passed += 1
-            print()
-        except Exception as e:
-            print(f"✗ Test {test.__name__} failed with exception: {e}")
-            print()
-    
-    print(f"=== Test Results: {passed}/{total} passed ===")
-    
-    if passed == total:
-        print("\n✓ All tests passed! The targeted pipeline infrastructure is working correctly.")
-        print("Next steps:")
-        print("1. Fix the import issues in the main pipeline file")
-        print("2. Test with actual diffusion model loading")
-        print("3. Run end-to-end generation tests")
-    else:
-        print(f"\n✗ {total - passed} tests failed. Please fix the issues before proceeding.")
-    
-    return 0 if passed == total else 1
 
-if __name__ == "__main__":
-    exit(main())

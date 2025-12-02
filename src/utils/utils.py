@@ -8,7 +8,9 @@ import logging.config
 import torch
 import numpy as np
 from pathlib import Path
-from typing import Union, Tuple, Optional
+from typing import Union, Tuple, Optional, Any
+
+from src import pizza_utils
 
 def setup_logging(config_path: str = 'config/logging.conf') -> None:
     """Konfiguriert das Logging-System."""
@@ -27,15 +29,24 @@ def ensure_dir(path: Union[str, Path]) -> Path:
     path.mkdir(parents=True, exist_ok=True)
     return path
 
-def load_model(model_path: str, device: Optional[torch.device] = None) -> torch.nn.Module:
-    """Lädt ein PyTorch-Modell mit Fehlerbehandlung."""
+def load_model(
+    model_path: str,
+    device: Optional[torch.device] = None,
+    *,
+    quantized: bool = False,
+    config: Optional[Any] = None,
+) -> torch.nn.Module:
+    """Wrapper um :func:`src.pizza_utils.load_model` für zentrale Logik."""
     if device is None:
         device = get_device()
-    
+
     try:
-        model = torch.load(model_path, map_location=device)
-        model.eval()
-        return model
+        return pizza_utils.load_model(
+            model_path,
+            config=config,
+            quantized=quantized,
+            device=device,
+        )
     except Exception as e:
         logging.error(f"Fehler beim Laden des Modells {model_path}: {e}")
         raise
@@ -48,6 +59,18 @@ def save_model(model: torch.nn.Module, save_path: str) -> None:
         logging.info(f"Modell gespeichert unter: {save_path}")
     except Exception as e:
         logging.error(f"Fehler beim Speichern des Modells unter {save_path}: {e}")
+        raise
+
+def save_config(config: dict, path: Union[str, Path]) -> None:
+    """Speichert eine Konfiguration als JSON-Datei."""
+    import json
+    try:
+        ensure_dir(os.path.dirname(path))
+        with open(path, 'w') as f:
+            json.dump(config, f, indent=4)
+        logging.info(f"Konfiguration gespeichert unter: {path}")
+    except Exception as e:
+        logging.error(f"Fehler beim Speichern der Konfiguration unter {path}: {e}")
         raise
 
 def estimate_inference_time(model: torch.nn.Module, 

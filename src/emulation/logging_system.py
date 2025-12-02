@@ -131,7 +131,7 @@ class LoggingSystem:
             logger.warning("SD-Karten-Logging aktiviert, aber keine SD-Karte konfiguriert")
             self.log_to_sd = False
     
-    def log(self, message: str, level: LogLevel = None, log_type: LogType = LogType.SYSTEM) -> None:
+    def log(self, message: str, level: Optional[LogLevel] = None, log_type: LogType = LogType.SYSTEM) -> None:
         """
         Loggt eine einfache Textnachricht.
         

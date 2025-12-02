@@ -6,11 +6,10 @@ providing file operations similar to real hardware.
 """
 
 import os
-import time
 import logging
 from enum import Enum
 from pathlib import Path
-from typing import Dict, List, Optional, Any, Union, Set
+from typing import Any, Dict, List, Optional, Union
 
 logger = logging.getLogger(__name__)
 
@@ -46,7 +45,8 @@ class SDCardEmulator:
         self.fail_probability = fail_probability
         self.status = SDCardStatus.NOT_INITIALIZED
         self.mounted = False
-        self.open_files = set()  # Set zum Speichern offener Dateien
+        self.open_files: Dict[int, Dict[str, Any]] = {}
+        self._next_handle = 1
         
         logger.info(f"SD-Karten-Emulator erstellt: {capacity_mb}MB, Root: {root_dir}")
     
@@ -145,13 +145,33 @@ class SDCardEmulator:
         try:
             # Erstelle vollständigen Pfad
             file_path = self.root_dir / filename
-            
-            # Erstelle übergeordnete Verzeichnisse, falls nötig
             file_path.parent.mkdir(parents=True, exist_ok=True)
-            
-            # Öffne Datei und speichere in open_files mit einer eindeutigen ID
-            file_handle = len(self.open_files) + 1
-            self.open_files.add((file_handle, file_path, mode))
+
+            # Öffne Datei (ggf. mit Trunkierung) und speichere Handle
+            if 'w' in mode and '+' not in mode:
+                # Trunkiere Datei beim ersten Öffnen
+                with open(file_path, 'w') as f:
+                    f.write("") # Explicitly clear file
+            elif 'w' in mode and '+' in mode:
+                with open(file_path, 'w+') as f:
+                    f.write("") # Explicitly clear file
+            elif 'a' in mode and '+' in mode:
+                # Stelle sicher, dass Datei existiert
+                file_path.touch(exist_ok=True)
+            elif 'a' in mode:
+                file_path.touch(exist_ok=True)
+            elif 'r' in mode:
+                file_path.parent.mkdir(parents=True, exist_ok=True)
+                file_path.touch(exist_ok=True)
+
+            file_handle = self._next_handle
+            self._next_handle += 1
+
+            self.open_files[file_handle] = {
+                'path': file_path,
+                'mode': mode,
+                'first_write': True
+            }
             
             logger.debug(f"Datei geöffnet: {filename}, Modus: {mode}, Handle: {file_handle}")
             return file_handle
@@ -175,32 +195,34 @@ class SDCardEmulator:
             return False
         
         # Suche nach dem passenden file_handle in open_files
-        for handle, path, mode in self.open_files:
-            if handle == file_handle:
-                if 'r' in mode and '+' not in mode:
-                    logger.error(f"Datei mit Handle {file_handle} ist nur zum Lesen geöffnet")
-                    return False
-                
-                try:
-                    # Schreibe in die Datei, je nach Modus
-                    if 'a' in mode:
-                        with open(path, 'a') as f:
-                            f.write(data)
-                    elif 'w' in mode:
-                        with open(path, 'w') as f:
-                            f.write(data)
-                    else:  # 'r+' oder ähnlich
-                        with open(path, 'r+') as f:
-                            f.write(data)
-                    
-                    logger.debug(f"In Datei geschrieben: {path.name}, {len(data)} Bytes")
-                    return True
-                except Exception as e:
-                    logger.error(f"Fehler beim Schreiben in Datei: {e}")
-                    return False
+        file_info = self.open_files.get(file_handle)
+        if not file_info:
+            logger.error(f"Ungültiger File-Handle: {file_handle}")
+            return False
+
+        mode = file_info['mode']
+        path: Path = file_info['path']
+
+        if 'r' in mode and 'w' not in mode and 'a' not in mode and '+' not in mode:
+            logger.error(f"Datei mit Handle {file_handle} ist nur zum Lesen geöffnet")
+            return False
         
-        logger.error(f"Ungültiger File-Handle: {file_handle}")
-        return False
+        try:
+            open_mode = self._resolve_write_mode(mode, file_info['first_write'])
+            with open(path, open_mode) as f:
+                if 'a' in open_mode:
+                    f.write(data)
+                elif 'w' in open_mode:
+                    f.write(data)
+                else:  # r+ oder ähnliches
+                    f.seek(0, 2)  # an das Ende der Datei
+                    f.write(data)
+            file_info['first_write'] = False
+            logger.debug(f"In Datei geschrieben: {path.name}, {len(data)} Bytes")
+            return True
+        except Exception as e:
+            logger.error(f"Fehler beim Schreiben in Datei: {e}")
+            return False
     
     def read_file(self, file_handle: int, size: int = -1) -> Optional[str]:
         """
@@ -218,28 +240,26 @@ class SDCardEmulator:
             return None
         
         # Suche nach dem passenden file_handle in open_files
-        for handle, path, mode in self.open_files:
-            if handle == file_handle:
-                if 'w' in mode and '+' not in mode:
-                    logger.error(f"Datei mit Handle {file_handle} ist nur zum Schreiben geöffnet")
-                    return None
-                
-                try:
-                    # Lese aus der Datei
-                    with open(path, 'r') as f:
-                        if size < 0:
-                            data = f.read()
-                        else:
-                            data = f.read(size)
-                    
-                    logger.debug(f"Aus Datei gelesen: {path.name}, {len(data)} Bytes")
-                    return data
-                except Exception as e:
-                    logger.error(f"Fehler beim Lesen aus Datei: {e}")
-                    return None
-        
-        logger.error(f"Ungültiger File-Handle: {file_handle}")
-        return None
+        file_info = self.open_files.get(file_handle)
+        if not file_info:
+            logger.error(f"Ungültiger File-Handle: {file_handle}")
+            return None
+
+        mode = file_info['mode']
+        path: Path = file_info['path']
+
+        if 'w' in mode and '+' not in mode and 'r' not in mode:
+            logger.error(f"Datei mit Handle {file_handle} ist nur zum Schreiben geöffnet")
+            return None
+
+        try:
+            with open(path, 'r') as f:
+                data = f.read() if size < 0 else f.read(size)
+            logger.debug(f"Aus Datei gelesen: {path.name}, {len(data)} Bytes")
+            return data
+        except Exception as e:
+            logger.error(f"Fehler beim Lesen aus Datei: {e}")
+            return None
     
     def close_file(self, file_handle: int) -> bool:
         """
@@ -255,13 +275,11 @@ class SDCardEmulator:
             logger.warning("SD-Karte nicht gemountet")
             return False
         
-        for file_info in list(self.open_files):
-            handle, _, _ = file_info
-            if handle == file_handle:
-                self.open_files.remove(file_info)
-                logger.debug(f"Datei geschlossen: Handle {file_handle}")
-                return True
-        
+        if file_handle in self.open_files:
+            del self.open_files[file_handle]
+            logger.debug(f"Datei geschlossen: Handle {file_handle}")
+            return True
+
         logger.error(f"Ungültiger File-Handle: {file_handle}")
         return False
     
@@ -374,3 +392,17 @@ class SDCardEmulator:
         """Schließt alle offenen Dateien."""
         self.open_files.clear()
         logger.debug("Alle Dateien geschlossen")
+
+    def _resolve_write_mode(self, mode: str, first_write: bool) -> str:
+        """Ermittelt den tatsächlichen Schreibmodus für eine Operation."""
+        if 'w' in mode and '+' not in mode:
+            return 'w' if first_write else 'a'
+        if 'w' in mode and '+' in mode:
+            return 'w+' if first_write else 'a+'
+        if 'a' in mode and '+' in mode:
+            return 'a+'
+        if 'a' in mode:
+            return 'a'
+        if 'r+' in mode:
+            return 'r+'
+        return mode

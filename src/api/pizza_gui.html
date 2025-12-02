@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pizza Classification GUI - Spatial-MLLM Integration</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header .subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card h2 {
+            color: #4a5568;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+
+        .upload-area {
+            border: 3px dashed #e2e8f0;
+            border-radius: 10px;
+            padding: 40px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        .upload-area:hover {
+            border-color: #667eea;
+            background-color: #f8faff;
+        }
+
+        .upload-area.dragover {
+            border-color: #667eea;
+            background-color: #e6f3ff;
+        }
+
+        .upload-icon {
+            font-size: 3em;
+            color: #a0aec0;
+            margin-bottom: 10px;
+        }
+
+        .upload-text {
+            color: #718096;
+            font-size: 1.1em;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .model-selection {
+            margin-bottom: 20px;
+        }
+
+        .model-option {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 8px;
+            background: #f7fafc;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .model-option:hover {
+            background: #edf2f7;
+        }
+
+        .model-option input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .option-item {
+            display: flex;
+            align-items: center;
+            font-size: 0.9em;
+        }
+
+        .option-item input[type="checkbox"] {
+            margin-right: 8px;
+        }
+
+        .classify-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+        }
+
+        .classify-btn:hover:not(:disabled) {
+            opacity: 0.9;
+        }
+
+        .classify-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .results-section {
+            margin-top: 20px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            display: none;
+        }
+
+        .result-item {
+            margin-bottom: 15px;
+        }
+
+        .result-label {
+            font-weight: bold;
+            color: #4a5568;
+            margin-bottom: 5px;
+        }
+
+        .result-value {
+            padding: 8px 12px;
+            background: white;
+            border-radius: 6px;
+            border-left: 4px solid #667eea;
+        }
+
+        .confidence-bar {
+            background: #e2e8f0;
+            height: 8px;
+            border-radius: 4px;
+            margin-top: 5px;
+            overflow: hidden;
+        }
+
+        .confidence-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #48bb78, #38a169);
+            transition: width 0.5s ease;
+        }
+
+        .probabilities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .probability-item {
+            text-align: center;
+            padding: 10px;
+            background: white;
+            border-radius: 6px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .probability-label {
+            font-weight: bold;
+            color: #4a5568;
+            font-size: 0.9em;
+        }
+
+        .probability-value {
+            font-size: 1.1em;
+            color: #667eea;
+            margin-top: 5px;
+        }
+
+        .image-preview {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 10px;
+            margin-top: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .status-section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .status-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .status-item {
+            text-align: center;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .status-value {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .status-label {
+            color: #718096;
+            margin-top: 5px;
+        }
+
+        .alert {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid;
+        }
+
+        .alert-error {
+            background: #fed7d7;
+            border-color: #e53e3e;
+            color: #c53030;
+        }
+
+        .alert-success {
+            background: #c6f6d5;
+            border-color: #38a169;
+            color: #2f855a;
+        }
+
+        .ab-test-section {
+            background: #fff5cd;
+            border: 1px solid #f6e05e;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .ab-test-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .ab-test-btn {
+            flex: 1;
+            padding: 10px;
+            border: 2px solid #f6e05e;
+            background: white;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .ab-test-btn.active {
+            background: #f6e05e;
+            color: #744210;
+        }
+
+        .visualization-section {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .visualization-placeholder {
+            width: 100%;
+            height: 200px;
+            background: #f7fafc;
+            border: 2px dashed #e2e8f0;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #a0aec0;
+            font-size: 1.1em;
+        }
+
+        .visualization-content {
+            width: 100%;
+        }
+
+        .visualization-images {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .visualization-image {
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+            background: white;
+        }
+
+        .visualization-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .visualization-image .viz-title {
+            padding: 10px;
+            background: #667eea;
+            color: white;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .visualization-hidden {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .status-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🍕 Pizza Classification GUI</h1>
+            <div class="subtitle">Advanced AI-powered pizza analysis with Spatial-MLLM integration</div>
+        </div>
+
+        <div class="main-grid">
+            <!-- Upload and Classification Panel -->
+            <div class="card">
+                <h2>🔍 Image Classification</h2>
+                
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">📁</div>
+                    <div class="upload-text">
+                        Drag & drop your pizza image here<br>
+                        or click to browse
+                    </div>
+                    <input type="file" id="imageInput" class="file-input" accept="image/*">
+                </div>
+
+                <div class="model-selection">
+                    <h3>Model Selection</h3>
+                    <div class="model-option">
+                        <input type="radio" id="autoModel" name="model" value="auto" checked>
+                        <label for="autoModel">
+                            <strong>Auto</strong> - Intelligent model selection with fallback
+                        </label>
+                    </div>
+                    <div class="model-option">
+                        <input type="radio" id="spatialModel" name="model" value="spatial">
+                        <label for="spatialModel">
+                            <strong>Spatial-MLLM</strong> - Advanced spatial analysis
+                        </label>
+                    </div>
+                    <div class="model-option">
+                        <input type="radio" id="standardModel" name="model" value="standard">
+                        <label for="standardModel">
+                            <strong>Standard CNN</strong> - Fast traditional classification
+                        </label>
+                    </div>
+                </div>
+
+                <div class="ab-test-section">
+                    <h4>🧪 A/B Testing</h4>
+                    <p>Compare model performance side-by-side</p>
+                    <div class="ab-test-buttons">
+                        <button class="ab-test-btn" id="abTestA" onclick="setABTest('A')">Group A (Spatial)</button>
+                        <button class="ab-test-btn" id="abTestB" onclick="setABTest('B')">Group B (Standard)</button>
+                        <button class="ab-test-btn active" id="abTestOff" onclick="setABTest(null)">Disabled</button>
+                    </div>
+                </div>
+
+                <div class="options-grid">
+                    <div class="option-item">
+                        <input type="checkbox" id="enableVisualization" checked>
+                        <label for="enableVisualization">Generate visualizations</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="checkbox" id="returnProbabilities" checked>
+                        <label for="returnProbabilities">Show probabilities</label>
+                    </div>
+                </div>
+
+                <button class="classify-btn" id="classifyBtn" onclick="classifyImage()">
+                    🚀 Classify Pizza
+                </button>
+
+                <div class="loading" id="loadingDiv">
+                    <div class="spinner"></div>
+                    <p>Analyzing your pizza...</p>
+                </div>
+            </div>
+
+            <!-- Results Panel -->
+            <div class="card">
+                <h2>📊 Results</h2>
+                
+                <div id="alertContainer"></div>
+
+                <div class="results-section" id="resultsSection">
+                    <div class="result-item">
+                        <div class="result-label">Predicted Class</div>
+                        <div class="result-value" id="predictedClass">-</div>
+                    </div>
+
+                    <div class="result-item">
+                        <div class="result-label">Confidence</div>
+                        <div class="result-value">
+                            <span id="confidenceValue">-</span>
+                            <div class="confidence-bar">
+                                <div class="confidence-fill" id="confidenceFill" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="result-item">
+                        <div class="result-label">Model Used</div>
+                        <div class="result-value" id="modelUsed">-</div>
+                    </div>
+
+                    <div class="result-item">
+                        <div class="result-label">Inference Time</div>
+                        <div class="result-value" id="inferenceTime">-</div>
+                    </div>
+
+                    <div class="result-item" id="probabilitiesSection">
+                        <div class="result-label">Class Probabilities</div>
+                        <div class="probabilities-grid" id="probabilitiesGrid">
+                            <!-- Dynamically populated -->
+                        </div>
+                    </div>
+
+                    <div class="visualization-section" id="visualizationSection">
+                        <div class="result-label">Spatial Analysis</div>
+                        <div id="visualizationContent" class="visualization-content">
+                            <div class="visualization-placeholder" id="visualizationPlaceholder">
+                                Spatial visualization will appear here when available
+                            </div>
+                            <div id="visualizationImages" class="visualization-images" style="display: none;">
+                                <!-- Spatial visualization images will be loaded here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <img id="imagePreview" class="image-preview" style="display: none;">
+            </div>
+        </div>
+
+        <!-- Status Panel -->
+        <div class="status-section">
+            <h2>📈 System Status</h2>
+            <div class="status-grid" id="statusGrid">
+                <div class="status-item">
+                    <div class="status-value" id="apiStatus">Loading...</div>
+                    <div class="status-label">API Status</div>
+                </div>
+                <div class="status-item">
+                    <div class="status-value" id="spatialStatus">Loading...</div>
+                    <div class="status-label">Spatial Model</div>
+                </div>
+                <div class="status-item">
+                    <div class="status-value" id="standardStatus">Loading...</div>
+                    <div class="status-label">Standard Model</div>
+                </div>
+                <div class="status-item">
+                    <div class="status-value" id="totalRequests">0</div>
+                    <div class="status-label">Total Requests</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let selectedFile = null;
+        let abTestGroup = null;
+        const API_BASE_URL = 'http://localhost:8000';
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            setupEventListeners();
+            updateSystemStatus();
+            setInterval(updateSystemStatus, 30000); // Update status every 30 seconds
+        });
+
+        function setupEventListeners() {
+            // File upload handling
+            const uploadArea = document.getElementById('uploadArea');
+            const imageInput = document.getElementById('imageInput');
+
+            uploadArea.addEventListener('click', () => imageInput.click());
+            
+            uploadArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadArea.classList.add('dragover');
+            });
+
+            uploadArea.addEventListener('dragleave', () => {
+                uploadArea.classList.remove('dragover');
+            });
+
+            uploadArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadArea.classList.remove('dragover');
+                const files = e.dataTransfer.files;
+                if (files.length > 0) {
+                    handleFileSelection(files[0]);
+                }
+            });
+
+            imageInput.addEventListener('change', (e) => {
+                if (e.target.files.length > 0) {
+                    handleFileSelection(e.target.files[0]);
+                }
+            });
+        }
+
+        function handleFileSelection(file) {
+            selectedFile = file;
+            
+            // Show image preview
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const imagePreview = document.getElementById('imagePreview');
+                imagePreview.src = e.target.result;
+                imagePreview.style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+
+            // Update upload area
+            const uploadArea = document.getElementById('uploadArea');
+            uploadArea.innerHTML = `
+                <div class="upload-icon">✅</div>
+                <div class="upload-text">
+                    Selected: ${file.name}<br>
+                    Click to change image
+                </div>
+            `;
+
+            // Enable classify button
+            document.getElementById('classifyBtn').disabled = false;
+        }
+
+        function setABTest(group) {
+            abTestGroup = group;
+            
+            // Update button states
+            document.querySelectorAll('.ab-test-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            if (group === 'A') {
+                document.getElementById('abTestA').classList.add('active');
+            } else if (group === 'B') {
+                document.getElementById('abTestB').classList.add('active');
+            } else {
+                document.getElementById('abTestOff').classList.add('active');
+            }
+        }
+
+        async function classifyImage() {
+            if (!selectedFile) {
+                showAlert('Please select an image first', 'error');
+                return;
+            }
+
+            // Show loading state
+            document.getElementById('loadingDiv').style.display = 'block';
+            document.getElementById('classifyBtn').disabled = true;
+            document.getElementById('resultsSection').style.display = 'none';
+
+            try {
+                // Prepare form data
+                const formData = new FormData();
+                formData.append('file', selectedFile);
+
+                // Get selected options
+                const modelSelection = document.querySelector('input[name="model"]:checked').value;
+                const enableVisualization = document.getElementById('enableVisualization').checked;
+                const returnProbabilities = document.getElementById('returnProbabilities').checked;
+
+                // Add parameters
+                const params = new URLSearchParams();
+                if (modelSelection !== 'auto') {
+                    params.append('use_spatial', modelSelection === 'spatial');
+                }
+                params.append('enable_visualization', enableVisualization);
+                params.append('return_probabilities', returnProbabilities);
+                if (abTestGroup) {
+                    params.append('ab_test_group', abTestGroup);
+                }
+
+                // Make API request
+                const response = await fetch(`${API_BASE_URL}/classify?${params}`, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+
+                const result = await response.json();
+                displayResults(result);
+                showAlert('Classification completed successfully!', 'success');
+
+            } catch (error) {
+                console.error('Classification error:', error);
+                showAlert(`Classification failed: ${error.message}`, 'error');
+            } finally {
+                // Hide loading state
+                document.getElementById('loadingDiv').style.display = 'none';
+                document.getElementById('classifyBtn').disabled = false;
+            }
+        }
+
+        async function displayResults(result) {
+            // Show results section
+            document.getElementById('resultsSection').style.display = 'block';
+
+            // Update result fields
+            document.getElementById('predictedClass').textContent = result.predicted_class.toUpperCase();
+            document.getElementById('confidenceValue').textContent = `${(result.confidence * 100).toFixed(1)}%`;
+            document.getElementById('modelUsed').textContent = result.model_used;
+            document.getElementById('inferenceTime').textContent = `${result.inference_time.toFixed(3)}s`;
+
+            // Update confidence bar
+            const confidenceFill = document.getElementById('confidenceFill');
+            confidenceFill.style.width = `${result.confidence * 100}%`;
+
+            // Update probabilities if available
+            if (result.probabilities) {
+                const probabilitiesGrid = document.getElementById('probabilitiesGrid');
+                probabilitiesGrid.innerHTML = '';
+
+                Object.entries(result.probabilities).forEach(([className, probability]) => {
+                    const item = document.createElement('div');
+                    item.className = 'probability-item';
+                    item.innerHTML = `
+                        <div class="probability-label">${className.toUpperCase()}</div>
+                        <div class="probability-value">${(probability * 100).toFixed(1)}%</div>
+                    `;
+                    probabilitiesGrid.appendChild(item);
+                });
+            }
+
+            // Update visualization section
+            const visualizationSection = document.getElementById('visualizationSection');
+            if (result.spatial_features && result.model_used === 'spatial-mllm') {
+                visualizationSection.style.display = 'block';
+                await loadVisualizationImages(result.visualization_url);
+            } else {
+                visualizationSection.style.display = 'none';
+            }
+        }
+
+        async function loadVisualizationImages(visualizationUrl) {
+            if (!visualizationUrl) {
+                console.warn('No visualization URL provided');
+                return;
+            }
+
+            try {
+                // Extract the viz_id from the visualization URL
+                const vizIdMatch = visualizationUrl.match(/\/visualizations\/([^\/]+)/);
+                if (!vizIdMatch) {
+                    throw new Error('Invalid visualization URL format');
+                }
+                const vizId = vizIdMatch[1];
+
+                // Fetch the list of available visualization files
+                const listResponse = await fetch(`${API_BASE_URL}/visualizations/${vizId}`);
+                if (!listResponse.ok) {
+                    throw new Error(`Failed to fetch visualization list: ${listResponse.statusText}`);
+                }
+
+                const visualizationList = await listResponse.json();
+                console.log('Available visualizations:', visualizationList);
+
+                // Hide placeholder and show images container
+                document.getElementById('visualizationPlaceholder').style.display = 'none';
+                const imagesContainer = document.getElementById('visualizationImages');
+                imagesContainer.style.display = 'grid';
+                
+                // Clear any existing content
+                imagesContainer.innerHTML = '';
+
+                // Create a grid of visualization images
+                const visualizationTypes = [
+                    { key: 'spatial_features_', title: 'Spatial Feature Maps', suffix: '.png' },
+                    { key: 'attention_', title: 'Attention Visualization', suffix: '.png' },
+                    { key: 'prediction_', title: 'Prediction Overlay', suffix: '.png' }
+                ];
+
+                for (const vizType of visualizationTypes) {
+                    // Find matching file (files have format like "spatial_features_sample_pizza_image.jpg.png")
+                    const matchingFile = visualizationList.files.find(file => 
+                        file.startsWith(vizType.key) && file.endsWith(vizType.suffix)
+                    );
+                    
+                    if (matchingFile) {
+                        const vizDiv = document.createElement('div');
+                        vizDiv.className = 'visualization-image';
+                        
+                        const title = document.createElement('div');
+                        title.className = 'viz-title';
+                        title.textContent = vizType.title;
+                        
+                        const img = document.createElement('img');
+                        img.src = `${API_BASE_URL}/visualizations/${vizId}/${matchingFile}`;
+                        img.alt = vizType.title;
+                        img.style.width = '100%';
+                        img.style.height = 'auto';
+                        img.style.borderRadius = '8px';
+                        img.style.boxShadow = '0 2px 8px rgba(0,0,0,0.1)';
+                        
+                        // Add loading and error handling
+                        img.onload = () => {
+                            console.log(`Successfully loaded: ${vizType.title}`);
+                        };
+                        
+                        img.onerror = () => {
+                            console.error(`Failed to load: ${vizType.title}`);
+                            img.style.display = 'none';
+                            const errorMsg = document.createElement('div');
+                            errorMsg.textContent = `Failed to load ${vizType.title}`;
+                            errorMsg.style.color = '#999';
+                            errorMsg.style.fontStyle = 'italic';
+                            errorMsg.style.textAlign = 'center';
+                            errorMsg.style.padding = '20px';
+                            vizDiv.appendChild(errorMsg);
+                        };
+                        
+                        vizDiv.appendChild(title);
+                        vizDiv.appendChild(img);
+                        imagesContainer.appendChild(vizDiv);
+                    }
+                }
+
+                if (imagesContainer.children.length === 0) {
+                    // No visualization images were successfully loaded
+                    document.getElementById('visualizationPlaceholder').style.display = 'block';
+                    document.getElementById('visualizationPlaceholder').textContent = 'No spatial visualizations available';
+                    imagesContainer.style.display = 'none';
+                }
+
+            } catch (error) {
+                console.error('Error loading visualizations:', error);
+                document.getElementById('visualizationPlaceholder').style.display = 'block';
+                document.getElementById('visualizationPlaceholder').textContent = 'Error loading spatial visualizations';
+                document.getElementById('visualizationImages').style.display = 'none';
+            }
+        }
+
+        async function updateSystemStatus() {
+            try {
+                const statusResponse = await fetch(`${API_BASE_URL}/status`);
+                const metricsResponse = await fetch(`${API_BASE_URL}/metrics`);
+
+                if (statusResponse.ok) {
+                    const status = await statusResponse.json();
+                    
+                    document.getElementById('apiStatus').textContent = status.api_status === 'online' ? '🟢 Online' : '🔴 Offline';
+                    
+                    const spatialModel = status.models['spatial-mllm'];
+                    const standardModel = status.models['standard-cnn'];
+                    
+                    document.getElementById('spatialStatus').textContent = 
+                        spatialModel?.available ? '🟢 Ready' : '🔴 Unavailable';
+                    document.getElementById('standardStatus').textContent = 
+                        standardModel?.available ? '🟢 Ready' : '🔴 Unavailable';
+                }
+
+                if (metricsResponse.ok) {
+                    const metrics = await metricsResponse.json();
+                    document.getElementById('totalRequests').textContent = metrics.total_requests;
+                }
+
+            } catch (error) {
+                console.error('Failed to update status:', error);
+                document.getElementById('apiStatus').textContent = '🔴 Error';
+            }
+        }
+
+        function showAlert(message, type) {
+            const alertContainer = document.getElementById('alertContainer');
+            const alert = document.createElement('div');
+            alert.className = `alert alert-${type}`;
+            alert.textContent = message;
+            
+            alertContainer.innerHTML = '';
+            alertContainer.appendChild(alert);
+            
+            // Auto-remove after 5 seconds
+            setTimeout(() => {
+                if (alert.parentNode) {
+                    alert.parentNode.removeChild(alert);
+                }
+            }, 5000);
+        }
+    </script>
+</body>
+</html>

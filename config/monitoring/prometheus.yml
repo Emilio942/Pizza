@@ -1,0 +1,139 @@
+# Prometheus Configuration for Spatial-MLLM Monitoring
+# Part of SPATIAL-4.2: Deployment-Pipeline erweitern
+
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  external_labels:
+    monitor: 'spatial-mllm-monitor'
+    environment: 'production'
+
+# Alertmanager configuration
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+            - alertmanager:9093
+
+# Rules configuration
+rule_files:
+  - "spatial_rules.yml"
+  - "performance_rules.yml"
+
+# Scrape configurations
+scrape_configs:
+  # Prometheus self-monitoring
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+    scrape_interval: 30s
+    
+  # Spatial-MLLM API servers
+  - job_name: 'spatial-api'
+    static_configs:
+      - targets: 
+          - 'spatial-api-1:8000'
+          - 'spatial-api-2:8000'
+          - 'spatial-api-3:8000'
+    metrics_path: '/metrics'
+    scrape_interval: 10s
+    scrape_timeout: 5s
+    honor_labels: true
+    
+  # Nginx load balancer
+  - job_name: 'nginx'
+    static_configs:
+      - targets: ['nginx-exporter:9113']
+    scrape_interval: 15s
+    
+  # Node exporter for system metrics
+  - job_name: 'node-exporter'
+    static_configs:
+      - targets: 
+          - 'node-exporter-1:9100'
+          - 'node-exporter-2:9100'
+          - 'node-exporter-3:9100'
+    scrape_interval: 15s
+    
+  # Redis cache monitoring
+  - job_name: 'redis'
+    static_configs:
+      - targets: ['redis-exporter:9121']
+    scrape_interval: 15s
+    
+  # GPU monitoring (if available)
+  - job_name: 'gpu-metrics'
+    static_configs:
+      - targets: ['dcgm-exporter:9400']
+    scrape_interval: 10s
+    scrape_timeout: 5s
+    
+  # Model performance metrics
+  - job_name: 'spatial-model-metrics'
+    static_configs:
+      - targets: 
+          - 'spatial-api-1:8001'
+          - 'spatial-api-2:8001'
+          - 'spatial-api-3:8001'
+    metrics_path: '/model/metrics'
+    scrape_interval: 30s
+    scrape_timeout: 10s
+    
+  # Custom spatial metrics
+  - job_name: 'spatial-features'
+    static_configs:
+      - targets:
+          - 'spatial-api-1:8002'
+          - 'spatial-api-2:8002'
+          - 'spatial-api-3:8002'
+    metrics_path: '/spatial/metrics'
+    scrape_interval: 20s
+    
+  # Health check monitoring
+  - job_name: 'health-checks'
+    static_configs:
+      - targets:
+          - 'spatial-api-1:8000'
+          - 'spatial-api-2:8000'
+          - 'spatial-api-3:8000'
+    metrics_path: '/health/detailed'
+    scrape_interval: 30s
+    params:
+      format: ['prometheus']
+    
+  # Docker container metrics
+  - job_name: 'cadvisor'
+    static_configs:
+      - targets: ['cadvisor:8080']
+    scrape_interval: 15s
+    
+  # Application-specific metrics
+  - job_name: 'spatial-app-metrics'
+    static_configs:
+      - targets:
+          - 'spatial-api-1:8000'
+          - 'spatial-api-2:8000'
+          - 'spatial-api-3:8000'
+    metrics_path: '/app/metrics'
+    scrape_interval: 20s
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: instance
+      - source_labels: [__address__]
+        regex: '([^:]+).*'
+        target_label: host
+        replacement: '${1}'
+
+# Remote write configuration for long-term storage (optional)
+# remote_write:
+#   - url: "https://your-remote-storage/api/v1/write"
+#     basic_auth:
+#       username: "your-username"
+#       password: "your-password"
+
+# Remote read configuration (optional)
+# remote_read:
+#   - url: "https://your-remote-storage/api/v1/read"
+#     basic_auth:
+#       username: "your-username"
+#       password: "your-password"

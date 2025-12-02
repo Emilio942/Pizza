@@ -146,7 +146,7 @@ Zuletzt aktualisiert: 2025-05-29
 - UART-Logging implementiert, SD-Karten-Logging noch ausstehend
 
 **Relevante Dateien**:
-- `scripts/analyze_performance_logs.py`
+- `scripts/utility/analyze_performance_logs.py`
 - `pizza_training_detailed.log`
 
 ## 9. Einfache Statusanzeige ✅

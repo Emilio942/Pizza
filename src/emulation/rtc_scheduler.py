@@ -154,7 +154,7 @@ class ScheduleManager:
         """
         self.rtc = rtc or RTCEmulator()
         self.events: Dict[str, ScheduledEvent] = {}
-        self.event_history = deque(maxlen=1000)
+        self.event_history: deque[TimerEvent] = deque(maxlen=1000)
         self.timer_callbacks: List[Callable[[TimerEvent], None]] = []
         
         # Background execution
@@ -430,7 +430,7 @@ class ScheduleManager:
     
     def get_statistics(self) -> Dict:
         """Get scheduler statistics"""
-        return self.get_scheduler_stats()
+        return self.get_schedule_stats()
     
     def _scheduler_loop(self) -> None:
         """Main scheduler loop running in background thread"""

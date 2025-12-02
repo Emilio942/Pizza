@@ -1,0 +1,201 @@
+# Docker Compose Override for Development and Testing
+# SPATIAL-4.2: Extended Deployment Pipeline
+version: '3.8'
+
+services:
+  # Development container with mounted source code
+  pizza-api-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: development
+    ports:
+      - "8002:8000"
+    volumes:
+      - ./src:/app/src
+      - ./scripts:/app/scripts
+      - ./data:/app/data:ro
+      - ./models:/app/models:ro
+      - ./output:/app/output
+      - ./logs:/app/logs
+    environment:
+      - MODEL_TYPE=standard
+      - API_PORT=8000
+      - LOG_LEVEL=DEBUG
+      - DEVELOPMENT_MODE=true
+    networks:
+      - pizza-network
+
+  # Development spatial container
+  pizza-api-spatial-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.spatial
+      target: development
+    ports:
+      - "8003:8001"
+    volumes:
+      - ./src:/app/src
+      - ./scripts:/app/scripts
+      - ./data:/app/data:ro
+      - ./models:/app/models
+      - ./output:/app/output
+      - ./logs:/app/logs
+    environment:
+      - MODEL_TYPE=spatial
+      - API_PORT=8001
+      - LOG_LEVEL=DEBUG
+      - CUDA_VISIBLE_DEVICES=0
+      - SPATIAL_MODEL_PATH=/app/models/spatial_mllm/pizza_finetuned_v1.pth
+      - SPATIAL_MODEL_ID=Diankun/Spatial-MLLM-subset-sft
+      - DEVELOPMENT_MODE=true
+    networks:
+      - pizza-network
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+
+  # Test runner service
+  test-runner:
+    build:
+      context: .
+      dockerfile: Dockerfile.spatial
+    command: python scripts/spatial_feature_tests.py
+    volumes:
+      - ./src:/app/src
+      - ./scripts:/app/scripts
+      - ./test_data:/app/test_data:ro
+      - ./models:/app/models:ro
+      - ./output:/app/output
+      - ./logs:/app/logs
+    environment:
+      - CUDA_VISIBLE_DEVICES=0
+      - PYTHONPATH=/app
+      - TEST_MODE=true
+    networks:
+      - pizza-network
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    profiles:
+      - testing
+
+  # Model validation service
+  model-validator-extended:
+    build:
+      context: .
+      dockerfile: Dockerfile.spatial
+    command: python scripts/model_version_manager.py list
+    volumes:
+      - ./models:/app/models
+      - ./output:/app/output
+      - ./logs:/app/logs
+    environment:
+      - VALIDATION_INTERVAL=1800  # 30 minutes
+      - CUDA_VISIBLE_DEVICES=0
+    networks:
+      - pizza-network
+    profiles:
+      - validation
+
+  # Performance monitoring
+  performance-monitor:
+    build:
+      context: .
+      dockerfile: Dockerfile.spatial
+    command: python scripts/spatial_inference_optimized.py --monitor
+    volumes:
+      - ./models:/app/models:ro
+      - ./output:/app/output
+      - ./logs:/app/logs
+    environment:
+      - CUDA_VISIBLE_DEVICES=0
+      - MONITOR_INTERVAL=300  # 5 minutes
+    networks:
+      - pizza-network
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    profiles:
+      - monitoring
+
+  # Database for metrics
+  postgres:
+    image: postgres:13
+    environment:
+      - POSTGRES_DB=pizza_metrics
+      - POSTGRES_USER=pizza_user
+      - POSTGRES_PASSWORD=pizza_pass
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./docker/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    networks:
+      - pizza-network
+    profiles:
+      - metrics
+
+  # Advanced monitoring with cAdvisor
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    ports:
+      - "8080:8080"
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
+    privileged: true
+    devices:
+      - /dev/kmsg
+    networks:
+      - pizza-network
+    profiles:
+      - monitoring
+
+  # Node exporter for system metrics
+  node-exporter:
+    image: prom/node-exporter:latest
+    ports:
+      - "9100:9100"
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.rootfs=/rootfs'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
+    networks:
+      - pizza-network
+    profiles:
+      - monitoring
+
+  # GPU metrics exporter
+  nvidia-gpu-exporter:
+    image: mindprince/nvidia_gpu_prometheus_exporter:0.1
+    ports:
+      - "9445:9445"
+    runtime: nvidia
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+    networks:
+      - pizza-network
+    profiles:
+      - monitoring
+
+volumes:
+  postgres-data:

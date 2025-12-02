@@ -1,0 +1,166 @@
+# Pizza-AI Quality Verifier mit Reinforcement Learning
+# Angepasste Aufgabenliste für das Pizza-Erkennungsprojekt
+
+Phase 1: Pizza-spezifische Datensammlung und Verifier-Vorbereitung
+
+Aufgabe 1.1: Umgebungseinrichtung für Pizza-Verifier
+Beschreibung: Integration der Verifier-Komponenten in die bestehende Pizza-Projektarchitektur.
+Schritte:
+- Erweiterung der requirements.txt um RL-Bibliotheken (stable-baselines3, gym)
+- Integration in bestehende Projektstruktur (src/verification/, src/rl/)
+- Kompatibilität mit bestehenden MicroPizzaNet-Modellen sicherstellen
+Status: NEU - Integration in bestehendes Projekt erforderlich
+
+Aufgabe 1.2: Pizza-Erkennungs-Qualitätsdatenstruktur
+Beschreibung: Definition einer Datenstruktur für Pizza-Erkennungsqualität basierend auf bestehenden Metriken.
+Schritte:
+- Schema für [Pizza-Bild, Modell-Vorhersage, Ground-Truth] -> Quality-Score [0.0-1.0]
+- Integration mit bestehenden class_names ['basic', 'burnt', 'combined', 'mixed', 'progression', 'segment']
+- Berücksichtigung von Confidence-Scores und Temporal-Smoothing-Ergebnissen
+- JSON-Schema kompatibel mit bestehender Projektstruktur
+Status: NEU - Anpassung an Pizza-spezifische Klassifikation erforderlich
+
+Aufgabe 1.3: Sammlung von Pizza-Erkennungs-Qualitätsdaten (60%)
+Beschreibung: Nutzung der bestehenden Testdaten und Formal-Verification-Ergebnisse als hochqualitative Beispiele.
+Schritte:
+- Extraktion von verifizierten Vorhersagen aus `models/formal_verification/` Berichten
+- Nutzung der Diffusion-generierten Daten aus `augmented_pizza/` mit bekannten Labels
+- Integration mit bestehenden Evaluationsergebnissen aus `results/`
+- Generierung von Pizza-Quality-Scores basierend auf:
+  * Prediction Confidence
+  * Formal Verification Results
+  * Temporal Consistency (aus bestehender Temporal-Smoothing-Implementierung)
+Status: NEU - Nutzung bestehender Projektdaten
+
+Aufgabe 1.4: Generierung von Pizza-spezifischen "Hard Negatives" (40%)
+Beschreibung: Erzeugung von subtilen Pizza-Erkennungsfehlern für robustes Verifier-Training.
+Schritte:
+- Modifikation von korrekten Pizza-Vorhersagen:
+  * Burnt vs. Basic Verwechslungen (kritische Unterscheidung)
+  * Combined vs. Mixed Konfusion
+  * Progression-Stage-Fehler
+- Nutzung der bestehenden Augmentation-Pipeline für schwierige Fälle
+- Integration mit CMSIS-NN vs. Standard-Modell Diskrepanzen
+- Generierung von Low-Quality-Scores (0.0-0.3) für diese Fälle
+Status: NEU - Pizza-spezifische Fehlertypen erforderlich
+
+Phase 2: Pizza-Verifier-Modell Training
+
+Aufgabe 2.1: Pizza-Verifier-Datensatz Vorbereitung
+Beschreibung: Kombination der Pizza-Qualitätsdaten mit Fokus auf kritische Unterscheidungen.
+Schritte:
+- Kombination der positiven Pizza-Beispiele mit Hard Negatives
+- Spezielle Gewichtung für food-safety-kritische Fälle (raw vs. cooked)
+- Integration mit bestehender Klassenverteilung aus dem Projekt
+- Train/Val/Test Split kompatibel mit bestehender Evaluation-Infrastruktur
+Status: NEU - Pizza-spezifische Priorisierung
+
+Aufgabe 2.2: Pizza-Verifier-Modell Implementation
+Beschreibung: Training eines Lightweight-Verifiers für Pizza-Erkennungsqualität.
+Schritte:
+- Nutzung von DistilBERT oder kleineres Modell für RP2040-Kompatibilität
+- Input: [Pizza-Image-Features + Model-Prediction + Confidence] -> Quality-Score
+- Integration mit bestehender MicroPizzaNet-Feature-Extraktion
+- Quantization-aware Training für Deployment auf RP2040
+- Kompatibilität mit bestehender Model-Export-Pipeline
+Status: NEU - Anpassung an Hardware-Constraints des Projekts
+
+Aufgabe 2.3: Pizza-Verifier Evaluation mit bestehenden Metriken
+Beschreibung: Evaluation des Verifiers mit Fokus auf Pizza-spezifische Metriken.
+Schritte:
+- Integration mit bestehender Formal-Verification-Suite
+- Vergleich mit Ground-Truth aus `test_data/` Verzeichnis
+- Korrelation mit bestehenden Performance-Metriken
+- Spezielle Analyse für food-safety-kritische Entscheidungen
+Status: NEU - Integration mit bestehender Test-Infrastruktur
+
+Phase 3: RL-Integration für Adaptive Pizza-Erkennung
+
+Aufgabe 3.1: Adaptive Pizza-Recognition Policy
+Beschreibung: RL-Agent für adaptive Inferenz-Strategien basierend auf Energiezustand und Qualitätsanforderungen.
+Schritte:
+- Policy-Architecture für [Battery-State, Image-Complexity, Quality-Requirements] -> Inference-Strategy
+- Integration mit bestehendem Energiemanagement-System
+- Auswahl zwischen verschiedenen Modell-Varianten (MicroPizzaNet, MicroPizzaNetV2, etc.)
+- Adaptive CMSIS-NN Aktivierung basierend auf verfügbarer Energie
+Status: NEU - Innovation für das Pizza-Projekt
+
+Aufgabe 3.2: Pizza-RL-Environment Implementation
+Beschreibung: RL-Environment das Pizza-Erkennungsaufgaben mit realistischen Constraints simuliert.
+Schritte:
+- State: [Current-Pizza-Image, Battery-Level, Required-Accuracy, Time-Constraints]
+- Action: [Model-Selection, Processing-Intensity, Confidence-Threshold]
+- Reward: Pizza-Verifier-Score gewichtet mit Energieverbrauch und Latenz
+- Integration mit bestehender RP2040-Emulator-Infrastruktur
+- Nutzung der bestehenden Performance-Logger-Daten
+Status: NEU - Nutzung bestehender Emulator-Infrastruktur
+
+Phase 4: Training und Integration in Pizza-System
+
+Aufgabe 4.1: Pizza-RL-Agent Training
+Beschreibung: Training des RL-Agents mit Pizza-spezifischen Belohnungsstrategien.
+Schritte:
+- PPO-Training mit Multi-Objective-Belohnung (Accuracy + Energy + Speed)
+- Integration mit bestehenden Pizza-Datasets
+- Evaluation auf realistischen Pizza-Erkennungsszenarien
+- Monitoring mit bestehender Logging-Infrastruktur
+Status: NEU - Pizza-spezifisches Multi-Objective RL
+
+Aufgabe 4.2: Kontinuierliche Pizza-Verifier-Verbesserung
+Beschreibung: Bootstrapping-Mechanismus für kontinuierliche Verbesserung mit neuen Pizza-Daten.
+Schritte:
+- Automatische Sammlung von High-Confidence-Vorhersagen aus dem Produktionssystem
+- Integration mit bestehender Datenaugmentation-Pipeline
+- Periodisches Retraining des Verifiers mit neuen Pizza-Erkennungsmustern
+- Deployment-Integration mit bestehender CI/CD-Pipeline
+Status: NEU - Continuous Learning für Pizza-Domain
+
+Phase 5: Integration in bestehende Pizza-Projektinfrastruktur
+
+Aufgabe 5.1: API-Integration
+Beschreibung: Integration des Verifier-Systems in die bestehende Pizza-API.
+Schritte:
+- Erweiterung der FastAPI-Endpoints um Quality-Assessment
+- Integration mit Spatial-MLLM und Standard-CNN-Models
+- Caching-Strategy für Verifier-Ergebnisse
+- Monitoring und Metriken-Integration
+Status: NEU - Erweiterung der bestehenden API
+
+Aufgabe 5.2: Hardware-Deployment
+Beschreibung: Deployment des Verifier-Systems auf RP2040-Hardware.
+Schritte:
+- Quantization des Verifier-Models für RP2040
+- Integration mit bestehender CMSIS-NN-Infrastruktur
+- Memory-Management-Integration mit bestehendem System
+- Performance-Optimierung für Real-Time-Constraints
+Status: NEU - Hardware-Integration
+
+Aufgabe 5.3: Evaluation und Validierung
+Beschreibung: Umfassende Evaluation der integrierten Lösung.
+Schritte:
+- Vergleich mit bestehenden Pizza-Erkennungsmetriken
+- Energieverbrauch-Analyse mit bestehender ENERGIE-Infrastruktur
+- Real-World-Testing mit Pizza-Backprozessen
+- Integration in bestehende Test-Suite
+Status: NEU - Comprehensive Pizza-System Evaluation
+
+# Zusätzliche Überlegungen für Pizza-Projekt-Integration:
+
+## Synergien mit bestehenden Komponenten:
+1. **Formal Verification**: Verifier kann Formal-Verification-Ergebnisse als Ground-Truth nutzen
+2. **Energiemanagement**: RL-Agent kann mit adaptivem Duty-Cycle-System interagieren
+3. **Diffusion-Augmentation**: Synthetic Data kann für Verifier-Training genutzt werden
+4. **Temporal Smoothing**: Bestehende Temporal-Logik kann in Verifier-Bewertung einfließen
+5. **CMSIS-NN**: Verifier kann optimale Hardware-Acceleration-Strategy auswählen
+
+## Pizza-spezifische Verbesserungen:
+- Food-Safety-Priorisierung (Raw vs. Cooked Detection)
+- Adaptive Genauigkeit basierend auf Backprozess-Phase
+- Energy-aware Qualitätskompromisse
+- Real-Time-Constraints für Pizza-Produktionsumgebungen
+
+## Integration mit bestehender Infrastruktur:
+- Nutzung bestehender Datenstrukturen und Klassendefinitionen
+- Integration mit Performance-Logger und Metriken-System
+- Kompatibilität mit bestehender Export- und Deployment-Pipeline
+- Erweiterung der bestehenden Test-Suite

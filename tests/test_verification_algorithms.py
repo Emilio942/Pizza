@@ -123,13 +123,13 @@ def test_property_verification():
                 print(f"  Brown ratio: {metrics['brown_ratio']:.3f}")
                 print(f"  Total burnt ratio: {metrics['burnt_ratio']:.3f}")
         
-        return results
+        assert results, "Verification results should not be empty"
         
     except Exception as e:
         print(f"Property verification test failed: {e}")
         import traceback
         traceback.print_exc()
-        return {}
+        raise e
 
 def test_template_system():
     """Test the template-based prompt generation"""
@@ -149,11 +149,9 @@ def test_template_system():
             sample_prompt = random.choice(template['prompts'])
             print(f"  {level}: {sample_prompt[:60]}...")
         
-        return True
-        
     except Exception as e:
         print(f"Template system test failed: {e}")
-        return False
+        raise e
 
 def test_standalone_generation():
     """Test the pipeline in standalone mode (without actual diffusion models)"""
@@ -198,64 +196,11 @@ def test_standalone_generation():
             assert subdir_path.exists(), f"Output subdirectory {subdir} not created"
         
         print("✓ Standalone pipeline features working correctly")
-        return True
         
     except Exception as e:
         print(f"Standalone generation test failed: {e}")
         import traceback
         traceback.print_exc()
-        return False
+        raise e
 
-def main():
-    """Run all verification tests"""
-    print("=== Testing DIFFUSION-2.1 Property Verification ===\n")
-    
-    tests_passed = 0
-    total_tests = 0
-    
-    # Test property verification algorithms
-    total_tests += 1
-    verification_results = test_property_verification()
-    if verification_results:
-        tests_passed += 1
-        print("✓ Property verification algorithms working")
-    else:
-        print("✗ Property verification failed")
-    
-    # Test template system
-    total_tests += 1
-    if test_template_system():
-        tests_passed += 1
-        print("✓ Template system working")
-    else:
-        print("✗ Template system failed")
-    
-    # Test standalone pipeline features
-    total_tests += 1
-    if test_standalone_generation():
-        tests_passed += 1
-        print("✓ Standalone pipeline features working")
-    else:
-        print("✗ Standalone pipeline features failed")
-    
-    print(f"\n=== Test Results: {tests_passed}/{total_tests} passed ===")
-    
-    if tests_passed == total_tests:
-        print("\n🎉 All DIFFUSION-2.1 tests passed!")
-        print("\nThe targeted diffusion pipeline is ready for:")
-        print("1. Integration with actual diffusion models")
-        print("2. End-to-end generation testing")
-        print("3. Production dataset generation")
-        
-        # Show some sample verification results
-        if verification_results:
-            print("\nSample verification results:")
-            for test_name, result in verification_results.items():
-                print(f"  {test_name}: score={result['score']:.3f}, verified={result['verified']}")
-    else:
-        print(f"\n❌ {total_tests - tests_passed} tests failed. Please review and fix issues.")
-    
-    return 0 if tests_passed == total_tests else 1
 
-if __name__ == "__main__":
-    exit(main())

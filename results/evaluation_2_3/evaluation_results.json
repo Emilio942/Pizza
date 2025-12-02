@@ -1,0 +1,4361 @@
+{
+  "predictions": {
+    "MicroPizzaNet": [
+      {
+        "image_path": "data/test/progression/test_progression_challenging_backlit_angle_diagonal_blurry_20250520_211411_012.jpg",
+        "ground_truth_class": "progression",
+        "predicted_class": "burnt",
+        "confidence": 0.16744638979434967,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.0502339169383049,
+        "true_quality_score": 0.0502339169383049
+      },
+      {
+        "image_path": "data/test/progression/test_progression_challenging_low_contrast_angle_top_normal_20250520_211411_009.jpg",
+        "ground_truth_class": "progression",
+        "predicted_class": "burnt",
+        "confidence": 0.1672951877117157,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05018855631351471,
+        "true_quality_score": 0.05018855631351471
+      },
+      {
+        "image_path": "data/test/progression/sample_progression_0020.jpg",
+        "ground_truth_class": "progression",
+        "predicted_class": "burnt",
+        "confidence": 0.1672719269990921,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050181578099727626,
+        "true_quality_score": 0.050181578099727626
+      },
+      {
+        "image_path": "data/test/progression/challenging_progression_lighting_contrast_005.jpg",
+        "ground_truth_class": "progression",
+        "predicted_class": "burnt",
+        "confidence": 0.16796083748340607,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05038825124502182,
+        "true_quality_score": 0.05038825124502182
+      },
+      {
+        "image_path": "data/test/progression/sample_progression_0001.jpg",
+        "ground_truth_class": "progression",
+        "predicted_class": "burnt",
+        "confidence": 0.16726960241794586,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05018088072538376,
+        "true_quality_score": 0.05018088072538376
+      },
+      {
+        "image_path": "data/test/progression/sample_progression_0005.jpg",
+        "ground_truth_class": "progression",
+        "predicted_class": "burnt",
+        "confidence": 0.16724857687950134,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050174573063850404,
+        "true_quality_score": 0.050174573063850404
+      },
+      {
+        "image_path": "data/test/progression/test_progression_challenging_dark_angle_close_blurry_20250520_211411_004.jpg",
+        "ground_truth_class": "progression",
+        "predicted_class": "burnt",
+        "confidence": 0.1672932654619217,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050187979638576505,
+        "true_quality_score": 0.050187979638576505
+      },
+      {
+        "image_path": "data/test/progression/test_progression_challenging_backlit_angle_top_jpeg_artifact_20250520_211411_011.jpg",
+        "ground_truth_class": "progression",
+        "predicted_class": "burnt",
+        "confidence": 0.16743040084838867,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.0502291202545166,
+        "true_quality_score": 0.0502291202545166
+      },
+      {
+        "image_path": "data/test/progression/sample_progression_0016.jpg",
+        "ground_truth_class": "progression",
+        "predicted_class": "burnt",
+        "confidence": 0.16716809570789337,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05015042871236801,
+        "true_quality_score": 0.05015042871236801
+      },
+      {
+        "image_path": "data/test/progression/sample_progression_0015.jpg",
+        "ground_truth_class": "progression",
+        "predicted_class": "burnt",
+        "confidence": 0.16726261377334595,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05017878413200378,
+        "true_quality_score": 0.05017878413200378
+      },
+      {
+        "image_path": "data/test/progression/test_progression_challenging_low_contrast_angle_side_normal_20250520_211427_009.jpg",
+        "ground_truth_class": "progression",
+        "predicted_class": "burnt",
+        "confidence": 0.16733793914318085,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05020138174295425,
+        "true_quality_score": 0.05020138174295425
+      },
+      {
+        "image_path": "data/test/progression/test_progression_challenging_low_contrast_angle_top_blurry_20250520_211427_007.jpg",
+        "ground_truth_class": "progression",
+        "predicted_class": "burnt",
+        "confidence": 0.16700923442840576,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05010277032852173,
+        "true_quality_score": 0.05010277032852173
+      },
+      {
+        "image_path": "data/test/progression/test_progression_challenging_normal_angle_diagonal_motion_blur_20250520_211411_005.jpg",
+        "ground_truth_class": "progression",
+        "predicted_class": "burnt",
+        "confidence": 0.16743849217891693,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05023154765367508,
+        "true_quality_score": 0.05023154765367508
+      },
+      {
+        "image_path": "data/test/progression/sample_progression.jpg",
+        "ground_truth_class": "progression",
+        "predicted_class": "burnt",
+        "confidence": 0.16723963618278503,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05017189085483551,
+        "true_quality_score": 0.05017189085483551
+      },
+      {
+        "image_path": "data/test/progression/test_progression_challenging_bright_angle_side_normal_20250520_211427_016.jpg",
+        "ground_truth_class": "progression",
+        "predicted_class": "burnt",
+        "confidence": 0.16808877885341644,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050426633656024934,
+        "true_quality_score": 0.050426633656024934
+      },
+      {
+        "image_path": "data/test/progression/test_progression_challenging_shadowed_angle_close_normal_20250520_211411_014.jpg",
+        "ground_truth_class": "progression",
+        "predicted_class": "burnt",
+        "confidence": 0.16782304644584656,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05034691393375396,
+        "true_quality_score": 0.05034691393375396
+      },
+      {
+        "image_path": "data/test/progression/challenging_progression_blur_014.jpg",
+        "ground_truth_class": "progression",
+        "predicted_class": "burnt",
+        "confidence": 0.16712069511413574,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05013620853424072,
+        "true_quality_score": 0.05013620853424072
+      },
+      {
+        "image_path": "data/test/progression/sample_progression_0023.jpg",
+        "ground_truth_class": "progression",
+        "predicted_class": "burnt",
+        "confidence": 0.167470321059227,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050241096317768096,
+        "true_quality_score": 0.050241096317768096
+      },
+      {
+        "image_path": "data/test/progression/test_progression_challenging_uneven_angle_side_noisy_20250520_211427_011.jpg",
+        "ground_truth_class": "progression",
+        "predicted_class": "burnt",
+        "confidence": 0.16752341389656067,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.0502570241689682,
+        "true_quality_score": 0.0502570241689682
+      },
+      {
+        "image_path": "data/test/progression/test_progression_challenging_dark_angle_side_jpeg_artifact_20250520_211427_015.jpg",
+        "ground_truth_class": "progression",
+        "predicted_class": "burnt",
+        "confidence": 0.16750088334083557,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05025026500225067,
+        "true_quality_score": 0.05025026500225067
+      },
+      {
+        "image_path": "data/test/progression/sample_progression_0000.jpg",
+        "ground_truth_class": "progression",
+        "predicted_class": "burnt",
+        "confidence": 0.16727757453918457,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05018327236175537,
+        "true_quality_score": 0.05018327236175537
+      },
+      {
+        "image_path": "data/test/progression/sample_progression_0004.jpg",
+        "ground_truth_class": "progression",
+        "predicted_class": "burnt",
+        "confidence": 0.1672436147928238,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05017308443784713,
+        "true_quality_score": 0.05017308443784713
+      },
+      {
+        "image_path": "data/test/progression/challenging_progression_lighting_contrast_004.jpg",
+        "ground_truth_class": "progression",
+        "predicted_class": "burnt",
+        "confidence": 0.16761474311351776,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05028442293405533,
+        "true_quality_score": 0.05028442293405533
+      },
+      {
+        "image_path": "data/test/progression/sample_progression_0019.jpg",
+        "ground_truth_class": "progression",
+        "predicted_class": "burnt",
+        "confidence": 0.16747036576271057,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05024110972881317,
+        "true_quality_score": 0.05024110972881317
+      },
+      {
+        "image_path": "data/test/progression/sample_progression_0018.jpg",
+        "ground_truth_class": "progression",
+        "predicted_class": "burnt",
+        "confidence": 0.16716797649860382,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050150392949581145,
+        "true_quality_score": 0.050150392949581145
+      },
+      {
+        "image_path": "data/test/progression/test_progression_challenging_bright_angle_close_blurry_20250520_211427_005.jpg",
+        "ground_truth_class": "progression",
+        "predicted_class": "burnt",
+        "confidence": 0.16762779653072357,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05028833895921707,
+        "true_quality_score": 0.05028833895921707
+      },
+      {
+        "image_path": "data/test/progression/sample_progression_0011.jpg",
+        "ground_truth_class": "progression",
+        "predicted_class": "burnt",
+        "confidence": 0.16753438115119934,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050260314345359804,
+        "true_quality_score": 0.050260314345359804
+      },
+      {
+        "image_path": "data/test/progression/sample_progression_0010.jpg",
+        "ground_truth_class": "progression",
+        "predicted_class": "burnt",
+        "confidence": 0.16721351444721222,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05016405433416366,
+        "true_quality_score": 0.05016405433416366
+      },
+      {
+        "image_path": "data/test/progression/test_progression_challenging_dark_angle_side_blurry_20250520_211427_000.jpg",
+        "ground_truth_class": "progression",
+        "predicted_class": "burnt",
+        "confidence": 0.16711075603961945,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05013322681188583,
+        "true_quality_score": 0.05013322681188583
+      },
+      {
+        "image_path": "data/test/progression/challenging_progression_blur_001.jpg",
+        "ground_truth_class": "progression",
+        "predicted_class": "burnt",
+        "confidence": 0.16731299459934235,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050193898379802704,
+        "true_quality_score": 0.050193898379802704
+      },
+      {
+        "image_path": "data/test/progression/test_progression_challenging_backlit_angle_top_normal_20250520_211411_013.jpg",
+        "ground_truth_class": "progression",
+        "predicted_class": "burnt",
+        "confidence": 0.1677679866552353,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05033039599657058,
+        "true_quality_score": 0.05033039599657058
+      },
+      {
+        "image_path": "data/test/progression/test_progression_challenging_shadowed_angle_top_normal_20250520_211411_002.jpg",
+        "ground_truth_class": "progression",
+        "predicted_class": "burnt",
+        "confidence": 0.1678462028503418,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05035386085510254,
+        "true_quality_score": 0.05035386085510254
+      },
+      {
+        "image_path": "data/test/progression/challenging_progression_lighting_bright_007.jpg",
+        "ground_truth_class": "progression",
+        "predicted_class": "burnt",
+        "confidence": 0.16779369115829468,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.0503381073474884,
+        "true_quality_score": 0.0503381073474884
+      },
+      {
+        "image_path": "data/test/progression/test_progression_challenging_uneven_angle_diagonal_blurry_20250520_211411_003.jpg",
+        "ground_truth_class": "progression",
+        "predicted_class": "burnt",
+        "confidence": 0.167425736784935,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050227721035480496,
+        "true_quality_score": 0.050227721035480496
+      },
+      {
+        "image_path": "data/test/progression/test_progression_challenging_backlit_angle_top_normal_20250520_211411_015.jpg",
+        "ground_truth_class": "progression",
+        "predicted_class": "burnt",
+        "confidence": 0.16773684322834015,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05032105296850204,
+        "true_quality_score": 0.05032105296850204
+      },
+      {
+        "image_path": "data/test/progression/sample_progression_rotated.jpg",
+        "ground_truth_class": "progression",
+        "predicted_class": "burnt",
+        "confidence": 0.1678137630224228,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050344128906726834,
+        "true_quality_score": 0.050344128906726834
+      },
+      {
+        "image_path": "data/test/progression/sample_progression_0022.jpg",
+        "ground_truth_class": "progression",
+        "predicted_class": "burnt",
+        "confidence": 0.1673172265291214,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050195167958736416,
+        "true_quality_score": 0.050195167958736416
+      },
+      {
+        "image_path": "data/test/progression/test_progression_challenging_normal_angle_side_noisy_20250520_211427_001.jpg",
+        "ground_truth_class": "progression",
+        "predicted_class": "burnt",
+        "confidence": 0.167922243475914,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.0503766730427742,
+        "true_quality_score": 0.0503766730427742
+      },
+      {
+        "image_path": "data/test/progression/sample_progression_0006.jpg",
+        "ground_truth_class": "progression",
+        "predicted_class": "burnt",
+        "confidence": 0.16758140921592712,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050274422764778136,
+        "true_quality_score": 0.050274422764778136
+      },
+      {
+        "image_path": "data/test/progression/challenging_progression_lighting_dark_010.jpg",
+        "ground_truth_class": "progression",
+        "predicted_class": "burnt",
+        "confidence": 0.16735775768756866,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050207327306270595,
+        "true_quality_score": 0.050207327306270595
+      },
+      {
+        "image_path": "data/test/progression/sample_progression_0012.jpg",
+        "ground_truth_class": "progression",
+        "predicted_class": "burnt",
+        "confidence": 0.16740632057189941,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05022189617156982,
+        "true_quality_score": 0.05022189617156982
+      },
+      {
+        "image_path": "data/test/progression/test_progression_challenging_uneven_angle_top_normal_20250520_211427_012.jpg",
+        "ground_truth_class": "progression",
+        "predicted_class": "burnt",
+        "confidence": 0.16758406162261963,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050275218486785886,
+        "true_quality_score": 0.050275218486785886
+      },
+      {
+        "image_path": "data/test/progression/challenging_progression_noise_009.jpg",
+        "ground_truth_class": "progression",
+        "predicted_class": "burnt",
+        "confidence": 0.16722938418388367,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050168815255165096,
+        "true_quality_score": 0.050168815255165096
+      },
+      {
+        "image_path": "data/test/progression/test_progression_challenging_low_contrast_angle_close_motion_blur_20250520_211427_017.jpg",
+        "ground_truth_class": "progression",
+        "predicted_class": "burnt",
+        "confidence": 0.16705399751663208,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05011619925498962,
+        "true_quality_score": 0.05011619925498962
+      },
+      {
+        "image_path": "data/test/progression/test_progression_challenging_backlit_angle_top_noisy_20250520_211411_001.jpg",
+        "ground_truth_class": "progression",
+        "predicted_class": "burnt",
+        "confidence": 0.16763076186180115,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050289228558540344,
+        "true_quality_score": 0.050289228558540344
+      },
+      {
+        "image_path": "data/test/progression/test_progression_challenging_dark_angle_top_motion_blur_20250520_211427_008.jpg",
+        "ground_truth_class": "progression",
+        "predicted_class": "burnt",
+        "confidence": 0.16736283898353577,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05020885169506073,
+        "true_quality_score": 0.05020885169506073
+      },
+      {
+        "image_path": "data/test/progression/challenging_progression_combined_003.jpg",
+        "ground_truth_class": "progression",
+        "predicted_class": "burnt",
+        "confidence": 0.1676837056875229,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050305111706256865,
+        "true_quality_score": 0.050305111706256865
+      },
+      {
+        "image_path": "data/test/progression/test_progression_challenging_backlit_angle_close_motion_blur_20250520_211411_007.jpg",
+        "ground_truth_class": "progression",
+        "predicted_class": "burnt",
+        "confidence": 0.16775363683700562,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05032609105110168,
+        "true_quality_score": 0.05032609105110168
+      },
+      {
+        "image_path": "data/test/progression/test_progression_challenging_normal_normal_blurry_20250520_211411_008.jpg",
+        "ground_truth_class": "progression",
+        "predicted_class": "burnt",
+        "confidence": 0.16740535199642181,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05022160559892654,
+        "true_quality_score": 0.05022160559892654
+      },
+      {
+        "image_path": "data/test/progression/test_progression_challenging_shadowed_normal_jpeg_artifact_20250520_211427_013.jpg",
+        "ground_truth_class": "progression",
+        "predicted_class": "burnt",
+        "confidence": 0.16737648844718933,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.0502129465341568,
+        "true_quality_score": 0.0502129465341568
+      },
+      {
+        "image_path": "data/test/progression/sample_progression_0017.jpg",
+        "ground_truth_class": "progression",
+        "predicted_class": "burnt",
+        "confidence": 0.16733285784721375,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05019985735416412,
+        "true_quality_score": 0.05019985735416412
+      },
+      {
+        "image_path": "data/test/progression/challenging_progression_blur_002.jpg",
+        "ground_truth_class": "progression",
+        "predicted_class": "burnt",
+        "confidence": 0.1671816110610962,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050154483318328856,
+        "true_quality_score": 0.050154483318328856
+      },
+      {
+        "image_path": "data/test/progression/test_progression_challenging_shadowed_normal_noisy_20250520_211411_000.jpg",
+        "ground_truth_class": "progression",
+        "predicted_class": "burnt",
+        "confidence": 0.16733744740486145,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05020123422145843,
+        "true_quality_score": 0.05020123422145843
+      },
+      {
+        "image_path": "data/test/progression/test_progression_challenging_normal_angle_top_blurry_20250520_211427_002.jpg",
+        "ground_truth_class": "progression",
+        "predicted_class": "burnt",
+        "confidence": 0.1672186553478241,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050165596604347225,
+        "true_quality_score": 0.050165596604347225
+      },
+      {
+        "image_path": "data/test/progression/challenging_progression_lighting_bright_015.jpg",
+        "ground_truth_class": "progression",
+        "predicted_class": "burnt",
+        "confidence": 0.1678202748298645,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05034608244895935,
+        "true_quality_score": 0.05034608244895935
+      },
+      {
+        "image_path": "data/test/progression/sample_progression_0013.jpg",
+        "ground_truth_class": "progression",
+        "predicted_class": "burnt",
+        "confidence": 0.1672360748052597,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05017082244157791,
+        "true_quality_score": 0.05017082244157791
+      },
+      {
+        "image_path": "data/test/progression/sample_progression_0021.jpg",
+        "ground_truth_class": "progression",
+        "predicted_class": "burnt",
+        "confidence": 0.16725410521030426,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05017623156309128,
+        "true_quality_score": 0.05017623156309128
+      },
+      {
+        "image_path": "data/test/progression/challenging_progression_noise_000.jpg",
+        "ground_truth_class": "progression",
+        "predicted_class": "burnt",
+        "confidence": 0.16731083393096924,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05019325017929077,
+        "true_quality_score": 0.05019325017929077
+      },
+      {
+        "image_path": "data/test/progression/test_progression_challenging_uneven_angle_side_normal_20250520_211411_017.jpg",
+        "ground_truth_class": "progression",
+        "predicted_class": "burnt",
+        "confidence": 0.16752362251281738,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050257086753845215,
+        "true_quality_score": 0.050257086753845215
+      },
+      {
+        "image_path": "data/test/progression/challenging_progression_noise_008.jpg",
+        "ground_truth_class": "progression",
+        "predicted_class": "burnt",
+        "confidence": 0.16722707450389862,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05016812235116958,
+        "true_quality_score": 0.05016812235116958
+      },
+      {
+        "image_path": "data/test/progression/test_progression_challenging_uneven_angle_diagonal_motion_blur_20250520_211411_016.jpg",
+        "ground_truth_class": "progression",
+        "predicted_class": "burnt",
+        "confidence": 0.1677544265985489,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05032632797956466,
+        "true_quality_score": 0.05032632797956466
+      },
+      {
+        "image_path": "data/test/progression/test_progression_challenging_backlit_normal_motion_blur_20250520_211427_014.jpg",
+        "ground_truth_class": "progression",
+        "predicted_class": "burnt",
+        "confidence": 0.16772258281707764,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05031677484512329,
+        "true_quality_score": 0.05031677484512329
+      },
+      {
+        "image_path": "data/test/progression/sample_progression_dark.jpg",
+        "ground_truth_class": "progression",
+        "predicted_class": "burnt",
+        "confidence": 0.16741251945495605,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05022375583648681,
+        "true_quality_score": 0.05022375583648681
+      },
+      {
+        "image_path": "data/test/progression/sample_progression_0002.jpg",
+        "ground_truth_class": "progression",
+        "predicted_class": "burnt",
+        "confidence": 0.1672341674566269,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05017025023698807,
+        "true_quality_score": 0.05017025023698807
+      },
+      {
+        "image_path": "data/test/progression/challenging_progression_combined_006.jpg",
+        "ground_truth_class": "progression",
+        "predicted_class": "burnt",
+        "confidence": 0.16782349348068237,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05034704804420471,
+        "true_quality_score": 0.05034704804420471
+      },
+      {
+        "image_path": "data/test/progression/test_progression_challenging_bright_normal_noisy_20250520_211411_010.jpg",
+        "ground_truth_class": "progression",
+        "predicted_class": "burnt",
+        "confidence": 0.1676708608865738,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050301258265972135,
+        "true_quality_score": 0.050301258265972135
+      },
+      {
+        "image_path": "data/test/progression/test_progression_challenging_low_contrast_angle_close_blurry_20250520_211427_004.jpg",
+        "ground_truth_class": "progression",
+        "predicted_class": "burnt",
+        "confidence": 0.16701778769493103,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050105336308479305,
+        "true_quality_score": 0.050105336308479305
+      },
+      {
+        "image_path": "data/test/progression/test_progression_challenging_bright_angle_side_blurry_20250520_211411_006.jpg",
+        "ground_truth_class": "progression",
+        "predicted_class": "burnt",
+        "confidence": 0.1678435206413269,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05035305619239807,
+        "true_quality_score": 0.05035305619239807
+      },
+      {
+        "image_path": "data/test/progression/sample_progression_0007.jpg",
+        "ground_truth_class": "progression",
+        "predicted_class": "burnt",
+        "confidence": 0.1672673374414444,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050180201232433316,
+        "true_quality_score": 0.050180201232433316
+      },
+      {
+        "image_path": "data/test/progression/challenging_progression_lighting_contrast_013.jpg",
+        "ground_truth_class": "progression",
+        "predicted_class": "burnt",
+        "confidence": 0.16762502491474152,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050287507474422455,
+        "true_quality_score": 0.050287507474422455
+      },
+      {
+        "image_path": "data/test/progression/sample_progression_0009.jpg",
+        "ground_truth_class": "progression",
+        "predicted_class": "burnt",
+        "confidence": 0.1672915816307068,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050187474489212035,
+        "true_quality_score": 0.050187474489212035
+      },
+      {
+        "image_path": "data/test/progression/test_progression_challenging_normal_angle_close_jpeg_artifact_20250520_211427_010.jpg",
+        "ground_truth_class": "progression",
+        "predicted_class": "burnt",
+        "confidence": 0.16741158068180084,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05022347420454025,
+        "true_quality_score": 0.05022347420454025
+      },
+      {
+        "image_path": "data/test/progression/sample_progression_0008.jpg",
+        "ground_truth_class": "progression",
+        "predicted_class": "burnt",
+        "confidence": 0.16726435720920563,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050179307162761685,
+        "true_quality_score": 0.050179307162761685
+      },
+      {
+        "image_path": "data/test/progression/sample_progression_0014.jpg",
+        "ground_truth_class": "progression",
+        "predicted_class": "burnt",
+        "confidence": 0.16752289235591888,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05025686770677566,
+        "true_quality_score": 0.05025686770677566
+      },
+      {
+        "image_path": "data/test/progression/test_progression_challenging_backlit_angle_diagonal_normal_20250520_211427_003.jpg",
+        "ground_truth_class": "progression",
+        "predicted_class": "burnt",
+        "confidence": 0.16766157746315002,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050298473238945006,
+        "true_quality_score": 0.050298473238945006
+      },
+      {
+        "image_path": "data/test/progression/challenging_progression_lighting_dark_011.jpg",
+        "ground_truth_class": "progression",
+        "predicted_class": "burnt",
+        "confidence": 0.16742277145385742,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05022683143615723,
+        "true_quality_score": 0.05022683143615723
+      },
+      {
+        "image_path": "data/test/progression/sample_progression_0003.jpg",
+        "ground_truth_class": "progression",
+        "predicted_class": "burnt",
+        "confidence": 0.1671736091375351,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050152082741260526,
+        "true_quality_score": 0.050152082741260526
+      },
+      {
+        "image_path": "data/test/progression/challenging_progression_lighting_bright_012.jpg",
+        "ground_truth_class": "progression",
+        "predicted_class": "burnt",
+        "confidence": 0.16784080862998962,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050352242588996884,
+        "true_quality_score": 0.050352242588996884
+      },
+      {
+        "image_path": "data/test/progression/challenging_progression_lighting_contrast_016.jpg",
+        "ground_truth_class": "progression",
+        "predicted_class": "burnt",
+        "confidence": 0.1675010770559311,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05025032311677933,
+        "true_quality_score": 0.05025032311677933
+      },
+      {
+        "image_path": "data/test/progression/test_progression_challenging_low_contrast_angle_side_noisy_20250520_211427_006.jpg",
+        "ground_truth_class": "progression",
+        "predicted_class": "burnt",
+        "confidence": 0.16744089126586914,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05023226737976074,
+        "true_quality_score": 0.05023226737976074
+      },
+      {
+        "image_path": "data/test/mixed/test_mixed_challenging_backlit_angle_diagonal_jpeg_artifact_20250520_211427_014.jpg",
+        "ground_truth_class": "mixed",
+        "predicted_class": "burnt",
+        "confidence": 0.16798576712608337,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05039573013782501,
+        "true_quality_score": 0.05039573013782501
+      },
+      {
+        "image_path": "data/test/mixed/test_mixed_challenging_normal_angle_diagonal_blurry_20250520_211411_000.jpg",
+        "ground_truth_class": "mixed",
+        "predicted_class": "burnt",
+        "confidence": 0.16732728481292725,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05019818544387817,
+        "true_quality_score": 0.05019818544387817
+      },
+      {
+        "image_path": "data/test/mixed/test_mixed_challenging_uneven_normal_blurry_20250520_211411_016.jpg",
+        "ground_truth_class": "mixed",
+        "predicted_class": "burnt",
+        "confidence": 0.16730841994285583,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05019252598285675,
+        "true_quality_score": 0.05019252598285675
+      },
+      {
+        "image_path": "data/test/mixed/sample_mixed_0008.jpg",
+        "ground_truth_class": "mixed",
+        "predicted_class": "burnt",
+        "confidence": 0.16716726124286652,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050150178372859955,
+        "true_quality_score": 0.050150178372859955
+      },
+      {
+        "image_path": "data/test/mixed/test_mixed_challenging_low_contrast_normal_noisy_20250520_211411_001.jpg",
+        "ground_truth_class": "mixed",
+        "predicted_class": "burnt",
+        "confidence": 0.16708742082118988,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050126226246356965,
+        "true_quality_score": 0.050126226246356965
+      },
+      {
+        "image_path": "data/test/mixed/test_mixed_challenging_uneven_angle_top_noisy_20250520_211411_005.jpg",
+        "ground_truth_class": "mixed",
+        "predicted_class": "burnt",
+        "confidence": 0.16726577281951904,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05017973184585571,
+        "true_quality_score": 0.05017973184585571
+      },
+      {
+        "image_path": "data/test/mixed/sample_mixed_0021.jpg",
+        "ground_truth_class": "mixed",
+        "predicted_class": "burnt",
+        "confidence": 0.16735097765922546,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050205293297767635,
+        "true_quality_score": 0.050205293297767635
+      },
+      {
+        "image_path": "data/test/mixed/test_mixed_challenging_backlit_normal_blurry_20250520_211427_017.jpg",
+        "ground_truth_class": "mixed",
+        "predicted_class": "burnt",
+        "confidence": 0.16723096370697021,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050169289112091064,
+        "true_quality_score": 0.050169289112091064
+      },
+      {
+        "image_path": "data/test/mixed/test_mixed_challenging_low_contrast_normal_noisy_20250520_211411_008.jpg",
+        "ground_truth_class": "mixed",
+        "predicted_class": "burnt",
+        "confidence": 0.1670749932527542,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05012249797582626,
+        "true_quality_score": 0.05012249797582626
+      },
+      {
+        "image_path": "data/test/mixed/sample_mixed_0017.jpg",
+        "ground_truth_class": "mixed",
+        "predicted_class": "burnt",
+        "confidence": 0.16700509190559387,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05010152757167816,
+        "true_quality_score": 0.05010152757167816
+      },
+      {
+        "image_path": "data/test/mixed/test_mixed_challenging_backlit_angle_side_jpeg_artifact_20250520_211411_004.jpg",
+        "ground_truth_class": "mixed",
+        "predicted_class": "burnt",
+        "confidence": 0.1675281971693039,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05025845915079117,
+        "true_quality_score": 0.05025845915079117
+      },
+      {
+        "image_path": "data/test/mixed/sample_mixed_0002.jpg",
+        "ground_truth_class": "mixed",
+        "predicted_class": "burnt",
+        "confidence": 0.16716249287128448,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050148747861385345,
+        "true_quality_score": 0.050148747861385345
+      },
+      {
+        "image_path": "data/test/mixed/test_mixed_challenging_uneven_angle_side_blurry_20250520_211427_005.jpg",
+        "ground_truth_class": "mixed",
+        "predicted_class": "burnt",
+        "confidence": 0.16753141582012177,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05025942474603653,
+        "true_quality_score": 0.05025942474603653
+      },
+      {
+        "image_path": "data/test/mixed/test_mixed_challenging_low_contrast_normal_normal_20250520_211411_002.jpg",
+        "ground_truth_class": "mixed",
+        "predicted_class": "burnt",
+        "confidence": 0.16702787578105927,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05010836273431778,
+        "true_quality_score": 0.05010836273431778
+      },
+      {
+        "image_path": "data/test/mixed/test_mixed_challenging_uneven_angle_close_noisy_20250520_211411_006.jpg",
+        "ground_truth_class": "mixed",
+        "predicted_class": "burnt",
+        "confidence": 0.1673131287097931,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05019393861293792,
+        "true_quality_score": 0.05019393861293792
+      },
+      {
+        "image_path": "data/test/mixed/sample_mixed_0016.jpg",
+        "ground_truth_class": "mixed",
+        "predicted_class": "burnt",
+        "confidence": 0.16718077659606934,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.0501542329788208,
+        "true_quality_score": 0.0501542329788208
+      },
+      {
+        "image_path": "data/test/mixed/test_mixed_challenging_dark_angle_side_noisy_20250520_211411_017.jpg",
+        "ground_truth_class": "mixed",
+        "predicted_class": "burnt",
+        "confidence": 0.16732920706272125,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050198762118816374,
+        "true_quality_score": 0.050198762118816374
+      },
+      {
+        "image_path": "data/test/mixed/sample_mixed_0011.jpg",
+        "ground_truth_class": "mixed",
+        "predicted_class": "burnt",
+        "confidence": 0.16737878322601318,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050213634967803955,
+        "true_quality_score": 0.050213634967803955
+      },
+      {
+        "image_path": "data/test/mixed/sample_mixed_0018.jpg",
+        "ground_truth_class": "mixed",
+        "predicted_class": "burnt",
+        "confidence": 0.16718077659606934,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.0501542329788208,
+        "true_quality_score": 0.0501542329788208
+      },
+      {
+        "image_path": "data/test/mixed/sample_mixed_0001.jpg",
+        "ground_truth_class": "mixed",
+        "predicted_class": "burnt",
+        "confidence": 0.1671903133392334,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05015709400177002,
+        "true_quality_score": 0.05015709400177002
+      },
+      {
+        "image_path": "data/test/mixed/sample_mixed_0014.jpg",
+        "ground_truth_class": "mixed",
+        "predicted_class": "burnt",
+        "confidence": 0.16718077659606934,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.0501542329788208,
+        "true_quality_score": 0.0501542329788208
+      },
+      {
+        "image_path": "data/test/mixed/challenging_mixed_lighting_contrast_012.jpg",
+        "ground_truth_class": "mixed",
+        "predicted_class": "burnt",
+        "confidence": 0.1675134152173996,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05025402456521988,
+        "true_quality_score": 0.05025402456521988
+      },
+      {
+        "image_path": "data/test/mixed/test_mixed_challenging_dark_normal_noisy_20250520_211411_013.jpg",
+        "ground_truth_class": "mixed",
+        "predicted_class": "burnt",
+        "confidence": 0.16729792952537537,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050189378857612606,
+        "true_quality_score": 0.050189378857612606
+      },
+      {
+        "image_path": "data/test/mixed/test_mixed_challenging_uneven_normal_jpeg_artifact_20250520_211411_007.jpg",
+        "ground_truth_class": "mixed",
+        "predicted_class": "burnt",
+        "confidence": 0.16735225915908813,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05020567774772644,
+        "true_quality_score": 0.05020567774772644
+      },
+      {
+        "image_path": "data/test/mixed/test_mixed_challenging_backlit_angle_side_blurry_20250520_211427_004.jpg",
+        "ground_truth_class": "mixed",
+        "predicted_class": "burnt",
+        "confidence": 0.1676921844482422,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05030765533447266,
+        "true_quality_score": 0.05030765533447266
+      },
+      {
+        "image_path": "data/test/mixed/challenging_mixed_blur_006.jpg",
+        "ground_truth_class": "mixed",
+        "predicted_class": "burnt",
+        "confidence": 0.1670244187116623,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050107325613498684,
+        "true_quality_score": 0.050107325613498684
+      },
+      {
+        "image_path": "data/test/mixed/test_mixed_challenging_low_contrast_angle_top_blurry_20250520_211427_013.jpg",
+        "ground_truth_class": "mixed",
+        "predicted_class": "burnt",
+        "confidence": 0.16701029241085052,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050103087723255155,
+        "true_quality_score": 0.050103087723255155
+      },
+      {
+        "image_path": "data/test/mixed/sample_mixed_0022.jpg",
+        "ground_truth_class": "mixed",
+        "predicted_class": "burnt",
+        "confidence": 0.1674719899892807,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05024159699678421,
+        "true_quality_score": 0.05024159699678421
+      },
+      {
+        "image_path": "data/test/mixed/sample_mixed_0000.jpg",
+        "ground_truth_class": "mixed",
+        "predicted_class": "burnt",
+        "confidence": 0.16737505793571472,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050212517380714417,
+        "true_quality_score": 0.050212517380714417
+      },
+      {
+        "image_path": "data/test/mixed/test_mixed_challenging_uneven_angle_diagonal_motion_blur_20250520_211427_002.jpg",
+        "ground_truth_class": "mixed",
+        "predicted_class": "burnt",
+        "confidence": 0.1675928384065628,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05027785152196884,
+        "true_quality_score": 0.05027785152196884
+      },
+      {
+        "image_path": "data/test/mixed/challenging_mixed_lighting_dark_005.jpg",
+        "ground_truth_class": "mixed",
+        "predicted_class": "burnt",
+        "confidence": 0.16748198866844177,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05024459660053253,
+        "true_quality_score": 0.05024459660053253
+      },
+      {
+        "image_path": "data/test/mixed/sample_mixed_0007.jpg",
+        "ground_truth_class": "mixed",
+        "predicted_class": "burnt",
+        "confidence": 0.16718077659606934,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.0501542329788208,
+        "true_quality_score": 0.0501542329788208
+      },
+      {
+        "image_path": "data/test/mixed/sample_mixed_0003.jpg",
+        "ground_truth_class": "mixed",
+        "predicted_class": "burnt",
+        "confidence": 0.16716574132442474,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05014972239732742,
+        "true_quality_score": 0.05014972239732742
+      },
+      {
+        "image_path": "data/test/mixed/challenging_mixed_noise_001.jpg",
+        "ground_truth_class": "mixed",
+        "predicted_class": "burnt",
+        "confidence": 0.16705161333084106,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050115483999252315,
+        "true_quality_score": 0.050115483999252315
+      },
+      {
+        "image_path": "data/test/mixed/sample_mixed_0019.jpg",
+        "ground_truth_class": "mixed",
+        "predicted_class": "burnt",
+        "confidence": 0.16714833676815033,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.0501445010304451,
+        "true_quality_score": 0.0501445010304451
+      },
+      {
+        "image_path": "data/test/mixed/challenging_mixed_perspective_003.jpg",
+        "ground_truth_class": "mixed",
+        "predicted_class": "burnt",
+        "confidence": 0.16732436418533325,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050197309255599974,
+        "true_quality_score": 0.050197309255599974
+      },
+      {
+        "image_path": "data/test/mixed/test_mixed_challenging_shadowed_angle_close_jpeg_artifact_20250520_211427_010.jpg",
+        "ground_truth_class": "mixed",
+        "predicted_class": "burnt",
+        "confidence": 0.1674453616142273,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05023360848426819,
+        "true_quality_score": 0.05023360848426819
+      },
+      {
+        "image_path": "data/test/mixed/challenging_mixed_perspective_013.jpg",
+        "ground_truth_class": "mixed",
+        "predicted_class": "burnt",
+        "confidence": 0.16725482046604156,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05017644613981247,
+        "true_quality_score": 0.05017644613981247
+      },
+      {
+        "image_path": "data/test/mixed/test_mixed_challenging_uneven_angle_close_jpeg_artifact_20250520_211427_003.jpg",
+        "ground_truth_class": "mixed",
+        "predicted_class": "burnt",
+        "confidence": 0.16738365590572357,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05021509677171707,
+        "true_quality_score": 0.05021509677171707
+      },
+      {
+        "image_path": "data/test/mixed/sample_mixed_0010.jpg",
+        "ground_truth_class": "mixed",
+        "predicted_class": "burnt",
+        "confidence": 0.1671786904335022,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05015360713005066,
+        "true_quality_score": 0.05015360713005066
+      },
+      {
+        "image_path": "data/test/mixed/challenging_mixed_perspective_004.jpg",
+        "ground_truth_class": "mixed",
+        "predicted_class": "burnt",
+        "confidence": 0.1672426462173462,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05017279386520385,
+        "true_quality_score": 0.05017279386520385
+      },
+      {
+        "image_path": "data/test/mixed/challenging_mixed_perspective_016.jpg",
+        "ground_truth_class": "mixed",
+        "predicted_class": "burnt",
+        "confidence": 0.1672845333814621,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05018536001443863,
+        "true_quality_score": 0.05018536001443863
+      },
+      {
+        "image_path": "data/test/mixed/test_mixed_challenging_normal_angle_top_motion_blur_20250520_211411_010.jpg",
+        "ground_truth_class": "mixed",
+        "predicted_class": "burnt",
+        "confidence": 0.16753000020980835,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050259000062942503,
+        "true_quality_score": 0.050259000062942503
+      },
+      {
+        "image_path": "data/test/mixed/challenging_mixed_blur_009.jpg",
+        "ground_truth_class": "mixed",
+        "predicted_class": "burnt",
+        "confidence": 0.16703349351882935,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.0501100480556488,
+        "true_quality_score": 0.0501100480556488
+      },
+      {
+        "image_path": "data/test/mixed/test_mixed_challenging_shadowed_angle_diagonal_noisy_20250520_211411_012.jpg",
+        "ground_truth_class": "mixed",
+        "predicted_class": "burnt",
+        "confidence": 0.167473703622818,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.0502421110868454,
+        "true_quality_score": 0.0502421110868454
+      },
+      {
+        "image_path": "data/test/mixed/challenging_mixed_lighting_dark_014.jpg",
+        "ground_truth_class": "mixed",
+        "predicted_class": "burnt",
+        "confidence": 0.16751600801944733,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050254802405834194,
+        "true_quality_score": 0.050254802405834194
+      },
+      {
+        "image_path": "data/test/mixed/test_mixed_challenging_normal_angle_side_motion_blur_20250520_211427_007.jpg",
+        "ground_truth_class": "mixed",
+        "predicted_class": "burnt",
+        "confidence": 0.16735289990901947,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05020586997270584,
+        "true_quality_score": 0.05020586997270584
+      },
+      {
+        "image_path": "data/test/mixed/challenging_mixed_perspective_011.jpg",
+        "ground_truth_class": "mixed",
+        "predicted_class": "burnt",
+        "confidence": 0.16711285710334778,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05013385713100433,
+        "true_quality_score": 0.05013385713100433
+      },
+      {
+        "image_path": "data/test/mixed/sample_mixed_0023.jpg",
+        "ground_truth_class": "mixed",
+        "predicted_class": "burnt",
+        "confidence": 0.16715729236602783,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05014718770980835,
+        "true_quality_score": 0.05014718770980835
+      },
+      {
+        "image_path": "data/test/mixed/test_mixed_challenging_backlit_angle_top_normal_20250520_211411_014.jpg",
+        "ground_truth_class": "mixed",
+        "predicted_class": "burnt",
+        "confidence": 0.16747231781482697,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05024169534444809,
+        "true_quality_score": 0.05024169534444809
+      },
+      {
+        "image_path": "data/test/mixed/test_mixed_challenging_normal_angle_close_jpeg_artifact_20250520_211427_008.jpg",
+        "ground_truth_class": "mixed",
+        "predicted_class": "burnt",
+        "confidence": 0.16727398335933685,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05018219500780106,
+        "true_quality_score": 0.05018219500780106
+      },
+      {
+        "image_path": "data/test/mixed/test_mixed_challenging_low_contrast_angle_close_noisy_20250520_211427_015.jpg",
+        "ground_truth_class": "mixed",
+        "predicted_class": "burnt",
+        "confidence": 0.16706611216068268,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050119833648204805,
+        "true_quality_score": 0.050119833648204805
+      },
+      {
+        "image_path": "data/test/mixed/sample_mixed.jpg",
+        "ground_truth_class": "mixed",
+        "predicted_class": "burnt",
+        "confidence": 0.1671828180551529,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050154845416545864,
+        "true_quality_score": 0.050154845416545864
+      },
+      {
+        "image_path": "data/test/mixed/challenging_mixed_combined_010.jpg",
+        "ground_truth_class": "mixed",
+        "predicted_class": "burnt",
+        "confidence": 0.16792409121990204,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05037722736597061,
+        "true_quality_score": 0.05037722736597061
+      },
+      {
+        "image_path": "data/test/mixed/challenging_mixed_lighting_contrast_007.jpg",
+        "ground_truth_class": "mixed",
+        "predicted_class": "burnt",
+        "confidence": 0.16768984496593475,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050306953489780426,
+        "true_quality_score": 0.050306953489780426
+      },
+      {
+        "image_path": "data/test/mixed/test_mixed_challenging_dark_angle_side_noisy_20250520_211427_016.jpg",
+        "ground_truth_class": "mixed",
+        "predicted_class": "burnt",
+        "confidence": 0.1673397719860077,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05020193159580231,
+        "true_quality_score": 0.05020193159580231
+      },
+      {
+        "image_path": "data/test/mixed/challenging_mixed_lighting_contrast_000.jpg",
+        "ground_truth_class": "mixed",
+        "predicted_class": "burnt",
+        "confidence": 0.16778528690338135,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050335586071014404,
+        "true_quality_score": 0.050335586071014404
+      },
+      {
+        "image_path": "data/test/mixed/challenging_mixed_noise_002.jpg",
+        "ground_truth_class": "mixed",
+        "predicted_class": "burnt",
+        "confidence": 0.1671912968158722,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050157389044761656,
+        "true_quality_score": 0.050157389044761656
+      },
+      {
+        "image_path": "data/test/mixed/test_mixed_challenging_bright_angle_side_normal_20250520_211427_001.jpg",
+        "ground_truth_class": "mixed",
+        "predicted_class": "burnt",
+        "confidence": 0.16795621812343597,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05038686543703079,
+        "true_quality_score": 0.05038686543703079
+      },
+      {
+        "image_path": "data/test/mixed/sample_mixed_0009.jpg",
+        "ground_truth_class": "mixed",
+        "predicted_class": "burnt",
+        "confidence": 0.1671837419271469,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05015512257814407,
+        "true_quality_score": 0.05015512257814407
+      },
+      {
+        "image_path": "data/test/mixed/sample_mixed_rotated.jpg",
+        "ground_truth_class": "mixed",
+        "predicted_class": "burnt",
+        "confidence": 0.1678074598312378,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050342237949371337,
+        "true_quality_score": 0.050342237949371337
+      },
+      {
+        "image_path": "data/test/mixed/challenging_mixed_lighting_contrast_015.jpg",
+        "ground_truth_class": "mixed",
+        "predicted_class": "burnt",
+        "confidence": 0.1674938052892685,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050248141586780544,
+        "true_quality_score": 0.050248141586780544
+      },
+      {
+        "image_path": "data/test/mixed/sample_mixed_0006.jpg",
+        "ground_truth_class": "mixed",
+        "predicted_class": "burnt",
+        "confidence": 0.16718077659606934,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.0501542329788208,
+        "true_quality_score": 0.0501542329788208
+      },
+      {
+        "image_path": "data/test/mixed/test_mixed_challenging_dark_angle_close_noisy_20250520_211411_015.jpg",
+        "ground_truth_class": "mixed",
+        "predicted_class": "burnt",
+        "confidence": 0.16730307042598724,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05019092112779617,
+        "true_quality_score": 0.05019092112779617
+      },
+      {
+        "image_path": "data/test/mixed/test_mixed_challenging_low_contrast_angle_side_motion_blur_20250520_211427_011.jpg",
+        "ground_truth_class": "mixed",
+        "predicted_class": "burnt",
+        "confidence": 0.16726697981357574,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050180093944072725,
+        "true_quality_score": 0.050180093944072725
+      },
+      {
+        "image_path": "data/test/mixed/sample_mixed_0004.jpg",
+        "ground_truth_class": "mixed",
+        "predicted_class": "burnt",
+        "confidence": 0.16718077659606934,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.0501542329788208,
+        "true_quality_score": 0.0501542329788208
+      },
+      {
+        "image_path": "data/test/mixed/sample_mixed_0020.jpg",
+        "ground_truth_class": "mixed",
+        "predicted_class": "burnt",
+        "confidence": 0.1672123223543167,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05016369670629501,
+        "true_quality_score": 0.05016369670629501
+      },
+      {
+        "image_path": "data/test/mixed/sample_mixed_0013.jpg",
+        "ground_truth_class": "mixed",
+        "predicted_class": "burnt",
+        "confidence": 0.16714435815811157,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05014330744743347,
+        "true_quality_score": 0.05014330744743347
+      },
+      {
+        "image_path": "data/test/mixed/test_mixed_challenging_dark_angle_close_noisy_20250520_211427_000.jpg",
+        "ground_truth_class": "mixed",
+        "predicted_class": "burnt",
+        "confidence": 0.16727985441684723,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050183956325054166,
+        "true_quality_score": 0.050183956325054166
+      },
+      {
+        "image_path": "data/test/mixed/test_mixed_challenging_dark_angle_side_blurry_20250520_211427_006.jpg",
+        "ground_truth_class": "mixed",
+        "predicted_class": "burnt",
+        "confidence": 0.16739876568317413,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05021962970495224,
+        "true_quality_score": 0.05021962970495224
+      },
+      {
+        "image_path": "data/test/mixed/test_mixed_challenging_backlit_angle_close_jpeg_artifact_20250520_211411_003.jpg",
+        "ground_truth_class": "mixed",
+        "predicted_class": "burnt",
+        "confidence": 0.16773129999637604,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05031938999891281,
+        "true_quality_score": 0.05031938999891281
+      },
+      {
+        "image_path": "data/test/mixed/sample_mixed_0012.jpg",
+        "ground_truth_class": "mixed",
+        "predicted_class": "burnt",
+        "confidence": 0.16715404391288757,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05014621317386627,
+        "true_quality_score": 0.05014621317386627
+      },
+      {
+        "image_path": "data/test/mixed/test_mixed_challenging_low_contrast_angle_top_jpeg_artifact_20250520_211411_011.jpg",
+        "ground_truth_class": "mixed",
+        "predicted_class": "burnt",
+        "confidence": 0.16730886697769165,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050192660093307494,
+        "true_quality_score": 0.050192660093307494
+      },
+      {
+        "image_path": "data/test/mixed/test_mixed_challenging_normal_normal_noisy_20250520_211427_009.jpg",
+        "ground_truth_class": "mixed",
+        "predicted_class": "burnt",
+        "confidence": 0.1671578288078308,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050147348642349245,
+        "true_quality_score": 0.050147348642349245
+      },
+      {
+        "image_path": "data/test/mixed/challenging_mixed_lighting_dark_008.jpg",
+        "ground_truth_class": "mixed",
+        "predicted_class": "burnt",
+        "confidence": 0.16736672818660736,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050210018455982205,
+        "true_quality_score": 0.050210018455982205
+      },
+      {
+        "image_path": "data/test/mixed/test_mixed_challenging_bright_angle_close_jpeg_artifact_20250520_211411_009.jpg",
+        "ground_truth_class": "mixed",
+        "predicted_class": "burnt",
+        "confidence": 0.16772709786891937,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05031812936067581,
+        "true_quality_score": 0.05031812936067581
+      },
+      {
+        "image_path": "data/test/mixed/sample_mixed_dark.jpg",
+        "ground_truth_class": "mixed",
+        "predicted_class": "burnt",
+        "confidence": 0.1673571616411209,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05020714849233627,
+        "true_quality_score": 0.05020714849233627
+      },
+      {
+        "image_path": "data/test/mixed/test_mixed_challenging_normal_angle_top_noisy_20250520_211427_012.jpg",
+        "ground_truth_class": "mixed",
+        "predicted_class": "burnt",
+        "confidence": 0.16728968918323517,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05018690675497055,
+        "true_quality_score": 0.05018690675497055
+      },
+      {
+        "image_path": "data/test/mixed/sample_mixed_0015.jpg",
+        "ground_truth_class": "mixed",
+        "predicted_class": "burnt",
+        "confidence": 0.16731882095336914,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05019564628601074,
+        "true_quality_score": 0.05019564628601074
+      },
+      {
+        "image_path": "data/test/mixed/sample_mixed_0005.jpg",
+        "ground_truth_class": "mixed",
+        "predicted_class": "burnt",
+        "confidence": 0.16701015830039978,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050103047490119935,
+        "true_quality_score": 0.050103047490119935
+      },
+      {
+        "image_path": "data/test/basic/challenging_basic_combined_013.jpg",
+        "ground_truth_class": "basic",
+        "predicted_class": "burnt",
+        "confidence": 0.16684846580028534,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.0500545397400856,
+        "true_quality_score": 0.0250272698700428
+      },
+      {
+        "image_path": "data/test/basic/sample_basic_dark.jpg",
+        "ground_truth_class": "basic",
+        "predicted_class": "burnt",
+        "confidence": 0.1673077642917633,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05019232928752899,
+        "true_quality_score": 0.025096164643764494
+      },
+      {
+        "image_path": "data/test/basic/sample_basic_rotated.jpg",
+        "ground_truth_class": "basic",
+        "predicted_class": "burnt",
+        "confidence": 0.16762657463550568,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.0502879723906517,
+        "true_quality_score": 0.02514398619532585
+      },
+      {
+        "image_path": "data/test/basic/test_basic_challenging_backlit_angle_side_motion_blur_20250520_211427_000.jpg",
+        "ground_truth_class": "basic",
+        "predicted_class": "burnt",
+        "confidence": 0.16778564453125,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050335693359374996,
+        "true_quality_score": 0.025167846679687498
+      },
+      {
+        "image_path": "data/test/basic/challenging_basic_lighting_bright_006.jpg",
+        "ground_truth_class": "basic",
+        "predicted_class": "burnt",
+        "confidence": 0.16849187016487122,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05054756104946136,
+        "true_quality_score": 0.02527378052473068
+      },
+      {
+        "image_path": "data/test/basic/challenging_basic_perspective_010.jpg",
+        "ground_truth_class": "basic",
+        "predicted_class": "burnt",
+        "confidence": 0.16712728142738342,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05013818442821503,
+        "true_quality_score": 0.025069092214107514
+      },
+      {
+        "image_path": "data/test/basic/test_basic_challenging_dark_angle_top_jpeg_artifact_20250520_211427_008.jpg",
+        "ground_truth_class": "basic",
+        "predicted_class": "burnt",
+        "confidence": 0.16725438833236694,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050176316499710084,
+        "true_quality_score": 0.025088158249855042
+      },
+      {
+        "image_path": "data/test/basic/test_basic_challenging_bright_normal_blurry_20250520_211411_008.jpg",
+        "ground_truth_class": "basic",
+        "predicted_class": "burnt",
+        "confidence": 0.16702774167060852,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05010832250118256,
+        "true_quality_score": 0.02505416125059128
+      },
+      {
+        "image_path": "data/test/basic/basic_augmented_0004.jpg",
+        "ground_truth_class": "basic",
+        "predicted_class": "burnt",
+        "confidence": 0.16747240722179413,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05024172216653824,
+        "true_quality_score": 0.02512086108326912
+      },
+      {
+        "image_path": "data/test/basic/challenging_basic_perspective_014.jpg",
+        "ground_truth_class": "basic",
+        "predicted_class": "burnt",
+        "confidence": 0.16721650958061218,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050164952874183655,
+        "true_quality_score": 0.025082476437091827
+      },
+      {
+        "image_path": "data/test/basic/challenging_basic_lighting_contrast_011.jpg",
+        "ground_truth_class": "basic",
+        "predicted_class": "burnt",
+        "confidence": 0.167316734790802,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.0501950204372406,
+        "true_quality_score": 0.0250975102186203
+      },
+      {
+        "image_path": "data/test/basic/basic_augmented_0006.jpg",
+        "ground_truth_class": "basic",
+        "predicted_class": "burnt",
+        "confidence": 0.16676706075668335,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050030118227005003,
+        "true_quality_score": 0.025015059113502502
+      },
+      {
+        "image_path": "data/test/basic/challenging_basic_lighting_dark_004.jpg",
+        "ground_truth_class": "basic",
+        "predicted_class": "burnt",
+        "confidence": 0.16753694415092468,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.0502610832452774,
+        "true_quality_score": 0.0251305416226387
+      },
+      {
+        "image_path": "data/test/basic/sample_basic.jpg",
+        "ground_truth_class": "basic",
+        "predicted_class": "burnt",
+        "confidence": 0.16689182817935944,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05006754845380783,
+        "true_quality_score": 0.025033774226903914
+      },
+      {
+        "image_path": "data/test/basic/test_basic_challenging_low_contrast_angle_side_normal_20250520_211427_003.jpg",
+        "ground_truth_class": "basic",
+        "predicted_class": "burnt",
+        "confidence": 0.16708220541477203,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05012466162443161,
+        "true_quality_score": 0.025062330812215806
+      },
+      {
+        "image_path": "data/test/basic/test_basic_challenging_normal_angle_close_motion_blur_20250520_211411_000.jpg",
+        "ground_truth_class": "basic",
+        "predicted_class": "burnt",
+        "confidence": 0.16736067831516266,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.0502082034945488,
+        "true_quality_score": 0.0251041017472744
+      },
+      {
+        "image_path": "data/test/basic/challenging_basic_combined_007.jpg",
+        "ground_truth_class": "basic",
+        "predicted_class": "burnt",
+        "confidence": 0.16796234250068665,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050388702750205995,
+        "true_quality_score": 0.025194351375102998
+      },
+      {
+        "image_path": "data/test/basic/challenging_basic_blur_009.jpg",
+        "ground_truth_class": "basic",
+        "predicted_class": "burnt",
+        "confidence": 0.1668059527873993,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050041785836219786,
+        "true_quality_score": 0.025020892918109893
+      },
+      {
+        "image_path": "data/test/basic/test_basic_challenging_uneven_angle_close_jpeg_artifact_20250520_211411_003.jpg",
+        "ground_truth_class": "basic",
+        "predicted_class": "burnt",
+        "confidence": 0.16703687608242035,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050111062824726105,
+        "true_quality_score": 0.025055531412363052
+      },
+      {
+        "image_path": "data/test/basic/challenging_basic_perspective_003.jpg",
+        "ground_truth_class": "basic",
+        "predicted_class": "burnt",
+        "confidence": 0.16688354313373566,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.0500650629401207,
+        "true_quality_score": 0.02503253147006035
+      },
+      {
+        "image_path": "data/test/basic/challenging_basic_perspective_000.jpg",
+        "ground_truth_class": "basic",
+        "predicted_class": "burnt",
+        "confidence": 0.16688911616802216,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05006673485040664,
+        "true_quality_score": 0.02503336742520332
+      },
+      {
+        "image_path": "data/test/basic/basic_augmented_0000.jpg",
+        "ground_truth_class": "basic",
+        "predicted_class": "burnt",
+        "confidence": 0.1667965203523636,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050038956105709076,
+        "true_quality_score": 0.025019478052854538
+      },
+      {
+        "image_path": "data/test/basic/basic_augmented_0007.jpg",
+        "ground_truth_class": "basic",
+        "predicted_class": "burnt",
+        "confidence": 0.16705957055091858,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05011787116527557,
+        "true_quality_score": 0.025058935582637786
+      },
+      {
+        "image_path": "data/test/basic/test_basic_challenging_uneven_angle_top_motion_blur_20250520_211411_002.jpg",
+        "ground_truth_class": "basic",
+        "predicted_class": "burnt",
+        "confidence": 0.16694843769073486,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05008453130722046,
+        "true_quality_score": 0.02504226565361023
+      },
+      {
+        "image_path": "data/test/basic/challenging_basic_lighting_contrast_001.jpg",
+        "ground_truth_class": "basic",
+        "predicted_class": "burnt",
+        "confidence": 0.1673828661441803,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050214859843254085,
+        "true_quality_score": 0.025107429921627043
+      },
+      {
+        "image_path": "data/test/basic/basic_augmented_0003.jpg",
+        "ground_truth_class": "basic",
+        "predicted_class": "burnt",
+        "confidence": 0.16684550046920776,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05005365014076233,
+        "true_quality_score": 0.025026825070381165
+      },
+      {
+        "image_path": "data/test/basic/test_basic_challenging_low_contrast_angle_top_motion_blur_20250520_211411_006.jpg",
+        "ground_truth_class": "basic",
+        "predicted_class": "burnt",
+        "confidence": 0.16676311194896698,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05002893358469009,
+        "true_quality_score": 0.025014466792345046
+      },
+      {
+        "image_path": "data/test/basic/challenging_basic_noise_016.jpg",
+        "ground_truth_class": "basic",
+        "predicted_class": "burnt",
+        "confidence": 0.16739557683467865,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050218673050403596,
+        "true_quality_score": 0.025109336525201798
+      },
+      {
+        "image_path": "data/test/basic/test_basic_challenging_backlit_angle_diagonal_motion_blur_20250520_211411_004.jpg",
+        "ground_truth_class": "basic",
+        "predicted_class": "burnt",
+        "confidence": 0.16761314868927002,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050283944606781004,
+        "true_quality_score": 0.025141972303390502
+      },
+      {
+        "image_path": "data/test/basic/test_basic_challenging_normal_angle_diagonal_jpeg_artifact_20250520_211427_004.jpg",
+        "ground_truth_class": "basic",
+        "predicted_class": "burnt",
+        "confidence": 0.16699345409870148,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05009803622961044,
+        "true_quality_score": 0.02504901811480522
+      },
+      {
+        "image_path": "data/test/basic/challenging_basic_lighting_contrast_015.jpg",
+        "ground_truth_class": "basic",
+        "predicted_class": "burnt",
+        "confidence": 0.1668005734682083,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050040172040462495,
+        "true_quality_score": 0.025020086020231248
+      },
+      {
+        "image_path": "data/test/basic/basic_augmented_0002.jpg",
+        "ground_truth_class": "basic",
+        "predicted_class": "burnt",
+        "confidence": 0.1672559380531311,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05017678141593933,
+        "true_quality_score": 0.025088390707969664
+      },
+      {
+        "image_path": "data/test/basic/test_basic_challenging_backlit_angle_side_blurry_20250520_211411_005.jpg",
+        "ground_truth_class": "basic",
+        "predicted_class": "burnt",
+        "confidence": 0.16782337427139282,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050347012281417844,
+        "true_quality_score": 0.025173506140708922
+      },
+      {
+        "image_path": "data/test/basic/challenging_basic_perspective_002.jpg",
+        "ground_truth_class": "basic",
+        "predicted_class": "burnt",
+        "confidence": 0.16713573038578033,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050140719115734096,
+        "true_quality_score": 0.025070359557867048
+      },
+      {
+        "image_path": "data/test/basic/test_basic_challenging_low_contrast_angle_side_motion_blur_20250520_211411_010.jpg",
+        "ground_truth_class": "basic",
+        "predicted_class": "burnt",
+        "confidence": 0.16714170575141907,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05014251172542572,
+        "true_quality_score": 0.02507125586271286
+      },
+      {
+        "image_path": "data/test/basic/basic_augmented_0001.jpg",
+        "ground_truth_class": "basic",
+        "predicted_class": "burnt",
+        "confidence": 0.16753926873207092,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05026178061962128,
+        "true_quality_score": 0.02513089030981064
+      },
+      {
+        "image_path": "data/test/basic/test_basic_challenging_uneven_angle_side_jpeg_artifact_20250520_211411_001.jpg",
+        "ground_truth_class": "basic",
+        "predicted_class": "burnt",
+        "confidence": 0.1672384887933731,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05017154663801193,
+        "true_quality_score": 0.025085773319005966
+      },
+      {
+        "image_path": "data/test/basic/challenging_basic_perspective_008.jpg",
+        "ground_truth_class": "basic",
+        "predicted_class": "burnt",
+        "confidence": 0.1673535853624344,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05020607560873031,
+        "true_quality_score": 0.025103037804365156
+      },
+      {
+        "image_path": "data/test/basic/test_basic_challenging_dark_normal_blurry_20250520_211411_007.jpg",
+        "ground_truth_class": "basic",
+        "predicted_class": "burnt",
+        "confidence": 0.1671985238790512,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05015955716371536,
+        "true_quality_score": 0.02507977858185768
+      },
+      {
+        "image_path": "data/test/basic/challenging_basic_perspective_012.jpg",
+        "ground_truth_class": "basic",
+        "predicted_class": "burnt",
+        "confidence": 0.16688843071460724,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05006652921438217,
+        "true_quality_score": 0.025033264607191085
+      },
+      {
+        "image_path": "data/test/basic/test_basic_challenging_backlit_angle_side_normal_20250520_211427_001.jpg",
+        "ground_truth_class": "basic",
+        "predicted_class": "burnt",
+        "confidence": 0.1676875203847885,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05030625611543655,
+        "true_quality_score": 0.025153128057718275
+      },
+      {
+        "image_path": "data/test/basic/challenging_basic_combined_005.jpg",
+        "ground_truth_class": "basic",
+        "predicted_class": "burnt",
+        "confidence": 0.1674707978963852,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05024123936891556,
+        "true_quality_score": 0.02512061968445778
+      },
+      {
+        "image_path": "data/test/basic/test_basic_challenging_dark_normal_jpeg_artifact_20250520_211427_007.jpg",
+        "ground_truth_class": "basic",
+        "predicted_class": "burnt",
+        "confidence": 0.16762793064117432,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050288379192352295,
+        "true_quality_score": 0.025144189596176147
+      },
+      {
+        "image_path": "data/test/basic/test_basic_challenging_uneven_angle_side_blurry_20250520_211427_002.jpg",
+        "ground_truth_class": "basic",
+        "predicted_class": "burnt",
+        "confidence": 0.166990727186203,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.0500972181558609,
+        "true_quality_score": 0.02504860907793045
+      },
+      {
+        "image_path": "data/test/basic/basic_augmented_0005.jpg",
+        "ground_truth_class": "basic",
+        "predicted_class": "burnt",
+        "confidence": 0.16771496832370758,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05031449049711227,
+        "true_quality_score": 0.025157245248556136
+      },
+      {
+        "image_path": "data/test/basic/test_basic_challenging_backlit_angle_close_normal_20250520_211427_006.jpg",
+        "ground_truth_class": "basic",
+        "predicted_class": "burnt",
+        "confidence": 0.16772258281707764,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05031677484512329,
+        "true_quality_score": 0.025158387422561646
+      },
+      {
+        "image_path": "data/test/basic/test_basic_challenging_uneven_angle_close_motion_blur_20250520_211427_010.jpg",
+        "ground_truth_class": "basic",
+        "predicted_class": "burnt",
+        "confidence": 0.166972354054451,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.0500917062163353,
+        "true_quality_score": 0.02504585310816765
+      },
+      {
+        "image_path": "data/test/basic/test_basic_challenging_bright_angle_top_jpeg_artifact_20250520_211427_005.jpg",
+        "ground_truth_class": "basic",
+        "predicted_class": "burnt",
+        "confidence": 0.1672729104757309,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05018187314271927,
+        "true_quality_score": 0.025090936571359634
+      },
+      {
+        "image_path": "data/test/basic/test_basic_challenging_uneven_angle_diagonal_motion_blur_20250520_211427_009.jpg",
+        "ground_truth_class": "basic",
+        "predicted_class": "burnt",
+        "confidence": 0.16710852086544037,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05013255625963211,
+        "true_quality_score": 0.025066278129816055
+      },
+      {
+        "image_path": "data/test/basic/test_basic_challenging_normal_normal_blurry_20250520_211411_009.jpg",
+        "ground_truth_class": "basic",
+        "predicted_class": "burnt",
+        "confidence": 0.1668107658624649,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05004322975873947,
+        "true_quality_score": 0.025021614879369734
+      },
+      {
+        "image_path": "data/test/segment/challenging_segment_lighting_contrast_015.jpg",
+        "ground_truth_class": "segment",
+        "predicted_class": "burnt",
+        "confidence": 0.16711992025375366,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.0501359760761261,
+        "true_quality_score": 0.0501359760761261
+      },
+      {
+        "image_path": "data/test/segment/challenging_segment_noise_010.jpg",
+        "ground_truth_class": "segment",
+        "predicted_class": "burnt",
+        "confidence": 0.16700249910354614,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05010074973106384,
+        "true_quality_score": 0.05010074973106384
+      },
+      {
+        "image_path": "data/test/segment/sample_segment_0002.jpg",
+        "ground_truth_class": "segment",
+        "predicted_class": "burnt",
+        "confidence": 0.16698653995990753,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05009596198797226,
+        "true_quality_score": 0.05009596198797226
+      },
+      {
+        "image_path": "data/test/segment/test_segment_challenging_bright_angle_diagonal_jpeg_artifact_20250520_211427_017.jpg",
+        "ground_truth_class": "segment",
+        "predicted_class": "burnt",
+        "confidence": 0.16788038611412048,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050364115834236146,
+        "true_quality_score": 0.050364115834236146
+      },
+      {
+        "image_path": "data/test/segment/challenging_segment_perspective_014.jpg",
+        "ground_truth_class": "segment",
+        "predicted_class": "burnt",
+        "confidence": 0.16712233424186707,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05013670027256012,
+        "true_quality_score": 0.05013670027256012
+      },
+      {
+        "image_path": "data/test/segment/sample_segment_0013.jpg",
+        "ground_truth_class": "segment",
+        "predicted_class": "burnt",
+        "confidence": 0.16701027750968933,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.0501030832529068,
+        "true_quality_score": 0.0501030832529068
+      },
+      {
+        "image_path": "data/test/segment/sample_segment_0001.jpg",
+        "ground_truth_class": "segment",
+        "predicted_class": "burnt",
+        "confidence": 0.16702911257743835,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.0501087337732315,
+        "true_quality_score": 0.0501087337732315
+      },
+      {
+        "image_path": "data/test/segment/challenging_segment_lighting_dark_013.jpg",
+        "ground_truth_class": "segment",
+        "predicted_class": "burnt",
+        "confidence": 0.1674821674823761,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05024465024471283,
+        "true_quality_score": 0.05024465024471283
+      },
+      {
+        "image_path": "data/test/segment/sample_segment_0003.jpg",
+        "ground_truth_class": "segment",
+        "predicted_class": "burnt",
+        "confidence": 0.16699491441249847,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05009847432374954,
+        "true_quality_score": 0.05009847432374954
+      },
+      {
+        "image_path": "data/test/segment/test_segment_challenging_shadowed_angle_top_jpeg_artifact_20250520_211411_010.jpg",
+        "ground_truth_class": "segment",
+        "predicted_class": "burnt",
+        "confidence": 0.16745831072330475,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050237493216991426,
+        "true_quality_score": 0.050237493216991426
+      },
+      {
+        "image_path": "data/test/segment/test_segment_challenging_uneven_angle_close_jpeg_artifact_20250520_211411_015.jpg",
+        "ground_truth_class": "segment",
+        "predicted_class": "burnt",
+        "confidence": 0.166939377784729,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.0500818133354187,
+        "true_quality_score": 0.0500818133354187
+      },
+      {
+        "image_path": "data/test/segment/test_segment_challenging_backlit_angle_top_motion_blur_20250520_211427_007.jpg",
+        "ground_truth_class": "segment",
+        "predicted_class": "burnt",
+        "confidence": 0.16746167838573456,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050238503515720366,
+        "true_quality_score": 0.050238503515720366
+      },
+      {
+        "image_path": "data/test/segment/sample_segment_0008.jpg",
+        "ground_truth_class": "segment",
+        "predicted_class": "burnt",
+        "confidence": 0.1669846922159195,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05009540766477585,
+        "true_quality_score": 0.05009540766477585
+      },
+      {
+        "image_path": "data/test/segment/test_segment_challenging_low_contrast_angle_side_normal_20250520_211427_000.jpg",
+        "ground_truth_class": "segment",
+        "predicted_class": "burnt",
+        "confidence": 0.167152538895607,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.0501457616686821,
+        "true_quality_score": 0.0501457616686821
+      },
+      {
+        "image_path": "data/test/segment/sample_segment_rotated.jpg",
+        "ground_truth_class": "segment",
+        "predicted_class": "burnt",
+        "confidence": 0.1677381545305252,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050321446359157564,
+        "true_quality_score": 0.050321446359157564
+      },
+      {
+        "image_path": "data/test/segment/test_segment_challenging_low_contrast_angle_close_jpeg_artifact_20250520_211427_002.jpg",
+        "ground_truth_class": "segment",
+        "predicted_class": "burnt",
+        "confidence": 0.16689373552799225,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05006812065839767,
+        "true_quality_score": 0.05006812065839767
+      },
+      {
+        "image_path": "data/test/segment/test_segment_challenging_dark_angle_side_noisy_20250520_211427_008.jpg",
+        "ground_truth_class": "segment",
+        "predicted_class": "burnt",
+        "confidence": 0.16725699603557587,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05017709881067276,
+        "true_quality_score": 0.05017709881067276
+      },
+      {
+        "image_path": "data/test/segment/challenging_segment_lighting_dark_011.jpg",
+        "ground_truth_class": "segment",
+        "predicted_class": "burnt",
+        "confidence": 0.16737617552280426,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05021285265684128,
+        "true_quality_score": 0.05021285265684128
+      },
+      {
+        "image_path": "data/test/segment/test_segment_challenging_low_contrast_angle_diagonal_normal_20250520_211427_010.jpg",
+        "ground_truth_class": "segment",
+        "predicted_class": "burnt",
+        "confidence": 0.16710564494132996,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05013169348239899,
+        "true_quality_score": 0.05013169348239899
+      },
+      {
+        "image_path": "data/test/segment/test_segment_challenging_bright_angle_diagonal_noisy_20250520_211411_013.jpg",
+        "ground_truth_class": "segment",
+        "predicted_class": "burnt",
+        "confidence": 0.16781781613826752,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050345344841480254,
+        "true_quality_score": 0.050345344841480254
+      },
+      {
+        "image_path": "data/test/segment/sample_segment_0014.jpg",
+        "ground_truth_class": "segment",
+        "predicted_class": "burnt",
+        "confidence": 0.16700467467308044,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05010140240192413,
+        "true_quality_score": 0.05010140240192413
+      },
+      {
+        "image_path": "data/test/segment/test_segment_challenging_bright_angle_side_motion_blur_20250520_211411_017.jpg",
+        "ground_truth_class": "segment",
+        "predicted_class": "burnt",
+        "confidence": 0.16767795383930206,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05030338615179062,
+        "true_quality_score": 0.05030338615179062
+      },
+      {
+        "image_path": "data/test/segment/test_segment_challenging_low_contrast_angle_close_blurry_20250520_211411_005.jpg",
+        "ground_truth_class": "segment",
+        "predicted_class": "burnt",
+        "confidence": 0.16687145829200745,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05006143748760223,
+        "true_quality_score": 0.05006143748760223
+      },
+      {
+        "image_path": "data/test/segment/sample_segment_0000.jpg",
+        "ground_truth_class": "segment",
+        "predicted_class": "burnt",
+        "confidence": 0.16706602275371552,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05011980682611465,
+        "true_quality_score": 0.05011980682611465
+      },
+      {
+        "image_path": "data/test/segment/sample_segment_0019.jpg",
+        "ground_truth_class": "segment",
+        "predicted_class": "burnt",
+        "confidence": 0.16698545217514038,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05009563565254211,
+        "true_quality_score": 0.05009563565254211
+      },
+      {
+        "image_path": "data/test/segment/sample_segment_0007.jpg",
+        "ground_truth_class": "segment",
+        "predicted_class": "burnt",
+        "confidence": 0.1670331060886383,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05010993182659149,
+        "true_quality_score": 0.05010993182659149
+      },
+      {
+        "image_path": "data/test/segment/challenging_segment_lighting_dark_004.jpg",
+        "ground_truth_class": "segment",
+        "predicted_class": "burnt",
+        "confidence": 0.16718746721744537,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05015624016523361,
+        "true_quality_score": 0.05015624016523361
+      },
+      {
+        "image_path": "data/test/segment/test_segment_challenging_dark_angle_close_jpeg_artifact_20250520_211427_005.jpg",
+        "ground_truth_class": "segment",
+        "predicted_class": "burnt",
+        "confidence": 0.16754111647605896,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050262334942817684,
+        "true_quality_score": 0.050262334942817684
+      },
+      {
+        "image_path": "data/test/segment/challenging_segment_perspective_000.jpg",
+        "ground_truth_class": "segment",
+        "predicted_class": "burnt",
+        "confidence": 0.1670747995376587,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05012243986129761,
+        "true_quality_score": 0.05012243986129761
+      },
+      {
+        "image_path": "data/test/segment/challenging_segment_noise_002.jpg",
+        "ground_truth_class": "segment",
+        "predicted_class": "burnt",
+        "confidence": 0.1670100837945938,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050103025138378145,
+        "true_quality_score": 0.050103025138378145
+      },
+      {
+        "image_path": "data/test/segment/sample_segment_0011.jpg",
+        "ground_truth_class": "segment",
+        "predicted_class": "burnt",
+        "confidence": 0.16699182987213135,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050097548961639406,
+        "true_quality_score": 0.050097548961639406
+      },
+      {
+        "image_path": "data/test/segment/test_segment_challenging_normal_angle_top_blurry_20250520_211411_004.jpg",
+        "ground_truth_class": "segment",
+        "predicted_class": "burnt",
+        "confidence": 0.16694281995296478,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05008284598588943,
+        "true_quality_score": 0.05008284598588943
+      },
+      {
+        "image_path": "data/test/segment/sample_segment_0020.jpg",
+        "ground_truth_class": "segment",
+        "predicted_class": "burnt",
+        "confidence": 0.16698257625102997,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05009477287530899,
+        "true_quality_score": 0.05009477287530899
+      },
+      {
+        "image_path": "data/test/segment/test_segment_challenging_dark_normal_noisy_20250520_211411_016.jpg",
+        "ground_truth_class": "segment",
+        "predicted_class": "burnt",
+        "confidence": 0.16686145961284637,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05005843788385391,
+        "true_quality_score": 0.05005843788385391
+      },
+      {
+        "image_path": "data/test/segment/test_segment_challenging_backlit_angle_side_normal_20250520_211427_009.jpg",
+        "ground_truth_class": "segment",
+        "predicted_class": "burnt",
+        "confidence": 0.16760492324829102,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.0502814769744873,
+        "true_quality_score": 0.0502814769744873
+      },
+      {
+        "image_path": "data/test/segment/test_segment_challenging_low_contrast_angle_close_jpeg_artifact_20250520_211427_015.jpg",
+        "ground_truth_class": "segment",
+        "predicted_class": "burnt",
+        "confidence": 0.16695134341716766,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.0500854030251503,
+        "true_quality_score": 0.0500854030251503
+      },
+      {
+        "image_path": "data/test/segment/challenging_segment_noise_016.jpg",
+        "ground_truth_class": "segment",
+        "predicted_class": "burnt",
+        "confidence": 0.1669720560312271,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050091616809368134,
+        "true_quality_score": 0.050091616809368134
+      },
+      {
+        "image_path": "data/test/segment/test_segment_challenging_normal_angle_diagonal_noisy_20250520_211427_001.jpg",
+        "ground_truth_class": "segment",
+        "predicted_class": "burnt",
+        "confidence": 0.16727890074253082,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05018367022275925,
+        "true_quality_score": 0.05018367022275925
+      },
+      {
+        "image_path": "data/test/segment/test_segment_challenging_uneven_angle_top_motion_blur_20250520_211411_000.jpg",
+        "ground_truth_class": "segment",
+        "predicted_class": "burnt",
+        "confidence": 0.16690930724143982,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05007279217243194,
+        "true_quality_score": 0.05007279217243194
+      },
+      {
+        "image_path": "data/test/segment/test_segment_challenging_uneven_normal_blurry_20250520_211427_011.jpg",
+        "ground_truth_class": "segment",
+        "predicted_class": "burnt",
+        "confidence": 0.16732554137706757,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05019766241312027,
+        "true_quality_score": 0.05019766241312027
+      },
+      {
+        "image_path": "data/test/segment/sample_segment_0005.jpg",
+        "ground_truth_class": "segment",
+        "predicted_class": "burnt",
+        "confidence": 0.1670181304216385,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05010543912649155,
+        "true_quality_score": 0.05010543912649155
+      },
+      {
+        "image_path": "data/test/segment/test_segment_challenging_normal_angle_close_motion_blur_20250520_211411_008.jpg",
+        "ground_truth_class": "segment",
+        "predicted_class": "burnt",
+        "confidence": 0.16722801327705383,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05016840398311615,
+        "true_quality_score": 0.05016840398311615
+      },
+      {
+        "image_path": "data/test/segment/sample_segment_0009.jpg",
+        "ground_truth_class": "segment",
+        "predicted_class": "burnt",
+        "confidence": 0.16701772809028625,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050105318427085876,
+        "true_quality_score": 0.050105318427085876
+      },
+      {
+        "image_path": "data/test/segment/sample_segment_0021.jpg",
+        "ground_truth_class": "segment",
+        "predicted_class": "burnt",
+        "confidence": 0.16700467467308044,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05010140240192413,
+        "true_quality_score": 0.05010140240192413
+      },
+      {
+        "image_path": "data/test/segment/challenging_segment_combined_001.jpg",
+        "ground_truth_class": "segment",
+        "predicted_class": "burnt",
+        "confidence": 0.16786782443523407,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05036034733057022,
+        "true_quality_score": 0.05036034733057022
+      },
+      {
+        "image_path": "data/test/segment/sample_segment_0018.jpg",
+        "ground_truth_class": "segment",
+        "predicted_class": "burnt",
+        "confidence": 0.16703103482723236,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05010931044816971,
+        "true_quality_score": 0.05010931044816971
+      },
+      {
+        "image_path": "data/test/segment/sample_segment_0023.jpg",
+        "ground_truth_class": "segment",
+        "predicted_class": "burnt",
+        "confidence": 0.16699126362800598,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05009737908840179,
+        "true_quality_score": 0.05009737908840179
+      },
+      {
+        "image_path": "data/test/segment/test_segment_challenging_shadowed_angle_side_noisy_20250520_211411_007.jpg",
+        "ground_truth_class": "segment",
+        "predicted_class": "burnt",
+        "confidence": 0.16723383963108063,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05017015188932419,
+        "true_quality_score": 0.05017015188932419
+      },
+      {
+        "image_path": "data/test/segment/sample_segment_0010.jpg",
+        "ground_truth_class": "segment",
+        "predicted_class": "burnt",
+        "confidence": 0.16701027750968933,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.0501030832529068,
+        "true_quality_score": 0.0501030832529068
+      },
+      {
+        "image_path": "data/test/segment/test_segment_challenging_low_contrast_angle_side_normal_20250520_211411_002.jpg",
+        "ground_truth_class": "segment",
+        "predicted_class": "burnt",
+        "confidence": 0.16715604066848755,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050146812200546266,
+        "true_quality_score": 0.050146812200546266
+      },
+      {
+        "image_path": "data/test/segment/challenging_segment_lighting_contrast_008.jpg",
+        "ground_truth_class": "segment",
+        "predicted_class": "burnt",
+        "confidence": 0.1671835482120514,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050155064463615416,
+        "true_quality_score": 0.050155064463615416
+      },
+      {
+        "image_path": "data/test/segment/sample_segment_dark.jpg",
+        "ground_truth_class": "segment",
+        "predicted_class": "burnt",
+        "confidence": 0.1672893911600113,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050186817348003385,
+        "true_quality_score": 0.050186817348003385
+      },
+      {
+        "image_path": "data/test/segment/test_segment_challenging_uneven_angle_top_motion_blur_20250520_211427_003.jpg",
+        "ground_truth_class": "segment",
+        "predicted_class": "burnt",
+        "confidence": 0.16746839880943298,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05024051964282989,
+        "true_quality_score": 0.05024051964282989
+      },
+      {
+        "image_path": "data/test/segment/challenging_segment_lighting_contrast_003.jpg",
+        "ground_truth_class": "segment",
+        "predicted_class": "burnt",
+        "confidence": 0.16720359027385712,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050161077082157134,
+        "true_quality_score": 0.050161077082157134
+      },
+      {
+        "image_path": "data/test/segment/challenging_segment_lighting_dark_007.jpg",
+        "ground_truth_class": "segment",
+        "predicted_class": "burnt",
+        "confidence": 0.16760066151618958,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05028019845485687,
+        "true_quality_score": 0.05028019845485687
+      },
+      {
+        "image_path": "data/test/segment/test_segment_challenging_normal_angle_close_noisy_20250520_211411_006.jpg",
+        "ground_truth_class": "segment",
+        "predicted_class": "burnt",
+        "confidence": 0.16704663634300232,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050113990902900696,
+        "true_quality_score": 0.050113990902900696
+      },
+      {
+        "image_path": "data/test/segment/challenging_segment_lighting_contrast_012.jpg",
+        "ground_truth_class": "segment",
+        "predicted_class": "burnt",
+        "confidence": 0.16708341240882874,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05012502372264862,
+        "true_quality_score": 0.05012502372264862
+      },
+      {
+        "image_path": "data/test/segment/test_segment_challenging_normal_angle_diagonal_blurry_20250520_211427_013.jpg",
+        "ground_truth_class": "segment",
+        "predicted_class": "burnt",
+        "confidence": 0.1671956330537796,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050158689916133876,
+        "true_quality_score": 0.050158689916133876
+      },
+      {
+        "image_path": "data/test/segment/test_segment_challenging_shadowed_angle_close_blurry_20250520_211427_014.jpg",
+        "ground_truth_class": "segment",
+        "predicted_class": "burnt",
+        "confidence": 0.1677177995443344,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05031533986330032,
+        "true_quality_score": 0.05031533986330032
+      },
+      {
+        "image_path": "data/test/segment/sample_segment_0017.jpg",
+        "ground_truth_class": "segment",
+        "predicted_class": "burnt",
+        "confidence": 0.16699033975601196,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05009710192680359,
+        "true_quality_score": 0.05009710192680359
+      },
+      {
+        "image_path": "data/test/segment/test_segment_challenging_backlit_angle_side_jpeg_artifact_20250520_211411_014.jpg",
+        "ground_truth_class": "segment",
+        "predicted_class": "burnt",
+        "confidence": 0.16757437586784363,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050272312760353086,
+        "true_quality_score": 0.050272312760353086
+      },
+      {
+        "image_path": "data/test/segment/sample_segment.jpg",
+        "ground_truth_class": "segment",
+        "predicted_class": "burnt",
+        "confidence": 0.1670076698064804,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05010230094194412,
+        "true_quality_score": 0.05010230094194412
+      },
+      {
+        "image_path": "data/test/segment/test_segment_challenging_dark_angle_diagonal_blurry_20250520_211411_003.jpg",
+        "ground_truth_class": "segment",
+        "predicted_class": "burnt",
+        "confidence": 0.16729632019996643,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050188896059989926,
+        "true_quality_score": 0.050188896059989926
+      },
+      {
+        "image_path": "data/test/segment/test_segment_challenging_bright_angle_close_jpeg_artifact_20250520_211427_004.jpg",
+        "ground_truth_class": "segment",
+        "predicted_class": "burnt",
+        "confidence": 0.16761267185211182,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05028380155563354,
+        "true_quality_score": 0.05028380155563354
+      },
+      {
+        "image_path": "data/test/segment/sample_segment_0012.jpg",
+        "ground_truth_class": "segment",
+        "predicted_class": "burnt",
+        "confidence": 0.16701577603816986,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050104732811450954,
+        "true_quality_score": 0.050104732811450954
+      },
+      {
+        "image_path": "data/test/segment/challenging_segment_noise_009.jpg",
+        "ground_truth_class": "segment",
+        "predicted_class": "burnt",
+        "confidence": 0.16701075434684753,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05010322630405426,
+        "true_quality_score": 0.05010322630405426
+      },
+      {
+        "image_path": "data/test/segment/test_segment_challenging_backlit_normal_motion_blur_20250520_211427_006.jpg",
+        "ground_truth_class": "segment",
+        "predicted_class": "burnt",
+        "confidence": 0.16772258281707764,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05031677484512329,
+        "true_quality_score": 0.05031677484512329
+      },
+      {
+        "image_path": "data/test/segment/test_segment_challenging_backlit_angle_top_blurry_20250520_211427_012.jpg",
+        "ground_truth_class": "segment",
+        "predicted_class": "burnt",
+        "confidence": 0.16740190982818604,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05022057294845581,
+        "true_quality_score": 0.05022057294845581
+      },
+      {
+        "image_path": "data/test/segment/challenging_segment_combined_006.jpg",
+        "ground_truth_class": "segment",
+        "predicted_class": "burnt",
+        "confidence": 0.16775651276111603,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050326953828334804,
+        "true_quality_score": 0.050326953828334804
+      },
+      {
+        "image_path": "data/test/segment/test_segment_challenging_shadowed_normal_motion_blur_20250520_211411_011.jpg",
+        "ground_truth_class": "segment",
+        "predicted_class": "burnt",
+        "confidence": 0.16718830168247223,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05015649050474167,
+        "true_quality_score": 0.05015649050474167
+      },
+      {
+        "image_path": "data/test/segment/sample_segment_0022.jpg",
+        "ground_truth_class": "segment",
+        "predicted_class": "burnt",
+        "confidence": 0.1669754832983017,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05009264498949051,
+        "true_quality_score": 0.05009264498949051
+      },
+      {
+        "image_path": "data/test/segment/sample_segment_0006.jpg",
+        "ground_truth_class": "segment",
+        "predicted_class": "burnt",
+        "confidence": 0.16701126098632812,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050103378295898435,
+        "true_quality_score": 0.050103378295898435
+      },
+      {
+        "image_path": "data/test/segment/sample_segment_0004.jpg",
+        "ground_truth_class": "segment",
+        "predicted_class": "burnt",
+        "confidence": 0.16700635850429535,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050101907551288606,
+        "true_quality_score": 0.050101907551288606
+      },
+      {
+        "image_path": "data/test/segment/sample_segment_0015.jpg",
+        "ground_truth_class": "segment",
+        "predicted_class": "burnt",
+        "confidence": 0.16700410842895508,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05010123252868652,
+        "true_quality_score": 0.05010123252868652
+      },
+      {
+        "image_path": "data/test/segment/test_segment_challenging_uneven_angle_top_blurry_20250520_211411_001.jpg",
+        "ground_truth_class": "segment",
+        "predicted_class": "burnt",
+        "confidence": 0.16745954751968384,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05023786425590515,
+        "true_quality_score": 0.05023786425590515
+      },
+      {
+        "image_path": "data/test/segment/sample_segment_0016.jpg",
+        "ground_truth_class": "segment",
+        "predicted_class": "burnt",
+        "confidence": 0.16701902449131012,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05010570734739304,
+        "true_quality_score": 0.05010570734739304
+      },
+      {
+        "image_path": "data/test/segment/test_segment_challenging_bright_normal_motion_blur_20250520_211411_009.jpg",
+        "ground_truth_class": "segment",
+        "predicted_class": "burnt",
+        "confidence": 0.16758345067501068,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050275035202503204,
+        "true_quality_score": 0.050275035202503204
+      },
+      {
+        "image_path": "data/test/segment/test_segment_challenging_dark_angle_diagonal_normal_20250520_211427_016.jpg",
+        "ground_truth_class": "segment",
+        "predicted_class": "burnt",
+        "confidence": 0.16731803119182587,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05019540935754776,
+        "true_quality_score": 0.05019540935754776
+      },
+      {
+        "image_path": "data/test/segment/challenging_segment_blur_005.jpg",
+        "ground_truth_class": "segment",
+        "predicted_class": "burnt",
+        "confidence": 0.1669154018163681,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05007462054491043,
+        "true_quality_score": 0.05007462054491043
+      },
+      {
+        "image_path": "data/test/segment/test_segment_challenging_backlit_angle_diagonal_motion_blur_20250520_211411_012.jpg",
+        "ground_truth_class": "segment",
+        "predicted_class": "burnt",
+        "confidence": 0.1676996946334839,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05030990839004516,
+        "true_quality_score": 0.05030990839004516
+      },
+      {
+        "image_path": "data/test/combined/challenging_combined_lighting_bright_008.jpg",
+        "ground_truth_class": "combined",
+        "predicted_class": "burnt",
+        "confidence": 0.1677371859550476,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050321155786514284,
+        "true_quality_score": 0.050321155786514284
+      },
+      {
+        "image_path": "data/test/combined/test_combined_challenging_normal_angle_side_blurry_20250520_211427_015.jpg",
+        "ground_truth_class": "combined",
+        "predicted_class": "burnt",
+        "confidence": 0.16706420481204987,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050119261443614956,
+        "true_quality_score": 0.050119261443614956
+      },
+      {
+        "image_path": "data/test/combined/test_combined_challenging_bright_angle_side_motion_blur_20250520_211427_011.jpg",
+        "ground_truth_class": "combined",
+        "predicted_class": "burnt",
+        "confidence": 0.16762244701385498,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050286734104156496,
+        "true_quality_score": 0.050286734104156496
+      },
+      {
+        "image_path": "data/test/combined/test_combined_challenging_normal_angle_top_jpeg_artifact_20250520_211427_014.jpg",
+        "ground_truth_class": "combined",
+        "predicted_class": "burnt",
+        "confidence": 0.16710549592971802,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050131648778915405,
+        "true_quality_score": 0.050131648778915405
+      },
+      {
+        "image_path": "data/test/combined/sample_combined_0019.jpg",
+        "ground_truth_class": "combined",
+        "predicted_class": "burnt",
+        "confidence": 0.16690035164356232,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050070105493068694,
+        "true_quality_score": 0.050070105493068694
+      },
+      {
+        "image_path": "data/test/combined/test_combined_challenging_backlit_angle_close_noisy_20250520_211411_017.jpg",
+        "ground_truth_class": "combined",
+        "predicted_class": "burnt",
+        "confidence": 0.16768372058868408,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05030511617660522,
+        "true_quality_score": 0.05030511617660522
+      },
+      {
+        "image_path": "data/test/combined/test_combined_challenging_bright_angle_diagonal_noisy_20250520_211411_003.jpg",
+        "ground_truth_class": "combined",
+        "predicted_class": "burnt",
+        "confidence": 0.1675366312265396,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05026098936796188,
+        "true_quality_score": 0.05026098936796188
+      },
+      {
+        "image_path": "data/test/combined/sample_combined_0003.jpg",
+        "ground_truth_class": "combined",
+        "predicted_class": "burnt",
+        "confidence": 0.16712543368339539,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050137630105018614,
+        "true_quality_score": 0.050137630105018614
+      },
+      {
+        "image_path": "data/test/combined/challenging_combined_blur_013.jpg",
+        "ground_truth_class": "combined",
+        "predicted_class": "burnt",
+        "confidence": 0.1667775809764862,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05003327429294586,
+        "true_quality_score": 0.05003327429294586
+      },
+      {
+        "image_path": "data/test/combined/challenging_combined_lighting_contrast_000.jpg",
+        "ground_truth_class": "combined",
+        "predicted_class": "burnt",
+        "confidence": 0.16735431551933289,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050206294655799864,
+        "true_quality_score": 0.050206294655799864
+      },
+      {
+        "image_path": "data/test/combined/sample_combined_0001.jpg",
+        "ground_truth_class": "combined",
+        "predicted_class": "burnt",
+        "confidence": 0.16689012944698334,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050067038834095,
+        "true_quality_score": 0.050067038834095
+      },
+      {
+        "image_path": "data/test/combined/sample_combined_0020.jpg",
+        "ground_truth_class": "combined",
+        "predicted_class": "burnt",
+        "confidence": 0.16691628098487854,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05007488429546356,
+        "true_quality_score": 0.05007488429546356
+      },
+      {
+        "image_path": "data/test/combined/sample_combined_0000.jpg",
+        "ground_truth_class": "combined",
+        "predicted_class": "burnt",
+        "confidence": 0.16695861518383026,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05008758455514908,
+        "true_quality_score": 0.05008758455514908
+      },
+      {
+        "image_path": "data/test/combined/sample_combined_dark.jpg",
+        "ground_truth_class": "combined",
+        "predicted_class": "burnt",
+        "confidence": 0.16737572848796844,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05021271854639053,
+        "true_quality_score": 0.05021271854639053
+      },
+      {
+        "image_path": "data/test/combined/test_combined_challenging_low_contrast_angle_close_jpeg_artifact_20250520_211427_005.jpg",
+        "ground_truth_class": "combined",
+        "predicted_class": "burnt",
+        "confidence": 0.16682159900665283,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05004647970199585,
+        "true_quality_score": 0.05004647970199585
+      },
+      {
+        "image_path": "data/test/combined/sample_combined_0014.jpg",
+        "ground_truth_class": "combined",
+        "predicted_class": "burnt",
+        "confidence": 0.16695253551006317,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05008576065301895,
+        "true_quality_score": 0.05008576065301895
+      },
+      {
+        "image_path": "data/test/combined/sample_combined_0009.jpg",
+        "ground_truth_class": "combined",
+        "predicted_class": "burnt",
+        "confidence": 0.16691045463085175,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05007313638925552,
+        "true_quality_score": 0.05007313638925552
+      },
+      {
+        "image_path": "data/test/combined/challenging_combined_perspective_012.jpg",
+        "ground_truth_class": "combined",
+        "predicted_class": "burnt",
+        "confidence": 0.16701993346214294,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05010598003864288,
+        "true_quality_score": 0.05010598003864288
+      },
+      {
+        "image_path": "data/test/combined/test_combined_challenging_bright_angle_close_blurry_20250520_211427_007.jpg",
+        "ground_truth_class": "combined",
+        "predicted_class": "burnt",
+        "confidence": 0.16744787991046906,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05023436397314072,
+        "true_quality_score": 0.05023436397314072
+      },
+      {
+        "image_path": "data/test/combined/sample_combined_0022.jpg",
+        "ground_truth_class": "combined",
+        "predicted_class": "burnt",
+        "confidence": 0.1669735163450241,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05009205490350723,
+        "true_quality_score": 0.05009205490350723
+      },
+      {
+        "image_path": "data/test/combined/test_combined_challenging_dark_normal_blurry_20250520_211411_000.jpg",
+        "ground_truth_class": "combined",
+        "predicted_class": "burnt",
+        "confidence": 0.1675536036491394,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05026608109474182,
+        "true_quality_score": 0.05026608109474182
+      },
+      {
+        "image_path": "data/test/combined/test_combined_challenging_bright_normal_jpeg_artifact_20250520_211411_001.jpg",
+        "ground_truth_class": "combined",
+        "predicted_class": "burnt",
+        "confidence": 0.16747954487800598,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050243863463401796,
+        "true_quality_score": 0.050243863463401796
+      },
+      {
+        "image_path": "data/test/combined/test_combined_challenging_low_contrast_angle_diagonal_normal_20250520_211411_006.jpg",
+        "ground_truth_class": "combined",
+        "predicted_class": "burnt",
+        "confidence": 0.1672126203775406,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05016378611326217,
+        "true_quality_score": 0.05016378611326217
+      },
+      {
+        "image_path": "data/test/combined/sample_combined_0013.jpg",
+        "ground_truth_class": "combined",
+        "predicted_class": "burnt",
+        "confidence": 0.16691045463085175,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05007313638925552,
+        "true_quality_score": 0.05007313638925552
+      },
+      {
+        "image_path": "data/test/combined/test_combined_challenging_dark_angle_side_blurry_20250520_211427_002.jpg",
+        "ground_truth_class": "combined",
+        "predicted_class": "burnt",
+        "confidence": 0.16726303100585938,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050178909301757814,
+        "true_quality_score": 0.050178909301757814
+      },
+      {
+        "image_path": "data/test/combined/challenging_combined_noise_003.jpg",
+        "ground_truth_class": "combined",
+        "predicted_class": "burnt",
+        "confidence": 0.16694089770317078,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05008226931095123,
+        "true_quality_score": 0.05008226931095123
+      },
+      {
+        "image_path": "data/test/combined/challenging_combined_blur_009.jpg",
+        "ground_truth_class": "combined",
+        "predicted_class": "burnt",
+        "confidence": 0.16683171689510345,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05004951506853104,
+        "true_quality_score": 0.05004951506853104
+      },
+      {
+        "image_path": "data/test/combined/sample_combined_0016.jpg",
+        "ground_truth_class": "combined",
+        "predicted_class": "burnt",
+        "confidence": 0.16692239046096802,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05007671713829041,
+        "true_quality_score": 0.05007671713829041
+      },
+      {
+        "image_path": "data/test/combined/test_combined_challenging_bright_angle_close_motion_blur_20250520_211427_004.jpg",
+        "ground_truth_class": "combined",
+        "predicted_class": "burnt",
+        "confidence": 0.1675347089767456,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05026041269302368,
+        "true_quality_score": 0.05026041269302368
+      },
+      {
+        "image_path": "data/test/combined/test_combined_challenging_normal_angle_diagonal_normal_20250520_211427_001.jpg",
+        "ground_truth_class": "combined",
+        "predicted_class": "burnt",
+        "confidence": 0.16740447282791138,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05022134184837341,
+        "true_quality_score": 0.05022134184837341
+      },
+      {
+        "image_path": "data/test/combined/test_combined_challenging_shadowed_angle_side_blurry_20250520_211427_006.jpg",
+        "ground_truth_class": "combined",
+        "predicted_class": "burnt",
+        "confidence": 0.16724492609500885,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050173477828502656,
+        "true_quality_score": 0.050173477828502656
+      },
+      {
+        "image_path": "data/test/combined/test_combined_challenging_low_contrast_angle_top_motion_blur_20250520_211411_010.jpg",
+        "ground_truth_class": "combined",
+        "predicted_class": "burnt",
+        "confidence": 0.16692844033241272,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050078532099723815,
+        "true_quality_score": 0.050078532099723815
+      },
+      {
+        "image_path": "data/test/combined/challenging_combined_perspective_002.jpg",
+        "ground_truth_class": "combined",
+        "predicted_class": "burnt",
+        "confidence": 0.16713929176330566,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.0501417875289917,
+        "true_quality_score": 0.0501417875289917
+      },
+      {
+        "image_path": "data/test/combined/test_combined_challenging_dark_angle_close_noisy_20250520_211427_008.jpg",
+        "ground_truth_class": "combined",
+        "predicted_class": "burnt",
+        "confidence": 0.1673465520143509,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05020396560430527,
+        "true_quality_score": 0.05020396560430527
+      },
+      {
+        "image_path": "data/test/combined/challenging_combined_combined_014.jpg",
+        "ground_truth_class": "combined",
+        "predicted_class": "burnt",
+        "confidence": 0.16786076128482819,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050358228385448456,
+        "true_quality_score": 0.050358228385448456
+      },
+      {
+        "image_path": "data/test/combined/challenging_combined_noise_007.jpg",
+        "ground_truth_class": "combined",
+        "predicted_class": "burnt",
+        "confidence": 0.16690705716609955,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05007211714982986,
+        "true_quality_score": 0.05007211714982986
+      },
+      {
+        "image_path": "data/test/combined/sample_combined_0006.jpg",
+        "ground_truth_class": "combined",
+        "predicted_class": "burnt",
+        "confidence": 0.16698692739009857,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05009607821702957,
+        "true_quality_score": 0.05009607821702957
+      },
+      {
+        "image_path": "data/test/combined/sample_combined_0015.jpg",
+        "ground_truth_class": "combined",
+        "predicted_class": "burnt",
+        "confidence": 0.16693924367427826,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050081773102283476,
+        "true_quality_score": 0.050081773102283476
+      },
+      {
+        "image_path": "data/test/combined/test_combined_challenging_uneven_normal_motion_blur_20250520_211411_016.jpg",
+        "ground_truth_class": "combined",
+        "predicted_class": "burnt",
+        "confidence": 0.16703040897846222,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05010912269353866,
+        "true_quality_score": 0.05010912269353866
+      },
+      {
+        "image_path": "data/test/combined/challenging_combined_blur_005.jpg",
+        "ground_truth_class": "combined",
+        "predicted_class": "burnt",
+        "confidence": 0.16685084998607635,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050055254995822904,
+        "true_quality_score": 0.050055254995822904
+      },
+      {
+        "image_path": "data/test/combined/challenging_combined_noise_006.jpg",
+        "ground_truth_class": "combined",
+        "predicted_class": "burnt",
+        "confidence": 0.1669975370168686,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05009926110506058,
+        "true_quality_score": 0.05009926110506058
+      },
+      {
+        "image_path": "data/test/combined/test_combined_challenging_low_contrast_angle_side_noisy_20250520_211411_005.jpg",
+        "ground_truth_class": "combined",
+        "predicted_class": "burnt",
+        "confidence": 0.16708707809448242,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05012612342834472,
+        "true_quality_score": 0.05012612342834472
+      },
+      {
+        "image_path": "data/test/combined/test_combined_challenging_backlit_normal_blurry_20250520_211411_012.jpg",
+        "ground_truth_class": "combined",
+        "predicted_class": "burnt",
+        "confidence": 0.1674356609582901,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05023069828748703,
+        "true_quality_score": 0.05023069828748703
+      },
+      {
+        "image_path": "data/test/combined/sample_combined_0011.jpg",
+        "ground_truth_class": "combined",
+        "predicted_class": "burnt",
+        "confidence": 0.1669919639825821,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050097589194774625,
+        "true_quality_score": 0.050097589194774625
+      },
+      {
+        "image_path": "data/test/combined/sample_combined.jpg",
+        "ground_truth_class": "combined",
+        "predicted_class": "burnt",
+        "confidence": 0.16693153977394104,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05007946193218231,
+        "true_quality_score": 0.05007946193218231
+      },
+      {
+        "image_path": "data/test/combined/sample_combined_0010.jpg",
+        "ground_truth_class": "combined",
+        "predicted_class": "burnt",
+        "confidence": 0.16691045463085175,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05007313638925552,
+        "true_quality_score": 0.05007313638925552
+      },
+      {
+        "image_path": "data/test/combined/test_combined_challenging_shadowed_angle_diagonal_blurry_20250520_211427_012.jpg",
+        "ground_truth_class": "combined",
+        "predicted_class": "burnt",
+        "confidence": 0.16718004643917084,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05015401393175125,
+        "true_quality_score": 0.05015401393175125
+      },
+      {
+        "image_path": "data/test/combined/test_combined_challenging_shadowed_angle_diagonal_noisy_20250520_211427_013.jpg",
+        "ground_truth_class": "combined",
+        "predicted_class": "burnt",
+        "confidence": 0.1672796905040741,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05018390715122223,
+        "true_quality_score": 0.05018390715122223
+      },
+      {
+        "image_path": "data/test/combined/test_combined_challenging_bright_angle_close_normal_20250520_211427_000.jpg",
+        "ground_truth_class": "combined",
+        "predicted_class": "burnt",
+        "confidence": 0.16752038896083832,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050256116688251494,
+        "true_quality_score": 0.050256116688251494
+      },
+      {
+        "image_path": "data/test/combined/test_combined_challenging_uneven_angle_close_normal_20250520_211411_008.jpg",
+        "ground_truth_class": "combined",
+        "predicted_class": "burnt",
+        "confidence": 0.16743063926696777,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05022919178009033,
+        "true_quality_score": 0.05022919178009033
+      },
+      {
+        "image_path": "data/test/combined/test_combined_challenging_normal_angle_close_blurry_20250520_211411_004.jpg",
+        "ground_truth_class": "combined",
+        "predicted_class": "burnt",
+        "confidence": 0.1668846309185028,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05006538927555084,
+        "true_quality_score": 0.05006538927555084
+      },
+      {
+        "image_path": "data/test/combined/test_combined_challenging_backlit_angle_side_normal_20250520_211411_009.jpg",
+        "ground_truth_class": "combined",
+        "predicted_class": "burnt",
+        "confidence": 0.16741299629211426,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050223898887634275,
+        "true_quality_score": 0.050223898887634275
+      },
+      {
+        "image_path": "data/test/combined/test_combined_challenging_low_contrast_angle_diagonal_motion_blur_20250520_211411_002.jpg",
+        "ground_truth_class": "combined",
+        "predicted_class": "burnt",
+        "confidence": 0.16713374853134155,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05014012455940246,
+        "true_quality_score": 0.05014012455940246
+      },
+      {
+        "image_path": "data/test/combined/test_combined_challenging_low_contrast_angle_close_jpeg_artifact_20250520_211427_009.jpg",
+        "ground_truth_class": "combined",
+        "predicted_class": "burnt",
+        "confidence": 0.1673831343650818,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05021494030952454,
+        "true_quality_score": 0.05021494030952454
+      },
+      {
+        "image_path": "data/test/combined/challenging_combined_lighting_bright_004.jpg",
+        "ground_truth_class": "combined",
+        "predicted_class": "burnt",
+        "confidence": 0.1672857105731964,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05018571317195892,
+        "true_quality_score": 0.05018571317195892
+      },
+      {
+        "image_path": "data/test/combined/challenging_combined_lighting_dark_015.jpg",
+        "ground_truth_class": "combined",
+        "predicted_class": "burnt",
+        "confidence": 0.1673065423965454,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050191962718963624,
+        "true_quality_score": 0.050191962718963624
+      },
+      {
+        "image_path": "data/test/combined/challenging_combined_blur_011.jpg",
+        "ground_truth_class": "combined",
+        "predicted_class": "burnt",
+        "confidence": 0.16703228652477264,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050109685957431795,
+        "true_quality_score": 0.050109685957431795
+      },
+      {
+        "image_path": "data/test/combined/sample_combined_0004.jpg",
+        "ground_truth_class": "combined",
+        "predicted_class": "burnt",
+        "confidence": 0.16690193116664886,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050070579349994655,
+        "true_quality_score": 0.050070579349994655
+      },
+      {
+        "image_path": "data/test/combined/challenging_combined_blur_001.jpg",
+        "ground_truth_class": "combined",
+        "predicted_class": "burnt",
+        "confidence": 0.1668030023574829,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05004090070724487,
+        "true_quality_score": 0.05004090070724487
+      },
+      {
+        "image_path": "data/test/combined/sample_combined_0021.jpg",
+        "ground_truth_class": "combined",
+        "predicted_class": "burnt",
+        "confidence": 0.16690917313098907,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05007275193929672,
+        "true_quality_score": 0.05007275193929672
+      },
+      {
+        "image_path": "data/test/combined/sample_combined_0007.jpg",
+        "ground_truth_class": "combined",
+        "predicted_class": "burnt",
+        "confidence": 0.16691045463085175,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05007313638925552,
+        "true_quality_score": 0.05007313638925552
+      },
+      {
+        "image_path": "data/test/combined/sample_combined_0005.jpg",
+        "ground_truth_class": "combined",
+        "predicted_class": "burnt",
+        "confidence": 0.1669592261314392,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05008776783943176,
+        "true_quality_score": 0.05008776783943176
+      },
+      {
+        "image_path": "data/test/combined/test_combined_challenging_low_contrast_angle_side_noisy_20250520_211411_015.jpg",
+        "ground_truth_class": "combined",
+        "predicted_class": "burnt",
+        "confidence": 0.16707651317119598,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050122953951358795,
+        "true_quality_score": 0.050122953951358795
+      },
+      {
+        "image_path": "data/test/combined/test_combined_challenging_backlit_angle_diagonal_normal_20250520_211427_010.jpg",
+        "ground_truth_class": "combined",
+        "predicted_class": "burnt",
+        "confidence": 0.16778631508350372,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05033589452505111,
+        "true_quality_score": 0.05033589452505111
+      },
+      {
+        "image_path": "data/test/combined/sample_combined_rotated.jpg",
+        "ground_truth_class": "combined",
+        "predicted_class": "burnt",
+        "confidence": 0.16762587428092957,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05028776228427887,
+        "true_quality_score": 0.05028776228427887
+      },
+      {
+        "image_path": "data/test/combined/test_combined_challenging_low_contrast_angle_side_jpeg_artifact_20250520_211411_011.jpg",
+        "ground_truth_class": "combined",
+        "predicted_class": "burnt",
+        "confidence": 0.16721419990062714,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05016425997018814,
+        "true_quality_score": 0.05016425997018814
+      },
+      {
+        "image_path": "data/test/combined/sample_combined_0018.jpg",
+        "ground_truth_class": "combined",
+        "predicted_class": "burnt",
+        "confidence": 0.16698238253593445,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05009471476078033,
+        "true_quality_score": 0.05009471476078033
+      },
+      {
+        "image_path": "data/test/combined/challenging_combined_noise_016.jpg",
+        "ground_truth_class": "combined",
+        "predicted_class": "burnt",
+        "confidence": 0.16695572435855865,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05008671730756759,
+        "true_quality_score": 0.05008671730756759
+      },
+      {
+        "image_path": "data/test/combined/test_combined_challenging_bright_angle_diagonal_jpeg_artifact_20250520_211411_013.jpg",
+        "ground_truth_class": "combined",
+        "predicted_class": "burnt",
+        "confidence": 0.1677599400281906,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05032798200845718,
+        "true_quality_score": 0.05032798200845718
+      },
+      {
+        "image_path": "data/test/combined/test_combined_challenging_bright_angle_close_jpeg_artifact_20250520_211411_014.jpg",
+        "ground_truth_class": "combined",
+        "predicted_class": "burnt",
+        "confidence": 0.1676841825246811,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05030525475740433,
+        "true_quality_score": 0.05030525475740433
+      },
+      {
+        "image_path": "data/test/combined/test_combined_challenging_backlit_angle_top_blurry_20250520_211427_017.jpg",
+        "ground_truth_class": "combined",
+        "predicted_class": "burnt",
+        "confidence": 0.1674669086933136,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050240072607994075,
+        "true_quality_score": 0.050240072607994075
+      },
+      {
+        "image_path": "data/test/combined/sample_combined_0012.jpg",
+        "ground_truth_class": "combined",
+        "predicted_class": "burnt",
+        "confidence": 0.16689246892929077,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05006774067878723,
+        "true_quality_score": 0.05006774067878723
+      },
+      {
+        "image_path": "data/test/combined/test_combined_challenging_backlit_angle_close_normal_20250520_211427_016.jpg",
+        "ground_truth_class": "combined",
+        "predicted_class": "burnt",
+        "confidence": 0.16762377321720123,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05028713196516037,
+        "true_quality_score": 0.05028713196516037
+      },
+      {
+        "image_path": "data/test/combined/sample_combined_0002.jpg",
+        "ground_truth_class": "combined",
+        "predicted_class": "burnt",
+        "confidence": 0.16688428819179535,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050065286457538605,
+        "true_quality_score": 0.050065286457538605
+      },
+      {
+        "image_path": "data/test/combined/sample_combined_0017.jpg",
+        "ground_truth_class": "combined",
+        "predicted_class": "burnt",
+        "confidence": 0.16708990931510925,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05012697279453277,
+        "true_quality_score": 0.05012697279453277
+      },
+      {
+        "image_path": "data/test/combined/sample_combined_0023.jpg",
+        "ground_truth_class": "combined",
+        "predicted_class": "burnt",
+        "confidence": 0.16708357632160187,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050125072896480556,
+        "true_quality_score": 0.050125072896480556
+      },
+      {
+        "image_path": "data/test/combined/test_combined_challenging_shadowed_angle_diagonal_noisy_20250520_211427_003.jpg",
+        "ground_truth_class": "combined",
+        "predicted_class": "burnt",
+        "confidence": 0.16730467975139618,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050191403925418855,
+        "true_quality_score": 0.050191403925418855
+      },
+      {
+        "image_path": "data/test/combined/challenging_combined_lighting_dark_010.jpg",
+        "ground_truth_class": "combined",
+        "predicted_class": "burnt",
+        "confidence": 0.16739444434642792,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05021833330392837,
+        "true_quality_score": 0.05021833330392837
+      },
+      {
+        "image_path": "data/test/combined/sample_combined_0008.jpg",
+        "ground_truth_class": "combined",
+        "predicted_class": "burnt",
+        "confidence": 0.16691045463085175,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05007313638925552,
+        "true_quality_score": 0.05007313638925552
+      },
+      {
+        "image_path": "data/test/combined/test_combined_challenging_dark_normal_motion_blur_20250520_211411_007.jpg",
+        "ground_truth_class": "combined",
+        "predicted_class": "burnt",
+        "confidence": 0.1672808676958084,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05018426030874252,
+        "true_quality_score": 0.05018426030874252
+      },
+      {
+        "image_path": "data/test/burnt/test_burnt_challenging_uneven_angle_diagonal_blurry_20250520_211411_012.jpg",
+        "ground_truth_class": "burnt",
+        "predicted_class": "burnt",
+        "confidence": 0.16729390621185303,
+        "model_type": "MicroPizzaNet",
+        "is_correct": true,
+        "verifier_quality_score": 0.16729390621185303,
+        "true_quality_score": 0.7501881718635559
+      },
+      {
+        "image_path": "data/test/burnt/challenging_burnt_noise_002.jpg",
+        "ground_truth_class": "burnt",
+        "predicted_class": "burnt",
+        "confidence": 0.16749626398086548,
+        "model_type": "MicroPizzaNet",
+        "is_correct": true,
+        "verifier_quality_score": 0.16749626398086548,
+        "true_quality_score": 0.7502488791942596
+      },
+      {
+        "image_path": "data/test/burnt/test_burnt_challenging_low_contrast_angle_side_normal_20250520_211427_007.jpg",
+        "ground_truth_class": "burnt",
+        "predicted_class": "burnt",
+        "confidence": 0.1671142429113388,
+        "model_type": "MicroPizzaNet",
+        "is_correct": true,
+        "verifier_quality_score": 0.1671142429113388,
+        "true_quality_score": 0.7501342728734016
+      },
+      {
+        "image_path": "data/test/burnt/challenging_burnt_lighting_contrast_010.jpg",
+        "ground_truth_class": "burnt",
+        "predicted_class": "burnt",
+        "confidence": 0.1670166403055191,
+        "model_type": "MicroPizzaNet",
+        "is_correct": true,
+        "verifier_quality_score": 0.1670166403055191,
+        "true_quality_score": 0.7501049920916557
+      },
+      {
+        "image_path": "data/test/burnt/burnt_augmented_0001.jpg",
+        "ground_truth_class": "burnt",
+        "predicted_class": "burnt",
+        "confidence": 0.16689851880073547,
+        "model_type": "MicroPizzaNet",
+        "is_correct": true,
+        "verifier_quality_score": 0.16689851880073547,
+        "true_quality_score": 0.7500695556402206
+      },
+      {
+        "image_path": "data/test/burnt/burnt_augmented_0009.jpg",
+        "ground_truth_class": "burnt",
+        "predicted_class": "burnt",
+        "confidence": 0.1669687032699585,
+        "model_type": "MicroPizzaNet",
+        "is_correct": true,
+        "verifier_quality_score": 0.1669687032699585,
+        "true_quality_score": 0.7500906109809875
+      },
+      {
+        "image_path": "data/test/burnt/sample_burnt_rotated.jpg",
+        "ground_truth_class": "burnt",
+        "predicted_class": "burnt",
+        "confidence": 0.16745242476463318,
+        "model_type": "MicroPizzaNet",
+        "is_correct": true,
+        "verifier_quality_score": 0.16745242476463318,
+        "true_quality_score": 0.7502357274293899
+      },
+      {
+        "image_path": "data/test/burnt/test_burnt_challenging_uneven_angle_top_jpeg_artifact_20250520_211411_004.jpg",
+        "ground_truth_class": "burnt",
+        "predicted_class": "burnt",
+        "confidence": 0.1673453152179718,
+        "model_type": "MicroPizzaNet",
+        "is_correct": true,
+        "verifier_quality_score": 0.1673453152179718,
+        "true_quality_score": 0.7502035945653915
+      },
+      {
+        "image_path": "data/test/burnt/test_burnt_challenging_backlit_angle_side_motion_blur_20250520_211427_001.jpg",
+        "ground_truth_class": "burnt",
+        "predicted_class": "burnt",
+        "confidence": 0.16784025728702545,
+        "model_type": "MicroPizzaNet",
+        "is_correct": true,
+        "verifier_quality_score": 0.16784025728702545,
+        "true_quality_score": 0.7503520771861076
+      },
+      {
+        "image_path": "data/test/burnt/challenging_burnt_lighting_dark_006.jpg",
+        "ground_truth_class": "burnt",
+        "predicted_class": "burnt",
+        "confidence": 0.16762913763523102,
+        "model_type": "MicroPizzaNet",
+        "is_correct": true,
+        "verifier_quality_score": 0.16762913763523102,
+        "true_quality_score": 0.7502887412905692
+      },
+      {
+        "image_path": "data/test/burnt/burnt_augmented_0010.jpg",
+        "ground_truth_class": "burnt",
+        "predicted_class": "burnt",
+        "confidence": 0.16697175800800323,
+        "model_type": "MicroPizzaNet",
+        "is_correct": true,
+        "verifier_quality_score": 0.16697175800800323,
+        "true_quality_score": 0.7500915274024009
+      },
+      {
+        "image_path": "data/test/burnt/test_burnt_challenging_backlit_angle_diagonal_motion_blur_20250520_211411_002.jpg",
+        "ground_truth_class": "burnt",
+        "predicted_class": "burnt",
+        "confidence": 0.16779987514019012,
+        "model_type": "MicroPizzaNet",
+        "is_correct": true,
+        "verifier_quality_score": 0.16779987514019012,
+        "true_quality_score": 0.750339962542057
+      },
+      {
+        "image_path": "data/test/burnt/challenging_burnt_lighting_dark_008.jpg",
+        "ground_truth_class": "burnt",
+        "predicted_class": "burnt",
+        "confidence": 0.16738185286521912,
+        "model_type": "MicroPizzaNet",
+        "is_correct": true,
+        "verifier_quality_score": 0.16738185286521912,
+        "true_quality_score": 0.7502145558595656
+      },
+      {
+        "image_path": "data/test/burnt/challenging_burnt_perspective_004.jpg",
+        "ground_truth_class": "burnt",
+        "predicted_class": "burnt",
+        "confidence": 0.1669367402791977,
+        "model_type": "MicroPizzaNet",
+        "is_correct": true,
+        "verifier_quality_score": 0.1669367402791977,
+        "true_quality_score": 0.7500810220837593
+      },
+      {
+        "image_path": "data/test/burnt/challenging_burnt_noise_012.jpg",
+        "ground_truth_class": "burnt",
+        "predicted_class": "burnt",
+        "confidence": 0.1674460619688034,
+        "model_type": "MicroPizzaNet",
+        "is_correct": true,
+        "verifier_quality_score": 0.1674460619688034,
+        "true_quality_score": 0.750233818590641
+      },
+      {
+        "image_path": "data/test/burnt/test_burnt_challenging_backlit_angle_side_motion_blur_20250520_211411_005.jpg",
+        "ground_truth_class": "burnt",
+        "predicted_class": "burnt",
+        "confidence": 0.1678593009710312,
+        "model_type": "MicroPizzaNet",
+        "is_correct": true,
+        "verifier_quality_score": 0.1678593009710312,
+        "true_quality_score": 0.7503577902913093
+      },
+      {
+        "image_path": "data/test/burnt/challenging_burnt_perspective_013.jpg",
+        "ground_truth_class": "burnt",
+        "predicted_class": "burnt",
+        "confidence": 0.16696050763130188,
+        "model_type": "MicroPizzaNet",
+        "is_correct": true,
+        "verifier_quality_score": 0.16696050763130188,
+        "true_quality_score": 0.7500881522893905
+      },
+      {
+        "image_path": "data/test/burnt/challenging_burnt_lighting_contrast_001.jpg",
+        "ground_truth_class": "burnt",
+        "predicted_class": "burnt",
+        "confidence": 0.16745439171791077,
+        "model_type": "MicroPizzaNet",
+        "is_correct": true,
+        "verifier_quality_score": 0.16745439171791077,
+        "true_quality_score": 0.7502363175153732
+      },
+      {
+        "image_path": "data/test/burnt/test_burnt_challenging_dark_normal_motion_blur_20250520_211427_000.jpg",
+        "ground_truth_class": "burnt",
+        "predicted_class": "burnt",
+        "confidence": 0.16734598577022552,
+        "model_type": "MicroPizzaNet",
+        "is_correct": true,
+        "verifier_quality_score": 0.16734598577022552,
+        "true_quality_score": 0.7502037957310677
+      },
+      {
+        "image_path": "data/test/burnt/test_burnt_challenging_normal_angle_top_blurry_20250520_211411_011.jpg",
+        "ground_truth_class": "burnt",
+        "predicted_class": "burnt",
+        "confidence": 0.16693174839019775,
+        "model_type": "MicroPizzaNet",
+        "is_correct": true,
+        "verifier_quality_score": 0.16693174839019775,
+        "true_quality_score": 0.7500795245170593
+      },
+      {
+        "image_path": "data/test/burnt/test_burnt_challenging_uneven_angle_top_jpeg_artifact_20250520_211427_004.jpg",
+        "ground_truth_class": "burnt",
+        "predicted_class": "burnt",
+        "confidence": 0.16698606312274933,
+        "model_type": "MicroPizzaNet",
+        "is_correct": true,
+        "verifier_quality_score": 0.16698606312274933,
+        "true_quality_score": 0.7500958189368248
+      },
+      {
+        "image_path": "data/test/burnt/burnt_augmented_0006.jpg",
+        "ground_truth_class": "burnt",
+        "predicted_class": "burnt",
+        "confidence": 0.16757670044898987,
+        "model_type": "MicroPizzaNet",
+        "is_correct": true,
+        "verifier_quality_score": 0.16757670044898987,
+        "true_quality_score": 0.7502730101346969
+      },
+      {
+        "image_path": "data/test/burnt/test_burnt_challenging_backlit_normal_normal_20250520_211411_009.jpg",
+        "ground_truth_class": "burnt",
+        "predicted_class": "burnt",
+        "confidence": 0.167743518948555,
+        "model_type": "MicroPizzaNet",
+        "is_correct": true,
+        "verifier_quality_score": 0.167743518948555,
+        "true_quality_score": 0.7503230556845665
+      },
+      {
+        "image_path": "data/test/burnt/test_burnt_challenging_low_contrast_angle_side_motion_blur_20250520_211427_002.jpg",
+        "ground_truth_class": "burnt",
+        "predicted_class": "burnt",
+        "confidence": 0.16762469708919525,
+        "model_type": "MicroPizzaNet",
+        "is_correct": true,
+        "verifier_quality_score": 0.16762469708919525,
+        "true_quality_score": 0.7502874091267585
+      },
+      {
+        "image_path": "data/test/burnt/challenging_burnt_lighting_dark_009.jpg",
+        "ground_truth_class": "burnt",
+        "predicted_class": "burnt",
+        "confidence": 0.16752013564109802,
+        "model_type": "MicroPizzaNet",
+        "is_correct": true,
+        "verifier_quality_score": 0.16752013564109802,
+        "true_quality_score": 0.7502560406923293
+      },
+      {
+        "image_path": "data/test/burnt/challenging_burnt_lighting_bright_016.jpg",
+        "ground_truth_class": "burnt",
+        "predicted_class": "segment",
+        "confidence": 0.16708879172801971,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05012663751840591,
+        "true_quality_score": 0.05012663751840591
+      },
+      {
+        "image_path": "data/test/burnt/test_burnt_challenging_uneven_normal_normal_20250520_211411_003.jpg",
+        "ground_truth_class": "burnt",
+        "predicted_class": "burnt",
+        "confidence": 0.1671268343925476,
+        "model_type": "MicroPizzaNet",
+        "is_correct": true,
+        "verifier_quality_score": 0.1671268343925476,
+        "true_quality_score": 0.7501380503177643
+      },
+      {
+        "image_path": "data/test/burnt/sample_burnt.jpg",
+        "ground_truth_class": "burnt",
+        "predicted_class": "burnt",
+        "confidence": 0.166941836476326,
+        "model_type": "MicroPizzaNet",
+        "is_correct": true,
+        "verifier_quality_score": 0.166941836476326,
+        "true_quality_score": 0.7500825509428978
+      },
+      {
+        "image_path": "data/test/burnt/burnt_augmented_0005.jpg",
+        "ground_truth_class": "burnt",
+        "predicted_class": "burnt",
+        "confidence": 0.16725093126296997,
+        "model_type": "MicroPizzaNet",
+        "is_correct": true,
+        "verifier_quality_score": 0.16725093126296997,
+        "true_quality_score": 0.750175279378891
+      },
+      {
+        "image_path": "data/test/burnt/challenging_burnt_lighting_contrast_014.jpg",
+        "ground_truth_class": "burnt",
+        "predicted_class": "burnt",
+        "confidence": 0.1674170047044754,
+        "model_type": "MicroPizzaNet",
+        "is_correct": true,
+        "verifier_quality_score": 0.1674170047044754,
+        "true_quality_score": 0.7502251014113426
+      },
+      {
+        "image_path": "data/test/burnt/sample_burnt_dark.jpg",
+        "ground_truth_class": "burnt",
+        "predicted_class": "burnt",
+        "confidence": 0.1674264520406723,
+        "model_type": "MicroPizzaNet",
+        "is_correct": true,
+        "verifier_quality_score": 0.1674264520406723,
+        "true_quality_score": 0.7502279356122017
+      },
+      {
+        "image_path": "data/test/burnt/test_burnt_challenging_low_contrast_angle_top_motion_blur_20250520_211427_009.jpg",
+        "ground_truth_class": "burnt",
+        "predicted_class": "burnt",
+        "confidence": 0.16748324036598206,
+        "model_type": "MicroPizzaNet",
+        "is_correct": true,
+        "verifier_quality_score": 0.16748324036598206,
+        "true_quality_score": 0.7502449721097946
+      },
+      {
+        "image_path": "data/test/burnt/test_burnt_challenging_normal_angle_side_normal_20250520_211427_008.jpg",
+        "ground_truth_class": "burnt",
+        "predicted_class": "burnt",
+        "confidence": 0.16701115667819977,
+        "model_type": "MicroPizzaNet",
+        "is_correct": true,
+        "verifier_quality_score": 0.16701115667819977,
+        "true_quality_score": 0.7501033470034599
+      },
+      {
+        "image_path": "data/test/burnt/challenging_burnt_lighting_bright_015.jpg",
+        "ground_truth_class": "burnt",
+        "predicted_class": "segment",
+        "confidence": 0.16718213260173798,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.05015463978052139,
+        "true_quality_score": 0.05015463978052139
+      },
+      {
+        "image_path": "data/test/burnt/burnt_augmented_0003.jpg",
+        "ground_truth_class": "burnt",
+        "predicted_class": "burnt",
+        "confidence": 0.16691124439239502,
+        "model_type": "MicroPizzaNet",
+        "is_correct": true,
+        "verifier_quality_score": 0.16691124439239502,
+        "true_quality_score": 0.7500733733177185
+      },
+      {
+        "image_path": "data/test/burnt/test_burnt_challenging_low_contrast_angle_diagonal_normal_20250520_211427_012.jpg",
+        "ground_truth_class": "burnt",
+        "predicted_class": "burnt",
+        "confidence": 0.1670759916305542,
+        "model_type": "MicroPizzaNet",
+        "is_correct": true,
+        "verifier_quality_score": 0.1670759916305542,
+        "true_quality_score": 0.7501227974891662
+      },
+      {
+        "image_path": "data/test/burnt/burnt_augmented_0007.jpg",
+        "ground_truth_class": "burnt",
+        "predicted_class": "burnt",
+        "confidence": 0.16699136793613434,
+        "model_type": "MicroPizzaNet",
+        "is_correct": true,
+        "verifier_quality_score": 0.16699136793613434,
+        "true_quality_score": 0.7500974103808402
+      },
+      {
+        "image_path": "data/test/burnt/challenging_burnt_combined_005.jpg",
+        "ground_truth_class": "burnt",
+        "predicted_class": "burnt",
+        "confidence": 0.1671309918165207,
+        "model_type": "MicroPizzaNet",
+        "is_correct": true,
+        "verifier_quality_score": 0.1671309918165207,
+        "true_quality_score": 0.7501392975449561
+      },
+      {
+        "image_path": "data/test/burnt/test_burnt_challenging_backlit_angle_close_motion_blur_20250520_211411_001.jpg",
+        "ground_truth_class": "burnt",
+        "predicted_class": "burnt",
+        "confidence": 0.16767112910747528,
+        "model_type": "MicroPizzaNet",
+        "is_correct": true,
+        "verifier_quality_score": 0.16767112910747528,
+        "true_quality_score": 0.7503013387322426
+      },
+      {
+        "image_path": "data/test/burnt/test_burnt_challenging_uneven_angle_side_motion_blur_20250520_211427_011.jpg",
+        "ground_truth_class": "burnt",
+        "predicted_class": "burnt",
+        "confidence": 0.16724497079849243,
+        "model_type": "MicroPizzaNet",
+        "is_correct": true,
+        "verifier_quality_score": 0.16724497079849243,
+        "true_quality_score": 0.7501734912395477
+      },
+      {
+        "image_path": "data/test/burnt/test_burnt_challenging_backlit_angle_side_normal_20250520_211427_006.jpg",
+        "ground_truth_class": "burnt",
+        "predicted_class": "burnt",
+        "confidence": 0.16758942604064941,
+        "model_type": "MicroPizzaNet",
+        "is_correct": true,
+        "verifier_quality_score": 0.16758942604064941,
+        "true_quality_score": 0.7502768278121947
+      },
+      {
+        "image_path": "data/test/burnt/burnt_augmented_0000.jpg",
+        "ground_truth_class": "burnt",
+        "predicted_class": "burnt",
+        "confidence": 0.16730093955993652,
+        "model_type": "MicroPizzaNet",
+        "is_correct": true,
+        "verifier_quality_score": 0.16730093955993652,
+        "true_quality_score": 0.7501902818679809
+      },
+      {
+        "image_path": "data/test/burnt/test_burnt_challenging_backlit_angle_close_motion_blur_20250520_211411_007.jpg",
+        "ground_truth_class": "burnt",
+        "predicted_class": "burnt",
+        "confidence": 0.16774563491344452,
+        "model_type": "MicroPizzaNet",
+        "is_correct": true,
+        "verifier_quality_score": 0.16774563491344452,
+        "true_quality_score": 0.7503236904740334
+      },
+      {
+        "image_path": "data/test/burnt/burnt_augmented_0011.jpg",
+        "ground_truth_class": "burnt",
+        "predicted_class": "burnt",
+        "confidence": 0.16752013564109802,
+        "model_type": "MicroPizzaNet",
+        "is_correct": true,
+        "verifier_quality_score": 0.16752013564109802,
+        "true_quality_score": 0.7502560406923293
+      },
+      {
+        "image_path": "data/test/burnt/burnt_augmented_0002.jpg",
+        "ground_truth_class": "burnt",
+        "predicted_class": "burnt",
+        "confidence": 0.16693252325057983,
+        "model_type": "MicroPizzaNet",
+        "is_correct": true,
+        "verifier_quality_score": 0.16693252325057983,
+        "true_quality_score": 0.7500797569751739
+      },
+      {
+        "image_path": "data/test/burnt/test_burnt_challenging_uneven_angle_side_blurry_20250520_211411_008.jpg",
+        "ground_truth_class": "burnt",
+        "predicted_class": "burnt",
+        "confidence": 0.16746051609516144,
+        "model_type": "MicroPizzaNet",
+        "is_correct": true,
+        "verifier_quality_score": 0.16746051609516144,
+        "true_quality_score": 0.7502381548285484
+      },
+      {
+        "image_path": "data/test/burnt/test_burnt_challenging_normal_angle_side_blurry_20250520_211427_003.jpg",
+        "ground_truth_class": "burnt",
+        "predicted_class": "burnt",
+        "confidence": 0.16746820509433746,
+        "model_type": "MicroPizzaNet",
+        "is_correct": true,
+        "verifier_quality_score": 0.16746820509433746,
+        "true_quality_score": 0.7502404615283012
+      },
+      {
+        "image_path": "data/test/burnt/challenging_burnt_lighting_dark_007.jpg",
+        "ground_truth_class": "burnt",
+        "predicted_class": "burnt",
+        "confidence": 0.16736848652362823,
+        "model_type": "MicroPizzaNet",
+        "is_correct": true,
+        "verifier_quality_score": 0.16736848652362823,
+        "true_quality_score": 0.7502105459570885
+      },
+      {
+        "image_path": "data/test/burnt/test_burnt_challenging_normal_angle_top_normal_20250520_211411_000.jpg",
+        "ground_truth_class": "burnt",
+        "predicted_class": "burnt",
+        "confidence": 0.16739757359027863,
+        "model_type": "MicroPizzaNet",
+        "is_correct": true,
+        "verifier_quality_score": 0.16739757359027863,
+        "true_quality_score": 0.7502192720770835
+      },
+      {
+        "image_path": "data/test/burnt/burnt_augmented_0004.jpg",
+        "ground_truth_class": "burnt",
+        "predicted_class": "burnt",
+        "confidence": 0.16693951189517975,
+        "model_type": "MicroPizzaNet",
+        "is_correct": true,
+        "verifier_quality_score": 0.16693951189517975,
+        "true_quality_score": 0.7500818535685538
+      },
+      {
+        "image_path": "data/test/burnt/burnt_augmented_0008.jpg",
+        "ground_truth_class": "burnt",
+        "predicted_class": "burnt",
+        "confidence": 0.16758479177951813,
+        "model_type": "MicroPizzaNet",
+        "is_correct": true,
+        "verifier_quality_score": 0.16758479177951813,
+        "true_quality_score": 0.7502754375338554
+      },
+      {
+        "image_path": "data/test/burnt/test_burnt_challenging_bright_normal_normal_20250520_211427_005.jpg",
+        "ground_truth_class": "burnt",
+        "predicted_class": "burnt",
+        "confidence": 0.1675621122121811,
+        "model_type": "MicroPizzaNet",
+        "is_correct": true,
+        "verifier_quality_score": 0.1675621122121811,
+        "true_quality_score": 0.7502686336636543
+      },
+      {
+        "image_path": "data/test/burnt/test_burnt_challenging_dark_angle_side_motion_blur_20250520_211411_006.jpg",
+        "ground_truth_class": "burnt",
+        "predicted_class": "burnt",
+        "confidence": 0.1673932820558548,
+        "model_type": "MicroPizzaNet",
+        "is_correct": true,
+        "verifier_quality_score": 0.1673932820558548,
+        "true_quality_score": 0.7502179846167564
+      },
+      {
+        "image_path": "data/test/burnt/test_burnt_challenging_dark_angle_side_jpeg_artifact_20250520_211411_010.jpg",
+        "ground_truth_class": "burnt",
+        "predicted_class": "burnt",
+        "confidence": 0.1674460619688034,
+        "model_type": "MicroPizzaNet",
+        "is_correct": true,
+        "verifier_quality_score": 0.1674460619688034,
+        "true_quality_score": 0.750233818590641
+      },
+      {
+        "image_path": "data/test/burnt/challenging_burnt_noise_011.jpg",
+        "ground_truth_class": "burnt",
+        "predicted_class": "burnt",
+        "confidence": 0.16747325658798218,
+        "model_type": "MicroPizzaNet",
+        "is_correct": true,
+        "verifier_quality_score": 0.16747325658798218,
+        "true_quality_score": 0.7502419769763946
+      },
+      {
+        "image_path": "data/test/burnt/challenging_burnt_lighting_contrast_003.jpg",
+        "ground_truth_class": "burnt",
+        "predicted_class": "burnt",
+        "confidence": 0.16694770753383636,
+        "model_type": "MicroPizzaNet",
+        "is_correct": true,
+        "verifier_quality_score": 0.16694770753383636,
+        "true_quality_score": 0.7500843122601508
+      },
+      {
+        "image_path": "data/test/burnt/challenging_burnt_combined_000.jpg",
+        "ground_truth_class": "burnt",
+        "predicted_class": "segment",
+        "confidence": 0.16719935834407806,
+        "model_type": "MicroPizzaNet",
+        "is_correct": false,
+        "verifier_quality_score": 0.050159807503223415,
+        "true_quality_score": 0.050159807503223415
+      },
+      {
+        "image_path": "data/test/burnt/test_burnt_challenging_backlit_angle_close_motion_blur_20250520_211427_010.jpg",
+        "ground_truth_class": "burnt",
+        "predicted_class": "burnt",
+        "confidence": 0.16772258281707764,
+        "model_type": "MicroPizzaNet",
+        "is_correct": true,
+        "verifier_quality_score": 0.16772258281707764,
+        "true_quality_score": 0.7503167748451233
+      }
+    ]
+  },
+  "metrics": {
+    "MicroPizzaNet": {
+      "mse": 0.04373126218875774,
+      "r2_score": 0.21162423691888954,
+      "spearman_correlation": 0.8632977328180202,
+      "spearman_p_value": 1.3829991070225017e-128,
+      "pearson_correlation": 0.9994245468218635,
+      "pearson_p_value": 0.0,
+      "accuracy": 0.12850467289719625,
+      "safety_error_rate": 0.11682242990654206,
+      "avg_confidence": 0.16729064431981505,
+      "confidence_std": 0.00029128897883390624,
+      "sample_count": 428
+    }
+  },
+  "class_analysis": {
+    "MicroPizzaNet": {
+      "progression": {
+        "sample_count": 80,
+        "accuracy": 0.0,
+        "avg_true_quality": 0.050235629584640264,
+        "avg_predicted_quality": 0.050235629584640264,
+        "quality_mse": 0.0,
+        "quality_correlation": 1.0
+      },
+      "mixed": {
+        "sample_count": 80,
+        "accuracy": 0.0,
+        "avg_true_quality": 0.05019829580560327,
+        "avg_predicted_quality": 0.05019829580560327,
+        "quality_mse": 0.0,
+        "quality_correlation": 1.0
+      },
+      "basic": {
+        "sample_count": 50,
+        "accuracy": 0.0,
+        "avg_true_quality": 0.02508673444390297,
+        "avg_predicted_quality": 0.05017346888780594,
+        "quality_mse": 0.0006293472539522672,
+        "quality_correlation": 1.0
+      },
+      "segment": {
+        "sample_count": 80,
+        "accuracy": 0.0,
+        "avg_true_quality": 0.050163763649761675,
+        "avg_predicted_quality": 0.050163763649761675,
+        "quality_mse": 0.0,
+        "quality_correlation": 1.0
+      },
+      "combined": {
+        "sample_count": 80,
+        "accuracy": 0.0,
+        "avg_true_quality": 0.05015312355011701,
+        "avg_predicted_quality": 0.05015312355011701,
+        "quality_mse": 0.0,
+        "quality_correlation": 1.0
+      },
+      "burnt": {
+        "sample_count": 58,
+        "accuracy": 0.9482758620689655,
+        "avg_true_quality": 0.7139893151562788,
+        "avg_predicted_quality": 0.1612684781438318,
+        "quality_mse": 0.32216401472570166,
+        "quality_correlation": 0.9999493771841594
+      }
+    }
+  },
+  "formal_results": {},
+  "visualizations": [
+    "results/evaluation_2_3/quality_score_correlation.png",
+    "results/evaluation_2_3/model_performance_comparison.png",
+    "results/evaluation_2_3/class_performance_heatmap.png"
+  ],
+  "report_path": "results/evaluation_2_3/pizza_verifier_evaluation_report_20250608_113500.html",
+  "timestamp": "2025-06-08T11:35:00.652857"
+}

@@ -1,0 +1,83 @@
+{
+  "generated_at": "2025-08-25T10:48:52.618081+00:00",
+  "upload_dir": "/home/emilio/Documents/ai/pizza/hardware/manufacturing/JLCPCB_UPLOAD",
+  "zip_file": "/home/emilio/Documents/ai/pizza/hardware/manufacturing/JLCPCB_UPLOAD/gerber_jlcpcb_FIXED.zip",
+  "extracted_to": "/home/emilio/Documents/ai/pizza/hardware/manufacturing/JLCPCB_UPLOAD/extracted/gerber_jlcpcb_FIXED_20250825T104852Z",
+  "gerber": {
+    "present": {
+      "GTL": true,
+      "GBL": true,
+      "GTS": true,
+      "GBS": true,
+      "GTO": true,
+      "GBO": true,
+      "GKO": true
+    },
+    "drill_present": true,
+    "files": [
+      {
+        "path": "/home/emilio/Documents/ai/pizza/hardware/manufacturing/JLCPCB_UPLOAD/extracted/gerber_jlcpcb_FIXED_20250825T104852Z/PizzaBoard-RP2040-F_Cu.gtl",
+        "size": 1748
+      },
+      {
+        "path": "/home/emilio/Documents/ai/pizza/hardware/manufacturing/JLCPCB_UPLOAD/extracted/gerber_jlcpcb_FIXED_20250825T104852Z/PizzaBoard-RP2040-B_Mask.gbs",
+        "size": 588
+      },
+      {
+        "path": "/home/emilio/Documents/ai/pizza/hardware/manufacturing/JLCPCB_UPLOAD/extracted/gerber_jlcpcb_FIXED_20250825T104852Z/PizzaBoard-RP2040-Edge_Cuts.gm1",
+        "size": 544
+      },
+      {
+        "path": "/home/emilio/Documents/ai/pizza/hardware/manufacturing/JLCPCB_UPLOAD/extracted/gerber_jlcpcb_FIXED_20250825T104852Z/PizzaBoard-RP2040-B_Cu.gbl",
+        "size": 764
+      },
+      {
+        "path": "/home/emilio/Documents/ai/pizza/hardware/manufacturing/JLCPCB_UPLOAD/extracted/gerber_jlcpcb_FIXED_20250825T104852Z/PizzaBoard-RP2040-F_Mask.gts",
+        "size": 1035
+      },
+      {
+        "path": "/home/emilio/Documents/ai/pizza/hardware/manufacturing/JLCPCB_UPLOAD/extracted/gerber_jlcpcb_FIXED_20250825T104852Z/PizzaBoard-RP2040.drl",
+        "size": 362
+      },
+      {
+        "path": "/home/emilio/Documents/ai/pizza/hardware/manufacturing/JLCPCB_UPLOAD/extracted/gerber_jlcpcb_FIXED_20250825T104852Z/PizzaBoard-RP2040-F_Silkscreen.gto",
+        "size": 1199
+      },
+      {
+        "path": "/home/emilio/Documents/ai/pizza/hardware/manufacturing/JLCPCB_UPLOAD/extracted/gerber_jlcpcb_FIXED_20250825T104852Z/PizzaBoard-RP2040-B_Silkscreen.gbo",
+        "size": 437
+      },
+      {
+        "path": "/home/emilio/Documents/ai/pizza/hardware/manufacturing/JLCPCB_UPLOAD/extracted/gerber_jlcpcb_FIXED_20250825T104852Z/PizzaBoard-RP2040-job.gbrjob",
+        "size": 2353
+      }
+    ]
+  },
+  "bom": {
+    "path": "/home/emilio/Documents/ai/pizza/hardware/manufacturing/JLCPCB_UPLOAD/bom_jlcpcb.csv",
+    "exists": true,
+    "columns": [
+      "Comment",
+      "Designator",
+      "Footprint",
+      "LCSC Part #",
+      "Quantity"
+    ],
+    "has_required": true,
+    "row_count": 9
+  },
+  "cpl": {
+    "path": "/home/emilio/Documents/ai/pizza/hardware/manufacturing/JLCPCB_UPLOAD/cpl_jlcpcb.csv",
+    "exists": true,
+    "columns": [
+      "Designator",
+      "Mid X",
+      "Mid Y",
+      "Layer",
+      "Rotation"
+    ],
+    "has_required": true,
+    "row_count": 9
+  },
+  "warnings": []
+}

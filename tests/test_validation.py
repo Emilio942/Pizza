@@ -115,7 +115,10 @@ def test_validate_camera_config():
     validate_camera_config(valid_config)
     
     # Test: Ungültige Auflösung
-    invalid_res = valid_config._replace(width=320, height=240)
+    invalid_res = valid_config._replace(
+        width=CAMERA_WIDTH + 10,
+        height=CAMERA_HEIGHT + 10
+    )
     with pytest.raises(ConfigError):
         validate_camera_config(invalid_res)
     

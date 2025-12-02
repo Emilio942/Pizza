@@ -1,0 +1,49 @@
+{
+  "generated_at": "2025-08-25T10:47:06.376520+00:00",
+  "python": {
+    "executable": "/home/emilio/Documents/ai/pizza/.venv/bin/python3",
+    "version": "3.12.3 (main, Aug 14 2025, 17:47:21) [GCC 13.3.0]",
+    "platform": "Linux-6.14.0-28-generic-x86_64-with-glibc2.39"
+  },
+  "kicad": {
+    "kicad_cli_path": "/usr/bin/kicad-cli",
+    "version_check": {
+      "ok": true,
+      "stdout": "7.0.11"
+    },
+    "pcbnew": {
+      "importable": false,
+      "error": "No module named '_pcbnew'"
+    }
+  },
+  "packages": {
+    "requests": {
+      "installed": true,
+      "version": "2.32.3"
+    },
+    "numpy": {
+      "installed": true,
+      "version": "2.1.3"
+    },
+    "scipy": {
+      "installed": true,
+      "version": "1.15.2"
+    },
+    "matplotlib": {
+      "installed": true,
+      "version": "3.10.1"
+    },
+    "torch": {
+      "installed": true,
+      "version": "2.6.0+cu124"
+    },
+    "gymnasium": {
+      "installed": true,
+      "version": "1.1.1"
+    },
+    "stable_baselines3": {
+      "installed": true,
+      "version": "2.6.0"
+    }
+  }
+}

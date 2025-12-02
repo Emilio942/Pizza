@@ -1,0 +1,17 @@
+{
+  "generated_at": "2025-08-25T10:50:52.199474+00:00",
+  "kicad_cli_version": "7.0.11",
+  "pcb_file": "/home/emilio/Documents/ai/pizza/hardware/eda/PizzaBoard-RP2040.kicad_pcb",
+  "sch_file": "/home/emilio/Documents/ai/pizza/hardware/eda/PizzaBoard-RP2040.kicad_sch",
+  "drc": {
+    "status": "skipped",
+    "reason": "kicad-cli 7.0.11 does not support pcb drc; upgrade to KiCad 8+ or run DRC in GUI / pcbnew Python"
+  },
+  "erc": {
+    "status": "skipped",
+    "reason": "kicad-cli 7.0.11 does not support sch erc; upgrade to KiCad 8+ or run ERC in GUI"
+  },
+  "notes": [
+    "You can also try using KiCad's Python with pcbnew to trigger DRC headlessly."
+  ]
+}

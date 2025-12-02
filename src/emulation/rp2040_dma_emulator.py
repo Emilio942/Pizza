@@ -252,7 +252,17 @@ class RP2040DMAEmulator:
         
         # Transfer tracking
         self.transfer_events: List[DMATransferEvent] = []
-        self.active_transfers: Dict[int, Dict] = {}
+        self.active_transfers: Dict[int, Dict[str, Any]] = {}
+        self.transfer_logs: List[Dict[str, Any]] = []
+        self.transfer_counter: int = 0
+        self.transfer_map: Dict[int, int] = {}
+        self.completed_transfers: Dict[int, Dict[str, Any]] = {}
+        self._stats_accumulator: Dict[str, Any] = {
+            'total_transfers': 0,
+            'successful_transfers': 0,
+            'failed_transfers': 0,
+            'total_duration_ms': 0.0,
+        }
         
         # IRQ handling
         self.irq_callbacks: Dict[int, Callable] = {}
@@ -269,6 +279,30 @@ class RP2040DMAEmulator:
         logger.debug(f"DMA channel {channel} configured: {config.data_size.name} transfers, "
                     f"TREQ={config.treq_sel.name}")
         return True
+
+    def _get_transfer_unit_size(self, data_size: DMATransferSize) -> int:
+        """Return the transfer unit size in bytes for a given DMA transfer size."""
+        return 1 << data_size.value
+
+    def _resolve_channel(self, identifier: int) -> Optional[int]:
+        """Resolve a transfer or channel identifier to a channel index."""
+        if identifier in self.transfer_map:
+            return self.transfer_map[identifier]
+        if 0 <= identifier < self.num_channels:
+            return identifier
+        return None
+
+    def _normalize_address(self, addr: int) -> Optional[int]:
+        """Normalize RP2040-style absolute addresses to emulator memory offsets."""
+        if addr < 0:
+            return None
+        if addr < self.memory_size:
+            return addr
+        # Map RP2040 SRAM window (0x2000_0000) into local memory
+        sram_base = 0x20000000
+        if sram_base <= addr < sram_base + self.memory_size:
+            return addr - sram_base
+        return None
     
     def configure_camera_dma(self, channel: int, dest_buffer_addr: int, 
                            width: int = 48, height: int = 48, 
@@ -280,8 +314,18 @@ class RP2040DMAEmulator:
         transfer_count = width * height * bytes_per_pixel
         
         # Validate destination buffer
-        if dest_buffer_addr + transfer_count > self.memory_size:
-            logger.error(f"DMA destination buffer overflow: {dest_buffer_addr + transfer_count} > {self.memory_size}")
+        normalized_dest = self._normalize_address(dest_buffer_addr)
+        if normalized_dest is None:
+            logger.error(f"Invalid DMA destination address for camera: 0x{dest_buffer_addr:08X}")
+            return False
+
+        if normalized_dest + transfer_count > self.memory_size:
+            logger.error(
+                "DMA destination buffer overflow: 0x%08X + %d > %d",
+                dest_buffer_addr,
+                transfer_count,
+                self.memory_size,
+            )
             return False
         
         # Configure DVP interface
@@ -309,6 +353,111 @@ class RP2040DMAEmulator:
         
         return success
     
+    def start_transfer(self, channel_id: int, source_data: Union[bytes, bytearray], description: str = "") -> Optional[int]:
+        """Start a DMA transfer and return a transfer identifier."""
+        channel = self._resolve_channel(channel_id) if channel_id >= self.num_channels else channel_id
+        if channel is None or channel >= self.num_channels:
+            logger.error(f"Invalid DMA channel for transfer start: {channel_id}")
+            return None
+
+        config = self.channels[channel]
+        if not config.enable:
+            logger.warning(f"DMA channel {channel} not enabled for transfer start")
+            return None
+
+        unit_size = self._get_transfer_unit_size(config.data_size)
+        target_bytes = config.trans_count * unit_size
+        if target_bytes <= 0:
+            logger.error("Cannot start DMA transfer with zero length")
+            return None
+
+        # Prepare transfer data
+        data = bytes(source_data)
+        if len(data) < target_bytes:
+            logger.warning(
+                "Source data shorter than transfer size: %s < %s. Padding with zeros.",
+                len(data),
+                target_bytes,
+            )
+            data = data + bytes(target_bytes - len(data))
+        elif len(data) > target_bytes:
+            data = data[:target_bytes]
+
+        normalized_addr = self._normalize_address(config.write_addr)
+        if normalized_addr is None:
+            logger.error(f"DMA transfer has invalid destination address: 0x{config.write_addr:08X}")
+            return None
+
+        if normalized_addr + target_bytes > self.memory_size:
+            logger.error(
+                "DMA transfer would overflow memory: 0x%08X + %d > %d",
+                config.write_addr,
+                target_bytes,
+                self.memory_size,
+            )
+            return None
+
+        self.transfer_counter += 1
+        transfer_id = self.transfer_counter
+        self.transfer_map[transfer_id] = channel
+
+        transfer_info = {
+            'start_time': time.time(),
+            'bytes_transferred': 0,
+            'target_bytes': target_bytes,
+            'source_addr': config.read_addr,
+            'dest_addr': config.write_addr,
+            'description': description or f"{config.treq_sel.name} transfer",
+            'transfer_id': transfer_id,
+        }
+        self.active_transfers[channel] = transfer_info
+        self.channel_states[channel] = DMAChannelState.ACTIVE
+
+        # Perform the transfer immediately for the emulator
+        if not self._write_memory(config.write_addr, data):
+            logger.error("DMA transfer failed while writing to memory")
+            del self.active_transfers[channel]
+            self.channel_states[channel] = DMAChannelState.ERROR
+            self.transfer_map.pop(transfer_id, None)
+            return None
+
+        transfer_info['bytes_transferred'] = target_bytes
+
+        # Mark transfer as complete and log
+        self._complete_transfer(channel, transfer_info)
+
+        end_time = time.time()
+        integrity_verified = False
+        if self.transfer_logs:
+            integrity_verified = self.transfer_logs[-1].get('integrity_verified', False)
+        self.completed_transfers[transfer_id] = {
+            'channel': channel,
+            'description': transfer_info['description'],
+            'start_time': transfer_info['start_time'],
+            'end_time': end_time,
+            'duration_ms': (end_time - transfer_info['start_time']) * 1000,
+            'bytes_transferred': target_bytes,
+            'data': data,
+            'integrity_verified': integrity_verified,
+        }
+
+        return transfer_id
+
+    def wait_for_completion(self, transfer_id: int, timeout_ms: int = 100) -> bool:
+        """Wait for a transfer to complete (synchronous in emulator)."""
+        if transfer_id not in self.transfer_map:
+            logger.error(f"Unknown transfer id: {transfer_id}")
+            return False
+        return transfer_id in self.completed_transfers
+
+    def get_transfer_data(self, transfer_id: int) -> Optional[bytes]:
+        """Return the transferred data for a completed transfer."""
+        transfer = self.completed_transfers.get(transfer_id)
+        if not transfer:
+            logger.error(f"No completed transfer found for id: {transfer_id}")
+            return None
+        return transfer.get('data')
+
     def trigger_transfer(self, channel: int) -> bool:
         """Trigger a DMA transfer."""
         if channel >= self.num_channels:
@@ -335,7 +484,7 @@ class RP2040DMAEmulator:
         transfer_info = {
             'start_time': time.time(),
             'bytes_transferred': 0,
-            'target_bytes': config.trans_count,
+            'target_bytes': config.trans_count * self._get_transfer_unit_size(config.data_size),
             'source_addr': config.read_addr,
             'dest_addr': config.write_addr
         }
@@ -374,10 +523,13 @@ class RP2040DMAEmulator:
             return False
         
         # Calculate transfer rate (simulate hardware limitations)
-        bytes_per_transfer = min(32, config.trans_count - transfer_info['bytes_transferred'])
-        
-        if bytes_per_transfer <= 0:
-            return True  # Transfer complete
+        remaining_bytes = transfer_info['target_bytes'] - transfer_info['bytes_transferred']
+        if remaining_bytes <= 0:
+            transfer_info['bytes_transferred'] = transfer_info['target_bytes']
+            self._complete_transfer(channel, transfer_info)
+            return True
+
+        bytes_per_transfer = min(32, remaining_bytes)
         
         # Get data from DVP FIFO
         data = self.dvp.get_fifo_data(bytes_per_transfer)
@@ -407,6 +559,8 @@ class RP2040DMAEmulator:
         """Complete a DMA transfer."""
         config = self.channels[channel]
         duration = time.time() - transfer_info['start_time']
+        transfer_id = transfer_info.get('transfer_id')
+        description = transfer_info.get('description', f"{config.treq_sel.name} transfer")
         
         # Record transfer event
         event = DMATransferEvent(
@@ -420,6 +574,35 @@ class RP2040DMAEmulator:
             duration_us=duration * 1_000_000
         )
         self.transfer_events.append(event)
+
+        integrity_verified = False
+        try:
+            integrity_verified = self.verify_transfer_integrity(channel)
+        except Exception as exc:
+            logger.error(f"Integrity verification failed for channel {channel}: {exc}")
+            integrity_verified = False
+
+        self._stats_accumulator['total_transfers'] += 1
+        if integrity_verified:
+            self._stats_accumulator['successful_transfers'] += 1
+        else:
+            self._stats_accumulator['failed_transfers'] += 1
+        self._stats_accumulator['total_duration_ms'] += duration * 1000
+
+        log_transfer_id = transfer_id if transfer_id is not None else len(self.transfer_logs) + 1
+        if transfer_id is None and log_transfer_id not in self.transfer_map:
+            self.transfer_map[log_transfer_id] = channel
+
+        log_entry = {
+            'transfer_id': log_transfer_id,
+            'timestamp': event.timestamp,
+            'channel_id': channel,
+            'description': description,
+            'duration_ms': duration * 1000,
+            'bytes_transferred': transfer_info.get('bytes_transferred', 0),
+            'integrity_verified': integrity_verified,
+        }
+        self.transfer_logs.append(log_entry)
         
         # Update channel state
         self.channel_states[channel] = DMAChannelState.IDLE
@@ -440,20 +623,30 @@ class RP2040DMAEmulator:
     
     def _write_memory(self, addr: int, data: bytes):
         """Write data to emulated memory."""
-        if addr + len(data) > self.memory_size:
-            logger.error(f"Memory write overflow: {addr + len(data)} > {self.memory_size}")
+        normalized = self._normalize_address(addr)
+        if normalized is None:
+            logger.error(f"Invalid memory write address: 0x{addr:08X}")
+            return False
+
+        if normalized + len(data) > self.memory_size:
+            logger.error(f"Memory write overflow: {normalized + len(data)} > {self.memory_size}")
             return False
         
-        self.memory[addr:addr + len(data)] = data
+        self.memory[normalized:normalized + len(data)] = data
         return True
     
     def read_memory(self, addr: int, length: int) -> bytes:
         """Read data from emulated memory."""
-        if addr + length > self.memory_size:
-            logger.error(f"Memory read overflow: {addr + length} > {self.memory_size}")
+        normalized = self._normalize_address(addr)
+        if normalized is None:
+            logger.error(f"Invalid memory read address: 0x{addr:08X}")
+            return b''
+
+        if normalized + length > self.memory_size:
+            logger.error(f"Memory read overflow: {normalized + length} > {self.memory_size}")
             return b''
         
-        return bytes(self.memory[addr:addr + length])
+        return bytes(self.memory[normalized:normalized + length])
     
     def _trigger_irq(self, channel: int):
         """Trigger DMA IRQ."""
@@ -485,35 +678,65 @@ class RP2040DMAEmulator:
             'throughput_mbps': throughput_mbps,
             'active_channels': len(self.active_transfers)
         }
+
+    def get_statistics(self) -> Dict:
+        """Return high-level DMA statistics for camera integration."""
+        totals = dict(self._stats_accumulator)
+        average_duration = 0.0
+        if totals['total_transfers']:
+            average_duration = totals['total_duration_ms'] / totals['total_transfers']
+
+        base_stats = self.get_transfer_stats()
+        last_transfer = self.transfer_logs[-1] if self.transfer_logs else None
+
+        return {
+            'dma_enabled': True,
+            'total_transfers': totals['total_transfers'],
+            'successful_transfers': totals['successful_transfers'],
+            'failed_transfers': totals['failed_transfers'],
+            'average_transfer_time_ms': average_duration,
+            'throughput_mbps': base_stats['throughput_mbps'],
+            'active_channels': base_stats['active_channels'],
+            'last_transfer': last_transfer,
+        }
+
+    def get_transfer_logs(self) -> List[Dict]:
+        """Return a copy of detailed transfer logs."""
+        return list(self.transfer_logs)
     
-    def verify_transfer_integrity(self, channel: int, expected_pattern: Optional[bytes] = None) -> bool:
+    def verify_transfer_integrity(self, identifier: int, expected_pattern: Optional[bytes] = None) -> bool:
         """Verify the integrity of transferred data."""
-        if channel >= self.num_channels:
+        channel = self._resolve_channel(identifier)
+        if channel is None:
+            logger.error(f"Cannot verify integrity for unknown identifier: {identifier}")
             return False
         
         config = self.channels[channel]
+        transfer_length = config.trans_count * self._get_transfer_unit_size(config.data_size)
+        if transfer_length <= 0:
+            logger.error("Transfer length is zero; integrity check not possible")
+            return False
         
-        # Read back the transferred data
-        transferred_data = self.read_memory(config.write_addr, config.trans_count)
+        transferred_data = self.read_memory(config.write_addr, transfer_length)
         
         if expected_pattern:
-            # Compare with expected pattern
             if len(transferred_data) != len(expected_pattern):
                 logger.error(f"Data length mismatch: {len(transferred_data)} != {len(expected_pattern)}")
                 return False
-            
             mismatches = sum(1 for a, b in zip(transferred_data, expected_pattern) if a != b)
             if mismatches > 0:
                 logger.error(f"Data integrity check failed: {mismatches} mismatches")
                 return False
         
-        # Basic sanity checks
-        if len(transferred_data) != config.trans_count:
-            logger.error(f"Transfer count mismatch: {len(transferred_data)} != {config.trans_count}")
+        if len(transferred_data) != transfer_length:
+            logger.error(
+                "Transfer count mismatch: %s bytes read != %s expected",
+                len(transferred_data),
+                transfer_length,
+            )
             return False
         
-        # Check for all-zero data (likely indicates no transfer)
-        if all(b == 0 for b in transferred_data):
+        if not any(b != 0 for b in transferred_data):
             logger.warning("Transferred data is all zeros - may indicate transfer issue")
             return False
         
@@ -545,3 +768,45 @@ class RP2040DMAEmulator:
             status['progress_percent'] = (transfer_info['bytes_transferred'] / transfer_info['target_bytes']) * 100
         
         return status
+
+    def get_channel_state(self, channel: int) -> Optional[Dict]:
+        """Return simplified channel state information for tests."""
+        if not (0 <= channel < self.num_channels):
+            logger.error(f"Invalid DMA channel query: {channel}")
+            return None
+
+        config = self.channels[channel]
+        state = self.channel_states[channel]
+
+        if state == DMAChannelState.ACTIVE:
+            status_value = 'active'
+        elif state == DMAChannelState.ERROR:
+            status_value = 'error'
+        elif config.enable:
+            status_value = 'configured'
+        else:
+            status_value = 'disabled'
+
+        info: Dict[str, Union[int, str, bool]] = {
+            'channel': channel,
+            'status': status_value,
+            'state': state.name,
+            'enabled': config.enable,
+            'read_addr': config.read_addr,
+            'write_addr': config.write_addr,
+            'transfer_count': config.trans_count,
+            'data_size': config.data_size.name,
+            'trigger_source': config.treq_sel.name,
+            'chain_to': config.chain_to,
+        }
+
+        completed_transfer = None
+        for transfer in reversed(list(self.completed_transfers.values())):
+            if transfer['channel'] == channel:
+                completed_transfer = transfer
+                break
+        if completed_transfer:
+            info['last_transfer_bytes'] = completed_transfer.get('bytes_transferred', 0)
+            info['integrity_verified'] = completed_transfer.get('integrity_verified', False)
+
+        return info

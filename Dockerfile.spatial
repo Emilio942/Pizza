@@ -1,0 +1,70 @@
+FROM pytorch/pytorch:2.6.0-cuda12.4-cudnn9-devel
+
+# Set environment variables
+ENV DEBIAN_FRONTEND=noninteractive
+ENV PYTHONUNBUFFERED=1
+ENV PYTHONPATH=/app
+ENV CUDA_VISIBLE_DEVICES=0
+
+# Update system and install essential packages
+RUN apt-get update && apt-get install -y \
+    git \
+    wget \
+    curl \
+    build-essential \
+    ffmpeg \
+    libsm6 \
+    libxext6 \
+    libfontconfig1 \
+    libxrender1 \
+    libgl1-mesa-glx \
+    && rm -rf /var/lib/apt/lists/*
+
+# Set working directory
+WORKDIR /app
+
+# Copy requirements files
+COPY requirements.txt .
+COPY spatial_requirements.txt .
+
+# Install Python dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r spatial_requirements.txt
+
+# Install additional Spatial-MLLM dependencies
+RUN pip install --no-cache-dir \
+    flash-attn==2.7.4.post1 \
+    qwen_vl_utils==0.0.11 \
+    decord==0.6.0 \
+    ray==2.46.0 \
+    Levenshtein==0.27.1 \
+    accelerate==1.5.2 \
+    --extra-index-url https://download.pytorch.org/whl/cu124
+
+# Copy application code
+COPY . .
+
+# Create necessary directories
+RUN mkdir -p /app/models/spatial_mllm \
+    && mkdir -p /app/data/spatial_processed \
+    && mkdir -p /app/output/spatial_tests \
+    && mkdir -p /app/logs
+
+# Set permissions
+RUN chmod +x scripts/ci/*.sh
+RUN chmod +x scripts/spatial_*.py
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
+    CMD python -c "import torch; print('CUDA available:', torch.cuda.is_available()); exit(0 if torch.cuda.is_available() else 1)"
+
+# Default command
+CMD ["python", "src/api/pizza_api.py"]
+
+# Labels for metadata
+LABEL version="1.0.0"
+LABEL description="Pizza Detection System with Spatial-MLLM Integration"
+LABEL maintainer="pizza-detection-team"
+LABEL spatial-mllm-support="true"
+LABEL cuda-version="12.4"
+LABEL pytorch-version="2.6.0"

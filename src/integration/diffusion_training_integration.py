@@ -23,7 +23,7 @@ import argparse
 import numpy as np
 import matplotlib.pyplot as plt
 from pathlib import Path
-from typing import Dict, List, Tuple, Union, Optional, Any
+from typing import Dict, List, Tuple, Union, Optional, Any, cast, Sized
 from datetime import datetime
 
 import torch
@@ -43,7 +43,9 @@ from src.augmentation.advanced_pizza_diffusion_control import AdvancedPizzaDiffu
 
 # Try to import project modules
 try:
-    from src.pizza_detector import PizzaModel, train_model, evaluate_model
+    from src.models.architectures import MicroPizzaNet as PizzaModel
+    from src.training.trainer import train_microcontroller_model as train_model
+    from src.pizza_utils import evaluate_model
     from src.utils.utils import setup_logging, save_config
     PROJECT_MODULES_AVAILABLE = True
 except ImportError:
@@ -62,7 +64,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # Default training parameters
-DEFAULT_PARAMS = {
+DEFAULT_PARAMS: Dict[str, Any] = {
     "batch_size": 32,
     "epochs": 20,
     "learning_rate": 0.001,
@@ -75,6 +77,19 @@ DEFAULT_PARAMS = {
     "scheduler": "cosine",   # Learning rate scheduler
     "experiment_name": "diffusion_training_" + datetime.now().strftime("%Y%m%d_%H%M%S")
 }
+
+class TrainingConfig:
+    """Configuration wrapper for training parameters."""
+    def __init__(self, output_dir, epochs, lr, weight_decay, device, img_size=64, patience=10):
+        self.MODEL_DIR = str(output_dir)
+        self.IMG_SIZE = img_size
+        self.EPOCHS = epochs
+        self.LEARNING_RATE = lr
+        self.WEIGHT_DECAY = weight_decay
+        self.DEVICE = device
+        self.EARLY_STOPPING_PATIENCE = patience
+        self.RP2040_RAM_SIZE_KB = 264
+        self.RP2040_FLASH_SIZE_KB = 2048
 
 class PizzaDataset(Dataset):
     """
@@ -102,9 +117,9 @@ class PizzaDataset(Dataset):
         self.is_synthetic = is_synthetic
         
         # Scan for images
-        self.images = []
-        self.labels = []
-        self.metadata = []
+        self.images: List[Path] = []
+        self.labels: List[int] = []
+        self.metadata: List[Dict[str, Any]] = []
         
         # Use provided class map or load from PIZZA_STAGES
         if class_map is not None:
@@ -169,16 +184,15 @@ class PizzaDataset(Dataset):
             # Apply transforms
             if self.transform:
                 img = self.transform(img)
+            else:
+                img = TF.to_tensor(img)
             
             return img, label, metadata
             
         except Exception as e:
             logger.error(f"Error loading image {img_path}: {e}")
             # Return a blank image as fallback
-            if self.transform:
-                blank = torch.zeros((3, 224, 224))
-            else:
-                blank = Image.new("RGB", (224, 224), (0, 0, 0))
+            blank = torch.zeros((3, 224, 224))
             return blank, label, metadata
 
 
@@ -234,8 +248,9 @@ class PizzaDiffusionTrainer:
         ])
         
         # Set up storage for results and statistics
-        self.results = {}
-        self.history = []
+        self.results: Dict[str, Any] = {}
+        self.history: List[Dict[str, Any]] = []
+        self.mixed_dataset: Optional[Dataset] = None
         
         logger.info("Initialized Pizza Diffusion Trainer")
         logger.info(f"  Real data: {self.real_data_dir}")
@@ -278,7 +293,7 @@ class PizzaDiffusionTrainer:
             logger.error(f"Error loading synthetic dataset: {e}")
             self.synthetic_dataset = None
     
-    def prepare_mixed_dataset(self, synthetic_ratio: float = None):
+    def prepare_mixed_dataset(self, synthetic_ratio: Optional[float] = None):
         """
         Prepare a mixed dataset with both real and synthetic data.
         
@@ -335,7 +350,7 @@ class PizzaDiffusionTrainer:
             logger.info(f"Using only real dataset with {real_size} images")
         
         # Create train/val split
-        dataset_size = len(self.mixed_dataset)
+        dataset_size = len(cast(Sized, self.mixed_dataset))
         val_size = int(dataset_size * 0.2)  # 20% for validation
         train_size = dataset_size - val_size
         
@@ -350,7 +365,7 @@ class PizzaDiffusionTrainer:
         # Create dataloaders
         self.train_loader = DataLoader(
             self.train_dataset,
-            batch_size=self.params["batch_size"],
+            batch_size=int(self.params["batch_size"]),
             shuffle=True,
             num_workers=4,
             pin_memory=True if self.device.type == "cuda" else False
@@ -358,7 +373,7 @@ class PizzaDiffusionTrainer:
         
         self.val_loader = DataLoader(
             self.val_dataset,
-            batch_size=self.params["batch_size"],
+            batch_size=int(self.params["batch_size"]),
             shuffle=False,
             num_workers=4,
             pin_memory=True if self.device.type == "cuda" else False
@@ -408,7 +423,7 @@ class PizzaDiffusionTrainer:
         logger.info(f"Completed training with real data only. Best validation accuracy: {result['best_val_accuracy']:.4f}")
         return result
     
-    def train_with_mixed_data(self, synthetic_ratio: float = None):
+    def train_with_mixed_data(self, synthetic_ratio: Optional[float] = None):
         """
         Train a model using mixed real and synthetic data.
         
@@ -439,15 +454,23 @@ class PizzaDiffusionTrainer:
         if PROJECT_MODULES_AVAILABLE:
             # Use project's existing model and training code
             model = PizzaModel(num_classes=len(self.class_map))
+            
+            # Create config object expected by train_microcontroller_model
+            train_config = TrainingConfig(
+                output_dir=exp_dir,
+                epochs=self.params["epochs"],
+                lr=self.params["learning_rate"],
+                weight_decay=self.params["weight_decay"],
+                device=self.device,
+                patience=self.params.get("early_stopping", 5)
+            )
+            
             result = train_model(
                 model=model,
                 train_loader=self.train_loader,
                 val_loader=self.val_loader,
-                num_epochs=self.params["epochs"],
-                learning_rate=self.params["learning_rate"],
-                weight_decay=self.params["weight_decay"],
-                device=self.device,
-                output_dir=exp_dir
+                config=train_config,
+                class_names=list(self.class_map.keys())
             )
         else:
             # Use a simple training implementation
@@ -476,25 +499,28 @@ class PizzaDiffusionTrainer:
         # Define loss function and optimizer
         criterion = nn.CrossEntropyLoss()
         
-        if self.params["optimizer"].lower() == "adam":
+        optimizer: optim.Optimizer
+        scheduler: Any
+        
+        if str(self.params["optimizer"]).lower() == "adam":
             optimizer = optim.Adam(
                 model.parameters(), 
-                lr=self.params["learning_rate"],
-                weight_decay=self.params["weight_decay"]
+                lr=float(self.params["learning_rate"]),
+                weight_decay=float(self.params["weight_decay"])
             )
         else:
             optimizer = optim.SGD(
                 model.parameters(),
-                lr=self.params["learning_rate"],
+                lr=float(self.params["learning_rate"]),
                 momentum=0.9,
-                weight_decay=self.params["weight_decay"]
+                weight_decay=float(self.params["weight_decay"])
             )
         
         # Learning rate scheduler
-        if self.params["scheduler"].lower() == "cosine":
+        if str(self.params["scheduler"]).lower() == "cosine":
             scheduler = optim.lr_scheduler.CosineAnnealingLR(
                 optimizer, 
-                T_max=self.params["epochs"]
+                T_max=int(self.params["epochs"])
             )
         else:
             scheduler = optim.lr_scheduler.ReduceLROnPlateau(
@@ -714,7 +740,7 @@ class PizzaDiffusionTrainer:
         plt.savefig(output_dir / "learning_curves.png", dpi=300)
         plt.close()
     
-    def find_optimal_synthetic_ratio(self, ratios: List[float] = None):
+    def find_optimal_synthetic_ratio(self, ratios: Optional[List[float]] = None):
         """
         Find the optimal synthetic/real data ratio through grid search.
         

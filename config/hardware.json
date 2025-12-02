@@ -1,0 +1,34 @@
+{
+    "hardware": {
+        "flash_size_kb": 2048,
+        "ram_size_kb": 264,
+        "clock_speed_mhz": 133
+    },
+    "camera": {
+        "width": 320,
+        "height": 240,
+        "fps": 7
+    },
+    "battery": {
+        "capacity_mah": 1500,
+        "active_current_ma": 180,
+        "sleep_current_ma": 0.5
+    },
+    "paths": {
+        "data_dir": "augmented_pizza",
+        "model_dir": "models_optimized",
+        "temp_dir": "temp_preprocessing"
+    },
+    "model": {
+        "img_size": 48,
+        "batch_size": 16,
+        "epochs": 50,
+        "learning_rate": 0.002,
+        "early_stopping_patience": 10
+    },
+    "constraints": {
+        "max_model_size_kb": 180,
+        "max_runtime_ram_kb": 100,
+        "quantization_bits": 8
+    }
+}

@@ -1,0 +1,10 @@
+{
+  "spatial_features_original": {
+    "depth_variance": 0.027684345841407776,
+    "surface_roughness": 0.27002406120300293,
+    "edge_density": 0.0007270084461197257,
+    "spatial_complexity": 0.04583385959267616,
+    "dominant_depth_regions": [
+      [
+        0.25252306912538575,
+        

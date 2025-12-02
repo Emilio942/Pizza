@@ -1,0 +1,56 @@
+{
+  "scanned_root": "/home/emilio/Documents/ai/pizza/hardware",
+  "generated_at": "2025-08-25T10:46:18.031831+00:00",
+  "files": [
+    {
+      "type": "kicad_pcb",
+      "path": "/home/emilio/Documents/ai/pizza/hardware/eda/PizzaBoard-RP2040.kicad_pcb",
+      "size": 14876,
+      "mtime": 1748603428.1668515,
+      "mtime_iso": "2025-05-30T11:10:28.166852+00:00"
+    },
+    {
+      "type": "kicad_pcb",
+      "path": "/home/emilio/Documents/ai/pizza/hardware/manufacturing/output/corrected_jlcpcb/PizzaBoard-RP2040.sanitized.kicad_pcb",
+      "size": 14232,
+      "mtime": 1756117255.5354974,
+      "mtime_iso": "2025-08-25T10:20:55.535497+00:00"
+    },
+    {
+      "type": "kicad_pcb",
+      "path": "/home/emilio/Documents/ai/pizza/hardware/manufacturing/output/jlcpcb/converted_design.kicad_pcb",
+      "size": 7374,
+      "mtime": 1746817430.6642642,
+      "mtime_iso": "2025-05-09T19:03:50.664264+00:00"
+    },
+    {
+      "type": "kicad_pcb",
+      "path": "/home/emilio/Documents/ai/pizza/hardware/manufacturing/output/jlcpcb/temp_design.kicad_pcb",
+      "size": 7374,
+      "mtime": 1746817430.6642642,
+      "mtime_iso": "2025-05-09T19:03:50.664264+00:00"
+    },
+    {
+      "type": "kicad_pro",
+      "path": "/home/emilio/Documents/ai/pizza/hardware/eda/PizzaBoard-RP2040.kicad_pro",
+      "size": 11316,
+      "mtime": 1748603428.1668515,
+      "mtime_iso": "2025-05-30T11:10:28.166852+00:00"
+    },
+    {
+      "type": "kicad_sch",
+      "path": "/home/emilio/Documents/ai/pizza/hardware/eda/PizzaBoard-RP2040.kicad_sch",
+      "size": 4875,
+      "mtime": 1748603428.1668515,
+      "mtime_iso": "2025-05-30T11:10:28.166852+00:00"
+    }
+  ],
+  "stats": {
+    "total_files": 6,
+    "by_type": {
+      "kicad_pro": 1,
+      "kicad_sch": 1,
+      "kicad_pcb": 4
+    }
+  }
+}

@@ -7,7 +7,7 @@ import time
 import random
 import logging
 from enum import Enum
-from typing import Dict, List, Optional, Callable, Any
+from typing import Dict, List, Optional, Callable, Any, Tuple
 from dataclasses import dataclass
 from collections import deque
 import threading
@@ -94,12 +94,12 @@ class GPIOEmulator:
         
         # State tracking
         self.last_change_time = time.time()
-        self.state_history = deque(maxlen=100)
+        self.state_history: deque[Tuple[float, bool]] = deque(maxlen=100)
         self.interrupt_count = 0
         
         # Debouncing
         self.debounce_time_ms = 0
-        self.last_interrupt_time = 0
+        self.last_interrupt_time = 0.0
         
         # Simulation parameters
         self.noise_level = 0.0  # 0.0 to 1.0

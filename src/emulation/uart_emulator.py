@@ -28,7 +28,7 @@ class UARTEmulator:
         self.baudrate = 115200  # Standard-Baudrate
         self.log_to_file = log_to_file
         self.log_file = None
-        self.buffer = []
+        self.buffer: List[str] = []
         
         if log_to_file:
             # Erstelle Log-Verzeichnis falls nicht vorhanden

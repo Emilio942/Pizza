@@ -7,12 +7,12 @@ import random
 import logging
 import numpy as np
 from pathlib import Path
-from typing import Dict, Optional, Tuple, Union
+from typing import Dict, Optional, Tuple, Union, Any, List
 from enum import Enum
 from datetime import datetime
 
 # Import from utils
-from ..constants import (
+from src.constants import (
     RP2040_FLASH_SIZE_KB,
     RP2040_RAM_SIZE_KB,
     RP2040_CLOCK_SPEED_MHZ,
@@ -58,7 +58,7 @@ class CameraEmulator:
         self.frames_captured = 0
         self.startup_time = 0.1  # 100ms Startup-Zeit
         self.frame_time = 1.0 / 7  # ~7 FPS
-        self.last_capture = 0
+        self.last_capture = 0.0
         
         # Pizza detection specific settings
         self.pizza_detection_width = 48
@@ -68,8 +68,8 @@ class CameraEmulator:
         self.ov2640_emulator = OV2640TimingEmulator(log_dir)
         
         # Erstelle einen Framebuffer mit dem richtigen Format
-        pixel_format = PixelFormat.RGB888 if self.rgb else PixelFormat.GRAYSCALE
-        self.frame_buffer = FrameBuffer(self.width, self.height, pixel_format)
+        initial_pixel_format = PixelFormat.RGB888 if self.rgb else PixelFormat.GRAYSCALE
+        self._update_frame_buffer(self.width, self.height, initial_pixel_format)
         
         logger.info(
             f"Kamera-Emulator initialisiert: {self.width}x{self.height}, "
@@ -77,6 +77,15 @@ class CameraEmulator:
             f"Framebuffer-Größe: {self.frame_buffer.total_size_bytes/1024:.1f} KB"
         )
     
+    def _update_frame_buffer(self, width: int, height: int, pixel_format: PixelFormat) -> None:
+        """Rebuilds the framebuffer with the given geometry and format."""
+        self.width = width
+        self.height = height
+        self.pixel_format = pixel_format
+        # RGB-Modus ist für alle Farbpixelformate aktiv, nur Graustufen deaktivieren die RGB-Pfade
+        self.rgb = pixel_format != PixelFormat.GRAYSCALE
+        self.frame_buffer = FrameBuffer(width, height, pixel_format)
+
     def initialize(self) -> bool:
         """Emuliert vollständige OV2640-Initialisierung mit Timing."""
         if not self.initialized:
@@ -104,30 +113,31 @@ class CameraEmulator:
         logger.info("Konfiguriere Kamera für Pizza-Erkennung (48x48 RGB565)...")
         
         # Set format to RGB565 for pizza detection
-        self.width = self.pizza_detection_width
-        self.height = self.pizza_detection_height
-        self.rgb = True
-        
-        # Update framebuffer for new resolution
-        pixel_format = PixelFormat.RGB565  # Use RGB565 for efficiency
-        self.frame_buffer = FrameBuffer(self.width, self.height, pixel_format)
+        self.set_format(self.pizza_detection_width, self.pizza_detection_height, PixelFormat.RGB565)
         
         # Log the configuration change
-        self.ov2640_emulator.log_timing_event("CONFIG_PIZZA", 
-            f"Camera configured for pizza detection: {self.width}x{self.height} RGB565")
+        self.ov2640_emulator.log_timing_event(
+            "CONFIG_PIZZA",
+            f"Camera configured for pizza detection: {self.width}x{self.height} {self.pixel_format.name}"
+        )
     
     def capture_frame(self) -> np.ndarray:
         """Emuliert Bildaufnahme mit OV2640 Timing."""
         if not self.initialized:
             raise HardwareError("Kamera nicht initialisiert")
         
-        # Simuliere Framerate-Begrenzung
+        # Simuliere Framerate-Begrenzung (DMA kann schneller liefern)
+        effective_frame_time = self.frame_time
+        if hasattr(self, 'dma_emulator') and self.dma_emulator:
+            # Mit DMA erreichen wir nahezu sofortige Übertragung
+            effective_frame_time = 0.0
+
         elapsed = time.time() - self.last_capture
-        if (elapsed < self.frame_time):
-            time.sleep(self.frame_time - elapsed)
+        if elapsed < effective_frame_time:
+            time.sleep(effective_frame_time - elapsed)
         
         # Emulate the actual frame capture with timing
-        format_name = "RGB565" if self.rgb else "GRAYSCALE"
+        format_name = self.pixel_format.name
         success = self.ov2640_emulator.emulate_frame_capture(
             self.width, self.height, format_name
         )
@@ -141,8 +151,9 @@ class CameraEmulator:
             frame = self._generate_pizza_test_image()
         else:
             # Standard random image
-            channels = 3 if self.rgb else 1
-            frame = np.random.randint(0, 256, (self.height, self.width, channels), dtype=np.uint8)
+            channels = 1 if self.pixel_format == PixelFormat.GRAYSCALE else 3
+            frame_shape = (self.height, self.width, channels) if channels > 1 else (self.height, self.width)
+            frame = np.random.randint(0, 256, frame_shape, dtype=np.uint8)
         
         # Use DMA transfer if DMA emulator is available, otherwise use CPU-based transfer
         if hasattr(self, 'dma_emulator') and self.dma_emulator:
@@ -195,17 +206,154 @@ class CameraEmulator:
         """Liefert Statistiken über den Framebuffer."""
         return self.frame_buffer.get_statistics()
 
-    def set_format(self, width: int, height: int, rgb: bool = True) -> None:
-        """Ändert das Kameraformat."""
-        self.width = width
-        self.height = height
-        self.rgb = rgb
-        
-        # Erstelle neuen Framebuffer mit neuem Format
-        pixel_format = PixelFormat.RGB565 if rgb else PixelFormat.GRAYSCALE
-        self.frame_buffer = FrameBuffer(width, height, pixel_format)
-        
-        logger.info(f"Kameraformat geändert auf {width}x{height}, {'RGB565' if rgb else 'GRAYSCALE'}")
+    def _capture_frame_with_dma(self, frame: np.ndarray) -> bool:
+        """Führt eine DMA-basierte Frame-Erfassung durch."""
+        if not hasattr(self, 'dma_emulator') or not self.dma_emulator:
+            logger.debug("DMA emulator not available; falling back to CPU capture")
+            return False
+
+        try:
+            channel_id = 0
+            bytes_per_pixel = self.frame_buffer.bytes_per_pixel
+            buffer_size = self.width * self.height * bytes_per_pixel
+
+            if self.frame_buffer.pixel_format == PixelFormat.RGB565:
+                pixel_format = "RGB565"
+            elif self.frame_buffer.pixel_format == PixelFormat.RGB888:
+                pixel_format = "RGB888"
+            else:
+                pixel_format = "GRAYSCALE"
+
+            test_pattern = "pizza" if (self.width == 48 and self.height == 48) else "random"
+            dvp_data = self.dvp_interface.generate_camera_data(
+                width=self.width,
+                height=self.height,
+                pixel_format=pixel_format,
+                test_pattern=test_pattern
+            )
+
+            from .rp2040_dma_emulator import DMAChannelConfig, DMATransferSize, DMARequest
+
+            unit_size_bytes = 4  # Using 32-bit transfers
+            transfer_words = max(1, (buffer_size + unit_size_bytes - 1) // unit_size_bytes)
+
+            config = DMAChannelConfig(
+                read_addr=0x50000000,
+                write_addr=0x20000000,
+                trans_count=transfer_words,
+                data_size=DMATransferSize.SIZE_32,
+                treq_sel=DMARequest.TREQ_DVP_FIFO,
+                chain_to=channel_id,
+                incr_read=False,
+                incr_write=True,
+                enable=True
+            )
+
+            if not self.dma_emulator.configure_channel(channel_id, config):
+                logger.error("Failed to configure DMA channel for camera capture")
+                return False
+
+            transfer_id = self.dma_emulator.start_transfer(
+                channel_id=channel_id,
+                source_data=dvp_data,
+                description=f"Camera frame capture {self.width}x{self.height}"
+            )
+
+            if transfer_id is None:
+                logger.error("Failed to start DMA transfer for camera capture")
+                return False
+
+            if not self.dma_emulator.wait_for_completion(transfer_id, timeout_ms=100):
+                logger.error("DMA transfer timeout during camera capture")
+                return False
+
+            if not self.dma_emulator.verify_transfer_integrity(transfer_id):
+                logger.error("DMA transfer integrity check failed for camera capture")
+                return False
+
+            transfer_data = self.dma_emulator.get_transfer_data(transfer_id)
+            if not transfer_data:
+                logger.error("No transfer data available after DMA capture")
+                return False
+
+            self.frame_buffer.begin_frame_write()
+            self.frame_buffer.write_pixel_data(transfer_data)
+            self.frame_buffer.end_frame_write()
+            return True
+
+        except Exception as exc:
+            logger.error(f"DMA capture failed: {exc}")
+            return False
+
+    def _capture_frame_cpu_based(self, frame: np.ndarray) -> None:
+        """CPU-basierte Fallback-Erfassung für Kameraframes."""
+        self.frame_buffer.begin_frame_write()
+        self.frame_buffer.write_pixel_data(frame)
+        self.frame_buffer.end_frame_write()
+
+    def set_format(
+        self,
+        width: int,
+        height: int,
+        pixel_format: Optional[PixelFormat] = None,
+        *,
+        rgb: Optional[bool] = None,
+    ) -> None:
+        """Ändert Auflösung und Pixelformat der Kamera.
+
+        Unterstützt neben der direkten Angabe eines ``PixelFormat`` auch das
+        über Legacy-Aufrufe verwendete ``rgb``-Flag. Wird kein Format angegeben,
+        bleibt RGB888 der Standard. Ein ``rgb=False`` schaltet automatisch auf
+        Graustufen um.
+        """
+
+        chosen_format: PixelFormat
+
+        # Erlaubt legacy Aufruf: set_format(width, height, rgb=True/False)
+        if isinstance(pixel_format, bool) and rgb is None:
+            rgb = pixel_format
+            pixel_format = None
+
+        if pixel_format is None:
+            if rgb is None:
+                chosen_format = PixelFormat.RGB888
+            else:
+                chosen_format = PixelFormat.RGB888 if rgb else PixelFormat.GRAYSCALE
+        elif isinstance(pixel_format, PixelFormat):
+            if rgb is not None:
+                chosen_format = PixelFormat.RGB888 if rgb else PixelFormat.GRAYSCALE
+            else:
+                chosen_format = pixel_format
+        elif isinstance(pixel_format, str):
+            try:
+                chosen_format = PixelFormat[pixel_format.upper()]
+            except KeyError as exc:
+                raise ValueError(f"Unbekanntes Pixelformat: {pixel_format}") from exc
+        else:
+            raise TypeError(
+                "pixel_format muss PixelFormat, bool, str oder None sein"
+            )
+
+        self._update_frame_buffer(width, height, chosen_format)
+        logger.info(
+            "Kameraformat geändert auf %dx%d (%s)",
+            width,
+            height,
+            chosen_format.name,
+        )
+        self.ov2640_emulator.log_timing_event(
+            "CAMERA_FORMAT",
+            f"Resolution set to {width}x{height}, format {chosen_format.name}"
+        )
+
+    def set_pixel_format(self, pixel_format: PixelFormat) -> None:
+        """Ändert nur das Pixelformat des aktuellen Kamera-Framebuffers."""
+        self._update_frame_buffer(self.width, self.height, pixel_format)
+        logger.info("Kamera-Pixelformat geändert auf %s", pixel_format.name)
+        self.ov2640_emulator.log_timing_event(
+            "CAMERA_PIXEL_FORMAT",
+            f"Pixel format switched to {pixel_format.name}"
+        )
     
     def enable_dma_mode(self, dma_emulator, dvp_interface):
         """Enables DMA mode for camera data transfers."""
@@ -223,7 +371,13 @@ class CameraEmulator:
 class RP2040Emulator:
     """Emuliert RP2040 Mikrocontroller."""
     
-    def __init__(self, battery_capacity_mah: float = 1500.0, adaptive_mode: AdaptiveMode = AdaptiveMode.BALANCED):
+    def __init__(
+        self,
+        battery_capacity_mah: float = 1500.0,
+        adaptive_mode: AdaptiveMode = AdaptiveMode.BALANCED,
+        sd_root_dir: Optional[Union[str, Path]] = None,
+        log_dir: Optional[Union[str, Path]] = None,
+    ):
         self.flash_size_bytes = RP2040_FLASH_SIZE_KB * 1024
         self.ram_size_bytes = RP2040_RAM_SIZE_KB * 1024
         self.cpu_speed_mhz = RP2040_CLOCK_SPEED_MHZ
@@ -231,7 +385,7 @@ class RP2040Emulator:
         
         self.ram_used = 0
         self.flash_used = 0
-        self.system_ram_overhead = 40 * 1024  # 40KB System-Overhead
+        self.system_ram_overhead = 8 * 1024  # 8KB System-Overhead (RTOS + buffers)
         
         # Erstelle die Kamera mit Framebuffer
         self.camera = CameraEmulator()
@@ -253,23 +407,32 @@ class RP2040Emulator:
         logger.info(f"DMA channels available: {len(self.dma_emulator.channels)}")
         
         self.start_time = time.time()
-        self.firmware = None
+        self.firmware: Optional[Dict[str, Any]] = None
         self.firmware_loaded = False
-        self.inference_time = 0
+        self.inference_time = 0.0
         
         # Energiemanagement-Zustände
         self.sleep_mode = False
         self.sleep_ram_reduction = 0.6  # 60% RAM-Reduktion im Sleep-Mode
         self.original_ram_used = 0
-        self.sleep_start_time = 0
-        self.total_sleep_time = 0
+        self.sleep_start_time = 0.0
+        self.total_sleep_time = 0.0
+        self.sleep_transition_times: List[float] = []
+        self.wake_transition_times: List[float] = []
         
+        # Initialisiere Logging-Verzeichnisse
+        self.sd_root_path = Path(sd_root_dir) if sd_root_dir is not None else Path("output/sd_card")
+        self.sd_root_path.mkdir(parents=True, exist_ok=True)
+
+        self.log_dir_path = Path(log_dir) if log_dir is not None else Path("output/emulator_logs")
+        self.log_dir_path.mkdir(parents=True, exist_ok=True)
+
         # Initialisiere UART für Logging
-        self.uart = UARTEmulator(log_to_file=True, log_dir="output/emulator_logs")
+        self.uart = UARTEmulator(log_to_file=True, log_dir=str(self.log_dir_path))
         self.uart.initialize(baudrate=115200)
         
         # Initialisiere SD-Karte
-        self.sd_card = SDCardEmulator(root_dir="output/sd_card", capacity_mb=1024)
+        self.sd_card = SDCardEmulator(root_dir=str(self.sd_root_path), capacity_mb=1024)
         self.sd_card.initialize()
         self.sd_card.mount()
         logger.info(f"SD-Karte initialisiert und gemountet: {self.sd_card.get_status()}")
@@ -306,17 +469,19 @@ class RP2040Emulator:
         
         # Initialisiere Logging-System
         self.logging_system = LoggingSystem(
-            uart=self.uart, 
+            uart=self.uart,
             log_to_file=True,
             log_to_sd=True,
             sd_card=self.sd_card,
-            log_dir="output/emulator_logs"
+            log_dir=str(self.log_dir_path)
         )
         self.logging_system.log("RP2040 Emulator initialized", LogLevel.INFO, LogType.SYSTEM)
         
         # Aktiviere periodisches Temperaturlogging
         self.last_temp_log_time = time.time()
         self.temp_log_interval = 60.0  # Log temperature every 60 seconds
+        
+        self.sd_performance_metrics_handle: Optional[int] = None
         
         # Initialisiere Performance-Metrics-Datei auf SD-Karte
         if self.sd_card and self.sd_card.mounted:
@@ -409,7 +574,7 @@ class RP2040Emulator:
         self.current_frequency_mhz = self.cpu_speed_mhz  # Track current frequency
         self.target_frequency_mhz = self.cpu_speed_mhz   # Target frequency
         self.last_clock_adjustment_time = time.time()
-        self.last_adjustment_direction = None  # 'up', 'down', or None
+        self.last_adjustment_direction: Optional[str] = None  # 'up', 'down', or None
         self.thermal_protection_active = False
         self.total_clock_adjustments = 0
         self.emergency_mode_activations = 0
@@ -420,8 +585,8 @@ class RP2040Emulator:
         logger.info(f"  Clock frequencies: {self.clock_frequencies}")
         
         # Tracking für Erkennungsänderungen
-        self.last_detection_class = None
-        self.last_detection_time = 0
+        self.last_detection_class: Optional[int] = None
+        self.last_detection_time = 0.0
         
         logger.info(f"RP2040 Emulator gestartet")
         logger.info(f"Flash: {self.flash_size_bytes/1024:.0f}KB")
@@ -432,9 +597,65 @@ class RP2040Emulator:
         logger.info(f"Geschätzte Batterielebensdauer: {self.power_manager.estimated_runtime_hours:.1f} Stunden")
         logger.info("Adaptive duty-cycle trigger systems initialized")
     
+    def _refresh_framebuffer_allocation(self) -> None:
+        """Synchronizes tracked framebuffer RAM usage with the camera."""
+        current_size = self.camera.get_frame_buffer_size_bytes()
+        if current_size != self.framebuffer_ram_bytes:
+            logger.debug(
+                "Updating framebuffer allocation: %.1fKB -> %.1fKB",
+                self.framebuffer_ram_bytes / 1024,
+                current_size / 1024,
+            )
+            self.framebuffer_ram_bytes = current_size
+ 
     def load_firmware(self, firmware: Dict) -> bool:
         """Lädt simulierte Firmware."""
         logger.info(f"Lade Firmware: {firmware}")
+        self._refresh_framebuffer_allocation()
+
+        # Passe den Framebuffer dynamisch an die erwartete Modellausgabe an, um RAM zu sparen
+        desired_input = firmware.get('model_input_size')
+        if desired_input and isinstance(desired_input, (tuple, list)) and len(desired_input) == 2:
+            width, height = desired_input
+            pixel_format_hint = firmware.get('pixel_format') or firmware.get('framebuffer_format')
+            rgb_hint = firmware.get('rgb')
+
+            # Automatische Ableitung des RGB-Flags aus optionalen Angaben
+            color_channels = firmware.get('color_channels')
+            if rgb_hint is None and isinstance(color_channels, int):
+                rgb_hint = color_channels > 1
+
+            chosen_format: Optional[PixelFormat] = None
+            if isinstance(pixel_format_hint, PixelFormat):
+                chosen_format = pixel_format_hint
+            elif isinstance(pixel_format_hint, str):
+                try:
+                    chosen_format = PixelFormat[pixel_format_hint.upper()]
+                except KeyError:
+                    logger.warning("Unbekanntes Pixel-Format '%s' in Firmware-Metadaten", pixel_format_hint)
+
+            # Für kleine Eingaben standardmäßig RGB565 nutzen, falls nichts angegeben wurde
+            if chosen_format is None:
+                if rgb_hint is False:
+                    chosen_format = PixelFormat.GRAYSCALE
+                elif width * height <= 64 * 64:
+                    chosen_format = PixelFormat.RGB565
+                else:
+                    chosen_format = PixelFormat.RGB888
+
+            try:
+                self.camera.set_format(width, height, pixel_format=chosen_format, rgb=rgb_hint)
+                self._refresh_framebuffer_allocation()
+                logger.info(
+                    "Framebuffer dynamisch an Firmware angepasst: %dx%d (%s)",
+                    width,
+                    height,
+                    chosen_format.name,
+                )
+            except Exception as exc:
+                logger.warning("Konnte Kameraformat nicht an Firmware anpassen: %s", exc)
+                # Falls Anpassung fehlschlägt, aktuelle Größe beibehalten
+                self._refresh_framebuffer_allocation()
         
         # Prüfe, ob die Firmware ins Flash passt
         if firmware['total_size_bytes'] > self.flash_size_bytes:
@@ -538,6 +759,7 @@ class RP2040Emulator:
     
     def get_ram_usage(self) -> int:
         """Liefert simulierte RAM-Nutzung."""
+        self._refresh_framebuffer_allocation()
         if not self.firmware_loaded:
             # Nur System-Overhead und Framebuffer
             return self.system_ram_overhead + self.framebuffer_ram_bytes
@@ -586,6 +808,7 @@ class RP2040Emulator:
     
     def get_system_stats(self) -> Dict:
         """Liefert Systemstatistiken."""
+        self._refresh_framebuffer_allocation()
         ram_usage = self.get_ram_usage()
         flash_usage = self.get_flash_usage()
         
@@ -797,28 +1020,41 @@ class RP2040Emulator:
             height: Kamerahöhe in Pixeln
             pixel_format: Pixelformat (RGB888, RGB565, GRAYSCALE, YUV422)
         """
-        # Aktualisiere Kamera und Framebuffer
-        is_rgb = pixel_format in (PixelFormat.RGB888, PixelFormat.RGB565)
-        self.camera.set_format(width, height, is_rgb)
-        
-        # Aktualisiere Framebuffer-Größe im Speichermanagement
+        old_layout = self.camera.frame_buffer.get_memory_layout()
         old_framebuffer_size = self.framebuffer_ram_bytes
-        self.framebuffer_ram_bytes = self.camera.get_frame_buffer_size_bytes()
-        
+
+        # Aktualisiere Kamera und Framebuffer
+        self.camera.set_format(width, height, pixel_format)
+
+        # Synchronisiere und erfasse neues Layout
+        self._refresh_framebuffer_allocation()
+        new_layout = self.camera.frame_buffer.get_memory_layout()
+
         logger.info(
             f"Kameraformat geändert auf {width}x{height} ({pixel_format.name}). "
             f"Framebuffer-Größe: {self.framebuffer_ram_bytes/1024:.1f}KB "
             f"(vorher: {old_framebuffer_size/1024:.1f}KB)"
         )
-        
-        # Prüfe, ob die neue Framebuffer-Größe zu einem RAM-Überlauf führen würde
-        if self.firmware_loaded:
-            total_ram_needed = self.ram_used + self.system_ram_overhead + self.framebuffer_ram_bytes
-            if total_ram_needed > self.ram_size_bytes:
-                logger.warning(
-                    f"WARNUNG: Neues Kameraformat könnte RAM-Überlauf verursachen: "
-                    f"{total_ram_needed/1024:.1f}KB > {self.ram_size_bytes/1024:.1f}KB"
-                )
+
+        logger.debug(
+            "Framebuffer-Layout geändert: alt=%s Bytes/Zeile (%s Bytes gesamt), neu=%s Bytes/Zeile (%s Bytes gesamt)",
+            old_layout['aligned_row_bytes'],
+            old_layout['total_size_bytes'],
+            new_layout['aligned_row_bytes'],
+            new_layout['total_size_bytes'],
+        )
+
+        model_ram = self.ram_used if self.firmware_loaded else 0
+        total_ram_needed = model_ram + self.system_ram_overhead + self.framebuffer_ram_bytes
+        if total_ram_needed > self.ram_size_bytes:
+            message = (
+                "Neues Kameraformat überschreitet verfügbaren RAM: "
+                f"{total_ram_needed/1024:.1f}KB > {self.ram_size_bytes/1024:.1f}KB"
+            )
+            if self.firmware_loaded:
+                logger.error(message)
+                raise ResourceError(message)
+            logger.warning(message)
     
     def set_camera_pixel_format(self, pixel_format: PixelFormat) -> None:
         """
@@ -827,42 +1063,39 @@ class RP2040Emulator:
         Args:
             pixel_format: Neues Pixelformat (RGB888, RGB565, GRAYSCALE, YUV422)
         """
-        # Speichere aktuelle Dimensionen
-        width = self.camera.width
-        height = self.camera.height
-        
-        # Setze Kameraformat mit neuem Pixelformat
-        is_rgb = pixel_format in (PixelFormat.RGB888, PixelFormat.RGB565)
-        
-        # Erstelle einen neuen Framebuffer mit dem neuen Format
-        old_buffer = self.camera.frame_buffer
-        self.camera.frame_buffer = FrameBuffer(width, height, pixel_format)
-        
-        # Aktualisiere RGB-Flag für die Kamera basierend auf dem Format
-        self.camera.rgb = is_rgb
-        
-        # Aktualisiere die Framebuffer-Größe im Speichermanagement
+        old_layout = self.camera.frame_buffer.get_memory_layout()
         old_framebuffer_size = self.framebuffer_ram_bytes
-        self.framebuffer_ram_bytes = self.camera.get_frame_buffer_size_bytes()
-        
+
+        self.camera.set_pixel_format(pixel_format)
+
+        self._refresh_framebuffer_allocation()
+        new_layout = self.camera.frame_buffer.get_memory_layout()
+
         logger.info(
             f"Kamera-Pixelformat geändert auf {pixel_format.name}. "
             f"Framebuffer-Größe: {self.framebuffer_ram_bytes/1024:.1f}KB "
             f"(vorher: {old_framebuffer_size/1024:.1f}KB)"
         )
-        
-        # Überprüfe Speichernutzung nach Formatänderung
-        self.validate_resources()
-        
-        # Gib Statistiken über den alten und neuen Framebuffer aus
-        old_stats = old_buffer.get_memory_layout()
-        new_stats = self.camera.frame_buffer.get_memory_layout()
-        
+
         logger.debug(
-            f"Speicherlayout-Änderung:\n"
-            f"Alt: {old_stats['total_size_bytes']} Bytes, {old_stats['aligned_row_bytes']} Bytes/Zeile\n"
-            f"Neu: {new_stats['total_size_bytes']} Bytes, {new_stats['aligned_row_bytes']} Bytes/Zeile"
+            "Speicherlayout-Änderung: alt=%s Bytes/Zeile (%s Bytes gesamt), neu=%s Bytes/Zeile (%s Bytes gesamt)",
+            old_layout['aligned_row_bytes'],
+            old_layout['total_size_bytes'],
+            new_layout['aligned_row_bytes'],
+            new_layout['total_size_bytes'],
         )
+
+        model_ram = self.ram_used if self.firmware_loaded else 0
+        total_ram_needed = model_ram + self.system_ram_overhead + self.framebuffer_ram_bytes
+        if total_ram_needed > self.ram_size_bytes:
+            message = (
+                "Pixelformat überschreitet verfügbaren RAM: "
+                f"{total_ram_needed/1024:.1f}KB > {self.ram_size_bytes/1024:.1f}KB"
+            )
+            if self.firmware_loaded:
+                logger.error(message)
+                raise ResourceError(message)
+            logger.warning(message)
     
     def read_temperature(self) -> float:
         """
@@ -1194,6 +1427,10 @@ class RP2040Emulator:
         if hasattr(self, 'uart') and self.uart:
             self.uart.close()
         
+        if getattr(self, 'sd_card', None) and self.sd_performance_metrics_handle is not None:
+            self.sd_card.close_file(self.sd_performance_metrics_handle)
+            self.sd_performance_metrics_handle = None
+
         if hasattr(self, 'logging_system') and self.logging_system:
             self.logging_system.close()
         
@@ -1294,7 +1531,7 @@ class RP2040Emulator:
         self.logging_system.log_performance(metrics)
         
         # Log to SD card performance metrics file if available
-        if self.sd_card and self.sd_card.mounted and hasattr(self, 'sd_performance_metrics_handle'):
+        if self.sd_card and self.sd_card.mounted and self.sd_performance_metrics_handle is not None:
             timestamp = datetime.now().isoformat(timespec='milliseconds')
             log_entry = f"{timestamp},{inference_time_ms:.2f},{peak_ram_kb:.1f},{cpu_load:.1f},{temperature:.2f},{prediction:.0f},{confidence:.4f}\n"
             self.sd_card.write_file(self.sd_performance_metrics_handle, log_entry)
@@ -1308,7 +1545,7 @@ class RP2040Emulator:
         
         # Speichere Kamera-Zustand
         self.peripheral_states['camera_initialized'] = self.camera.initialized
-        self.peripheral_states['camera_fps'] = getattr(self.camera, 'max_fps', 10)
+        self.peripheral_states['camera_fps'] = getattr(self.camera, 'max_fps', 10)  # type: ignore
         
         # Speichere Sensor-Zustände
         self.peripheral_states['temp_sensor_active'] = self.temperature_sensor.is_initialized if hasattr(self.temperature_sensor, 'is_initialized') else True
@@ -1414,105 +1651,39 @@ class RP2040Emulator:
         
         return verification_success
     
-    def get_sleep_performance_metrics(self) -> Dict:
+    def get_sleep_performance_metrics(self) -> Dict[str, Any]:
         """Liefert Performance-Metriken für Sleep-Wake-Zyklen."""
-        metrics = {
-            'sleep_transition_times': getattr(self, 'sleep_transition_times', []),
-            'wake_transition_times': getattr(self, 'wake_transition_times', []),
-            'total_sleep_cycles': len(getattr(self, 'sleep_transition_times', [])),
+        metrics: Dict[str, Any] = {
+            'sleep_transition_times': self.sleep_transition_times,
+            'wake_transition_times': self.wake_transition_times,
+            'total_sleep_cycles': len(self.sleep_transition_times),
             'total_sleep_time': self.total_sleep_time
         }
         
-        if metrics['sleep_transition_times']:
-            metrics['avg_sleep_transition_ms'] = sum(metrics['sleep_transition_times']) / len(metrics['sleep_transition_times'])
-            metrics['max_sleep_transition_ms'] = max(metrics['sleep_transition_times'])
+        if self.sleep_transition_times:
+            metrics['avg_sleep_transition_ms'] = sum(self.sleep_transition_times) / len(self.sleep_transition_times)
+            metrics['max_sleep_transition_ms'] = max(self.sleep_transition_times)
         
-        if metrics['wake_transition_times']:
-            metrics['avg_wake_transition_ms'] = sum(metrics['wake_transition_times']) / len(metrics['wake_transition_times'])
-            metrics['max_wake_transition_ms'] = max(metrics['wake_transition_times'])
-            metrics['wake_time_under_10ms'] = all(t < 10.0 for t in metrics['wake_transition_times'])
+        if self.wake_transition_times:
+            metrics['avg_wake_transition_ms'] = sum(self.wake_transition_times) / len(self.wake_transition_times)
+            metrics['max_wake_transition_ms'] = max(self.wake_transition_times)
+            metrics['wake_time_under_10ms'] = all(t < 10.0 for t in self.wake_transition_times)
         
         return metrics
     
     def _capture_frame_with_dma(self, frame: np.ndarray) -> bool:
-        """Captures camera frame using DMA transfer (emulated)."""
-        try:
-            # Configure DMA channel for camera data transfer
-            channel_id = 0  # Use DMA channel 0 for camera data
-            
-            # Calculate buffer size based on frame format
-            bytes_per_pixel = 2 if self.rgb else 1  # RGB565 = 2, GRAYSCALE = 1
-            buffer_size = self.width * self.height * bytes_per_pixel
-            
-            # Generate DVP data (simulate camera data from DVP interface)
-            dvp_data = self.dvp_interface.generate_camera_data(
-                width=self.width, 
-                height=self.height,
-                pixel_format="RGB565" if self.rgb else "GRAYSCALE",
-                test_pattern="pizza" if (self.width == 48 and self.height == 48) else "random"
-            )
-            
-            # Configure DMA channel for camera data transfer
-            from .rp2040_dma_emulator import DMAChannelConfig, DMATransferSize, DMARequest
-            
-            config = DMAChannelConfig(
-                read_addr=0x50000000,  # DVP FIFO register address (simulated)
-                write_addr=0x20000000,  # RAM framebuffer address (simulated)
-                trans_count=buffer_size // 4,  # Transfer in 32-bit words
-                data_size=DMATransferSize.SIZE_32,
-                treq_sel=DMARequest.TREQ_DVP_FIFO,
-                chain_to=0,
-                incr_read=False,   # DVP FIFO is at fixed address
-                incr_write=True,   # Increment RAM address
-                enable=True
-            )
-            
-            # Configure and start DMA transfer
-            success = self.dma_emulator.configure_channel(channel_id, config)
-            if not success:
-                return False
-            
-            # Start DMA transfer
-            transfer_id = self.dma_emulator.start_transfer(
-                channel_id=channel_id,
-                source_data=dvp_data,
-                description=f"Camera frame capture {self.width}x{self.height}"
-            )
-            
-            if transfer_id is None:
-                return False
-            
-            # Wait for DMA transfer completion (simulate)
-            success = self.dma_emulator.wait_for_completion(transfer_id, timeout_ms=100)
-            
-            if success:
-                # Verify data integrity
-                integrity_ok = self.dma_emulator.verify_transfer_integrity(transfer_id)
-                if integrity_ok:
-                    logger.debug(f"DMA transfer completed successfully for frame {self.frames_captured}")
-                    
-                    # Copy the DMA transferred data to the framebuffer
-                    transfer_data = self.dma_emulator.get_transfer_data(transfer_id)
-                    if transfer_data:
-                        self.frame_buffer.begin_frame_write()
-                        self.frame_buffer.write_pixel_data(transfer_data)
-                        self.frame_buffer.end_frame_write()
-                    
-                    return True
-                else:
-                    logger.error("DMA transfer data integrity check failed")
-                    return False
-            else:
-                logger.error("DMA transfer timeout")
-                return False
-                
-        except Exception as e:
-            logger.error(f"DMA capture failed: {e}")
-            return False
-    
+        """Delegates DMA-based capture to the camera emulator."""
+        if hasattr(self.camera, '_capture_frame_with_dma'):
+            return self.camera._capture_frame_with_dma(frame)
+        logger.warning("Camera emulator does not support DMA capture; falling back to CPU path")
+        return False
+
     def _capture_frame_cpu_based(self, frame: np.ndarray):
-        """Fallback CPU-based frame capture (original method)."""
-        # Schreibe das Bild in den Framebuffer
-        self.frame_buffer.begin_frame_write()
-        self.frame_buffer.write_pixel_data(frame)
-        self.frame_buffer.end_frame_write()
+        """Delegates CPU capture to the camera emulator."""
+        if hasattr(self.camera, '_capture_frame_cpu_based'):
+            self.camera._capture_frame_cpu_based(frame)
+        else:
+            logger.warning("Camera emulator missing CPU capture helper; writing directly")
+            self.camera.frame_buffer.begin_frame_write()
+            self.camera.frame_buffer.write_pixel_data(frame)
+            self.camera.frame_buffer.end_frame_write()

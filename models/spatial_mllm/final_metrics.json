@@ -1,0 +1,27 @@
+{
+  "spatial_2_3_implementation": "completed",
+  "transfer_learning_setup": "successful",
+  "base_model": "Salesforce/blip-image-captioning-base",
+  "pizza_classes": [
+    "margherita",
+    "pepperoni",
+    "hawaiian",
+    "veggie",
+    "meat",
+    "seafood",
+    "bbq",
+    "white",
+    "supreme",
+    "custom"
+  ],
+  "num_classes": 10,
+  "model_parameters": 247414076,
+  "vision_feature_dimension": 768,
+  "device": "cuda",
+  "data_directory": "augmented_pizza",
+  "model_file": "models/spatial_mllm/pizza_finetuned_v1.pth",
+  "setup_timestamp": "2025-06-06 12:21:09",
+  "status": "ready_for_fine_tuning",
+  "spatial_preprocessing_available": true,
+  "evaluation_metrics_defined": true
+}

@@ -1,0 +1,147 @@
+{
+  "training_info": {
+    "total_timesteps": 0,
+    "training_episodes": 0,
+    "iterations_completed": 0,
+    "final_evaluation": {
+      "mean_reward": 6.433583417453173,
+      "std_reward": 0.3135206285145611,
+      "mean_episode_length": 10.0,
+      "average_accuracy": 0.7222214541608961,
+      "average_energy_efficiency": 0.5,
+      "average_inference_time": 0.005268650913919489,
+      "success_rate": 1.0
+    },
+    "training_metrics": []
+  },
+  "final_evaluation": {
+    "standard_evaluation": {
+      "mean_reward": 6.477728868176132,
+      "std_reward": 0.38884889335498923,
+      "mean_episode_length": 10.0,
+      "average_accuracy": 0.7283437778399372,
+      "average_energy_efficiency": 0.5,
+      "average_inference_time": 0.005201233346634817,
+      "success_rate": 1.0
+    },
+    "scenario_evaluation": {
+      "standard_lighting": {
+        "mean_reward": 6.511057019758651,
+        "std_reward": 0.3353348727823173,
+        "mean_episode_length": 10.0,
+        "average_accuracy": 0.7327977921563132,
+        "average_energy_efficiency": 0.5,
+        "average_inference_time": 0.005195689401297119,
+        "success_rate": 1.0,
+        "scenario": "standard_lighting"
+      },
+      "low_light": {
+        "mean_reward": 6.427752016761879,
+        "std_reward": 0.3071705413609211,
+        "mean_episode_length": 10.0,
+        "average_accuracy": 0.7281003296641697,
+        "average_energy_efficiency": 0.5,
+        "average_inference_time": 0.005232201457134678,
+        "success_rate": 1.0,
+        "scenario": "low_light"
+      },
+      "high_contrast": {
+        "mean_reward": 6.545661763916264,
+        "std_reward": 0.39707537721911096,
+        "mean_episode_length": 10.0,
+        "average_accuracy": 0.7305915361168034,
+        "average_energy_efficiency": 0.5,
+        "average_inference_time": 0.005168626087099536,
+        "success_rate": 1.0,
+        "scenario": "high_contrast"
+      },
+      "temporal_sequence": {
+        "mean_reward": 6.520363535734345,
+        "std_reward": 0.36005212124714975,
+        "mean_episode_length": 10.0,
+        "average_accuracy": 0.7347206298757865,
+        "average_energy_efficiency": 0.5,
+        "average_inference_time": 0.005224154641216176,
+        "success_rate": 1.0,
+        "scenario": "temporal_sequence"
+      },
+      "energy_constrained": {
+        "mean_reward": 6.580144296617451,
+        "std_reward": 0.46859428444272316,
+        "mean_episode_length": 10.0,
+        "average_accuracy": 0.739274795014356,
+        "average_energy_efficiency": 0.5,
+        "average_inference_time": 0.005236242199773085,
+        "success_rate": 1.0,
+        "scenario": "energy_constrained"
+      },
+      "speed_critical": {
+        "mean_reward": 6.485703641140153,
+        "std_reward": 0.36382671467759575,
+        "mean_episode_length": 10.0,
+        "average_accuracy": 0.7347790333645166,
+        "average_energy_efficiency": 0.5,
+        "average_inference_time": 0.005198595574517928,
+        "success_rate": 1.0,
+        "scenario": "speed_critical"
+      }
+    },
+    "evaluation_timestamp": "2025-11-27T15:34:21.311446",
+    "num_episodes": 100
+  },
+  "training_duration": 47.968863010406494,
+  "config": {
+    "output_dir": "temp_rl_test",
+    "total_timesteps": 100,
+    "save_interval": 10,
+    "eval_interval": 20,
+    "eval_episodes": 50,
+    "max_episodes_per_eval": 100,
+    "environment": {
+      "max_steps_per_episode": 10,
+      "battery_capacity_mah": 2000.0,
+      "initial_battery_level": 1.0,
+      "task_dataset_path": "/home/emilio/Documents/ai/pizza/test_data",
+      "enable_logging": true,
+      "energy_weight": 0.3,
+      "accuracy_weight": 0.5,
+      "speed_weight": 0.2
+    },
+    "ppo_hyperparams": {
+      "learning_rate": 0.0003,
+      "batch_size": 256,
+      "ppo_epochs": 10,
+      "rollout_steps": 2048,
+      "gamma": 0.99,
+      "gae_lambda": 0.95,
+      "clip_ratio": 0.2,
+      "value_loss_coef": 0.5,
+      "entropy_coef": 0.01,
+      "max_grad_norm": 0.5,
+      "advantage_normalization": true,
+      "reward_normalization": true,
+      "adaptive_entropy": true
+    },
+    "multi_objective": {
+      "enable": true,
+      "accuracy_target": 0.85,
+      "energy_efficiency_target": 0.7,
+      "inference_speed_target": 100.0,
+      "safety_penalty_weight": 2.0,
+      "adaptive_weights": true
+    },
+    "evaluation": {
+      "scenarios": [
+        "standard_lighting",
+        "low_light",
+        "high_contrast",
+        "temporal_sequence",
+        "energy_constrained",
+        "speed_critical"
+      ],
+      "deterministic": true,
+      "save_trajectories": true
+    }
+  },
+  "timestamp": "2025-11-27T15:34:21.311572"
+}

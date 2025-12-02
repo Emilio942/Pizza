@@ -1,0 +1,400 @@
+{
+  "test_config": {
+    "num_images": 9,
+    "hardware_backend": "cuda",
+    "batch_size": 4,
+    "mixed_precision": true
+  },
+  "single_image_tests": [
+    {
+      "success": true,
+      "image_path": "/home/emilio/Documents/ai/pizza/data/raw/IMG_20250326_125055_237.jpg",
+      "image_size": [
+        8000,
+        6000
+      ],
+      "load_time": 0.22667193412780762,
+      "inference_time": 0.1066744327545166,
+      "total_time": 0.33334779739379883,
+      "results": {
+        "success": false,
+        "prediction": null,
+        "confidence": 0.0,
+        "processing_time": 0.0,
+        "error": "'NoneType' object has no attribute 'generate_depth_map'"
+      },
+      "memory_usage": {
+        "cpu_memory_mb": 7110.65234375,
+        "cpu_memory_percent": 22.286300831337826,
+        "gpu_memory_allocated_mb": 3180.99462890625,
+        "gpu_memory_reserved_mb": 3308.0,
+        "gpu_memory_cached_mb": 3308.0
+      }
+    },
+    {
+      "success": true,
+      "image_path": "/home/emilio/Documents/ai/pizza/data/raw/IMG_20250326_125053_324.jpg",
+      "image_size": [
+        8000,
+        6000
+      ],
+      "load_time": 0.22629857063293457,
+      "inference_time": 0.10916447639465332,
+      "total_time": 0.3354647159576416,
+      "results": {
+        "success": false,
+        "prediction": null,
+        "confidence": 0.0,
+        "processing_time": 0.0,
+        "error": "'NoneType' object has no attribute 'generate_depth_map'"
+      },
+      "memory_usage": {
+        "cpu_memory_mb": 7110.65625,
+        "cpu_memory_percent": 22.28631307435835,
+        "gpu_memory_allocated_mb": 3180.99462890625,
+        "gpu_memory_reserved_mb": 3308.0,
+        "gpu_memory_cached_mb": 3308.0
+      }
+    },
+    {
+      "success": true,
+      "image_path": "/home/emilio/Documents/ai/pizza/data/raw/IMG_20250326_125040_326.jpg",
+      "image_size": [
+        6000,
+        8000
+      ],
+      "load_time": 0.2146148681640625,
+      "inference_time": 0.10576963424682617,
+      "total_time": 0.3203854560852051,
+      "results": {
+        "success": false,
+        "prediction": null,
+        "confidence": 0.0,
+        "processing_time": 0.0,
+        "error": "'NoneType' object has no attribute 'generate_depth_map'"
+      },
+      "memory_usage": {
+        "cpu_memory_mb": 7110.81640625,
+        "cpu_memory_percent": 22.28681503820006,
+        "gpu_memory_allocated_mb": 3180.99462890625,
+        "gpu_memory_reserved_mb": 3308.0,
+        "gpu_memory_cached_mb": 3308.0
+      }
+    },
+    {
+      "success": true,
+      "image_path": "/home/emilio/Documents/ai/pizza/data/test_new_images/basic/test_basic_challenging_backlit_angle_side_motion_blur_20250520_211427_000.jpg",
+      "image_size": [
+        320,
+        240
+      ],
+      "load_time": 0.0006120204925537109,
+      "inference_time": 0.0001838207244873047,
+      "total_time": 0.0007960796356201172,
+      "results": {
+        "success": false,
+        "prediction": null,
+        "confidence": 0.0,
+        "processing_time": 0.0,
+        "error": "'NoneType' object has no attribute 'generate_depth_map'"
+      },
+      "memory_usage": {
+        "cpu_memory_mb": 6774.96875,
+        "cpu_memory_percent": 21.234196862138326,
+        "gpu_memory_allocated_mb": 3180.99462890625,
+        "gpu_memory_reserved_mb": 3308.0,
+        "gpu_memory_cached_mb": 3308.0
+      }
+    },
+    {
+      "success": true,
+      "image_path": "/home/emilio/Documents/ai/pizza/data/test_new_images/basic/test_basic_challenging_dark_angle_top_jpeg_artifact_20250520_211427_008.jpg",
+      "image_size": [
+        320,
+        240
+      ],
+      "load_time": 0.0019369125366210938,
+      "inference_time": 0.00014281272888183594,
+      "total_time": 0.0020799636840820312,
+      "results": {
+        "success": false,
+        "prediction": null,
+        "confidence": 0.0,
+        "processing_time": 0.0,
+        "error": "'NoneType' object has no attribute 'generate_depth_map'"
+      },
+      "memory_usage": {
+        "cpu_memory_mb": 6774.96875,
+        "cpu_memory_percent": 21.234196862138326,
+        "gpu_memory_allocated_mb": 3180.99462890625,
+        "gpu_memory_reserved_mb": 3308.0,
+        "gpu_memory_cached_mb": 3308.0
+      }
+    }
+  ],
+  "batch_tests": [
+    {
+      "success": true,
+      "num_images": 2,
+      "batch_size": 1,
+      "total_time": 0.6395397186279297,
+      "images_per_second": 3.1272490851558143,
+      "results": [
+        {
+          "success": false,
+          "prediction": null,
+          "confidence": 0.0,
+          "processing_time": 0.0,
+          "error": "'NoneType' object has no attribute 'shape'",
+          "image_path": "/home/emilio/Documents/ai/pizza/data/raw/IMG_20250326_125055_237.jpg"
+        },
+        {
+          "success": false,
+          "prediction": null,
+          "confidence": 0.0,
+          "processing_time": 0.0,
+          "error": "'NoneType' object has no attribute 'shape'",
+          "image_path": "/home/emilio/Documents/ai/pizza/data/raw/IMG_20250326_125053_324.jpg"
+        }
+      ],
+      "memory_usage": {
+        "cpu_memory_mb": 6808.32421875,
+        "cpu_memory_percent": 21.33874001443942,
+        "gpu_memory_allocated_mb": 3180.99462890625,
+        "gpu_memory_reserved_mb": 3328.0,
+        "gpu_memory_cached_mb": 3328.0
+      }
+    },
+    {
+      "success": true,
+      "num_images": 4,
+      "batch_size": 2,
+      "total_time": 0.8739116191864014,
+      "images_per_second": 4.577121887593096,
+      "results": [
+        {
+          "success": false,
+          "prediction": null,
+          "confidence": 0.0,
+          "processing_time": 0.0,
+          "error": "'NoneType' object has no attribute 'shape'",
+          "image_path": "/home/emilio/Documents/ai/pizza/data/raw/IMG_20250326_125055_237.jpg"
+        },
+        {
+          "success": false,
+          "prediction": null,
+          "confidence": 0.0,
+          "processing_time": 0.0,
+          "error": "'NoneType' object has no attribute 'shape'",
+          "image_path": "/home/emilio/Documents/ai/pizza/data/raw/IMG_20250326_125053_324.jpg"
+        },
+        {
+          "success": false,
+          "prediction": null,
+          "confidence": 0.0,
+          "processing_time": 0.0,
+          "error": "'NoneType' object has no attribute 'shape'",
+          "image_path": "/home/emilio/Documents/ai/pizza/data/raw/IMG_20250326_125040_326.jpg"
+        },
+        {
+          "success": false,
+          "prediction": null,
+          "confidence": 0.0,
+          "processing_time": 0.0,
+          "error": "'NoneType' object has no attribute 'shape'",
+          "image_path": "/home/emilio/Documents/ai/pizza/data/test_new_images/basic/test_basic_challenging_backlit_angle_side_motion_blur_20250520_211427_000.jpg"
+        }
+      ],
+      "memory_usage": {
+        "cpu_memory_mb": 6808.5703125,
+        "cpu_memory_percent": 21.339511324732776,
+        "gpu_memory_allocated_mb": 3180.99462890625,
+        "gpu_memory_reserved_mb": 3378.0,
+        "gpu_memory_cached_mb": 3378.0
+      }
+    },
+    {
+      "success": true,
+      "num_images": 8,
+      "batch_size": 4,
+      "total_time": 0.9199168682098389,
+      "images_per_second": 8.696437989628373,
+      "results": [
+        {
+          "success": false,
+          "prediction": null,
+          "confidence": 0.0,
+          "processing_time": 0.0,
+          "error": "'NoneType' object has no attribute 'shape'",
+          "image_path": "/home/emilio/Documents/ai/pizza/data/raw/IMG_20250326_125055_237.jpg"
+        },
+        {
+          "success": false,
+          "prediction": null,
+          "confidence": 0.0,
+          "processing_time": 0.0,
+          "error": "'NoneType' object has no attribute 'shape'",
+          "image_path": "/home/emilio/Documents/ai/pizza/data/raw/IMG_20250326_125053_324.jpg"
+        },
+        {
+          "success": false,
+          "prediction": null,
+          "confidence": 0.0,
+          "processing_time": 0.0,
+          "error": "'NoneType' object has no attribute 'shape'",
+          "image_path": "/home/emilio/Documents/ai/pizza/data/raw/IMG_20250326_125040_326.jpg"
+        },
+        {
+          "success": false,
+          "prediction": null,
+          "confidence": 0.0,
+          "processing_time": 0.0,
+          "error": "'NoneType' object has no attribute 'shape'",
+          "image_path": "/home/emilio/Documents/ai/pizza/data/test_new_images/basic/test_basic_challenging_backlit_angle_side_motion_blur_20250520_211427_000.jpg"
+        },
+        {
+          "success": false,
+          "prediction": null,
+          "confidence": 0.0,
+          "processing_time": 0.0,
+          "error": "'NoneType' object has no attribute 'shape'",
+          "image_path": "/home/emilio/Documents/ai/pizza/data/test_new_images/basic/test_basic_challenging_dark_angle_top_jpeg_artifact_20250520_211427_008.jpg"
+        },
+        {
+          "success": false,
+          "prediction": null,
+          "confidence": 0.0,
+          "processing_time": 0.0,
+          "error": "'NoneType' object has no attribute 'shape'",
+          "image_path": "/home/emilio/Documents/ai/pizza/data/test_new_images/basic/test_basic_challenging_bright_normal_blurry_20250520_211411_008.jpg"
+        },
+        {
+          "success": false,
+          "prediction": null,
+          "confidence": 0.0,
+          "processing_time": 0.0,
+          "error": "'NoneType' object has no attribute 'shape'",
+          "image_path": "/home/emilio/Documents/ai/pizza/data/test_new_images/burnt/test_burnt_challenging_uneven_angle_diagonal_blurry_20250520_211411_012.jpg"
+        },
+        {
+          "success": false,
+          "prediction": null,
+          "confidence": 0.0,
+          "processing_time": 0.0,
+          "error": "'NoneType' object has no attribute 'shape'",
+          "image_path": "/home/emilio/Documents/ai/pizza/data/test_new_images/burnt/test_burnt_challenging_low_contrast_angle_side_normal_20250520_211427_007.jpg"
+        }
+      ],
+      "memory_usage": {
+        "cpu_memory_mb": 6808.5390625,
+        "cpu_memory_percent": 21.33941338056854,
+        "gpu_memory_allocated_mb": 3180.99462890625,
+        "gpu_memory_reserved_mb": 3402.0,
+        "gpu_memory_cached_mb": 3402.0
+      }
+    }
+  ],
+  "memory_tests": {
+    "batch_1": {
+      "batch_size": 1,
+      "success": true,
+      "memory_usage": {
+        "cpu_memory_mb": 6808.75390625,
+        "cpu_memory_percent": 21.340086746697658,
+        "gpu_memory_allocated_mb": 3180.99462890625,
+        "gpu_memory_reserved_mb": 3328.0,
+        "gpu_memory_cached_mb": 3328.0
+      },
+      "images_per_second": 3.2300127604750255
+    },
+    "batch_2": {
+      "batch_size": 2,
+      "success": true,
+      "memory_usage": {
+        "cpu_memory_mb": 6808.89453125,
+        "cpu_memory_percent": 21.34052749543672,
+        "gpu_memory_allocated_mb": 3180.99462890625,
+        "gpu_memory_reserved_mb": 3372.0,
+        "gpu_memory_cached_mb": 3372.0
+      },
+      "images_per_second": 4.6178306466751335
+    },
+    "batch_4": {
+      "batch_size": 4,
+      "success": true,
+      "memory_usage": {
+        "cpu_memory_mb": 6833.2734375,
+        "cpu_memory_percent": 21.416936186561106,
+        "gpu_memory_allocated_mb": 3180.99462890625,
+        "gpu_memory_reserved_mb": 3402.0,
+        "gpu_memory_cached_mb": 3402.0
+      },
+      "images_per_second": 8.639314425131497
+    },
+    "batch_8": {
+      "batch_size": 8,
+      "success": true,
+      "memory_usage": {
+        "cpu_memory_mb": 6809.24609375,
+        "cpu_memory_percent": 21.341629367284373,
+        "gpu_memory_allocated_mb": 3180.99462890625,
+        "gpu_memory_reserved_mb": 3374.0,
+        "gpu_memory_cached_mb": 3374.0
+      },
+      "images_per_second": 9.951067053721218
+    }
+  },
+  "device_tests": {
+    "cpu": {
+      "success": true,
+      "device": "cpu",
+      "total_time": 24.14660120010376,
+      "memory_usage": {
+        "cpu_memory_mb": 19057.9765625,
+        "cpu_memory_percent": 59.731762766011755,
+        "gpu_memory_allocated_mb": 3180.99462890625,
+        "gpu_memory_reserved_mb": 3374.0,
+        "gpu_memory_cached_mb": 3374.0
+      },
+      "mixed_precision": false
+    },
+    "cuda": {
+      "success": true,
+      "device": "cuda",
+      "total_time": 0.6782557964324951,
+      "memory_usage": {
+        "cpu_memory_mb": 12970.76953125,
+        "cpu_memory_percent": 40.653157799434595,
+        "gpu_memory_allocated_mb": 3327.31494140625,
+        "gpu_memory_reserved_mb": 3448.0,
+        "gpu_memory_cached_mb": 3448.0
+      },
+      "mixed_precision": true
+    }
+  },
+  "quantization_tests": {
+    "without_opt": {
+      "total_time": 1.2116661071777344,
+      "images_per_second": 3.30123948858896,
+      "memory_usage": {
+        "cpu_memory_mb": 17784.62890625,
+        "cpu_memory_percent": 55.740819662878636,
+        "gpu_memory_allocated_mb": 3330.62109375,
+        "gpu_memory_reserved_mb": 3448.0,
+        "gpu_memory_cached_mb": 3448.0
+      }
+    },
+    "with_opt": {
+      "total_time": 0.8570029735565186,
+      "images_per_second": 4.6674283793908025,
+      "memory_usage": {
+        "cpu_memory_mb": 17784.2890625,
+        "cpu_memory_percent": 55.739754520092575,
+        "gpu_memory_allocated_mb": 3330.62109375,
+        "gpu_memory_reserved_mb": 3448.0,
+        "gpu_memory_cached_mb": 3448.0
+      }
+    },
+    "speedup": 1.4138411937468338
+  }
+}

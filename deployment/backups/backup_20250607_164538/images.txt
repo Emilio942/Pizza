@@ -1,0 +1,3 @@
+pizza-classification:20250607-153719                                                     8c01c66dd9dd
+pizza-classification:latest                                                              8c01c66dd9dd
+deployment-pizza-api:latest                                                              ac0664fe6371

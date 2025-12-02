@@ -67,8 +67,8 @@ class MotionSensor:
         self.detection_count = 0
         
         # Detection history for pattern analysis
-        self.detection_history = deque(maxlen=100)
-        self.event_history = deque(maxlen=50)
+        self.detection_history: deque[float] = deque(maxlen=100)
+        self.event_history: deque[MotionEvent] = deque(maxlen=50)
         
         # Sensor-specific parameters
         if sensor_type == MotionSensorType.PIR:
@@ -86,7 +86,7 @@ class MotionSensor:
         
         # Simulated environment
         self.ambient_activity_level = 0.1  # Background activity level
-        self.simulation_patterns = []
+        self.simulation_patterns: List[Callable[[float], float]] = []
         
         logger.info(f"Motion sensor {sensor_id} ({sensor_type.value}) initialized: "
                    f"sensitivity={sensitivity:.1f}, range={detection_range_m:.1f}m")
@@ -406,67 +406,7 @@ class MotionSensorController:
                 
         logger.info(f"Simulated {sensor_type} motion event (duration: {duration}s, confidence: {confidence})")
         
-    def get_statistics(self) -> Dict:
-        """Get motion controller statistics"""
-        return self.get_controller_stats()
-        """Initialize motion sensor controller"""
-        self.sensors: Dict[str, MotionSensor] = {}
-        self.motion_callbacks: List[Callable[[MotionEvent], None]] = []
-        self.fusion_enabled = True
-        self.detection_threshold = 1  # Minimum sensors needed for detection
-        self.active = False
-        
-        # Initialize default sensors for emulation
-        self._initialize_default_sensors()
-        
-    def _initialize_default_sensors(self) -> None:
-        """Initialize default set of motion sensors for emulation"""
-        # Create default PIR sensor
-        pir_sensor = MotionSensor(
-            sensor_id="pir_main",
-            sensor_type=MotionSensorType.PIR,
-            detection_range_m=5.0,
-            sensitivity=0.7
-        )
-        
-        # Create default microwave sensor
-        microwave_sensor = MotionSensor(
-            sensor_id="microwave_main", 
-            sensor_type=MotionSensorType.MICROWAVE,
-            detection_range_m=8.0,
-            sensitivity=0.6
-        )
-        
-        # Add sensors
-        self.add_sensor(pir_sensor)
-        self.add_sensor(microwave_sensor)
-        
-        logger.info("Default motion sensors initialized")
-        
-    def start(self) -> None:
-        """Start the motion sensor controller"""
-        self.active = True
-        
-        # Initialize all sensors
-        for sensor in self.sensors.values():
-            sensor.initialize()
-            sensor.enable()
-            
-        logger.info("Motion sensor controller started")
-        
-    def stop(self) -> None:
-        """Stop the motion sensor controller"""
-        self.active = False
-        
-        # Disable all sensors
-        for sensor in self.sensors.values():
-            sensor.disable()
-            
-        logger.info("Motion sensor controller stopped")
-        
-    def is_active(self) -> bool:
-        """Check if motion sensor controller is active"""
-        return self.active
+
         
     def add_sensor(self, sensor: MotionSensor) -> None:
         """Add a motion sensor to the controller"""
@@ -552,55 +492,6 @@ class MotionSensorController:
             'sensor_details': sensor_stats
         }
     
-    def simulate_motion_event(self, sensor_type: str = "PIR", duration: float = 1.0, confidence: float = 0.8) -> None:
-        """
-        Simulate a motion detection event for testing.
-        
-        Args:
-            sensor_type: Type of sensor to simulate ("PIR", "MICROWAVE", "ULTRASONIC")
-            duration: Duration of motion event in seconds
-            confidence: Confidence level of detection
-        """
-        # Find a sensor of the specified type
-        target_sensor = None
-        for sensor in self.sensors.values():
-            if sensor.sensor_type.value.upper() == sensor_type.upper():
-                target_sensor = sensor
-                break
-                
-        if not target_sensor:
-            # Create temporary sensor if none exists
-            temp_sensor = MotionSensor(
-                sensor_id=f"temp_{sensor_type.lower()}",
-                sensor_type=MotionSensorType(sensor_type.lower()),
-                detection_range_m=5.0,
-                sensitivity=0.8
-            )
-            temp_sensor.initialize()
-            temp_sensor.enable()
-            self.add_sensor(temp_sensor)
-            target_sensor = temp_sensor
-            
-        # Trigger detection
-        target_sensor._trigger_detection(confidence=confidence)
-        
-        # Create motion event and notify callbacks
-        event = MotionEvent(
-            timestamp=time.time(),
-            sensor_id=target_sensor.sensor_id,
-            motion_detected=True,
-            confidence=confidence,
-            trigger_source=f"simulated_{sensor_type.lower()}"
-        )
-        
-        for callback in self.motion_callbacks:
-            try:
-                callback(event)
-            except Exception as e:
-                logger.error(f"Motion callback error during simulation: {e}")
-                
-        logger.info(f"Simulated {sensor_type} motion event (duration: {duration}s, confidence: {confidence})")
-        
     def get_statistics(self) -> Dict:
         """Get motion controller statistics"""
         return self.get_controller_stats()

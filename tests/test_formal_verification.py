@@ -28,7 +28,7 @@ except ImportError:
 from models.formal_verification.formal_verification import (
     ModelVerifier, VerificationProperty, VerificationResult, load_model_for_verification
 )
-from src.pizza_detector import MicroPizzaNet
+from src.models.architectures import MicroPizzaNet
 
 # Skip tests if verification dependencies are not available
 pytestmark = pytest.mark.skipif(

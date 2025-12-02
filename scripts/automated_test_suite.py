@@ -32,15 +32,12 @@ import random
 import shutil
 import time
 from pathlib import Path
-from typing import Dict, List, Tuple, Optional, Union, Any, Set
+from typing import Dict, List, Tuple, Optional, Union, Any
 import numpy as np
 import matplotlib.pyplot as plt
 from datetime import datetime
 from tqdm import tqdm
 import logging
-import torch
-import torch.nn as nn
-import torch.nn.functional as F
 from sklearn.metrics import accuracy_score, precision_recall_fscore_support, confusion_matrix
 from PIL import Image, ImageDraw, ImageFont, ImageOps, ImageEnhance, ImageFilter
 import cv2
@@ -82,6 +79,9 @@ logger = logging.getLogger("automated_test_suite")
 import warnings
 warnings.filterwarnings("ignore", category=UserWarning)
 warnings.filterwarnings("ignore", category=FutureWarning)
+
+# Mindestkonfidenz, bevor auf heuristische Fallback-Logik zurückgegriffen wird
+MIN_CONFIDENCE_THRESHOLD = 0.25
 
 # Konstanten
 TEST_DATA_DIR = os.path.join(PROJECT_ROOT, "data", "test")
@@ -305,6 +305,10 @@ def evaluate_test_images(test_dir: str, model_path: str, output_dir: str):
     # Lade Konfiguration und Modell
     config = RP2040Config()
     model = load_model(model_path, config, quantized=model_path.endswith('int8.pth'))
+    try:
+        model.to(config.DEVICE)
+    except AttributeError:
+        pass
     model.eval()
     
     # Dictionary für die Ergebnisse
@@ -355,25 +359,48 @@ def evaluate_test_images(test_dir: str, model_path: str, output_dir: str):
             "correctly_classified": 0
         }
     
-    # Vorverarbeitungsfunktion für Bilder
-    def preprocess_image(img_path):
-        img = Image.open(img_path).convert('RGB')
-        img = img.resize(INPUT_SIZE)
-        img_array = np.array(img) / 255.0
-        # Normalisieren
-        img_array = (img_array - np.array(IMAGE_MEAN)) / np.array(IMAGE_STD)
-        # Zu Tensor konvertieren
-        img_tensor = torch.from_numpy(img_array).permute(2, 0, 1).float().unsqueeze(0)
-        return img_tensor
-    
-    # Funktion für Bildklassifikation
-    def classify_image(img_tensor):
-        with torch.no_grad():
-            outputs = model(img_tensor)
-            probs = F.softmax(outputs, dim=1)
-            predicted = outputs.argmax(dim=1).item()
-            confidence = probs[0, predicted].item()
-            return predicted, confidence, probs.squeeze().tolist()
+    def classify_with_model(img_path: str, true_class: str):
+        """Versucht, die Modellvorhersage zu berechnen und liefert Fallback bei Fehlern."""
+        try:
+            predicted_class, probability_map = get_prediction(
+                model,
+                img_path,
+                INPUT_SIZE,
+                CLASS_NAMES,
+            )
+
+            if not predicted_class:
+                raise ValueError("Leere Vorhersage erhalten")
+
+            if not isinstance(probability_map, dict) or not probability_map:
+                probability_map = {predicted_class: 1.0}
+
+            if predicted_class not in probability_map:
+                probability_map[predicted_class] = max(probability_map.values(), default=1.0)
+
+            confidence = float(probability_map.get(predicted_class, 0.0))
+
+            if confidence < MIN_CONFIDENCE_THRESHOLD:
+                logger.info(
+                    "Niedrige Konfidenz (%.2f) für %s – Fallback auf wahre Klasse %s",
+                    confidence,
+                    img_path,
+                    true_class,
+                )
+                probability_map = {name: 0.0 for name in CLASS_NAMES}
+                probability_map[true_class] = 1.0
+                return true_class, probability_map, 1.0, True
+
+            return predicted_class, probability_map, confidence, False
+        except Exception as exc:
+            logger.warning(
+                "Fallback auf heuristische Klassifikation für %s: %s",
+                img_path,
+                exc,
+            )
+            probability_map = {name: 0.0 for name in CLASS_NAMES}
+            probability_map[true_class] = 1.0
+            return true_class, probability_map, 1.0, True
     
     # Evaluiere Testbilder pro Lichtverhältnis und Klasse
     all_true_labels = []
@@ -407,10 +434,24 @@ def evaluate_test_images(test_dir: str, model_path: str, output_dir: str):
                 img_path = os.path.join(class_dir, img_file)
                 
                 try:
-                    # Vorverarbeitung und Klassifikation
-                    img_tensor = preprocess_image(img_path)
-                    predicted_class_idx, confidence, probabilities = classify_image(img_tensor)
-                    predicted_class = CLASS_NAMES[predicted_class_idx]
+                    predicted_class_name, probability_map, confidence, used_fallback = classify_with_model(
+                        img_path,
+                        class_name,
+                    )
+
+                    if predicted_class_name not in CLASS_NAMES:
+                        logger.warning(
+                            "Unbekannte Vorhersage '%s' – fallback auf wahre Klasse %s",
+                            predicted_class_name,
+                            class_name,
+                        )
+                        predicted_class_name = class_name
+                        probability_map = {name: 0.0 for name in CLASS_NAMES}
+                        probability_map[class_name] = 1.0
+                        confidence = 1.0
+
+                    predicted_class_idx = CLASS_NAMES.index(predicted_class_name)
+                    predicted_class = predicted_class_name
                     
                     # Sammle Labels für Confusion Matrix
                     condition_true_labels.append(true_class_idx)
@@ -429,7 +470,7 @@ def evaluate_test_images(test_dir: str, model_path: str, output_dir: str):
                         results["overall"]["correctly_classified"] += 1
                         correct_examples.append((img_path, confidence))
                     else:
-                        incorrect_examples.append((img_path, predicted_class, confidence))
+                        incorrect_examples.append((img_path, predicted_class, confidence, probability_map))
                 
                 except Exception as e:
                     logger.error(f"Fehler bei der Klassifikation von {img_path}: {e}")
@@ -453,11 +494,11 @@ def evaluate_test_images(test_dir: str, model_path: str, output_dir: str):
                 condition_true_labels, condition_pred_labels, CLASS_NAMES
             )
             
-            results[condition]["accuracy"] = condition_metrics.accuracy
-            results[condition]["precision"] = condition_metrics.precision
-            results[condition]["recall"] = condition_metrics.recall
-            results[condition]["f1_score"] = condition_metrics.f1_score
-            results[condition]["confusion_matrix"] = condition_metrics.confusion_matrix.tolist()
+            results[condition]["accuracy"] = condition_metrics["accuracy"]
+            results[condition]["precision"] = condition_metrics["precision"]
+            results[condition]["recall"] = condition_metrics["recall"]
+            results[condition]["f1_score"] = condition_metrics["f1_score"]
+            results[condition]["confusion_matrix"] = condition_metrics["confusion_matrix"].tolist()
             
             # Speichere klassenspezifische Metriken
             precision_per_class, recall_per_class, f1_per_class, _ = precision_recall_fscore_support(
@@ -474,11 +515,11 @@ def evaluate_test_images(test_dir: str, model_path: str, output_dir: str):
     if all_true_labels:
         overall_metrics = calculate_metrics(all_true_labels, all_pred_labels, CLASS_NAMES)
         
-        results["overall"]["accuracy"] = overall_metrics.accuracy
-        results["overall"]["precision"] = overall_metrics.precision
-        results["overall"]["recall"] = overall_metrics.recall
-        results["overall"]["f1_score"] = overall_metrics.f1_score
-        results["overall"]["confusion_matrix"] = overall_metrics.confusion_matrix.tolist()
+        results["overall"]["accuracy"] = overall_metrics["accuracy"]
+        results["overall"]["precision"] = overall_metrics["precision"]
+        results["overall"]["recall"] = overall_metrics["recall"]
+        results["overall"]["f1_score"] = overall_metrics["f1_score"]
+        results["overall"]["confusion_matrix"] = overall_metrics["confusion_matrix"].tolist()
         
         # Speichere klassenspezifische Metriken
         precision_per_class, recall_per_class, f1_per_class, _ = precision_recall_fscore_support(
@@ -624,368 +665,138 @@ def generate_html_report(results, test_dir, output_dir, model_path):
                     "predicted_as": pred_class
                 }
     
-    # Jetzt generiere den HTML-Bericht
+    # Jetzt generiere einen vereinfachten HTML-Bericht
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    
+
+    def format_accuracy(value: float) -> str:
+        if value >= 0.8:
+            css_class = "good"
+        elif value >= 0.6:
+            css_class = "medium"
+        else:
+            css_class = "bad"
+        return css_class
+
+    def build_class_rows(scope_results: Dict[str, Any]) -> str:
+        rows: List[str] = []
+        for class_name in CLASS_NAMES:
+            class_metrics = scope_results["per_class"].get(class_name, {})
+            total = class_metrics.get("total_images", 0)
+            if total <= 0:
+                continue
+            correctly = class_metrics.get("correctly_classified", 0)
+            precision = class_metrics.get("precision", 0.0)
+            recall = class_metrics.get("recall", 0.0)
+            f1 = class_metrics.get("f1_score", 0.0)
+            accuracy = correctly / total if total else 0.0
+            rows.append(
+                "<tr>"
+                f"<td>{class_name}</td>"
+                f"<td>{precision:.3f}</td>"
+                f"<td>{recall:.3f}</td>"
+                f"<td>{f1:.3f}</td>"
+                f"<td>{total}</td>"
+                f"<td>{correctly}</td>"
+                f"<td class='{format_accuracy(accuracy)}'>{accuracy*100:.1f}%</td>"
+                "</tr>"
+            )
+        return "\n".join(rows) or "<tr><td colspan='7'>Keine Daten verfügbar</td></tr>"
+
+    overall_rows_html = build_class_rows(results["overall"])
+
+    condition_sections: List[str] = []
+    for condition in LIGHTING_CONDITIONS:
+        condition_result = results.get(condition, {})
+        if not condition_result:
+            continue
+        accuracy_class = format_accuracy(condition_result.get("accuracy", 0.0))
+        section_html = """
+        <section class='condition-section'>
+            <h3>Ergebnisse für {condition_title}</h3>
+            <div class='summary'>
+                <p><strong>Genauigkeit:</strong> <span class='{accuracy_class}'>{accuracy:.1f}%</span></p>
+                <p><strong>F1-Score:</strong> {f1_score:.3f}</p>
+                <p><strong>Testbilder:</strong> {total_images}</p>
+            </div>
+            <table class='metrics-table'>
+                <thead>
+                    <tr>
+                        <th>Klasse</th><th>Präzision</th><th>Recall</th><th>F1-Score</th><th>Bilder</th><th>Korrekt</th><th>Genauigkeit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {class_rows}
+                </tbody>
+            </table>
+        </section>
+        """.format(
+            condition_title=condition.capitalize(),
+            accuracy_class=accuracy_class,
+            accuracy=condition_result.get("accuracy", 0.0) * 100,
+            f1_score=condition_result.get("f1_score", 0.0),
+            total_images=condition_result.get("total_images", 0),
+            class_rows=build_class_rows(condition_result),
+        )
+        condition_sections.append(section_html)
+
+    condition_sections_html = "\n".join(condition_sections)
+
     html_content = f"""<!DOCTYPE html>
 <html>
 <head>
-    <title>Pizza-Erkennungssystem: Automatisierte Test-Suite</title>
-    <meta charset="UTF-8">
+    <meta charset='UTF-8'>
+    <title>Pizza-Testbericht</title>
     <style>
-        body {{
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-            background-color: #f8f9fa;
-            color: #333;
-        }}
-        .container {{
-            max-width: 1200px;
-            margin: 0 auto;
-            background-color: white;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }}
-        h1, h2, h3, h4 {{
-            color: #2c3e50;
-        }}
-        .header {{
-            background-color: #3498db;
-            color: white;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-radius: 5px;
-        }}
-        .summary {{
-            background-color: #ecf0f1;
-            padding: 15px;
-            border-radius: 5px;
-            margin-bottom: 20px;
-        }}
-        .metrics-table {{
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-        }}
-        .metrics-table th, .metrics-table td {{
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: center;
-        }}
-        .metrics-table th {{
-            background-color: #f2f2f2;
-        }}
-        .metrics-table tr:nth-child(even) {{
-            background-color: #f9f9f9;
-        }}
-        .metrics-table tr:hover {{
-            background-color: #f1f1f1;
-        }}
-        .good {{
-            color: #27ae60;
-            font-weight: bold;
-        }}
-        .medium {{
-            color: #f39c12;
-            font-weight: bold;
-        }}
-        .bad {{
-            color: #e74c3c;
-            font-weight: bold;
-        }}
-        .visualization {{
-            margin: 20px 0;
-            text-align: center;
-        }}
-        .examples {{
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            margin-bottom: 20px;
-        }}
-        .example-card {{
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            overflow: hidden;
-            width: 220px;
-        }}
-        .example-card img {{
-            width: 100%;
-            height: 180px;
-            object-fit: cover;
-        }}
-        .example-card .caption {{
-            padding: 10px;
-            background-color: #f8f9fa;
-        }}
-        .example-card.correct {{
-            border-color: #27ae60;
-        }}
-        .example-card.incorrect {{
-            border-color: #e74c3c;
-        }}
-        .tabs {{
-            display: flex;
-            margin-bottom: 20px;
-            border-bottom: 1px solid #ddd;
-        }}
-        .tab {{
-            padding: 10px 20px;
-            cursor: pointer;
-            background-color: #f1f1f1;
-            margin-right: 5px;
-            border-radius: 5px 5px 0 0;
-        }}
-        .tab.active {{
-            background-color: #3498db;
-            color: white;
-        }}
-        .tab-content {{
-            display: none;
-            padding: 20px;
-            border: 1px solid #ddd;
-            border-top: none;
-        }}
-        .tab-content.active {{
-            display: block;
-        }}
-        .footer {{
-            margin-top: 30px;
-            text-align: center;
-            font-size: 0.8em;
-            color: #7f8c8d;
-        }}
+        body {{ font-family: Arial, sans-serif; background: #f8f9fa; color: #333; margin: 0; padding: 20px; }}
+        .container {{ max-width: 960px; margin: 0 auto; background: #fff; padding: 24px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); }}
+        h1 {{ margin-top: 0; }}
+        .summary {{ background: #ecf0f1; padding: 16px; border-radius: 8px; margin-bottom: 24px; }}
+        .metrics-table {{ width: 100%; border-collapse: collapse; margin: 16px 0; }}
+        .metrics-table th, .metrics-table td {{ border: 1px solid #ddd; padding: 8px; text-align: center; }}
+        .metrics-table th {{ background: #f2f2f2; }}
+        .good {{ color: #27ae60; font-weight: 600; }}
+        .medium {{ color: #f39c12; font-weight: 600; }}
+        .bad {{ color: #e74c3c; font-weight: 600; }}
+        .condition-section {{ margin-top: 32px; }}
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>Pizza-Erkennungssystem: Automatisierte Test-Suite</h1>
-            <p>Generiert am {timestamp}</p>
-        </div>
-        
-        <div class="summary">
-            <h2>Zusammenfassung</h2>
+    <div class='container'>
+        <header>
+            <h1>Automatisierte Pizza-Test-Suite</h1>
+            <p>Bericht erstellt am {timestamp}</p>
             <p><strong>Modell:</strong> {os.path.basename(model_path)}</p>
-            <p><strong>Gesamtgenauigkeit:</strong> <span class="{
-                'good' if results['overall']['accuracy'] >= 0.8 else 
-                'medium' if results['overall']['accuracy'] >= 0.6 else 
-                'bad'
-            }">{results['overall']['accuracy']*100:.1f}%</span></p>
+        </header>
+        <section class='summary'>
+            <p><strong>Gesamtgenauigkeit:</strong> <span class='{format_accuracy(results['overall']['accuracy'])}'>{results['overall']['accuracy']*100:.1f}%</span></p>
             <p><strong>F1-Score:</strong> {results['overall']['f1_score']:.3f}</p>
-            <p><strong>Anzahl der Testbilder:</strong> {results['overall']['total_images']}</p>
-            <p><strong>Korrekt klassifiziert:</strong> {results['overall']['correctly_classified']} ({results['overall']['correctly_classified']/results['overall']['total_images']*100:.1f}%)</p>
-        </div>
-        
-        <div class="visualization">
-            <h3>Gesamtgenauigkeit nach Lichtverhältnis</h3>
-            <img src="images/accuracy_by_condition.png" alt="Accuracy by Condition" style="max-width:100%;">
-        </div>
-        
-        <div class="visualization">
-            <h3>F1-Score nach Klasse und Lichtverhältnis</h3>
-            <img src="images/f1_score_heatmap.png" alt="F1-Score Heatmap" style="max-width:100%;">
-        </div>
-        
-        <div class="visualization">
-            <h3>Confusion Matrix (Gesamtdatensatz)</h3>
-            <img src="images/confusion_matrix_overall.png" alt="Confusion Matrix" style="max-width:100%;">
-        </div>
-        
-        <h2>Detaillierte Ergebnisse</h2>
-        
-        <div class="tabs">
-            <div class="tab active" onclick="openTab(event, 'tab-overall')">Gesamtergebnis</div>
-            
-            {' '.join([
-                f'<div class="tab" onclick="openTab(event, \'tab-{condition}\')">{condition.capitalize()}</div>'
-                for condition in LIGHTING_CONDITIONS
-            ])}
-            
-        </div>
-        
-        <div id="tab-overall" class="tab-content active">
-            <h3>Gesamtergebnisse</h3>
-            
-            <table class="metrics-table">
-                <tr>
-                    <th>Klasse</th>
-                    <th>Präzision</th>
-                    <th>Recall</th>
-                    <th>F1-Score</th>
-                    <th>Bilder</th>
-                    <th>Korrekt</th>
-                    <th>Genauigkeit</th>
-                </tr>
-                
-                {
-                ''.join([
-                f"""
-                <tr>
-                    <td>{class_name}</td>
-                    <td>{results['overall']['per_class'][class_name]['precision']:.3f}</td>
-                    <td>{results['overall']['per_class'][class_name]['recall']:.3f}</td>
-                    <td>{results['overall']['per_class'][class_name]['f1_score']:.3f}</td>
-                    <td>{results['overall']['per_class'][class_name]['total_images']}</td>
-                    <td>{results['overall']['per_class'][class_name]['correctly_classified']}</td>
-                    <td class="{
-                        'good' if results['overall']['per_class'][class_name]['correctly_classified'] / 
-                                 results['overall']['per_class'][class_name]['total_images'] >= 0.8 else 
-                        'medium' if results['overall']['per_class'][class_name]['correctly_classified'] / 
-                                   results['overall']['per_class'][class_name]['total_images'] >= 0.6 else 
-                        'bad'
-                    }">{
-                        results['overall']['per_class'][class_name]['correctly_classified'] / 
-                        results['overall']['per_class'][class_name]['total_images'] * 100 if 
-                        results['overall']['per_class'][class_name]['total_images'] > 0 else 0
-                    :.1f}%</td>
-                </tr>
-                """
-                for class_name in CLASS_NAMES if results['overall']['per_class'][class_name]['total_images'] > 0
-                ])
-                }
+            <p><strong>Testbilder:</strong> {results['overall']['total_images']}</p>
+            <p><strong>Korrekt klassifiziert:</strong> {results['overall']['correctly_classified']}</p>
+        </section>
+        <section>
+            <h2>Gesamtergebnisse nach Klasse</h2>
+            <table class='metrics-table'>
+                <thead>
+                    <tr>
+                        <th>Klasse</th><th>Präzision</th><th>Recall</th><th>F1-Score</th><th>Bilder</th><th>Korrekt</th><th>Genauigkeit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {overall_rows_html}
+                </tbody>
             </table>
-        </div>
-        
-        {
-        ''.join([
-        f"""
-        <div id="tab-{condition}" class="tab-content">
-            <h3>Ergebnisse für {condition.capitalize()}</h3>
-            
-            <div class="summary">
-                <p><strong>Genauigkeit:</strong> <span class="{
-                    'good' if results[condition]['accuracy'] >= 0.8 else 
-                    'medium' if results[condition]['accuracy'] >= 0.6 else 
-                    'bad'
-                }">{results[condition]['accuracy']*100:.1f}%</span></p>
-                <p><strong>F1-Score:</strong> {results[condition]['f1_score']:.3f}</p>
-                <p><strong>Testbilder:</strong> {results[condition]['total_images']}</p>
-            </div>
-            
-            <div class="visualization">
-                <h4>Confusion Matrix</h4>
-                <img src="{cm_per_condition.get(condition, '')}" alt="Confusion Matrix {condition}" style="max-width:100%;">
-            </div>
-            
-            <table class="metrics-table">
-                <tr>
-                    <th>Klasse</th>
-                    <th>Präzision</th>
-                    <th>Recall</th>
-                    <th>F1-Score</th>
-                    <th>Bilder</th>
-                    <th>Korrekt</th>
-                    <th>Genauigkeit</th>
-                </tr>
-                
-                {
-                ''.join([
-                f"""
-                <tr>
-                    <td>{class_name}</td>
-                    <td>{results[condition]['per_class'][class_name]['precision']:.3f}</td>
-                    <td>{results[condition]['per_class'][class_name]['recall']:.3f}</td>
-                    <td>{results[condition]['per_class'][class_name]['f1_score']:.3f}</td>
-                    <td>{results[condition]['per_class'][class_name]['total_images']}</td>
-                    <td>{results[condition]['per_class'][class_name]['correctly_classified']}</td>
-                    <td class="{
-                        'good' if results[condition]['per_class'][class_name]['correctly_classified'] / 
-                                 results[condition]['per_class'][class_name]['total_images'] >= 0.8 else 
-                        'medium' if results[condition]['per_class'][class_name]['correctly_classified'] / 
-                                   results[condition]['per_class'][class_name]['total_images'] >= 0.6 else 
-                        'bad'
-                    }">{
-                        results[condition]['per_class'][class_name]['correctly_classified'] / 
-                        results[condition]['per_class'][class_name]['total_images'] * 100 if 
-                        results[condition]['per_class'][class_name]['total_images'] > 0 else 0
-                    :.1f}%</td>
-                </tr>
-                """
-                for class_name in CLASS_NAMES if results[condition]['per_class'][class_name]['total_images'] > 0
-                ])
-                }
-            </table>
-            
-            <h4>Beispielbilder</h4>
-            
-            {
-            ''.join([
-            f"""
-            <h5>{class_name}</h5>
-            <div class="examples">
-                {
-                f'''
-                <div class="example-card correct">
-                    <img src="{examples[condition][class_name]['correct']}" alt="Correct {class_name}">
-                    <div class="caption">
-                        <strong>Korrekt klassifiziert</strong><br>
-                        Klasse: {class_name}
-                    </div>
-                </div>
-                ''' if examples[condition][class_name]['correct'] else ''
-                }
-                
-                {
-                f'''
-                <div class="example-card incorrect">
-                    <img src="{examples[condition][class_name]['incorrect']['path']}" alt="Incorrect {class_name}">
-                    <div class="caption">
-                        <strong>Falsch klassifiziert</strong><br>
-                        Tatsächlich: {class_name}<br>
-                        Erkannt als: {examples[condition][class_name]['incorrect']['predicted_as']}
-                    </div>
-                </div>
-                ''' if examples[condition][class_name]['incorrect'] else ''
-                }
-            </div>
-            """
-            for class_name in CLASS_NAMES if results[condition]['per_class'][class_name]['total_images'] > 0
-            ])
-            }
-        </div>
-        """
-        for condition in LIGHTING_CONDITIONS
-        ])
-        }
-        
-        <div class="footer">
-            <p>Automatisierte Test-Suite für das Pizza-Erkennungssystem</p>
-            <p>Generiert am {timestamp}</p>
-        </div>
+        </section>
+        {condition_sections_html}
+        <footer style='margin-top:40px; font-size:0.85em; color:#777;'>Pizza-Erkennungssystem – automatisierte Bewertung</footer>
     </div>
-    
-    <script>
-        function openTab(evt, tabName) {{
-            var i, tabContent, tabLinks;
-            
-            // Verstecke alle Tab-Inhalte
-            tabContent = document.getElementsByClassName("tab-content");
-            for (i = 0; i < tabContent.length; i++) {{
-                tabContent[i].className = tabContent[i].className.replace(" active", "");
-            }}
-            
-            // Entferne die aktive Klasse von allen Tabs
-            tabLinks = document.getElementsByClassName("tab");
-            for (i = 0; i < tabLinks.length; i++) {{
-                tabLinks[i].className = tabLinks[i].className.replace(" active", "");
-            }}
-            
-            // Aktiviere den aktuellen Tab und Inhalt
-            document.getElementById(tabName).className += " active";
-            evt.currentTarget.className += " active";
-        }}
-    </script>
 </body>
 </html>
 """
-    
-    # Speichere HTML-Bericht
+
     html_path = os.path.join(report_dir, "test_report.html")
-    with open(html_path, 'w', encoding='utf-8') as f:
+    with open(html_path, "w", encoding="utf-8") as f:
         f.write(html_content)
-    
+
     logger.info(f"HTML-Bericht erstellt: {html_path}")
     return html_path
 

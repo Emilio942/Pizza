@@ -204,7 +204,7 @@ log "Generating final reports..."
 
 # Generate performance analysis
 log "Analyzing performance..."
-run_script "$PROJECT_ROOT/scripts/analyze_performance_logs.py" "false" "2" "--input=$LOG_DIR/pipeline.log" "--output-dir=$REPORTS_DIR" || \
+run_script "$PROJECT_ROOT/scripts/utility/analyze_performance_logs.py" "false" "2" "--input=$LOG_DIR/pipeline.log" "--output-dir=$REPORTS_DIR" || \
     warning_log "Performance analysis had issues, but continuing..."
 
 # Cleanup temporary files

@@ -1,0 +1,9 @@
+{
+  "model_name": "micropizzanetv2_pruned_s20",
+  "model_type": "pruned",
+  "sparsity": 0.2,
+  "model_path": "test_models/micropizzanetv2_pruned_s20.pth",
+  "parameters": 1572,
+  "model_size_kb": 6.140625,
+  "saved_at": "2025-11-27 15:30:35"
+}

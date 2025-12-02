@@ -316,7 +316,7 @@ class OV2640FirmwareWrapper:
         # Use the emulator's frame capture simulation
         width = 48
         height = 48
-        format_name = self.current_config['format']
+        format_name = str(self.current_config['format'])
         
         success = self.emulator.emulate_frame_capture(width, height, format_name)
         

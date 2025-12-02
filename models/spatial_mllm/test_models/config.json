@@ -1,0 +1,12 @@
+{
+  "model_type": "qwen2_vl",
+  "hidden_size": 3584,
+  "vocab_size": 152064,
+  "architectures": ["Qwen2VLForConditionalGeneration"],
+  "spatial_encoder": {
+    "type": "VGGT",
+    "input_channels": 4,
+    "output_features": 1024
+  },
+  "version": "test_v1.0"
+}

@@ -26,7 +26,7 @@ sys.path.append(str(project_root))
 from src.pizza_utils import (
     RP2040Config, preprocess_image, get_prediction
 )
-from src.pizza_detector import MicroPizzaNet
+from src.models.architectures import MicroPizzaNet
 from src.constants import (
     DEFAULT_CLASSES as CLASS_NAMES, PROJECT_ROOT, MODELS_DIR, INPUT_SIZE
 )

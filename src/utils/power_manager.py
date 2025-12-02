@@ -17,7 +17,7 @@ from .constants import (
     MAX_POWER_CONSUMPTION_MW,
     RP2040_CLOCK_SPEED_MHZ
 )
-from .metrics import PowerProfile
+from .types import PowerProfile
 
 logger = logging.getLogger(__name__)
 

@@ -85,6 +85,11 @@ class FrameBuffer:
             Anzahl der Bytes pro Zeile inklusive Padding
         """
         raw_row_bytes = self.width * self.bytes_per_pixel
+
+        # Graustufen-Framebuffer dürfen Byte-genau gepackt werden, um Speicher zu sparen.
+        if self.pixel_format == PixelFormat.GRAYSCALE:
+            return raw_row_bytes
+
         # Runde auf das nächste Vielfache von 4 auf (für 4-Byte-Ausrichtung)
         return (raw_row_bytes + 3) & ~3
     

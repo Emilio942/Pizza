@@ -1,0 +1,51 @@
+{
+  "deployment_timestamp": 1749385235.792861,
+  "rp2040_compatibility": {
+    "memory_constraints": {
+      "sram": 270336,
+      "flash": 2097152,
+      "available_for_model": 204800,
+      "stack_overhead": 32768
+    },
+    "cmsis_nn_config": {
+      "supported_operations": [
+        "conv2d",
+        "depthwise_conv2d",
+        "fully_connected",
+        "max_pool2d",
+        "avg_pool2d",
+        "relu",
+        "softmax"
+      ],
+      "quantization_schemes": [
+        "int8",
+        "int4"
+      ],
+      "optimization_level": "speed"
+    }
+  },
+  "deployment_results": {
+    "memory_optimization": {
+      "total_model_memory_bytes": 53192,
+      "fits_in_rp2040": true,
+      "memory_optimization_applied": false,
+      "optimizations": []
+    },
+    "cmsis_integration": {
+      "cmsis_integration_generated": true,
+      "inference_file": "firmware/pizza_verifier_inference.c",
+      "cmake_file": "firmware/CMakeLists.txt",
+      "example_file": "firmware/pizza_verifier_example.c",
+      "rp2040_compatible": true
+    }
+  },
+  "deployment_artifacts": [
+    "firmware/pizza_verifier_example.c",
+    "firmware/pizza_verifier_inference.c",
+    "firmware/CMakeLists.txt"
+  ],
+  "recommendations": [
+    "Model quantization failed - manual optimization required",
+    "Memory optimization successful - fits RP2040 constraints"
+  ]
+}

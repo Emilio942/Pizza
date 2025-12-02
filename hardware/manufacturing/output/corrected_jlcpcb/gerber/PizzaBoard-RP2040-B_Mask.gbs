@@ -13,7 +13,7 @@ G01*%
 G04 APERTURE LIST*%
 %ADD10C,0.900000*%
 G04 APERTURE END LIST*%
-G04 Via openings in back solder mask*%
+G04 Via openings*%
 %LPC*%
 D10*%
 X25000000Y15000000D03*%

@@ -22,7 +22,7 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-def test_basic_functionality():
+def run_basic_functionality():
     """Test basic adaptive duty-cycle functionality."""
     logger.info("Starting basic adaptive duty-cycle validation...")
     
@@ -126,7 +126,7 @@ def test_basic_functionality():
             emulator.close()
             logger.info("Emulator closed")
 
-def test_scenarios():
+def run_scenarios():
     """Test specific scenarios for different trigger patterns."""
     logger.info("\nTesting scenario patterns...")
     
@@ -197,14 +197,14 @@ def main():
     success = True
     
     # Run basic functionality tests
-    if test_basic_functionality():
+    if run_basic_functionality():
         logger.info("✓ Basic functionality tests passed")
     else:
         logger.error("✗ Basic functionality tests failed")
         success = False
     
     # Run scenario tests
-    if test_scenarios():
+    if run_scenarios():
         logger.info("✓ Scenario tests passed")
     else:
         logger.error("✗ Scenario tests failed")
@@ -228,3 +228,11 @@ def main():
 
 if __name__ == "__main__":
     exit(main())
+
+
+def test_basic_functionality():
+    assert run_basic_functionality()
+
+
+def test_scenarios():
+    assert run_scenarios()

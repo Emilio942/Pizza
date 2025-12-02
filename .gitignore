@@ -19,11 +19,22 @@ wheels/
 .installed.cfg
 *.egg
 
+# Build-/Testartefakte
+.pytest_cache/
+.coverage
+coverage/
+htmlcov/
+.cache/
+
 # Virtuelle Umgebungen
 .env
 .venv
 venv/
 ENV/
+
+# IDE-/Editor-Konfigurationen
+.idea/
+*.iml
 
 # VS Code und History
 .vscode/
@@ -36,6 +47,21 @@ output/logs/
 *.pth
 *.onnx
 *.tflite
+
+# Laufzeit-Outputs & Logs
+*.log
+log/
+logs/
+output/
+temp_output/
+temp_preprocessing/
+augmentation_test_results/
+augmented_pizza*/
+augmented_pizza_output*/
+
+# Sonstige Binär-/Zwischendateien
+*.bak
+*.tmp
 
 # Bild- und Mediendateien
 *.jpg

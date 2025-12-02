@@ -59,7 +59,7 @@ class TaskManager:
             task = session.query(Task).filter(Task.task_id == task_id.upper()).first()
             if task:
                 task.status = status
-                task.updated_at = datetime.now(timezone.UTC)
+                task.updated_at = datetime.now(timezone.utc)
                 session.commit()
                 session.refresh(task)
                 return task
@@ -70,7 +70,7 @@ class TaskManager:
             task = session.query(Task).filter(Task.task_id == task_id.upper()).first()
             if task:
                 task.priority = priority
-                task.updated_at = datetime.now(timezone.UTC)
+                task.updated_at = datetime.now(timezone.utc)
                 session.commit()
                 session.refresh(task)
                 return task
@@ -81,7 +81,7 @@ class TaskManager:
             task = session.query(Task).filter(Task.task_id == task_id.upper()).first()
             if task:
                 task.due_date = due_date
-                task.updated_at = datetime.now(timezone.UTC)
+                task.updated_at = datetime.now(timezone.utc)
                 session.commit()
                 session.refresh(task)
                 return task
@@ -92,7 +92,7 @@ class TaskManager:
             task = session.query(Task).filter(Task.task_id == task_id.upper()).first()
             if task:
                 task.notes = notes
-                task.updated_at = datetime.now(timezone.UTC)
+                task.updated_at = datetime.now(timezone.utc)
                 session.commit()
                 session.refresh(task)
                 return task

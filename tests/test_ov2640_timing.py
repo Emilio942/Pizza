@@ -38,7 +38,7 @@ def test_ov2640_initialization_and_capture():
         print("✓ Camera initialization successful")
     else:
         print("✗ Camera initialization failed")
-        return False
+        assert False, "Camera initialization failed"
     
     # Test 2: Frame capture (48x48 RGB565 for pizza detection)
     print("\n2. Testing frame capture sequence...")
@@ -48,7 +48,7 @@ def test_ov2640_initialization_and_capture():
         print("✓ Frame capture successful")
     else:
         print("✗ Frame capture failed")
-        return False
+        assert False, "Frame capture failed"
     
     # Test 3: Additional captures to test consistency
     print("\n3. Testing multiple captures...")
@@ -58,7 +58,7 @@ def test_ov2640_initialization_and_capture():
             print(f"✓ Capture {i+1} successful")
         else:
             print(f"✗ Capture {i+1} failed")
-            return False
+            assert False, f"Capture {i+1} failed"
     
     # Generate detailed timing analysis
     print("\n4. Generating detailed timing analysis...")
@@ -72,8 +72,6 @@ def test_ov2640_initialization_and_capture():
     print(f"- GPIO Events: {summary['gpio_events']}")
     print(f"- Frames Captured: {summary['frames_captured']}")
     print(f"- Registers Written: {summary['registers_written']}")
-    
-    return True
 
 def verify_log_content():
     """Verify that the log file contains expected content"""

@@ -1,14 +1,18 @@
-"""
-Simulation der Batterielebensdauer unter verschiedenen Betriebsbedingungen für das RP2040-basierte Pizza-Erkennungssystem.
-"""
+"""Simulationsskript für Batterielaufzeit und Leistungsprofile des Pizza-Systems."""
 
-import sys
-import os
-import numpy as np
-import matplotlib.pyplot as plt
-import time
-from pathlib import Path
+from __future__ import annotations
+
+import argparse
+import contextlib
+import io
 import json
+import os
+import sys
+from pathlib import Path
+from typing import Dict, List
+
+import matplotlib.pyplot as plt
+import numpy as np
 
 # Füge das Stammverzeichnis zum Python-Pfad hinzu
 current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -21,8 +25,8 @@ from src.constants import (
     RP2040_CLOCK_SPEED_MHZ
 )
 
-# Simulationsparameter
-OUTPUT_DIR = Path("/home/emilio/Documents/ai/pizza/output/simulations")
+# Standardausgabeordner relativ zum Projekt
+DEFAULT_OUTPUT_DIR = Path(project_root) / "output" / "simulations"
 
 # Batteriekonfigurationen
 BATTERY_CONFIGS = [
@@ -42,7 +46,7 @@ POWER_PROFILES = {
     "Inference Running": 100     # mA
 }
 
-def simulate_battery_life():
+def simulate_battery_life() -> Dict[str, List[float]]:
     """Simuliert Batterielebensdauer unter verschiedenen Betriebsbedingungen."""
     
     # Ergebnisstruktur
@@ -96,7 +100,7 @@ def simulate_battery_life():
     
     return results
 
-def simulate_cpu_clock_impact():
+def simulate_cpu_clock_impact() -> Dict[str, List[float]]:
     """Simuliert den Einfluss der CPU-Taktrate auf die Leistung und Batterielebensdauer."""
     
     # CPU-Frequenzen (MHz)
@@ -130,10 +134,10 @@ def simulate_cpu_clock_impact():
         "clock_speeds": clock_speeds,
         "inference_times": inference_times,
         "power_consumption": power_consumption,
-        "battery_life": battery_life
+        "battery_life": battery_life,
     }
 
-def plot_battery_results(results):
+def plot_battery_results(results: Dict[str, List[float]], output_dir: Path) -> Path:
     """Erstellt Diagramme der Batterielebensdauer-Simulationsergebnisse."""
     plt.figure(figsize=(15, 10))
     
@@ -178,13 +182,13 @@ def plot_battery_results(results):
     plt.tight_layout()
     
     # Speichere die Ergebnisse
-    output_path = OUTPUT_DIR / "battery_simulation.png"
+    output_path = output_dir / "battery_simulation.png"
     plt.savefig(output_path)
     plt.close()
     
     return output_path
 
-def plot_clock_speed_results(results):
+def plot_clock_speed_results(results: Dict[str, List[float]], output_dir: Path) -> Path:
     """Erstellt Diagramme der CPU-Taktrate-Simulationsergebnisse."""
     plt.figure(figsize=(15, 10))
     
@@ -225,38 +229,106 @@ def plot_clock_speed_results(results):
     plt.tight_layout()
     
     # Speichere die Ergebnisse
-    output_path = OUTPUT_DIR / "clock_speed_simulation.png"
+    output_path = output_dir / "clock_speed_simulation.png"
     plt.savefig(output_path)
     plt.close()
-    
+
     return output_path
+    
+def build_arg_parser() -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(
+        description="Simuliert Batterielaufzeiten und Leistungsprofile für das Pizza-Erkennungssystem",
+    )
+    parser.add_argument(
+        "--output",
+        type=Path,
+        default=DEFAULT_OUTPUT_DIR,
+        help="Verzeichnis für Diagramme und JSON-Ergebnisse (Standard: output/simulations)",
+    )
+    parser.add_argument(
+        "--battery-only",
+        action="store_true",
+        help="Nur Batterielaufzeit-Simulation durchführen",
+    )
+    parser.add_argument(
+        "--clock-only",
+        action="store_true",
+        help="Nur CPU-Taktratensimulation durchführen",
+    )
+    parser.add_argument(
+        "--skip-plots",
+        action="store_true",
+        help="Keine Diagramme erzeugen (nur Konsolenausgabe/JSON)",
+    )
+    parser.add_argument(
+        "--no-json",
+        action="store_true",
+        help="Kein JSON-Ergebnisfile speichern",
+    )
+    parser.add_argument(
+        "--quiet",
+        action="store_true",
+        help="Konsolenausgabe minimieren",
+    )
+    return parser
+
+
+def main() -> None:
+    parser = build_arg_parser()
+    args = parser.parse_args()
+
+    output_dir = args.output.expanduser().resolve()
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    run_battery = True
+    run_clock = True
+
+    if args.battery_only and args.clock_only:
+        parser.error("--battery-only und --clock-only können nicht gleichzeitig verwendet werden.")
+
+    if args.battery_only:
+        run_clock = False
+    if args.clock_only:
+        run_battery = False
+
+    results_data: Dict[str, Dict[str, List[float]]] = {}
+
+    if run_battery:
+        if not args.quiet:
+            print("Simuliere Batterielebensdauer unter verschiedenen Betriebsbedingungen...")
+        with contextlib.redirect_stdout(io.StringIO()) if args.quiet else contextlib.nullcontext():
+            battery_results = simulate_battery_life()
+        results_data["battery_simulation"] = battery_results
+        if not args.skip_plots:
+            battery_plot_path = plot_battery_results(battery_results, output_dir)
+            if not args.quiet:
+                print(f"Batterielebensdauer-Simulationsergebnisse gespeichert unter: {battery_plot_path}")
+
+    if run_clock:
+        if not args.quiet:
+            print("\nSimuliere den Einfluss der CPU-Taktrate auf Leistung und Batterielebensdauer...")
+        clock_results = simulate_cpu_clock_impact()
+        results_data["clock_speed_simulation"] = clock_results
+        if not args.skip_plots:
+            clock_plot_path = plot_clock_speed_results(clock_results, output_dir)
+            if not args.quiet:
+                print(f"CPU-Taktrate-Simulationsergebnisse gespeichert unter: {clock_plot_path}")
+
+    if not args.no_json and results_data:
+        results_path = output_dir / "power_simulation_results.json"
+        with open(results_path, "w", encoding="utf-8") as f:
+            json.dump(
+                {
+                    **results_data,
+                    "power_profiles": POWER_PROFILES,
+                    "battery_configs": BATTERY_CONFIGS,
+                },
+                f,
+                indent=2,
+            )
+        if not args.quiet:
+            print(f"Vollständige Simulationsergebnisse gespeichert unter: {results_path}")
+
 
 if __name__ == "__main__":
-    # Stelle sicher, dass der Ausgabeordner existiert
-    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-    
-    print("Simuliere Batterielebensdauer unter verschiedenen Betriebsbedingungen...")
-    battery_results = simulate_battery_life()
-    
-    battery_plot_path = plot_battery_results(battery_results)
-    print(f"Batterielebensdauer-Simulationsergebnisse gespeichert unter: {battery_plot_path}")
-    
-    print("\nSimuliere den Einfluss der CPU-Taktrate auf Leistung und Batterielebensdauer...")
-    clock_results = simulate_cpu_clock_impact()
-    
-    clock_plot_path = plot_clock_speed_results(clock_results)
-    print(f"CPU-Taktrate-Simulationsergebnisse gespeichert unter: {clock_plot_path}")
-    
-    # Speichere vollständige Simulationsergebnisse als JSON
-    results_data = {
-        "battery_simulation": battery_results,
-        "clock_speed_simulation": clock_results,
-        "power_profiles": POWER_PROFILES,
-        "battery_configs": BATTERY_CONFIGS
-    }
-    
-    results_path = OUTPUT_DIR / "power_simulation_results.json"
-    with open(results_path, 'w') as f:
-        json.dump(results_data, f, indent=2)
-    
-    print(f"Vollständige Simulationsergebnisse gespeichert unter: {results_path}")
+    main()

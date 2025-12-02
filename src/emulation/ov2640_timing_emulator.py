@@ -91,8 +91,8 @@ class OV2640TimingEmulator:
         
         # Current configuration
         self.current_bank = 0
-        self.registers = {}  # reg_bank_addr -> value
-        self.gpio_states = {}  # pin -> state
+        self.registers: Dict[str, int] = {}  # reg_bank_addr -> value
+        self.gpio_states: Dict[int, bool] = {}  # pin -> state
         
         # Timing constants from OV2640 datasheet (optimized for compliance)
         self.PWDN_DELAY_US = 1000      # 1ms power-up delay (within 1-10ms spec)

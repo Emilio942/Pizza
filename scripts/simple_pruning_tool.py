@@ -77,54 +77,35 @@ def simulate_pruning(sparsity):
         "sparsity": sparsity
     }
 
-def save_mock_model(sparsity, quantized=False, stats=None):
-    """Erstellt eine Mock-Modelldatei und einen Bericht"""
-    output_dir = Path(args.output_dir)
+def save_real_model(model, sparsity, output_dir):
+    """Saves the actual pruned model."""
+    output_dir = Path(output_dir)
     output_dir.mkdir(exist_ok=True, parents=True)
     
-    # Modelltyp und Name erstellen
-    model_type = "quantized" if quantized else "pruned"
-    model_name = f"micropizzanetv2_{model_type}_s{int(sparsity*100)}"
+    model_name = f"micropizzanetv2_pruned_s{int(sparsity*100)}"
     
-    # Simuliere das Speichern eines TFLite-Modells
-    tflite_path = output_dir / f"{model_name}.tflite"
+    # Save PyTorch model
+    torch_path = output_dir / f"{model_name}.pth"
+    torch.save(model.state_dict(), torch_path)
+    logger.info(f"Saved pruned model to {torch_path}")
     
-    # Erstelle leere Datei
-    with open(tflite_path, 'wb') as f:
-        # Erstelle eine minimale TFLite-Datei mit zufälligem Inhalt
-        f.write(os.urandom(int(stats["pruned_params"] * 4 * 0.25)))  # Zufällige Bytes als Platzhalter
-    
-    logger.info(f"Mock-Modelldatei erstellt: {tflite_path}")
-    
-    # Erstelle Bericht
-    report = {
-        "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-        "model_name": model_name,
-        "sparsity": sparsity,
-        "quantized": quantized,
-        "parameters": {
-            "original": stats["original_params"],
-            "pruned": stats["pruned_params"],
-            "reduction_percent": sparsity * 100
-        },
-        "model_path": str(tflite_path),
-        "inference_stats": {
-            "latency_ms": round(25 * (1 - sparsity*0.7)),  # Simulierte Latenz
-            "ram_usage_kb": round(11 * (1 - sparsity*0.6))  # Simulierte RAM-Nutzung
-        }
-    }
-    
-    # Speichere Bericht
-    report_dir = Path("output/model_optimization")
-    report_dir.mkdir(exist_ok=True, parents=True)
-    report_path = report_dir / f"pruning_report_s{int(sparsity*100)}.json"
-    
-    with open(report_path, 'w') as f:
-        json.dump(report, f, indent=2)
-    
-    logger.info(f"Pruning-Bericht erstellt: {report_path}")
-    
-    return report
+    # Export to ONNX (real export)
+    try:
+        onnx_path = output_dir / f"{model_name}.onnx"
+        dummy_input = torch.randn(1, 3, 48, 48).to(next(model.parameters()).device)
+        torch.onnx.export(
+            model, 
+            dummy_input, 
+            onnx_path,
+            input_names=['input'],
+            output_names=['output'],
+            dynamic_axes={'input': {0: 'batch_size'}, 'output': {0: 'batch_size'}}
+        )
+        logger.info(f"Exported ONNX model to {onnx_path}")
+    except Exception as e:
+        logger.error(f"Failed to export ONNX: {e}")
+
+    return torch_path
 
 def main():
     """Hauptfunktion"""
@@ -133,11 +114,45 @@ def main():
     
     start_time = time.time()
     
-    # Simuliere Pruning-Prozess
-    stats = simulate_pruning(args.sparsity)
-    
-    # Speichere Mock-Modell und Bericht
-    save_mock_model(args.sparsity, quantized=args.quantize, stats=stats)
+    # Load real model
+    try:
+        from src.pizza_detector import MicroPizzaNetV2
+        model = MicroPizzaNetV2(num_classes=6)
+        # Load weights if available, else random init
+        weights_path = "models/pizza_model_float32.pth"
+        if Path(weights_path).exists():
+            model.load_state_dict(torch.load(weights_path), strict=False)
+            logger.info(f"Loaded weights from {weights_path}")
+        else:
+            logger.warning("No weights found, using random initialization")
+            
+        # Perform real pruning (magnitude based)
+        import torch.nn.utils.prune as prune
+        
+        parameters_to_prune = []
+        for name, module in model.named_modules():
+            if isinstance(module, (torch.nn.Conv2d, torch.nn.Linear)):
+                parameters_to_prune.append((module, 'weight'))
+                
+        prune.global_unstructured(
+            parameters_to_prune,
+            pruning_method=prune.L1Unstructured,
+            amount=args.sparsity,
+        )
+        
+        # Make pruning permanent
+        for module, _ in parameters_to_prune:
+            prune.remove(module, 'weight')
+            
+        logger.info(f"Applied global unstructured pruning with sparsity {args.sparsity}")
+        
+        # Save real model
+        save_real_model(model, args.sparsity, args.output_dir)
+        
+    except Exception as e:
+        logger.error(f"Pruning failed: {e}")
+        import traceback
+        traceback.print_exc()
     
     # Ausgabe
     elapsed_time = time.time() - start_time

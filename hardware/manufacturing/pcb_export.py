@@ -88,6 +88,8 @@ logger = logging.getLogger("pcb_export")
 # Projekt-Verzeichnisse
 PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 SVG_PATH = PROJECT_ROOT / "docs" / "pcb-layout-updated.svg"
+# Prefer the real KiCad PCB file when available
+KICAD_PCB_PATH = PROJECT_ROOT / "hardware" / "eda" / "PizzaBoard-RP2040.kicad_pcb"
 MANUFACTURING_DIR = PROJECT_ROOT / "hardware" / "manufacturing"
 OUTPUT_DIR = MANUFACTURING_DIR / "output"
 
@@ -101,7 +103,7 @@ PCB_MANUFACTURERS = {
         "url": "https://jlcpcb.com/",
         "quote_calculator_url": "https://cart.jlcpcb.com/quote",
         "api_docs_url": "https://jlcpcb.com/api/",
-        "bom_format": ["Comment", "Designator", "Footprint", "Quantity"], # Standard KiCad BOM + Quantity
+    "bom_format": ["Comment", "Designator", "Footprint", "LCSC Part #", "Quantity"], # JLCPCB BOM requires LCSC Part #
         "cpl_format": ["Designator", "Val", "Package", "Mid X", "Mid Y", "Rotation", "Layer"], # Standard KiCad CPL
         "gerber_naming": {"top_copper": "gtl", "bottom_copper": "gbl", "drill": "txt"}, # Common JLCPCB names
         "api_available": True,
@@ -276,7 +278,8 @@ class PCBExportTool:
     """
     def __init__(self, svg_path: Path = SVG_PATH, 
                  output_dir: Path = OUTPUT_DIR,
-                 manufacturer: str = "jlcpcb"):
+                 manufacturer: str = "jlcpcb",
+                 kicad_pcb_path: Optional[Path] = KICAD_PCB_PATH):
         """
         Initialisiert das PCB-Export-Tool.
         
@@ -287,6 +290,8 @@ class PCBExportTool:
         """
         self.svg_path = svg_path
         self.output_dir = output_dir
+        # Remember KiCad PCB path if present for better exports
+        self.kicad_pcb_path = kicad_pcb_path if kicad_pcb_path and Path(kicad_pcb_path).exists() else None
         
         # Setze Hersteller
         if manufacturer.lower() not in PCB_MANUFACTURERS:
@@ -1048,11 +1053,14 @@ class PCBExportTool:
             input_file: Eingabedatei für die Gerber-Generierung (optional)
         """
         if not input_file:
-            # Erstelle eine temporäre KiCad PCB Datei als Eingabe
-            temp_file = self.mfg_dir / "temp_design.kicad_pcb"
-            if not self.export_to_kicad_pcb(temp_file):
-                return False
-            input_file = temp_file
+            # Prefer the real KiCad design if available; otherwise synthesize
+            if self.kicad_pcb_path and Path(self.kicad_pcb_path).exists():
+                input_file = self.kicad_pcb_path
+            else:
+                temp_file = self.mfg_dir / "temp_design.kicad_pcb"
+                if not self.export_to_kicad_pcb(temp_file):
+                    return False
+                input_file = temp_file
         
         # Prüfe verfügbare Tools und wähle das beste aus
         if self.available_tools.get("kicad", False):
@@ -1196,8 +1204,9 @@ quit()
             }
             
             # Erzeuge einfache Gerber-Dateien mit rechteckigem Board-Outline
-            board_width = 100  # 100mm
-            board_height = 100  # 100mm
+            # Use detected board size if available, otherwise default to 100x100mm
+            board_width = float(self.board_dimensions.get("width", 0) or 100)
+            board_height = float(self.board_dimensions.get("height", 0) or 100)
             
             # Erstelle Layer-Dateien mit Mindestinhalt
             for layer_name, filename in gerber_layers.items():
@@ -1390,18 +1399,20 @@ quit()
         4. Erstellt BOM und CPL
         5. Erstellt ein komplettes Fertigungspaket
         """
+        # Try to parse SVG for component and board info, but don't abort if missing
         if not self.parse_svg():
-            logger.error("Export abgebrochen: Fehler beim Parsen der SVG-Datei.")
-            return False
+            logger.warning("SVG konnte nicht geparst werden oder fehlt. Fahre mit KiCad-Datei/Fallback fort.")
         
         logger.info(f"Starte Export-Prozess für {self.manufacturer_info['name']}...")
         
         # Exportiere zu KiCad PCB (für bessere Kompatibilität)
         if not self.export_to_kicad_pcb():
-            logger.warning("Warnung: KiCad PCB konnte nicht erstellt werden.")
+            logger.warning("Warnung: KiCad PCB konnte nicht erstellt werden (synthetisch).")
         
         # Generiere Gerber-Dateien (mit externen Tools oder vereinfacht)
-        if not self.generate_gerber_with_external_tool():
+        # Prefer using the real KiCad PCB file if available
+        preferred_input = self.kicad_pcb_path if self.kicad_pcb_path and Path(self.kicad_pcb_path).exists() else None
+        if not self.generate_gerber_with_external_tool(preferred_input):
             logger.warning("Warnung: Gerber-Dateien konnten nicht mit externen Tools erstellt werden.")
             # Nutze Fallback-Methode
             if not self._create_simplified_gerber():
@@ -1837,13 +1848,10 @@ def main():
     if args.verbose:
         logger.setLevel(logging.DEBUG)
     
-    # Bestimme SVG-Pfad
+    # Bestimme SVG-Pfad (optional). Wenn nicht vorhanden, fahren wir mit KiCad/Fallback fort.
     svg_path = Path(args.svg) if args.svg else SVG_PATH
     if not svg_path.exists():
-        logger.error(f"SVG-Datei nicht gefunden: {svg_path}")
-        print("\nBitte geben Sie den korrekten Pfad zur SVG-Datei an:")
-        print("  python pcb_export.py --svg /pfad/zu/design.svg")
-        return 1
+        logger.warning(f"SVG-Datei nicht gefunden: {svg_path}. Fahre ohne SVG fort (Komponentenliste ggf. leer).")
     
     # Bestimme Ausgabeverzeichnis
     output_dir = Path(args.output) if args.output else OUTPUT_DIR

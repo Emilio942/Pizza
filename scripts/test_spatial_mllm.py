@@ -23,13 +23,28 @@ sys.path.append("/home/emilio/Documents/ai/Spatial-MLLM")
 try:
     from src.models import Qwen2_5_VL_VGGTForConditionalGeneration, Qwen2_5_VLProcessor
     from qwen_vl_utils import process_vision_info
+    SPATIAL_MLLM_AVAILABLE = True
 except ImportError as e:
+    import warnings
+
+    warnings.warn(
+        "Spatial-MLLM modules could not be imported. "
+        "Make sure the Spatial-MLLM repository is available and dependencies are installed."
+    )
     print(f"Error importing Spatial-MLLM modules: {e}")
-    print("Make sure the Spatial-MLLM repository is available and dependencies are installed")
-    sys.exit(1)
+    Qwen2_5_VL_VGGTForConditionalGeneration = None
+    Qwen2_5_VLProcessor = None
+    process_vision_info = None
+    SPATIAL_MLLM_AVAILABLE = False
 
 def load_spatial_mllm_model(model_path, device):
     """Load the pretrained Spatial-MLLM model"""
+    if not SPATIAL_MLLM_AVAILABLE:
+        raise RuntimeError(
+            "Spatial-MLLM dependencies are not available. "
+            "Clone the Spatial-MLLM repository and install its requirements to use this script."
+        )
+
     print(f"Loading Spatial-MLLM model from: {model_path}")
     start_time = time.time()
     
@@ -114,6 +129,13 @@ Respond in a structured format within <analysis></analysis> tags."""
 
 def inference_spatial_mllm(model, processor, image_path, device):
     """Run inference on a pizza image using Spatial-MLLM"""
+
+    if not SPATIAL_MLLM_AVAILABLE:
+        return {
+            "image_path": image_path,
+            "error": "Spatial-MLLM dependencies missing",
+            "success": False
+        }
     
     # Preprocess image to frames
     frames = preprocess_pizza_image(image_path)
@@ -358,6 +380,13 @@ def main():
     
     args = parser.parse_args()
     
+    if not SPATIAL_MLLM_AVAILABLE:
+        print(
+            "Spatial-MLLM dependencies are missing. "
+            "Install the Spatial-MLLM repository and try again."
+        )
+        return 1
+
     # Determine device
     if args.device == "auto":
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")

@@ -56,7 +56,6 @@ from transformers import CLIPImageProcessor, CLIPTextModel, CLIPTokenizer
 
 # Import project utilities if available
 try:
-    from src.utils.validation import validate_image_quality
     from src.integration.diffusion_data_agent import AgentConfig, DiffusionDataAgent
     PROJECT_UTILS_AVAILABLE = True
 except ImportError:
@@ -472,13 +471,6 @@ class PizzaDiffusionGenerator:
         Returns:
             Quality score between 0.0 and 1.0
         """
-        if PROJECT_UTILS_AVAILABLE:
-            try:
-                # Use the project's built-in image validation if available
-                return validate_image_quality(image)
-            except:
-                pass
-        
         # Fallback quality assessment implementation
         try:
             # Convert to numpy if needed

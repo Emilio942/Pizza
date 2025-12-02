@@ -15,7 +15,7 @@ project_root = Path(__file__).parent
 sys.path.append(str(project_root))
 
 # Import modules
-from src.pizza_detector import MicroPizzaNetV2
+from src.models.architectures import MicroPizzaNetV2
 from scripts.pruning_tool import create_pruned_model, quantize_model, save_pruned_model
 
 def test_pruning(sparsity=0.2):

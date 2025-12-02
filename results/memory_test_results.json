@@ -1,0 +1,87 @@
+{
+  "test_timestamp": 1749232683.9851153,
+  "config": {
+    "max_batch_size": 2,
+    "memory_threshold": 0.75,
+    "cleanup_frequency": 2
+  },
+  "performance": {
+    "total_time": 42.01868414878845,
+    "success_rate": 1.0,
+    "avg_time_per_image": 6.002669164112636,
+    "images_processed": 7
+  },
+  "memory_usage": {
+    "initial": {
+      "allocated_gb": 2.8301186561584473,
+      "reserved_gb": 3.166015625,
+      "total_gb": 11.63262939453125,
+      "free_gb": 8.802510738372803,
+      "utilization": 0.24329139699825278
+    },
+    "final": {
+      "allocated_gb": 2.8380537033081055,
+      "reserved_gb": 3.166015625,
+      "total_gb": 11.63262939453125,
+      "free_gb": 8.794575691223145,
+      "utilization": 0.24397353401822772
+    }
+  },
+  "stats": {
+    "total_operations": 7,
+    "memory_cleanups": 2,
+    "batch_size_adaptations": 0,
+    "oom_errors": 0
+  },
+  "results": [
+    {
+      "image": "challenging_basic_combined_013.jpg",
+      "prediction": "basic",
+      "success": true,
+      "processing_time": 6.33434534072876,
+      "memory_gb": 2.85205078125
+    },
+    {
+      "image": "test_burnt_challenging_uneven_angle_diagonal_blurry_20250520_211411_012.jpg",
+      "prediction": "basic",
+      "success": true,
+      "processing_time": 5.96295428276062,
+      "memory_gb": 2.85205078125
+    },
+    {
+      "image": "challenging_combined_lighting_bright_008.jpg",
+      "prediction": "basic",
+      "success": true,
+      "processing_time": 5.844164609909058,
+      "memory_gb": 2.85205078125
+    },
+    {
+      "image": "test_mixed_challenging_backlit_angle_diagonal_jpeg_artifact_20250520_211427_014.jpg",
+      "prediction": "basic",
+      "success": true,
+      "processing_time": 5.65825080871582,
+      "memory_gb": 2.85205078125
+    },
+    {
+      "image": "test_progression_challenging_backlit_angle_diagonal_blurry_20250520_211411_012.jpg",
+      "prediction": "basic",
+      "success": true,
+      "processing_time": 5.575778245925903,
+      "memory_gb": 2.85205078125
+    },
+    {
+      "image": "challenging_segment_lighting_contrast_015.jpg",
+      "prediction": "basic",
+      "success": true,
+      "processing_time": 5.570341110229492,
+      "memory_gb": 2.85205078125
+    },
+    {
+      "image": "sample_pizza_image.jpg",
+      "prediction": "basic",
+      "success": true,
+      "processing_time": 5.5800557136535645,
+      "memory_gb": 2.845053195953369
+    }
+  ]
+}

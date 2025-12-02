@@ -1,0 +1,237 @@
+# Spatial-MLLM Alerting Rules
+# Part of SPATIAL-4.2: Deployment-Pipeline erweitern
+
+groups:
+  - name: spatial_mllm_alerts
+    rules:
+      # API Health Alerts
+      - alert: SpatialAPIDown
+        expr: up{job="spatial-api"} == 0
+        for: 1m
+        labels:
+          severity: critical
+          service: spatial-api
+        annotations:
+          summary: "Spatial-MLLM API instance is down"
+          description: "API instance {{ $labels.instance }} has been down for more than 1 minute."
+          
+      - alert: SpatialAPIHighErrorRate
+        expr: rate(http_requests_total{job="spatial-api",status=~"5.."}[5m]) > 0.1
+        for: 2m
+        labels:
+          severity: warning
+          service: spatial-api
+        annotations:
+          summary: "High error rate in Spatial-MLLM API"
+          description: "API instance {{ $labels.instance }} has error rate above 10% for 2 minutes."
+          
+      # Performance Alerts
+      - alert: SpatialAPIHighLatency
+        expr: histogram_quantile(0.95, rate(http_request_duration_seconds_bucket{job="spatial-api"}[5m])) > 2
+        for: 3m
+        labels:
+          severity: warning
+          service: spatial-api
+        annotations:
+          summary: "High latency in Spatial-MLLM API"
+          description: "95th percentile latency is above 2 seconds on {{ $labels.instance }}."
+          
+      - alert: ModelInferenceTimeout
+        expr: rate(model_inference_timeouts_total[5m]) > 0.05
+        for: 2m
+        labels:
+          severity: warning
+          service: spatial-model
+        annotations:
+          summary: "Model inference timeouts detected"
+          description: "Model inference timeout rate is above 5% on {{ $labels.instance }}."
+          
+      # Resource Alerts
+      - alert: HighMemoryUsage
+        expr: (node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes) / node_memory_MemTotal_bytes > 0.9
+        for: 5m
+        labels:
+          severity: warning
+          service: system
+        annotations:
+          summary: "High memory usage detected"
+          description: "Memory usage is above 90% on {{ $labels.instance }}."
+          
+      - alert: HighCPUUsage
+        expr: 100 * (1 - avg by(instance)(rate(node_cpu_seconds_total{mode="idle"}[5m]))) > 80
+        for: 5m
+        labels:
+          severity: warning
+          service: system
+        annotations:
+          summary: "High CPU usage detected"
+          description: "CPU usage is above 80% on {{ $labels.instance }}."
+          
+      - alert: HighGPUMemoryUsage
+        expr: DCGM_FI_DEV_MEM_COPY_UTIL > 90
+        for: 2m
+        labels:
+          severity: warning
+          service: gpu
+        annotations:
+          summary: "High GPU memory usage"
+          description: "GPU memory usage is above 90% on {{ $labels.instance }}."
+          
+      - alert: GPUTemperatureHigh
+        expr: DCGM_FI_DEV_GPU_TEMP > 85
+        for: 3m
+        labels:
+          severity: critical
+          service: gpu
+        annotations:
+          summary: "GPU temperature too high"
+          description: "GPU temperature is above 85°C on {{ $labels.instance }}."
+          
+      # Model-specific Alerts
+      - alert: ModelLoadFailure
+        expr: increase(model_load_failures_total[5m]) > 0
+        for: 0m
+        labels:
+          severity: critical
+          service: spatial-model
+        annotations:
+          summary: "Model loading failures detected"
+          description: "Model loading failed on {{ $labels.instance }}."
+          
+      - alert: DualEncoderFailure
+        expr: increase(dual_encoder_failures_total[5m]) > 0
+        for: 0m
+        labels:
+          severity: critical
+          service: spatial-model
+        annotations:
+          summary: "Dual-encoder failures detected"
+          description: "Dual-encoder processing failed on {{ $labels.instance }}."
+          
+      - alert: ModelAccuracyDrop
+        expr: model_accuracy_score < 0.8
+        for: 5m
+        labels:
+          severity: warning
+          service: spatial-model
+        annotations:
+          summary: "Model accuracy below threshold"
+          description: "Model accuracy dropped below 80% on {{ $labels.instance }}."
+          
+      # Storage and Cache Alerts
+      - alert: DiskSpaceLow
+        expr: (node_filesystem_avail_bytes{fstype!="tmpfs"} / node_filesystem_size_bytes{fstype!="tmpfs"}) < 0.1
+        for: 5m
+        labels:
+          severity: warning
+          service: storage
+        annotations:
+          summary: "Low disk space"
+          description: "Disk space is below 10% on {{ $labels.instance }} filesystem {{ $labels.mountpoint }}."
+          
+      - alert: RedisDown
+        expr: up{job="redis"} == 0
+        for: 1m
+        labels:
+          severity: warning
+          service: cache
+        annotations:
+          summary: "Redis cache is down"
+          description: "Redis cache instance {{ $labels.instance }} is not responding."
+          
+      - alert: RedisCacheHitRateLow
+        expr: redis_keyspace_hits_total / (redis_keyspace_hits_total + redis_keyspace_misses_total) < 0.8
+        for: 5m
+        labels:
+          severity: warning
+          service: cache
+        annotations:
+          summary: "Low Redis cache hit rate"
+          description: "Redis cache hit rate is below 80% on {{ $labels.instance }}."
+          
+      # Load Balancer Alerts
+      - alert: NginxDown
+        expr: up{job="nginx"} == 0
+        for: 1m
+        labels:
+          severity: critical
+          service: load-balancer
+        annotations:
+          summary: "Nginx load balancer is down"
+          description: "Nginx load balancer {{ $labels.instance }} is not responding."
+          
+      - alert: HighConnectionCount
+        expr: nginx_connections_active > 1000
+        for: 5m
+        labels:
+          severity: warning
+          service: load-balancer
+        annotations:
+          summary: "High connection count on Nginx"
+          description: "Active connections exceed 1000 on {{ $labels.instance }}."
+
+  - name: spatial_performance_rules
+    rules:
+      # Performance Recording Rules
+      - record: spatial:api_request_rate
+        expr: rate(http_requests_total{job="spatial-api"}[5m])
+        
+      - record: spatial:api_error_rate
+        expr: rate(http_requests_total{job="spatial-api",status=~"5.."}[5m])
+        
+      - record: spatial:api_latency_p95
+        expr: histogram_quantile(0.95, rate(http_request_duration_seconds_bucket{job="spatial-api"}[5m]))
+        
+      - record: spatial:api_latency_p99
+        expr: histogram_quantile(0.99, rate(http_request_duration_seconds_bucket{job="spatial-api"}[5m]))
+        
+      - record: spatial:model_inference_rate
+        expr: rate(model_inference_requests_total[5m])
+        
+      - record: spatial:model_inference_duration_avg
+        expr: rate(model_inference_duration_seconds_sum[5m]) / rate(model_inference_duration_seconds_count[5m])
+        
+      - record: spatial:dual_encoder_success_rate
+        expr: rate(dual_encoder_success_total[5m]) / rate(dual_encoder_requests_total[5m])
+        
+      - record: spatial:memory_usage_percent
+        expr: (node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes) / node_memory_MemTotal_bytes * 100
+        
+      - record: spatial:cpu_usage_percent
+        expr: 100 * (1 - avg by(instance)(rate(node_cpu_seconds_total{mode="idle"}[5m])))
+        
+      - record: spatial:gpu_utilization_avg
+        expr: avg by(instance)(DCGM_FI_DEV_GPU_UTIL)
+
+  - name: spatial_business_rules
+    rules:
+      # Business Logic Alerts
+      - alert: HighPizzaProcessingFailures
+        expr: rate(pizza_processing_failures_total[5m]) > 0.05
+        for: 3m
+        labels:
+          severity: warning
+          service: business-logic
+        annotations:
+          summary: "High pizza processing failure rate"
+          description: "Pizza processing failure rate is above 5% on {{ $labels.instance }}."
+          
+      - alert: LowUserSatisfactionScore
+        expr: avg_over_time(user_satisfaction_score[30m]) < 4.0
+        for: 10m
+        labels:
+          severity: warning
+          service: business-logic
+        annotations:
+          summary: "Low user satisfaction score"
+          description: "Average user satisfaction score dropped below 4.0."
+          
+      - alert: UnusualImageUploadPattern
+        expr: rate(image_uploads_total[5m]) > 100 or rate(image_uploads_total[5m]) < 0.1
+        for: 5m
+        labels:
+          severity: info
+          service: business-logic
+        annotations:
+          summary: "Unusual image upload pattern detected"
+          description: "Image upload rate is outside normal range on {{ $labels.instance }}."

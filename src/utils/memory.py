@@ -4,7 +4,7 @@ Speichermanagement und Ressourcenschätzung für RP2040-Deployment.
 
 import torch
 import numpy as np
-from typing import Dict, Tuple, Optional
+from typing import Dict, Tuple, Optional, Union
 
 from .constants import (
     RP2040_FLASH_SIZE_KB,
@@ -13,7 +13,7 @@ from .constants import (
     CAMERA_HEIGHT,
     INPUT_SIZE
 )
-from .exceptions import ResourceError, HardwareError
+from src.exceptions import ResourceError, HardwareError
 from .types import HardwareSpecs
 
 class MemoryTracker:
@@ -73,7 +73,7 @@ class MemoryEstimator:
     @staticmethod
     def estimate_runtime_ram(
         model_size_kb: float,
-        input_size: Tuple[int, int] = INPUT_SIZE,  # Geändert: INPUT_SIZE direkt verwenden
+        input_size: Union[int, Tuple[int, int]] = INPUT_SIZE,
         rgb: bool = True
     ) -> float:
         """Schätzt RAM-Bedarf während der Inferenz."""
@@ -82,8 +82,12 @@ class MemoryEstimator:
         # Kamera-Framebuffer
         frame_buffer_kb = (CAMERA_WIDTH * CAMERA_HEIGHT * channels) / 1024
         
-        # Vorverarbeitungs-Buffer
-        preprocess_buffer_kb = (input_size[0] * input_size[1] * channels) / 1024
+        # Vorverarbeitungs-Buffer (unterstützt int oder (w,h))
+        if isinstance(input_size, int):
+            in_w, in_h = input_size, input_size
+        else:
+            in_w, in_h = input_size
+        preprocess_buffer_kb = (in_w * in_h * channels) / 1024
         
         # Aktivierungen (geschätzt als 2x Modellgröße)
         activations_kb = model_size_kb * 2

@@ -49,9 +49,9 @@ class TemperatureSensor:
         
         # Emulierte Sensorstatus-Variablen
         self.initialized = False
-        self.last_read_time = 0
+        self.last_read_time = 0.0
         self.readings_count = 0
-        self.reading_history = []  # Speichert bis zu 100 Messungen
+        self.reading_history: List[float] = []  # Speichert bis zu 100 Messungen
         
         # Sensorspezifische Attribute
         if sensor_type == SensorType.INTERNAL:

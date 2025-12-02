@@ -18,7 +18,7 @@ project_root = Path(__file__).parent
 sys.path.append(str(project_root))
 
 # Importiere benötigte Module
-from src.pizza_detector import MicroPizzaNetV2
+from src.models.architectures import MicroPizzaNetV2
 from scripts.pruning_tool import get_filter_importance, create_pruned_model, quantize_model
 
 # Logging konfigurieren

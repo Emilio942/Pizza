@@ -14,34 +14,69 @@ from torchvision.transforms import functional as TF
 import numpy as np
 from typing import List, Tuple, Dict, Any, Optional, Union
 
-from src.constants import IMAGE_MEAN, IMAGE_STD, INPUT_SIZE
+from src.constants import IMAGE_MEAN, IMAGE_STD, INPUT_SIZE, NUM_CLASSES
 
 
-def load_model(model_path: str, device: Optional[torch.device] = None) -> torch.nn.Module:
+def load_model(
+    model_path: str,
+    config: Optional[Any] = None,
+    *,
+    quantized: bool = False,
+    device: Optional[torch.device] = None,
+) -> torch.nn.Module:
+    """Load a pizza detection model from disk.
+
+    Supports both TorchScript (quantized) Artefakte und klassische
+    ``state_dict``-Gewichte. Die Signatur ist kompatibel mit der Test-Suite
+    und älteren Aufrufern.
     """
-    Load a pizza detection model from a path
-    
-    Args:
-        model_path: Path to the model file
-        device: Device to load the model on (cpu or cuda)
-        
-    Returns:
-        The loaded model
-    """
+
     if device is None:
         device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    
+
+    if not Path(model_path).exists():
+        raise FileNotFoundError(f"Model file not found: {model_path}")
+
+    load_errors: List[str] = []
+
+    # 1) Bevorzugt TorchScript laden (quantisierte Modelle)
     try:
-        # Load model
-        if Path(model_path).exists():
-            model = torch.jit.load(model_path, map_location=device)
-            model.eval()
-            return model
+        scripted_model = torch.jit.load(model_path, map_location=device)
+        scripted_model.eval()
+        return scripted_model
+    except Exception as exc:
+        load_errors.append(f"torch.jit.load failed: {exc}")
+
+    # 2) Fallback: klassisches PyTorch-Modell mit state_dict
+    try:
+        state = torch.load(model_path, map_location=device)
+
+        if isinstance(state, dict):
+            if 'state_dict' in state and isinstance(state['state_dict'], dict):
+                state = state['state_dict']
+            elif 'model_state_dict' in state and isinstance(state['model_state_dict'], dict):
+                state = state['model_state_dict']
+
+        # Bereits serialisiertes Modul?
+        if isinstance(state, torch.nn.Module):
+            model = state
         else:
-            raise FileNotFoundError(f"Model file not found: {model_path}")
-    except Exception as e:
-        print(f"Error loading model: {e}")
-        raise
+            from src.models.architectures import MicroPizzaNet  # Lazy import to avoid cycles
+
+            num_classes = getattr(config, 'NUM_CLASSES', NUM_CLASSES)
+            model = MicroPizzaNet(num_classes=num_classes)
+            model.load_state_dict(state)
+
+        model.to(device)
+        model.eval()
+        return model
+    except Exception as exc:
+        load_errors.append(f"torch.load state_dict failed: {exc}")
+
+    raise RuntimeError(
+        "Unable to load model. Tried TorchScript and state_dict paths: "
+        + " | ".join(load_errors)
+    )
 
 
 def preprocess_image(image_path: Union[str, Path], img_size: int = INPUT_SIZE) -> torch.Tensor:
@@ -71,8 +106,12 @@ def preprocess_image(image_path: Union[str, Path], img_size: int = INPUT_SIZE) -
     return img_tensor
 
 
-def get_prediction(model: torch.nn.Module, img_input: Union[str, torch.Tensor], 
-                  img_size: int = INPUT_SIZE, class_names: List[str] = None) -> Tuple[str, float]:
+def get_prediction(
+    model: torch.nn.Module,
+    img_input: Union[str, torch.Tensor],
+    img_size: int = INPUT_SIZE,
+    class_names: Optional[List[str]] = None,
+) -> Tuple[str, Dict[str, float]]:
     """
     Get prediction for an image
     
@@ -100,20 +139,20 @@ def get_prediction(model: torch.nn.Module, img_input: Union[str, torch.Tensor],
     # Perform inference
     with torch.no_grad():
         outputs = model(img_tensor)
-        probs = torch.nn.functional.softmax(outputs, dim=1)
-        confidence, predicted = torch.max(probs, 1)
-    
-    # Convert tensors to Python values
-    predicted_idx = predicted.item()
-    confidence_val = confidence.item()
-    
-    # Get class name
-    if class_names is not None:
-        predicted_class = class_names[predicted_idx]
-    else:
-        predicted_class = str(predicted_idx)
-    
-    return predicted_class, confidence_val
+        probs_tensor = torch.nn.functional.softmax(outputs, dim=1)[0]
+
+    if class_names is None:
+        class_names = [str(i) for i in range(probs_tensor.shape[0])]
+
+    probability_map: Dict[str, float] = {
+        name: probs_tensor[idx].item()
+        for idx, name in enumerate(class_names)
+    }
+
+    predicted_idx = int(torch.argmax(probs_tensor).item())
+    predicted_class = class_names[predicted_idx]
+
+    return predicted_class, probability_map
 
 
 def evaluate_model(model, data_loader, device=None, class_names=None):

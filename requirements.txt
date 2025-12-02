@@ -32,3 +32,8 @@ markdown>=3.3.0    # For documentation
 jq>=1.2.0          # For JSON processing
 onnx>=1.12.0       # For model optimization
 tensorflow>=2.9.0  # For model optimization
+
+# Added for 3D data generation
+trimesh>=3.23.5
+pyrender>=0.1.45
+pyglet>=2.0.10

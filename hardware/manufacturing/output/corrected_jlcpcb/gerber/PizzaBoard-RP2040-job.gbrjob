@@ -44,6 +44,16 @@
       "FilePolarity": "Positive"
     },
     {
+      "Path": "PizzaBoard-RP2040-F_Silkscreen.gto",
+      "FileFunction": "Legend,Top",
+      "FilePolarity": "Positive"
+    },
+    {
+      "Path": "PizzaBoard-RP2040-B_Silkscreen.gbo",
+      "FileFunction": "Legend,Bot",
+      "FilePolarity": "Positive"
+    },
+    {
       "Path": "PizzaBoard-RP2040-F_Mask.gts",
       "FileFunction": "SolderMask,Top",
       "FilePolarity": "Negative"
@@ -60,6 +70,10 @@
     }
   ],
   "MaterialStackup": [
+    {
+      "Type": "Legend",
+      "Name": "Top Silk Screen"
+    },
     {
       "Type": "SolderMask",
       "Thickness": 0.01,
@@ -86,6 +100,10 @@
       "Type": "SolderMask",
       "Thickness": 0.01,
       "Name": "Bottom Solder Mask"
+    },
+    {
+      "Type": "Legend",
+      "Name": "Bottom Silk Screen"
     }
   ]
 }

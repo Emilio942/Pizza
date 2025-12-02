@@ -48,17 +48,36 @@ Ein minimalistisches Bilderkennungssystem für den RP2040 Mikrocontroller zur Er
 
 ## Installation
 
-1. Python-Umgebung einrichten (Python 3.8+ erforderlich):
+### Automatische Einrichtung (Empfohlen)
+Wir stellen ein Skript bereit, das Systemabhängigkeiten prüft und die Umgebung einrichtet:
+
 ```bash
-python -m venv venv
-source venv/bin/activate  # Linux/Mac
-# oder
-venv\Scripts\activate     # Windows
+./setup_env.sh
+source .venv/bin/activate
 ```
 
-2. Abhängigkeiten installieren:
+### Manuelle Installation
+
+1. Systemabhängigkeiten installieren (Linux/Debian):
+   Für 3D-Generierung und Bildverarbeitung werden Systembibliotheken benötigt:
+   ```bash
+   sudo apt-get update
+   sudo apt-get install libosmesa6-dev libgl1-mesa-glx libglib2.0-0
+   ```
+
+2. Python-Umgebung einrichten (Python 3.8+ erforderlich):
+```bash
+python -m venv .venv
+source .venv/bin/activate  # Linux/Mac
+# oder
+.venv\Scripts\activate     # Windows
+```
+
+3. Abhängigkeiten installieren:
 ```bash
 pip install -r requirements.txt
+# Optional für 3D-Funktionen:
+pip install -r requirements_spatial.txt
 ```
 
 ## Verwendung

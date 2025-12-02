@@ -53,7 +53,7 @@ def plot_inference_result(
     colors = [CLASS_COLORS[c] for c in classes]
     
     y_pos = np.arange(len(classes))
-    plt.barh(y_pos, probs, color=[np.array(c)/255 for c in colors])
+    plt.barh(y_pos, probs, color=colors)
     plt.yticks(y_pos, classes)
     plt.xlabel('Wahrscheinlichkeit')
     plt.title('Klassenwahrscheinlichkeiten')
@@ -149,13 +149,13 @@ def plot_resource_usage(
 
     fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(12, 8))
     
-    ax1.plot(timestamps, ram, label='RAM (KB)', color=COLOR_PALETTE['basic'])
-    ax1.plot(timestamps, flash, label='Flash (KB)', color=COLOR_PALETTE['burnt'])
+    ax1.plot(timestamps, ram, label='RAM (KB)', color=COLOR_PALETTE[0])
+    ax1.plot(timestamps, flash, label='Flash (KB)', color=COLOR_PALETTE[1])
     ax1.set_ylabel('Speichernutzung (KB)')
     ax1.legend()
     
-    ax2.plot(timestamps, cpu, label='CPU (%)', color=COLOR_PALETTE['perfect'])
-    ax2.plot(timestamps, power, label='Leistung (mW)', color=COLOR_PALETTE['undercooked'])
+    ax2.plot(timestamps, cpu, label='CPU (%)', color=COLOR_PALETTE[2])
+    ax2.plot(timestamps, power, label='Leistung (mW)', color=COLOR_PALETTE[3])
     ax2.set_xlabel('Zeit')
     ax2.set_ylabel('CPU & Leistung')
     ax2.legend()
@@ -317,7 +317,12 @@ def annotate_image(
     annotated = image.copy()
     
     # Rahmenfarbe basierend auf Klasse
-    color = CLASS_COLORS[result.class_name]
+    hex_color = CLASS_COLORS.get(result.class_name, "#FFFFFF")
+    # Convert hex to BGR for OpenCV
+    r = int(hex_color[1:3], 16)
+    g = int(hex_color[3:5], 16)
+    b = int(hex_color[5:7], 16)
+    color = (b, g, r)
     
     # Zeichne Rahmen
     height, width = image.shape[:2]
@@ -410,10 +415,10 @@ def plot_metrics_comparison(
     width = 0.2
 
     plt.figure(figsize=FIGURE_SIZE)
-    plt.bar(x - width*1.5, accuracy, width, label='Accuracy', color=COLOR_PALETTE['basic'])
-    plt.bar(x - width/2, precision, width, label='Precision', color=COLOR_PALETTE['burnt'])
-    plt.bar(x + width/2, recall, width, label='Recall', color=COLOR_PALETTE['undercooked'])
-    plt.bar(x + width*1.5, f1, width, label='F1', color=COLOR_PALETTE['perfect'])
+    plt.bar(x - width*1.5, accuracy, width, label='Accuracy', color=COLOR_PALETTE[0])
+    plt.bar(x - width/2, precision, width, label='Precision', color=COLOR_PALETTE[1])
+    plt.bar(x + width/2, recall, width, label='Recall', color=COLOR_PALETTE[2])
+    plt.bar(x + width*1.5, f1, width, label='F1', color=COLOR_PALETTE[3])
 
     plt.xlabel('Modell')
     plt.ylabel('Metrik-Wert')

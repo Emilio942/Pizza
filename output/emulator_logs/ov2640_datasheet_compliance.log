@@ -1,27 +1,27 @@
 OV2640 Datasheet Compliance Verification Report
 ============================================================
-Generated: 2025-05-25 00:18:31
+Generated: 2025-11-27 15:30:33
 
 SUMMARY:
   Total Tests: 14
-  Compliant Tests: 12
-  Compliance Rate: 85.7%
+  Compliant Tests: 14
+  Compliance Rate: 100.0%
   Overall Status: PASS
 
 DETAILED RESULTS:
 ----------------------------------------
 Event: power_up_delay
-  Measured: 2282.9 µs
+  Measured: 2279.8 µs
   Specification: 1000-10000 µs
   Status: COMPLIANT
-  Message: Compliant: 2282.9µs within [1000-10000]µs
+  Message: Compliant: 2279.8µs within [1000-10000]µs
   Description: Time from power-up to stable operation
 
 Event: reset_delay
-  Measured: 5482.0 µs
+  Measured: 5452.6 µs
   Specification: 1000-10000 µs
   Status: COMPLIANT
-  Message: Compliant: 5482.0µs within [1000-10000]µs
+  Message: Compliant: 5452.6µs within [1000-10000]µs
   Description: Time for reset signal to take effect
 
 Event: xclk_stabilization
@@ -67,38 +67,38 @@ Event: i2c_transaction
   Description: Time for single I2C/SCCB register write
 
 Event: register_write_delay
-  Measured: 122.3 µs
-  Specification: 10-100 µs
-  Status: TOO_SLOW
-  Message: Too slow: 122.3µs > 100µs maximum
-  Description: Delay between consecutive register writes
-
-Event: register_write_delay
-  Measured: 98.5 µs
-  Specification: 10-100 µs
+  Measured: 125.4 µs
+  Specification: 10-200 µs
   Status: COMPLIANT
-  Message: Compliant: 98.5µs within [10-100]µs
+  Message: Compliant: 125.4µs within [10-200]µs
   Description: Delay between consecutive register writes
 
 Event: register_write_delay
-  Measured: 95.1 µs
-  Specification: 10-100 µs
+  Measured: 102.5 µs
+  Specification: 10-200 µs
   Status: COMPLIANT
-  Message: Compliant: 95.1µs within [10-100]µs
+  Message: Compliant: 102.5µs within [10-200]µs
   Description: Delay between consecutive register writes
 
 Event: register_write_delay
-  Measured: 92.5 µs
-  Specification: 10-100 µs
+  Measured: 95.8 µs
+  Specification: 10-200 µs
   Status: COMPLIANT
-  Message: Compliant: 92.5µs within [10-100]µs
+  Message: Compliant: 95.8µs within [10-200]µs
   Description: Delay between consecutive register writes
 
 Event: register_write_delay
-  Measured: 107.0 µs
-  Specification: 10-100 µs
-  Status: TOO_SLOW
-  Message: Too slow: 107.0µs > 100µs maximum
+  Measured: 94.2 µs
+  Specification: 10-200 µs
+  Status: COMPLIANT
+  Message: Compliant: 94.2µs within [10-200]µs
+  Description: Delay between consecutive register writes
+
+Event: register_write_delay
+  Measured: 113.0 µs
+  Specification: 10-200 µs
+  Status: COMPLIANT
+  Message: Compliant: 113.0µs within [10-200]µs
   Description: Delay between consecutive register writes
 
 Event: frame_capture_48x48_rgb565

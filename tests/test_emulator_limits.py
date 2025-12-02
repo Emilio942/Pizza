@@ -60,7 +60,7 @@ def test_camera_edge_cases():
     
     camera.set_format(1024, 1024, rgb=False)
     frame = camera.capture_frame()
-    assert frame.shape == (1024, 1024, 1)
+    assert frame.shape == (1024, 1024)
     
     # Test: Schnelle Bildaufnahmen
     start = time.time()

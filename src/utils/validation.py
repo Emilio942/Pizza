@@ -24,7 +24,7 @@ from .constants import (
     IMAGE_EXTENSIONS,
     CLASS_NAMES
 )
-from .exceptions import (
+from src.exceptions import (
     InvalidInputError,
     ConfigError,
     ResourceError,

@@ -8,7 +8,7 @@ from typing import Dict, Optional, Tuple
 from enum import Enum
 import numpy as np
 
-from .exceptions import HardwareError
+from src.exceptions import HardwareError
 from .constants import (
     CAMERA_WIDTH, CAMERA_HEIGHT, CAMERA_FPS,
     RP2040_FLASH_SIZE_KB, RP2040_RAM_SIZE_KB
