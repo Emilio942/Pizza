@@ -1,0 +1,16 @@
+{
+  "original_file": "augmented_pizza_legacy/pizza_1_basic_8_0.jpg",
+  "augmentation_types": [
+    "geometric_pizza_reshaping",
+    "enhanced_burning",
+    "enhanced_mixed"
+  ],
+  "spatial_features_original": {
+    "depth_variance": 0.025633351877331734,
+    "surface_roughness": 0.2728767395019531,
+    "edge_density": 0.0024386360310018063,
+    "spatial_complexity": 0.04570533335208893,
+    "dominant_depth_regions": [
+      [
+        0.15415691477467539,
+        

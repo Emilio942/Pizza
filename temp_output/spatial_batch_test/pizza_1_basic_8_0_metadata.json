@@ -1,0 +1,57 @@
+{
+  "original_file": "augmented_pizza_legacy/pizza_1_basic_8_0.jpg",
+  "augmentation_types": [
+    "perspective_3d",
+    "depth_based_lighting"
+  ],
+  "spatial_features_original": {
+    "depth_variance": 3.1954131383310673,
+    "surface_roughness": 0.09231979340214762,
+    "edge_density": 0.34990533832232673,
+    "spatial_complexity": 3.672352958995965,
+    "dominant_depth_regions": [
+      [
+        0.3,
+        0.3,
+        0.4
+      ]
+    ],
+    "surface_texture_complexity": 0.11194209179314005
+  },
+  "spatial_features_augmented": [
+    {
+      "depth_variance": 19.770436432417306,
+      "surface_roughness": 0.10011126093948286,
+      "edge_density": 0.25784126652852524,
+      "spatial_complexity": 20.20788259802342,
+      "dominant_depth_regions": [
+        [
+          0.3,
+          0.3,
+          0.4
+        ]
+      ],
+      "surface_texture_complexity": 0.2784441115634906
+    },
+    {
+      "depth_variance": 3.5552208734985293,
+      "surface_roughness": 0.09738113912895953,
+      "edge_density": 0.35105693117276127,
+      "spatial_complexity": 4.032521577717918,
+      "dominant_depth_regions": [
+        [
+          0.3,
+          0.3,
+          0.4
+        ]
+      ],
+      "surface_texture_complexity": 0.11807642711892456
+    }
+  ],
+  "quality_scores": [
+    0.37423768257584666,
+    0.9860014411383865
+  ],
+  "spatial_consistency_score": 0.719579840197861,
+  "processing_time": 0.03038763999938965
+}

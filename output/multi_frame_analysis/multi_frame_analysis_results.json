@@ -1,0 +1,43 @@
+{
+  "timestamp": "2025-06-07T11:38:38.408326",
+  "config": {
+    "fps": 2.0,
+    "spatial_resolution": [
+      518,
+      518
+    ],
+    "target_frames": 8
+  },
+  "scenarios": [
+    {
+      "video_id": "normal_baking",
+      "total_frames": 60,
+      "duration": 29.5,
+      "quality_trend": "stable",
+      "temporal_consistency": 0.9691946860414397,
+      "burn_frames_count": 2,
+      "optimal_frame": 45,
+      "sampling_method": "space_aware"
+    },
+    {
+      "video_id": "fast_baking",
+      "total_frames": 40,
+      "duration": 19.5,
+      "quality_trend": "stable",
+      "temporal_consistency": 0.9720107631358818,
+      "burn_frames_count": 1,
+      "optimal_frame": 30,
+      "sampling_method": "adaptive"
+    },
+    {
+      "video_id": "slow_baking",
+      "total_frames": 90,
+      "duration": 44.5,
+      "quality_trend": "stable",
+      "temporal_consistency": 0.9729597572975839,
+      "burn_frames_count": 2,
+      "optimal_frame": 67,
+      "sampling_method": "uniform"
+    }
+  ]
+}

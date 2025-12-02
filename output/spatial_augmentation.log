@@ -1,0 +1,409 @@
+2025-06-07 12:03:29,333 - WARNING - Could not import spatial infrastructure: cannot import name 'SpatialProcessingResult' from 'spatial_preprocessing' (/home/emilio/Documents/ai/pizza/scripts/spatial_preprocessing.py)
+2025-06-07 12:03:29,333 - WARNING - Could not import enhanced augmentation: No module named 'enhanced_pizza_augmentation'
+2025-06-07 12:17:29,427 - INFO - Successfully imported spatial processing infrastructure
+2025-06-07 12:17:29,432 - INFO - Successfully imported enhanced augmentation pipeline
+2025-06-07 12:17:53,782 - INFO - Successfully imported spatial processing infrastructure
+2025-06-07 12:17:53,783 - INFO - Successfully imported enhanced augmentation pipeline
+2025-06-07 12:17:53,784 - INFO - Initialized transform pipelines for dual-encoder preprocessing
+2025-06-07 12:17:54,944 - WARNING - Failed to load MiDaS model: No module named 'timm'
+2025-06-07 12:17:54,944 - INFO - Falling back to edge-based depth estimation
+2025-06-07 12:17:54,944 - INFO - Edge-based depth estimation initialized
+2025-06-07 12:17:54,944 - INFO - Initialized SpatialPreprocessingPipeline with output_size=(518, 518), depth_method=monocular
+2025-06-07 12:17:54,945 - INFO - Initialized transform pipelines for dual-encoder preprocessing
+2025-06-07 12:17:54,945 - INFO - Edge-based depth estimation initialized
+2025-06-07 12:17:54,945 - INFO - Initialized SpatialPreprocessingPipeline with output_size=(518, 518), depth_method=edge_based
+2025-06-07 12:17:54,945 - INFO - ✅ Spatial preprocessing pipeline loaded
+2025-06-07 12:17:56,603 - INFO - set VIDEO_TOTAL_PIXELS: 90316800
+2025-06-07 12:17:56,641 - INFO - ✅ Initialized OptimizedSpatialInference on cuda
+2025-06-07 12:17:56,641 - INFO - ✅ Spatial inference system loaded
+2025-06-07 12:17:56,641 - INFO - Initialized Spatial-Aware Augmentation Pipeline with config: SpatialAugmentationConfig(perspective_distortion_range=(0.1, 0.4), depth_variation_intensity=0.3, lighting_3d_aware=True, spatial_feature_guidance=True, synthetic_depth_variations=5, spatial_complexity_threshold=0.5, quality_evaluation_enabled=True, output_variations_per_image=3, spatial_resolution=(518, 518), preserve_spatial_features=True, use_existing_augmentation=True, fallback_to_standard=True)
+2025-06-07 12:17:56,641 - INFO - Testing with single image: augmented_pizza_legacy/pizza_0_basic_0_0.jpg
+2025-06-07 12:17:56,659 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=518x518 at 0x7E3A1FD0FC80>: 'Image' object has no attribute 'read'
+2025-06-07 12:17:56,659 - WARNING - Spatial feature extraction failed: 'dict' object has no attribute 'spatial_data', using fallback
+2025-06-07 12:17:56,672 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=518x518 at 0x7E39CEDFA960>: 'Image' object has no attribute 'read'
+2025-06-07 12:17:56,672 - WARNING - Spatial feature extraction failed: 'dict' object has no attribute 'spatial_data', using fallback
+2025-06-07 12:17:56,692 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=518x518 at 0x7E39D244B050>: 'Image' object has no attribute 'read'
+2025-06-07 12:17:56,692 - WARNING - Spatial feature extraction failed: 'dict' object has no attribute 'spatial_data', using fallback
+2025-06-07 12:17:56,711 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=518x518 at 0x7E39D2417590>: 'Image' object has no attribute 'read'
+2025-06-07 12:17:56,711 - WARNING - Spatial feature extraction failed: 'dict' object has no attribute 'spatial_data', using fallback
+2025-06-07 12:17:56,720 - INFO - Single image augmentation results:
+2025-06-07 12:17:56,720 - INFO -   - Original image: augmented_pizza_legacy/pizza_0_basic_0_0.jpg
+2025-06-07 12:17:56,720 - INFO -   - Generated variations: 3
+2025-06-07 12:17:56,720 - INFO -   - Augmentation types: ['perspective_3d', 'depth_based_lighting', 'volumetric_texture_mapping']
+2025-06-07 12:17:56,720 - INFO -   - Average quality score: 0.776
+2025-06-07 12:17:56,720 - INFO -   - Spatial consistency: 0.759
+2025-06-07 12:17:56,720 - INFO -   - Processing time: 0.078s
+2025-06-07 12:17:56,727 - INFO - Test results saved to temp_output/spatial_augmentation_test/single_image_test
+2025-06-07 12:19:31,378 - INFO - Successfully imported spatial processing infrastructure
+2025-06-07 12:19:31,379 - INFO - Successfully imported enhanced augmentation pipeline
+2025-06-07 12:19:31,380 - INFO - Initialized transform pipelines for dual-encoder preprocessing
+2025-06-07 12:19:35,581 - WARNING - Failed to load MiDaS model: No module named 'timm'
+2025-06-07 12:19:35,581 - INFO - Falling back to edge-based depth estimation
+2025-06-07 12:19:35,581 - INFO - Edge-based depth estimation initialized
+2025-06-07 12:19:35,581 - INFO - Initialized SpatialPreprocessingPipeline with output_size=(518, 518), depth_method=monocular
+2025-06-07 12:19:35,582 - INFO - Initialized transform pipelines for dual-encoder preprocessing
+2025-06-07 12:19:35,582 - INFO - Edge-based depth estimation initialized
+2025-06-07 12:19:35,582 - INFO - Initialized SpatialPreprocessingPipeline with output_size=(518, 518), depth_method=edge_based
+2025-06-07 12:19:35,582 - INFO - ✅ Spatial preprocessing pipeline loaded
+2025-06-07 12:19:37,117 - INFO - set VIDEO_TOTAL_PIXELS: 90316800
+2025-06-07 12:19:37,159 - INFO - ✅ Initialized OptimizedSpatialInference on cuda
+2025-06-07 12:19:37,159 - INFO - ✅ Spatial inference system loaded
+2025-06-07 12:19:37,159 - INFO - Initialized Spatial-Aware Augmentation Pipeline with config: SpatialAugmentationConfig(perspective_distortion_range=(0.1, 0.4), depth_variation_intensity=0.3, lighting_3d_aware=True, spatial_feature_guidance=True, synthetic_depth_variations=5, spatial_complexity_threshold=0.5, quality_evaluation_enabled=True, output_variations_per_image=2, spatial_resolution=(518, 518), preserve_spatial_features=True, use_existing_augmentation=True, fallback_to_standard=True)
+2025-06-07 12:20:28,537 - INFO - Successfully imported spatial processing infrastructure
+2025-06-07 12:20:28,538 - INFO - Successfully imported enhanced augmentation pipeline
+2025-06-07 12:20:28,540 - INFO - Initialized transform pipelines for dual-encoder preprocessing
+2025-06-07 12:20:28,992 - WARNING - Failed to load MiDaS model: No module named 'timm'
+2025-06-07 12:20:28,992 - INFO - Falling back to edge-based depth estimation
+2025-06-07 12:20:28,992 - INFO - Edge-based depth estimation initialized
+2025-06-07 12:20:28,992 - INFO - Initialized SpatialPreprocessingPipeline with output_size=(518, 518), depth_method=monocular
+2025-06-07 12:20:28,993 - INFO - Initialized transform pipelines for dual-encoder preprocessing
+2025-06-07 12:20:28,993 - INFO - Edge-based depth estimation initialized
+2025-06-07 12:20:28,993 - INFO - Initialized SpatialPreprocessingPipeline with output_size=(518, 518), depth_method=edge_based
+2025-06-07 12:20:28,993 - INFO - ✅ Spatial preprocessing pipeline loaded
+2025-06-07 12:20:30,670 - INFO - set VIDEO_TOTAL_PIXELS: 90316800
+2025-06-07 12:20:30,707 - INFO - ✅ Initialized OptimizedSpatialInference on cuda
+2025-06-07 12:20:30,707 - INFO - ✅ Spatial inference system loaded
+2025-06-07 12:20:30,707 - INFO - Initialized Spatial-Aware Augmentation Pipeline with config: SpatialAugmentationConfig(perspective_distortion_range=(0.1, 0.4), depth_variation_intensity=0.3, lighting_3d_aware=True, spatial_feature_guidance=True, synthetic_depth_variations=5, spatial_complexity_threshold=0.5, quality_evaluation_enabled=True, output_variations_per_image=2, spatial_resolution=(518, 518), preserve_spatial_features=True, use_existing_augmentation=True, fallback_to_standard=True)
+2025-06-07 12:20:30,707 - INFO - Processing dataset: augmented_pizza_legacy
+2025-06-07 12:20:30,708 - INFO - Found 3 images to process
+2025-06-07 12:20:30,708 - INFO - Processing 1/3: pizza_1_basic_4_0.jpg
+2025-06-07 12:20:30,715 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=518x518 at 0x7469EAF38A40>: 'Image' object has no attribute 'read'
+2025-06-07 12:20:30,715 - WARNING - Spatial feature extraction failed: 'dict' object has no attribute 'spatial_data', using fallback
+2025-06-07 12:20:30,720 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=518x518 at 0x7469EA92F9B0>: 'Image' object has no attribute 'read'
+2025-06-07 12:20:30,720 - WARNING - Spatial feature extraction failed: 'dict' object has no attribute 'spatial_data', using fallback
+2025-06-07 12:20:30,731 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=518x518 at 0x7469EA92F9B0>: 'Image' object has no attribute 'read'
+2025-06-07 12:20:30,732 - WARNING - Spatial feature extraction failed: 'dict' object has no attribute 'spatial_data', using fallback
+2025-06-07 12:20:30,743 - INFO - Processing 2/3: pizza_1_basic_8_0.jpg
+2025-06-07 12:20:30,744 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=518x518 at 0x7469EA92FFB0>: 'Image' object has no attribute 'read'
+2025-06-07 12:20:30,744 - WARNING - Spatial feature extraction failed: 'dict' object has no attribute 'spatial_data', using fallback
+2025-06-07 12:20:30,750 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=518x518 at 0x7469EA96C050>: 'Image' object has no attribute 'read'
+2025-06-07 12:20:30,750 - WARNING - Spatial feature extraction failed: 'dict' object has no attribute 'spatial_data', using fallback
+2025-06-07 12:20:30,761 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=518x518 at 0x7469EA96C0E0>: 'Image' object has no attribute 'read'
+2025-06-07 12:20:30,761 - WARNING - Spatial feature extraction failed: 'dict' object has no attribute 'spatial_data', using fallback
+2025-06-07 12:20:30,771 - INFO - Processing 3/3: pizza_1_basic_5_0.jpg
+2025-06-07 12:20:30,772 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=518x518 at 0x7469EA96C5F0>: 'Image' object has no attribute 'read'
+2025-06-07 12:20:30,772 - WARNING - Spatial feature extraction failed: 'dict' object has no attribute 'spatial_data', using fallback
+2025-06-07 12:20:30,777 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=518x518 at 0x7469EA96C500>: 'Image' object has no attribute 'read'
+2025-06-07 12:20:30,777 - WARNING - Spatial feature extraction failed: 'dict' object has no attribute 'spatial_data', using fallback
+2025-06-07 12:20:30,786 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=518x518 at 0x7469EA96C680>: 'Image' object has no attribute 'read'
+2025-06-07 12:20:30,786 - WARNING - Spatial feature extraction failed: 'dict' object has no attribute 'spatial_data', using fallback
+2025-06-07 12:21:35,809 - INFO - Successfully imported spatial processing infrastructure
+2025-06-07 12:21:35,810 - INFO - Successfully imported enhanced augmentation pipeline
+2025-06-07 12:21:35,811 - INFO - Initialized transform pipelines for dual-encoder preprocessing
+2025-06-07 12:21:36,239 - WARNING - Failed to load MiDaS model: No module named 'timm'
+2025-06-07 12:21:36,239 - INFO - Falling back to edge-based depth estimation
+2025-06-07 12:21:36,239 - INFO - Edge-based depth estimation initialized
+2025-06-07 12:21:36,239 - INFO - Initialized SpatialPreprocessingPipeline with output_size=(518, 518), depth_method=monocular
+2025-06-07 12:21:36,240 - INFO - Initialized transform pipelines for dual-encoder preprocessing
+2025-06-07 12:21:36,240 - INFO - Edge-based depth estimation initialized
+2025-06-07 12:21:36,240 - INFO - Initialized SpatialPreprocessingPipeline with output_size=(518, 518), depth_method=edge_based
+2025-06-07 12:21:36,240 - INFO - ✅ Spatial preprocessing pipeline loaded
+2025-06-07 12:21:37,828 - INFO - set VIDEO_TOTAL_PIXELS: 90316800
+2025-06-07 12:21:37,883 - INFO - ✅ Initialized OptimizedSpatialInference on cuda
+2025-06-07 12:21:37,883 - INFO - ✅ Spatial inference system loaded
+2025-06-07 12:21:37,883 - INFO - Initialized Spatial-Aware Augmentation Pipeline with config: SpatialAugmentationConfig(perspective_distortion_range=(0.1, 0.4), depth_variation_intensity=0.3, lighting_3d_aware=True, spatial_feature_guidance=True, synthetic_depth_variations=5, spatial_complexity_threshold=0.5, quality_evaluation_enabled=True, output_variations_per_image=2, spatial_resolution=(518, 518), preserve_spatial_features=True, use_existing_augmentation=True, fallback_to_standard=True)
+2025-06-07 12:21:37,883 - INFO - Processing dataset: augmented_pizza_legacy
+2025-06-07 12:21:37,884 - INFO - Found 3 images to process
+2025-06-07 12:21:37,884 - INFO - Processing 1/3: pizza_1_basic_4_0.jpg
+2025-06-07 12:21:37,886 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=518x518 at 0x7C724C27CB00>: 'Image' object has no attribute 'read'
+2025-06-07 12:21:37,886 - WARNING - Spatial feature extraction failed: 'dict' object has no attribute 'spatial_data', using fallback
+2025-06-07 12:21:37,891 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=518x518 at 0x7C724C3B0E30>: 'Image' object has no attribute 'read'
+2025-06-07 12:21:37,891 - WARNING - Spatial feature extraction failed: 'dict' object has no attribute 'spatial_data', using fallback
+2025-06-07 12:21:37,901 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=518x518 at 0x7C724C3B2960>: 'Image' object has no attribute 'read'
+2025-06-07 12:21:37,901 - WARNING - Spatial feature extraction failed: 'dict' object has no attribute 'spatial_data', using fallback
+2025-06-07 12:21:37,910 - INFO - Processing 2/3: pizza_1_basic_8_0.jpg
+2025-06-07 12:21:37,911 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=518x518 at 0x7C724C27D160>: 'Image' object has no attribute 'read'
+2025-06-07 12:21:37,911 - WARNING - Spatial feature extraction failed: 'dict' object has no attribute 'spatial_data', using fallback
+2025-06-07 12:21:37,916 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=518x518 at 0x7C724C27D1C0>: 'Image' object has no attribute 'read'
+2025-06-07 12:21:37,916 - WARNING - Spatial feature extraction failed: 'dict' object has no attribute 'spatial_data', using fallback
+2025-06-07 12:21:37,929 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=518x518 at 0x7C724C27D310>: 'Image' object has no attribute 'read'
+2025-06-07 12:21:37,929 - WARNING - Spatial feature extraction failed: 'dict' object has no attribute 'spatial_data', using fallback
+2025-06-07 12:21:37,945 - INFO - Processing 3/3: pizza_1_basic_5_0.jpg
+2025-06-07 12:21:37,947 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=518x518 at 0x7C724C27D6D0>: 'Image' object has no attribute 'read'
+2025-06-07 12:21:37,947 - WARNING - Spatial feature extraction failed: 'dict' object has no attribute 'spatial_data', using fallback
+2025-06-07 12:21:37,953 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=518x518 at 0x7C724C27D730>: 'Image' object has no attribute 'read'
+2025-06-07 12:21:37,953 - WARNING - Spatial feature extraction failed: 'dict' object has no attribute 'spatial_data', using fallback
+2025-06-07 12:21:37,966 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=518x518 at 0x7C724C27D790>: 'Image' object has no attribute 'read'
+2025-06-07 12:21:37,966 - WARNING - Spatial feature extraction failed: 'dict' object has no attribute 'spatial_data', using fallback
+2025-06-07 12:21:37,980 - INFO - Dataset augmentation complete. Summary: {'total_images_processed': 3, 'successful_augmentations': 3, 'total_processing_time': 0.08724832534790039, 'average_processing_time': 0.029082775115966797, 'average_quality_score': np.float64(0.6773981998558267), 'average_spatial_consistency': np.float64(0.6644689011517692), 'augmentation_type_distribution': {'total_count': 6, 'distribution': {'perspective_3d': {'count': 3, 'percentage': 50.0, 'avg_quality': np.float64(0.39533594377425746), 'min_quality': np.float64(0.3718195772133728), 'max_quality': np.float64(0.43995057153355305)}, 'depth_based_lighting': {'count': 3, 'percentage': 50.0, 'avg_quality': np.float64(0.9594604559373959), 'min_quality': np.float64(0.9324242069704477), 'max_quality': np.float64(0.9860014411383865)}}, 'most_common_type': 'perspective_3d', 'average_quality_overall': np.float64(0.6773981998558268)}, 'config': {'perspective_distortion_range': (0.1, 0.4), 'depth_variation_intensity': 0.3, 'lighting_3d_aware': True, 'spatial_feature_guidance': True, 'synthetic_depth_variations': 5, 'spatial_complexity_threshold': 0.5, 'quality_evaluation_enabled': True, 'output_variations_per_image': 2, 'spatial_resolution': (518, 518), 'preserve_spatial_features': True, 'use_existing_augmentation': True, 'fallback_to_standard': True}}
+2025-06-07 12:21:37,981 - INFO - Dataset processing complete. Summary: {'total_images_processed': 3, 'successful_augmentations': 3, 'total_processing_time': 0.08724832534790039, 'average_processing_time': 0.029082775115966797, 'average_quality_score': np.float64(0.6773981998558267), 'average_spatial_consistency': np.float64(0.6644689011517692), 'augmentation_type_distribution': {'total_count': 6, 'distribution': {'perspective_3d': {'count': 3, 'percentage': 50.0, 'avg_quality': np.float64(0.39533594377425746), 'min_quality': np.float64(0.3718195772133728), 'max_quality': np.float64(0.43995057153355305)}, 'depth_based_lighting': {'count': 3, 'percentage': 50.0, 'avg_quality': np.float64(0.9594604559373959), 'min_quality': np.float64(0.9324242069704477), 'max_quality': np.float64(0.9860014411383865)}}, 'most_common_type': 'perspective_3d', 'average_quality_overall': np.float64(0.6773981998558268)}, 'config': {'perspective_distortion_range': (0.1, 0.4), 'depth_variation_intensity': 0.3, 'lighting_3d_aware': True, 'spatial_feature_guidance': True, 'synthetic_depth_variations': 5, 'spatial_complexity_threshold': 0.5, 'quality_evaluation_enabled': True, 'output_variations_per_image': 2, 'spatial_resolution': (518, 518), 'preserve_spatial_features': True, 'use_existing_augmentation': True, 'fallback_to_standard': True}}
+2025-06-07 12:22:27,505 - INFO - Successfully imported spatial processing infrastructure
+2025-06-07 12:22:27,506 - INFO - Successfully imported enhanced augmentation pipeline
+2025-06-07 12:22:35,509 - INFO - Successfully imported spatial processing infrastructure
+2025-06-07 12:22:35,509 - INFO - Successfully imported enhanced augmentation pipeline
+2025-06-07 12:22:35,511 - INFO - Initialized transform pipelines for dual-encoder preprocessing
+2025-06-07 12:22:35,942 - WARNING - Failed to load MiDaS model: No module named 'timm'
+2025-06-07 12:22:35,943 - INFO - Falling back to edge-based depth estimation
+2025-06-07 12:22:35,943 - INFO - Edge-based depth estimation initialized
+2025-06-07 12:22:35,943 - INFO - Initialized SpatialPreprocessingPipeline with output_size=(518, 518), depth_method=monocular
+2025-06-07 12:22:35,943 - INFO - Initialized transform pipelines for dual-encoder preprocessing
+2025-06-07 12:22:35,944 - INFO - Edge-based depth estimation initialized
+2025-06-07 12:22:35,944 - INFO - Initialized SpatialPreprocessingPipeline with output_size=(518, 518), depth_method=edge_based
+2025-06-07 12:22:35,944 - INFO - ✅ Spatial preprocessing pipeline loaded
+2025-06-07 12:22:37,508 - INFO - set VIDEO_TOTAL_PIXELS: 90316800
+2025-06-07 12:22:37,562 - INFO - ✅ Initialized OptimizedSpatialInference on cuda
+2025-06-07 12:22:37,562 - INFO - ✅ Spatial inference system loaded
+2025-06-07 12:22:37,562 - INFO - Initialized Spatial-Aware Augmentation Pipeline with config: SpatialAugmentationConfig(perspective_distortion_range=(0.1, 0.4), depth_variation_intensity=0.3, lighting_3d_aware=True, spatial_feature_guidance=True, synthetic_depth_variations=5, spatial_complexity_threshold=0.5, quality_evaluation_enabled=True, output_variations_per_image=3, spatial_resolution=(518, 518), preserve_spatial_features=True, use_existing_augmentation=True, fallback_to_standard=True)
+2025-06-07 12:22:37,562 - INFO - Testing with single image: augmented_pizza_legacy/pizza_1.jpg
+2025-06-07 12:22:37,567 - ERROR - Test failed: OpenCV(4.11.0) /io/opencv/modules/imgproc/src/color.cpp:199: error: (-215:Assertion failed) !_src.empty() in function 'cvtColor'
+
+2025-06-07 12:23:54,863 - INFO - Successfully imported spatial processing infrastructure
+2025-06-07 12:23:54,864 - INFO - Successfully imported enhanced augmentation pipeline
+2025-06-07 12:23:54,866 - INFO - Initialized transform pipelines for dual-encoder preprocessing
+2025-06-07 12:23:55,316 - WARNING - Failed to load MiDaS model: No module named 'timm'
+2025-06-07 12:23:55,316 - INFO - Falling back to edge-based depth estimation
+2025-06-07 12:23:55,316 - INFO - Edge-based depth estimation initialized
+2025-06-07 12:23:55,316 - INFO - Initialized SpatialPreprocessingPipeline with output_size=(518, 518), depth_method=monocular
+2025-06-07 12:23:55,316 - INFO - Initialized transform pipelines for dual-encoder preprocessing
+2025-06-07 12:23:55,316 - INFO - Edge-based depth estimation initialized
+2025-06-07 12:23:55,316 - INFO - Initialized SpatialPreprocessingPipeline with output_size=(518, 518), depth_method=edge_based
+2025-06-07 12:23:55,317 - INFO - ✅ Spatial preprocessing pipeline loaded
+2025-06-07 12:23:56,941 - INFO - set VIDEO_TOTAL_PIXELS: 90316800
+2025-06-07 12:23:56,976 - INFO - ✅ Initialized OptimizedSpatialInference on cuda
+2025-06-07 12:23:56,976 - INFO - ✅ Spatial inference system loaded
+2025-06-07 12:23:56,976 - INFO - Initialized Spatial-Aware Augmentation Pipeline with config: SpatialAugmentationConfig(perspective_distortion_range=(0.1, 0.4), depth_variation_intensity=0.3, lighting_3d_aware=True, spatial_feature_guidance=True, synthetic_depth_variations=5, spatial_complexity_threshold=0.5, quality_evaluation_enabled=True, output_variations_per_image=3, spatial_resolution=(518, 518), preserve_spatial_features=True, use_existing_augmentation=True, fallback_to_standard=True)
+2025-06-07 12:23:56,976 - INFO - Testing with single image: augmented_pizza_legacy/pizza_0_basic_0_0.jpg
+2025-06-07 12:23:56,978 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=518x518 at 0x7F13C835DF40>: 'Image' object has no attribute 'read'
+2025-06-07 12:23:56,978 - WARNING - Spatial feature extraction failed: 'dict' object has no attribute 'spatial_data', using fallback
+2025-06-07 12:23:56,984 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=518x518 at 0x7F13C7E17980>: 'Image' object has no attribute 'read'
+2025-06-07 12:23:56,984 - WARNING - Spatial feature extraction failed: 'dict' object has no attribute 'spatial_data', using fallback
+2025-06-07 12:23:56,994 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=518x518 at 0x7F13C8211AF0>: 'Image' object has no attribute 'read'
+2025-06-07 12:23:56,994 - WARNING - Spatial feature extraction failed: 'dict' object has no attribute 'spatial_data', using fallback
+2025-06-07 12:23:57,012 - ERROR - Failed to process <PIL.Image.Image image mode=RGB size=518x518 at 0x7F13C7E81910>: 'Image' object has no attribute 'read'
+2025-06-07 12:23:57,012 - WARNING - Spatial feature extraction failed: 'dict' object has no attribute 'spatial_data', using fallback
+2025-06-07 12:23:57,020 - INFO - Single image augmentation results:
+2025-06-07 12:23:57,020 - INFO -   - Original image: augmented_pizza_legacy/pizza_0_basic_0_0.jpg
+2025-06-07 12:23:57,020 - INFO -   - Generated variations: 3
+2025-06-07 12:23:57,020 - INFO -   - Augmentation types: ['perspective_3d', 'depth_based_lighting', 'volumetric_texture_mapping']
+2025-06-07 12:23:57,020 - INFO -   - Average quality score: 0.782
+2025-06-07 12:23:57,020 - INFO -   - Spatial consistency: 0.744
+2025-06-07 12:23:57,020 - INFO -   - Processing time: 0.044s
+2025-06-07 12:23:57,024 - INFO - Test results saved to output/spatial_augmentation/single_image_test
+2025-06-07 12:26:39,388 - INFO - Successfully imported spatial processing infrastructure
+2025-06-07 12:26:39,389 - INFO - Successfully imported enhanced augmentation pipeline
+2025-06-07 12:26:48,042 - INFO - Successfully imported spatial processing infrastructure
+2025-06-07 12:26:48,042 - INFO - Successfully imported enhanced augmentation pipeline
+2025-06-07 12:26:58,900 - INFO - Successfully imported spatial processing infrastructure
+2025-06-07 12:26:58,900 - INFO - Successfully imported enhanced augmentation pipeline
+2025-06-07 12:26:58,902 - INFO - Initialized transform pipelines for dual-encoder preprocessing
+2025-06-07 12:26:59,322 - WARNING - Failed to load MiDaS model: No module named 'timm'
+2025-06-07 12:26:59,323 - INFO - Falling back to edge-based depth estimation
+2025-06-07 12:26:59,323 - INFO - Edge-based depth estimation initialized
+2025-06-07 12:26:59,323 - INFO - Initialized SpatialPreprocessingPipeline with output_size=(518, 518), depth_method=monocular
+2025-06-07 12:26:59,324 - INFO - Initialized transform pipelines for dual-encoder preprocessing
+2025-06-07 12:26:59,324 - INFO - Edge-based depth estimation initialized
+2025-06-07 12:26:59,324 - INFO - Initialized SpatialPreprocessingPipeline with output_size=(518, 518), depth_method=edge_based
+2025-06-07 12:26:59,324 - INFO - ✅ Spatial preprocessing pipeline loaded
+2025-06-07 12:27:00,909 - INFO - set VIDEO_TOTAL_PIXELS: 90316800
+2025-06-07 12:27:00,966 - INFO - ✅ Initialized OptimizedSpatialInference on cuda
+2025-06-07 12:27:00,966 - INFO - ✅ Spatial inference system loaded
+2025-06-07 12:27:00,966 - INFO - Initialized Spatial-Aware Augmentation Pipeline with config: SpatialAugmentationConfig(perspective_distortion_range=(0.1, 0.4), depth_variation_intensity=0.3, lighting_3d_aware=True, spatial_feature_guidance=True, synthetic_depth_variations=5, spatial_complexity_threshold=0.5, quality_evaluation_enabled=True, output_variations_per_image=2, spatial_resolution=(518, 518), preserve_spatial_features=True, use_existing_augmentation=True, fallback_to_standard=True)
+2025-06-07 12:27:00,966 - INFO - Testing with single image: augmented_pizza_legacy/basic_pizza_1.jpg
+2025-06-07 12:27:00,966 - ERROR - Test failed: OpenCV(4.11.0) /io/opencv/modules/imgproc/src/color.cpp:199: error: (-215:Assertion failed) !_src.empty() in function 'cvtColor'
+
+2025-06-07 12:27:25,194 - INFO - Successfully imported spatial processing infrastructure
+2025-06-07 12:27:25,194 - INFO - Successfully imported enhanced augmentation pipeline
+2025-06-07 12:27:25,196 - INFO - Initialized transform pipelines for dual-encoder preprocessing
+2025-06-07 12:27:25,652 - WARNING - Failed to load MiDaS model: No module named 'timm'
+2025-06-07 12:27:25,652 - INFO - Falling back to edge-based depth estimation
+2025-06-07 12:27:25,652 - INFO - Edge-based depth estimation initialized
+2025-06-07 12:27:25,652 - INFO - Initialized SpatialPreprocessingPipeline with output_size=(518, 518), depth_method=monocular
+2025-06-07 12:27:25,653 - INFO - Initialized transform pipelines for dual-encoder preprocessing
+2025-06-07 12:27:25,653 - INFO - Edge-based depth estimation initialized
+2025-06-07 12:27:25,653 - INFO - Initialized SpatialPreprocessingPipeline with output_size=(518, 518), depth_method=edge_based
+2025-06-07 12:27:25,653 - INFO - ✅ Spatial preprocessing pipeline loaded
+2025-06-07 12:27:27,227 - INFO - set VIDEO_TOTAL_PIXELS: 90316800
+2025-06-07 12:27:27,257 - INFO - ✅ Initialized OptimizedSpatialInference on cuda
+2025-06-07 12:27:27,257 - INFO - ✅ Spatial inference system loaded
+2025-06-07 12:27:27,257 - INFO - Initialized Spatial-Aware Augmentation Pipeline with config: SpatialAugmentationConfig(perspective_distortion_range=(0.1, 0.4), depth_variation_intensity=0.3, lighting_3d_aware=True, spatial_feature_guidance=True, synthetic_depth_variations=5, spatial_complexity_threshold=0.5, quality_evaluation_enabled=True, output_variations_per_image=2, spatial_resolution=(518, 518), preserve_spatial_features=True, use_existing_augmentation=True, fallback_to_standard=True)
+2025-06-07 12:27:27,257 - INFO - Testing with single image: augmented_pizza_legacy/pizza_0_basic_0_0.jpg
+2025-06-07 12:27:27,907 - WARNING - Enhanced augmentation failed: apply_burning_augmentation() missing 3 required positional arguments: 'output_dir', 'count', and 'batch_size'
+2025-06-07 12:27:27,908 - INFO - Single image augmentation results:
+2025-06-07 12:27:27,908 - INFO -   - Original image: augmented_pizza_legacy/pizza_0_basic_0_0.jpg
+2025-06-07 12:27:27,908 - INFO -   - Generated variations: 1
+2025-06-07 12:27:27,908 - INFO -   - Augmentation types: ['geometric_pizza_reshaping']
+2025-06-07 12:27:27,908 - INFO -   - Average quality score: 0.555
+2025-06-07 12:27:27,908 - INFO -   - Spatial consistency: 0.748
+2025-06-07 12:27:27,908 - INFO -   - Processing time: 0.650s
+2025-06-07 12:27:27,910 - ERROR - Test failed: Object of type float32 is not JSON serializable
+2025-06-07 12:30:36,327 - INFO - Successfully imported spatial processing infrastructure
+2025-06-07 12:30:36,333 - INFO - Successfully imported single-image augmentation functions
+2025-06-07 12:30:45,070 - INFO - Successfully imported spatial processing infrastructure
+2025-06-07 12:30:45,072 - INFO - Successfully imported single-image augmentation functions
+2025-06-07 12:30:54,566 - INFO - Successfully imported spatial processing infrastructure
+2025-06-07 12:30:54,567 - INFO - Successfully imported single-image augmentation functions
+2025-06-07 12:30:54,569 - INFO - Initialized transform pipelines for dual-encoder preprocessing
+2025-06-07 12:30:54,997 - WARNING - Failed to load MiDaS model: No module named 'timm'
+2025-06-07 12:30:54,997 - INFO - Falling back to edge-based depth estimation
+2025-06-07 12:30:54,997 - INFO - Edge-based depth estimation initialized
+2025-06-07 12:30:54,997 - INFO - Initialized SpatialPreprocessingPipeline with output_size=(518, 518), depth_method=monocular
+2025-06-07 12:30:54,997 - INFO - Initialized transform pipelines for dual-encoder preprocessing
+2025-06-07 12:30:54,997 - INFO - Edge-based depth estimation initialized
+2025-06-07 12:30:54,998 - INFO - Initialized SpatialPreprocessingPipeline with output_size=(518, 518), depth_method=edge_based
+2025-06-07 12:30:54,998 - INFO - ✅ Spatial preprocessing pipeline loaded
+2025-06-07 12:30:56,630 - INFO - set VIDEO_TOTAL_PIXELS: 90316800
+2025-06-07 12:30:56,664 - INFO - ✅ Initialized OptimizedSpatialInference on cuda
+2025-06-07 12:30:56,664 - INFO - ✅ Spatial inference system loaded
+2025-06-07 12:31:21,345 - INFO - Successfully imported spatial processing infrastructure
+2025-06-07 12:31:21,346 - INFO - Successfully imported single-image augmentation functions
+2025-06-07 12:31:21,348 - INFO - Initialized transform pipelines for dual-encoder preprocessing
+2025-06-07 12:31:21,765 - WARNING - Failed to load MiDaS model: No module named 'timm'
+2025-06-07 12:31:21,765 - INFO - Falling back to edge-based depth estimation
+2025-06-07 12:31:21,765 - INFO - Edge-based depth estimation initialized
+2025-06-07 12:31:21,765 - INFO - Initialized SpatialPreprocessingPipeline with output_size=(518, 518), depth_method=monocular
+2025-06-07 12:31:21,765 - INFO - Initialized transform pipelines for dual-encoder preprocessing
+2025-06-07 12:31:21,765 - INFO - Edge-based depth estimation initialized
+2025-06-07 12:31:21,765 - INFO - Initialized SpatialPreprocessingPipeline with output_size=(518, 518), depth_method=edge_based
+2025-06-07 12:31:21,765 - INFO - ✅ Spatial preprocessing pipeline loaded
+2025-06-07 12:31:23,323 - INFO - set VIDEO_TOTAL_PIXELS: 90316800
+2025-06-07 12:31:23,378 - INFO - ✅ Initialized OptimizedSpatialInference on cuda
+2025-06-07 12:31:23,378 - INFO - ✅ Spatial inference system loaded
+2025-06-07 12:31:23,378 - INFO - Initialized Spatial-Aware Augmentation Pipeline with config: SpatialAugmentationConfig(perspective_distortion_range=(0.1, 0.4), depth_variation_intensity=0.3, lighting_3d_aware=True, spatial_feature_guidance=True, synthetic_depth_variations=5, spatial_complexity_threshold=0.5, quality_evaluation_enabled=True, output_variations_per_image=1, spatial_resolution=(518, 518), preserve_spatial_features=True, use_existing_augmentation=True, fallback_to_standard=True)
+2025-06-07 12:31:23,378 - INFO - Testing with single image: /home/emilio/Documents/ai/pizza/augmented_pizza_legacy/pizza_0_basic_0.jpg
+2025-06-07 12:31:23,378 - ERROR - Test failed: OpenCV(4.11.0) /io/opencv/modules/imgproc/src/color.cpp:199: error: (-215:Assertion failed) !_src.empty() in function 'cvtColor'
+
+2025-06-07 12:32:08,856 - INFO - Successfully imported spatial processing infrastructure
+2025-06-07 12:32:08,858 - INFO - Successfully imported single-image augmentation functions
+2025-06-07 12:32:24,028 - INFO - Successfully imported spatial processing infrastructure
+2025-06-07 12:32:24,030 - INFO - Successfully imported single-image augmentation functions
+2025-06-07 12:32:40,967 - INFO - Successfully imported spatial processing infrastructure
+2025-06-07 12:32:40,968 - INFO - Successfully imported single-image augmentation functions
+2025-06-07 12:32:40,970 - INFO - Initialized transform pipelines for dual-encoder preprocessing
+2025-06-07 12:32:41,403 - WARNING - Failed to load MiDaS model: No module named 'timm'
+2025-06-07 12:32:41,403 - INFO - Falling back to edge-based depth estimation
+2025-06-07 12:32:41,403 - INFO - Edge-based depth estimation initialized
+2025-06-07 12:32:41,403 - INFO - Initialized SpatialPreprocessingPipeline with output_size=(518, 518), depth_method=monocular
+2025-06-07 12:32:41,404 - INFO - Initialized transform pipelines for dual-encoder preprocessing
+2025-06-07 12:32:41,404 - INFO - Edge-based depth estimation initialized
+2025-06-07 12:32:41,404 - INFO - Initialized SpatialPreprocessingPipeline with output_size=(518, 518), depth_method=edge_based
+2025-06-07 12:32:41,404 - INFO - ✅ Spatial preprocessing pipeline loaded
+2025-06-07 12:32:43,039 - INFO - set VIDEO_TOTAL_PIXELS: 90316800
+2025-06-07 12:32:43,077 - INFO - ✅ Initialized OptimizedSpatialInference on cuda
+2025-06-07 12:32:43,077 - INFO - ✅ Spatial inference system loaded
+2025-06-07 12:32:43,077 - INFO - Initialized Spatial-Aware Augmentation Pipeline with config: SpatialAugmentationConfig(perspective_distortion_range=(0.1, 0.4), depth_variation_intensity=0.3, lighting_3d_aware=True, spatial_feature_guidance=True, synthetic_depth_variations=5, spatial_complexity_threshold=0.5, quality_evaluation_enabled=True, output_variations_per_image=3, spatial_resolution=(518, 518), preserve_spatial_features=True, use_existing_augmentation=True, fallback_to_standard=True)
+2025-06-07 12:32:43,077 - INFO - Testing with single image: augmented_pizza_legacy/pizza_0_basic_0_0.jpg
+2025-06-07 12:32:44,599 - INFO - Single image augmentation results:
+2025-06-07 12:32:44,599 - INFO -   - Original image: augmented_pizza_legacy/pizza_0_basic_0_0.jpg
+2025-06-07 12:32:44,599 - INFO -   - Generated variations: 3
+2025-06-07 12:32:44,599 - INFO -   - Augmentation types: ['geometric_pizza_reshaping', 'enhanced_burning', 'enhanced_mixed']
+2025-06-07 12:32:44,599 - INFO -   - Average quality score: 0.703
+2025-06-07 12:32:44,599 - INFO -   - Spatial consistency: 0.829
+2025-06-07 12:32:44,599 - INFO -   - Processing time: 1.520s
+2025-06-07 12:32:44,603 - ERROR - Test failed: Object of type float32 is not JSON serializable
+2025-06-07 12:33:09,475 - INFO - Successfully imported spatial processing infrastructure
+2025-06-07 12:33:09,477 - INFO - Successfully imported single-image augmentation functions
+2025-06-07 12:33:09,478 - INFO - Initialized transform pipelines for dual-encoder preprocessing
+2025-06-07 12:33:09,913 - WARNING - Failed to load MiDaS model: No module named 'timm'
+2025-06-07 12:33:09,913 - INFO - Falling back to edge-based depth estimation
+2025-06-07 12:33:09,913 - INFO - Edge-based depth estimation initialized
+2025-06-07 12:33:09,913 - INFO - Initialized SpatialPreprocessingPipeline with output_size=(518, 518), depth_method=monocular
+2025-06-07 12:33:09,913 - INFO - Initialized transform pipelines for dual-encoder preprocessing
+2025-06-07 12:33:09,913 - INFO - Edge-based depth estimation initialized
+2025-06-07 12:33:09,913 - INFO - Initialized SpatialPreprocessingPipeline with output_size=(518, 518), depth_method=edge_based
+2025-06-07 12:33:09,913 - INFO - ✅ Spatial preprocessing pipeline loaded
+2025-06-07 12:33:11,542 - INFO - set VIDEO_TOTAL_PIXELS: 90316800
+2025-06-07 12:33:11,578 - INFO - ✅ Initialized OptimizedSpatialInference on cuda
+2025-06-07 12:33:11,578 - INFO - ✅ Spatial inference system loaded
+2025-06-07 12:33:11,578 - INFO - Initialized Spatial-Aware Augmentation Pipeline with config: SpatialAugmentationConfig(perspective_distortion_range=(0.1, 0.4), depth_variation_intensity=0.3, lighting_3d_aware=True, spatial_feature_guidance=True, synthetic_depth_variations=5, spatial_complexity_threshold=0.5, quality_evaluation_enabled=True, output_variations_per_image=3, spatial_resolution=(518, 518), preserve_spatial_features=True, use_existing_augmentation=True, fallback_to_standard=True)
+2025-06-07 12:33:11,578 - INFO - Testing with single image: augmented_pizza_legacy/pizza_0_basic_0_0.jpg
+2025-06-07 12:33:12,961 - INFO - Single image augmentation results:
+2025-06-07 12:33:12,961 - INFO -   - Original image: augmented_pizza_legacy/pizza_0_basic_0_0.jpg
+2025-06-07 12:33:12,961 - INFO -   - Generated variations: 3
+2025-06-07 12:33:12,961 - INFO -   - Augmentation types: ['geometric_pizza_reshaping', 'enhanced_burning', 'enhanced_mixed']
+2025-06-07 12:33:12,961 - INFO -   - Average quality score: 0.705
+2025-06-07 12:33:12,961 - INFO -   - Spatial consistency: 0.960
+2025-06-07 12:33:12,962 - INFO -   - Processing time: 1.383s
+2025-06-07 12:33:12,966 - INFO - Test results saved to temp_output/single_image_test
+2025-06-07 12:33:36,593 - INFO - Successfully imported spatial processing infrastructure
+2025-06-07 12:33:36,595 - INFO - Successfully imported single-image augmentation functions
+2025-06-07 12:33:36,596 - INFO - Initialized transform pipelines for dual-encoder preprocessing
+2025-06-07 12:33:37,052 - WARNING - Failed to load MiDaS model: No module named 'timm'
+2025-06-07 12:33:37,052 - INFO - Falling back to edge-based depth estimation
+2025-06-07 12:33:37,052 - INFO - Edge-based depth estimation initialized
+2025-06-07 12:33:37,052 - INFO - Initialized SpatialPreprocessingPipeline with output_size=(518, 518), depth_method=monocular
+2025-06-07 12:33:37,052 - INFO - Initialized transform pipelines for dual-encoder preprocessing
+2025-06-07 12:33:37,053 - INFO - Edge-based depth estimation initialized
+2025-06-07 12:33:37,053 - INFO - Initialized SpatialPreprocessingPipeline with output_size=(518, 518), depth_method=edge_based
+2025-06-07 12:33:37,053 - INFO - ✅ Spatial preprocessing pipeline loaded
+2025-06-07 12:33:38,687 - INFO - set VIDEO_TOTAL_PIXELS: 90316800
+2025-06-07 12:33:38,737 - INFO - ✅ Initialized OptimizedSpatialInference on cuda
+2025-06-07 12:33:38,737 - INFO - ✅ Spatial inference system loaded
+2025-06-07 12:33:38,737 - INFO - Initialized Spatial-Aware Augmentation Pipeline with config: SpatialAugmentationConfig(perspective_distortion_range=(0.1, 0.4), depth_variation_intensity=0.3, lighting_3d_aware=True, spatial_feature_guidance=True, synthetic_depth_variations=5, spatial_complexity_threshold=0.5, quality_evaluation_enabled=True, output_variations_per_image=3, spatial_resolution=(518, 518), preserve_spatial_features=True, use_existing_augmentation=True, fallback_to_standard=True)
+2025-06-07 12:33:38,737 - INFO - Processing dataset: augmented_pizza_legacy
+2025-06-07 12:33:38,738 - INFO - Found 3 images to process
+2025-06-07 12:33:38,738 - INFO - Processing 1/3: pizza_1_basic_4_0.jpg
+2025-06-07 12:33:40,009 - ERROR - Failed to process augmented_pizza_legacy/pizza_1_basic_4_0.jpg: Object of type float32 is not JSON serializable
+2025-06-07 12:33:40,009 - INFO - Processing 2/3: pizza_1_basic_8_0.jpg
+2025-06-07 12:33:41,493 - ERROR - Failed to process augmented_pizza_legacy/pizza_1_basic_8_0.jpg: Object of type float32 is not JSON serializable
+2025-06-07 12:33:41,493 - INFO - Processing 3/3: pizza_1_basic_5_0.jpg
+2025-06-07 12:33:42,758 - ERROR - Failed to process augmented_pizza_legacy/pizza_1_basic_5_0.jpg: Object of type float32 is not JSON serializable
+2025-06-07 12:33:42,759 - INFO - Dataset augmentation complete. Summary: {'total_images_processed': 3, 'successful_augmentations': 3, 'total_processing_time': 4.009390115737915, 'average_processing_time': 1.3364633719126384, 'average_quality_score': np.float64(0.7099012311145526), 'average_spatial_consistency': np.float64(0.9297268691753269), 'augmentation_type_distribution': {'total_count': 9, 'distribution': {'geometric_pizza_reshaping': {'count': 3, 'percentage': 33.33333333333333, 'avg_quality': np.float64(0.6297036933436577), 'min_quality': np.float64(0.5577327849526091), 'max_quality': np.float64(0.6767342001095124)}, 'enhanced_burning': {'count': 3, 'percentage': 33.33333333333333, 'avg_quality': np.float64(0.75), 'min_quality': np.float64(0.75), 'max_quality': np.float64(0.75)}, 'enhanced_mixed': {'count': 3, 'percentage': 33.33333333333333, 'avg_quality': np.float64(0.75), 'min_quality': np.float64(0.75), 'max_quality': np.float64(0.75)}}, 'most_common_type': 'geometric_pizza_reshaping', 'average_quality_overall': np.float64(0.7099012311145526)}, 'config': {'perspective_distortion_range': (0.1, 0.4), 'depth_variation_intensity': 0.3, 'lighting_3d_aware': True, 'spatial_feature_guidance': True, 'synthetic_depth_variations': 5, 'spatial_complexity_threshold': 0.5, 'quality_evaluation_enabled': True, 'output_variations_per_image': 3, 'spatial_resolution': (518, 518), 'preserve_spatial_features': True, 'use_existing_augmentation': True, 'fallback_to_standard': True}}
+2025-06-07 12:33:42,759 - INFO - Dataset processing complete. Summary: {'total_images_processed': 3, 'successful_augmentations': 3, 'total_processing_time': 4.009390115737915, 'average_processing_time': 1.3364633719126384, 'average_quality_score': np.float64(0.7099012311145526), 'average_spatial_consistency': np.float64(0.9297268691753269), 'augmentation_type_distribution': {'total_count': 9, 'distribution': {'geometric_pizza_reshaping': {'count': 3, 'percentage': 33.33333333333333, 'avg_quality': np.float64(0.6297036933436577), 'min_quality': np.float64(0.5577327849526091), 'max_quality': np.float64(0.6767342001095124)}, 'enhanced_burning': {'count': 3, 'percentage': 33.33333333333333, 'avg_quality': np.float64(0.75), 'min_quality': np.float64(0.75), 'max_quality': np.float64(0.75)}, 'enhanced_mixed': {'count': 3, 'percentage': 33.33333333333333, 'avg_quality': np.float64(0.75), 'min_quality': np.float64(0.75), 'max_quality': np.float64(0.75)}}, 'most_common_type': 'geometric_pizza_reshaping', 'average_quality_overall': np.float64(0.7099012311145526)}, 'config': {'perspective_distortion_range': (0.1, 0.4), 'depth_variation_intensity': 0.3, 'lighting_3d_aware': True, 'spatial_feature_guidance': True, 'synthetic_depth_variations': 5, 'spatial_complexity_threshold': 0.5, 'quality_evaluation_enabled': True, 'output_variations_per_image': 3, 'spatial_resolution': (518, 518), 'preserve_spatial_features': True, 'use_existing_augmentation': True, 'fallback_to_standard': True}}
+2025-06-07 12:34:22,172 - INFO - Successfully imported spatial processing infrastructure
+2025-06-07 12:34:22,173 - INFO - Successfully imported single-image augmentation functions
+2025-06-07 12:34:22,175 - INFO - Initialized transform pipelines for dual-encoder preprocessing
+2025-06-07 12:34:22,639 - WARNING - Failed to load MiDaS model: No module named 'timm'
+2025-06-07 12:34:22,640 - INFO - Falling back to edge-based depth estimation
+2025-06-07 12:34:22,640 - INFO - Edge-based depth estimation initialized
+2025-06-07 12:34:22,640 - INFO - Initialized SpatialPreprocessingPipeline with output_size=(518, 518), depth_method=monocular
+2025-06-07 12:34:22,641 - INFO - Initialized transform pipelines for dual-encoder preprocessing
+2025-06-07 12:34:22,641 - INFO - Edge-based depth estimation initialized
+2025-06-07 12:34:22,641 - INFO - Initialized SpatialPreprocessingPipeline with output_size=(518, 518), depth_method=edge_based
+2025-06-07 12:34:22,641 - INFO - ✅ Spatial preprocessing pipeline loaded
+2025-06-07 12:34:24,296 - INFO - set VIDEO_TOTAL_PIXELS: 90316800
+2025-06-07 12:34:24,330 - INFO - ✅ Initialized OptimizedSpatialInference on cuda
+2025-06-07 12:34:24,330 - INFO - ✅ Spatial inference system loaded
+2025-06-07 12:34:24,330 - INFO - Initialized Spatial-Aware Augmentation Pipeline with config: SpatialAugmentationConfig(perspective_distortion_range=(0.1, 0.4), depth_variation_intensity=0.3, lighting_3d_aware=True, spatial_feature_guidance=True, synthetic_depth_variations=5, spatial_complexity_threshold=0.5, quality_evaluation_enabled=True, output_variations_per_image=3, spatial_resolution=(518, 518), preserve_spatial_features=True, use_existing_augmentation=True, fallback_to_standard=True)
+2025-06-07 12:34:24,331 - INFO - Processing dataset: augmented_pizza_legacy
+2025-06-07 12:34:24,332 - INFO - Found 2 images to process
+2025-06-07 12:34:24,332 - INFO - Processing 1/2: pizza_1_basic_4_0.jpg
+2025-06-07 12:34:25,723 - ERROR - Failed to process augmented_pizza_legacy/pizza_1_basic_4_0.jpg: Object of type float32 is not JSON serializable
+2025-06-07 12:34:25,723 - INFO - Processing 2/2: pizza_1_basic_8_0.jpg
+2025-06-07 12:34:27,091 - ERROR - Failed to process augmented_pizza_legacy/pizza_1_basic_8_0.jpg: Object of type float32 is not JSON serializable
+2025-06-07 12:34:27,092 - INFO - Dataset augmentation complete. Summary: {'total_images_processed': 2, 'successful_augmentations': 2, 'total_processing_time': 2.752331018447876, 'average_processing_time': 1.376165509223938, 'average_quality_score': np.float64(0.7077752536855749), 'average_spatial_consistency': np.float64(0.8905774447564154), 'augmentation_type_distribution': {'total_count': 6, 'distribution': {'geometric_pizza_reshaping': {'count': 2, 'percentage': 33.33333333333333, 'avg_quality': np.float64(0.6233257610567245), 'min_quality': np.float64(0.5637991309216188), 'max_quality': np.float64(0.6828523911918303)}, 'enhanced_burning': {'count': 2, 'percentage': 33.33333333333333, 'avg_quality': np.float64(0.75), 'min_quality': np.float64(0.75), 'max_quality': np.float64(0.75)}, 'enhanced_mixed': {'count': 2, 'percentage': 33.33333333333333, 'avg_quality': np.float64(0.75), 'min_quality': np.float64(0.75), 'max_quality': np.float64(0.75)}}, 'most_common_type': 'geometric_pizza_reshaping', 'average_quality_overall': np.float64(0.7077752536855749)}, 'config': {'perspective_distortion_range': (0.1, 0.4), 'depth_variation_intensity': 0.3, 'lighting_3d_aware': True, 'spatial_feature_guidance': True, 'synthetic_depth_variations': 5, 'spatial_complexity_threshold': 0.5, 'quality_evaluation_enabled': True, 'output_variations_per_image': 3, 'spatial_resolution': (518, 518), 'preserve_spatial_features': True, 'use_existing_augmentation': True, 'fallback_to_standard': True}}
+2025-06-07 12:34:27,092 - INFO - Dataset processing complete. Summary: {'total_images_processed': 2, 'successful_augmentations': 2, 'total_processing_time': 2.752331018447876, 'average_processing_time': 1.376165509223938, 'average_quality_score': np.float64(0.7077752536855749), 'average_spatial_consistency': np.float64(0.8905774447564154), 'augmentation_type_distribution': {'total_count': 6, 'distribution': {'geometric_pizza_reshaping': {'count': 2, 'percentage': 33.33333333333333, 'avg_quality': np.float64(0.6233257610567245), 'min_quality': np.float64(0.5637991309216188), 'max_quality': np.float64(0.6828523911918303)}, 'enhanced_burning': {'count': 2, 'percentage': 33.33333333333333, 'avg_quality': np.float64(0.75), 'min_quality': np.float64(0.75), 'max_quality': np.float64(0.75)}, 'enhanced_mixed': {'count': 2, 'percentage': 33.33333333333333, 'avg_quality': np.float64(0.75), 'min_quality': np.float64(0.75), 'max_quality': np.float64(0.75)}}, 'most_common_type': 'geometric_pizza_reshaping', 'average_quality_overall': np.float64(0.7077752536855749)}, 'config': {'perspective_distortion_range': (0.1, 0.4), 'depth_variation_intensity': 0.3, 'lighting_3d_aware': True, 'spatial_feature_guidance': True, 'synthetic_depth_variations': 5, 'spatial_complexity_threshold': 0.5, 'quality_evaluation_enabled': True, 'output_variations_per_image': 3, 'spatial_resolution': (518, 518), 'preserve_spatial_features': True, 'use_existing_augmentation': True, 'fallback_to_standard': True}}
+2025-06-07 12:38:39,588 - INFO - Successfully imported spatial processing infrastructure
+2025-06-07 12:38:39,590 - INFO - Successfully imported single-image augmentation functions
+2025-06-07 12:38:39,591 - INFO - Initialized transform pipelines for dual-encoder preprocessing
+2025-06-07 12:38:40,014 - WARNING - Failed to load MiDaS model: No module named 'timm'
+2025-06-07 12:38:40,014 - INFO - Falling back to edge-based depth estimation
+2025-06-07 12:38:40,014 - INFO - Edge-based depth estimation initialized
+2025-06-07 12:38:40,014 - INFO - Initialized SpatialPreprocessingPipeline with output_size=(518, 518), depth_method=monocular
+2025-06-07 12:38:40,015 - INFO - Initialized transform pipelines for dual-encoder preprocessing
+2025-06-07 12:38:40,015 - INFO - Edge-based depth estimation initialized
+2025-06-07 12:38:40,015 - INFO - Initialized SpatialPreprocessingPipeline with output_size=(518, 518), depth_method=edge_based
+2025-06-07 12:38:40,015 - INFO - ✅ Spatial preprocessing pipeline loaded
+2025-06-07 12:38:41,593 - INFO - set VIDEO_TOTAL_PIXELS: 90316800
+2025-06-07 12:38:41,650 - INFO - ✅ Initialized OptimizedSpatialInference on cuda
+2025-06-07 12:38:41,650 - INFO - ✅ Spatial inference system loaded
+2025-06-07 12:38:41,650 - INFO - Initialized Spatial-Aware Augmentation Pipeline with config: SpatialAugmentationConfig(perspective_distortion_range=(0.1, 0.4), depth_variation_intensity=0.3, lighting_3d_aware=True, spatial_feature_guidance=True, synthetic_depth_variations=5, spatial_complexity_threshold=0.5, quality_evaluation_enabled=True, output_variations_per_image=3, spatial_resolution=(518, 518), preserve_spatial_features=True, use_existing_augmentation=True, fallback_to_standard=True)
+2025-06-07 12:38:41,650 - INFO - Processing dataset: augmented_pizza_legacy
+2025-06-07 12:38:41,651 - INFO - Found 2 images to process
+2025-06-07 12:38:41,651 - INFO - Processing 1/2: pizza_1_basic_4_0.jpg
+2025-06-07 12:38:42,864 - INFO - Processing 2/2: pizza_1_basic_8_0.jpg
+2025-06-07 12:38:44,098 - INFO - Dataset augmentation complete. Summary: {'total_images_processed': 2, 'successful_augmentations': 2, 'total_processing_time': 2.437596082687378, 'average_processing_time': 1.218798041343689, 'average_quality_score': np.float64(0.6924606783318967), 'average_spatial_consistency': np.float64(0.8902759165978285), 'augmentation_type_distribution': {'total_count': 6, 'distribution': {'geometric_pizza_reshaping': {'count': 2, 'percentage': 33.33333333333333, 'avg_quality': np.float64(0.5773820349956903), 'min_quality': np.float64(0.5270153805083824), 'max_quality': np.float64(0.6277486894829982)}, 'enhanced_burning': {'count': 2, 'percentage': 33.33333333333333, 'avg_quality': np.float64(0.75), 'min_quality': np.float64(0.75), 'max_quality': np.float64(0.75)}, 'enhanced_mixed': {'count': 2, 'percentage': 33.33333333333333, 'avg_quality': np.float64(0.75), 'min_quality': np.float64(0.75), 'max_quality': np.float64(0.75)}}, 'most_common_type': 'geometric_pizza_reshaping', 'average_quality_overall': np.float64(0.6924606783318968)}, 'config': {'perspective_distortion_range': (0.1, 0.4), 'depth_variation_intensity': 0.3, 'lighting_3d_aware': True, 'spatial_feature_guidance': True, 'synthetic_depth_variations': 5, 'spatial_complexity_threshold': 0.5, 'quality_evaluation_enabled': True, 'output_variations_per_image': 3, 'spatial_resolution': (518, 518), 'preserve_spatial_features': True, 'use_existing_augmentation': True, 'fallback_to_standard': True}}
+2025-06-07 12:38:44,098 - INFO - Dataset processing complete. Summary: {'total_images_processed': 2, 'successful_augmentations': 2, 'total_processing_time': 2.437596082687378, 'average_processing_time': 1.218798041343689, 'average_quality_score': np.float64(0.6924606783318967), 'average_spatial_consistency': np.float64(0.8902759165978285), 'augmentation_type_distribution': {'total_count': 6, 'distribution': {'geometric_pizza_reshaping': {'count': 2, 'percentage': 33.33333333333333, 'avg_quality': np.float64(0.5773820349956903), 'min_quality': np.float64(0.5270153805083824), 'max_quality': np.float64(0.6277486894829982)}, 'enhanced_burning': {'count': 2, 'percentage': 33.33333333333333, 'avg_quality': np.float64(0.75), 'min_quality': np.float64(0.75), 'max_quality': np.float64(0.75)}, 'enhanced_mixed': {'count': 2, 'percentage': 33.33333333333333, 'avg_quality': np.float64(0.75), 'min_quality': np.float64(0.75), 'max_quality': np.float64(0.75)}}, 'most_common_type': 'geometric_pizza_reshaping', 'average_quality_overall': np.float64(0.6924606783318968)}, 'config': {'perspective_distortion_range': (0.1, 0.4), 'depth_variation_intensity': 0.3, 'lighting_3d_aware': True, 'spatial_feature_guidance': True, 'synthetic_depth_variations': 5, 'spatial_complexity_threshold': 0.5, 'quality_evaluation_enabled': True, 'output_variations_per_image': 3, 'spatial_resolution': (518, 518), 'preserve_spatial_features': True, 'use_existing_augmentation': True, 'fallback_to_standard': True}}
+2025-06-07 12:39:29,472 - INFO - Successfully imported spatial processing infrastructure
+2025-06-07 12:39:29,473 - INFO - Successfully imported single-image augmentation functions
+2025-06-07 12:39:29,475 - INFO - Initialized transform pipelines for dual-encoder preprocessing
+2025-06-07 12:39:29,893 - WARNING - Failed to load MiDaS model: No module named 'timm'
+2025-06-07 12:39:29,893 - INFO - Falling back to edge-based depth estimation
+2025-06-07 12:39:29,893 - INFO - Edge-based depth estimation initialized
+2025-06-07 12:39:29,893 - INFO - Initialized SpatialPreprocessingPipeline with output_size=(518, 518), depth_method=monocular
+2025-06-07 12:39:29,894 - INFO - Initialized transform pipelines for dual-encoder preprocessing
+2025-06-07 12:39:29,894 - INFO - Edge-based depth estimation initialized
+2025-06-07 12:39:29,894 - INFO - Initialized SpatialPreprocessingPipeline with output_size=(518, 518), depth_method=edge_based
+2025-06-07 12:39:29,894 - INFO - ✅ Spatial preprocessing pipeline loaded
+2025-06-07 12:39:31,516 - INFO - set VIDEO_TOTAL_PIXELS: 90316800
+2025-06-07 12:39:31,554 - INFO - ✅ Initialized OptimizedSpatialInference on cuda
+2025-06-07 12:39:31,554 - INFO - ✅ Spatial inference system loaded
+2025-06-07 12:39:31,554 - INFO - Initialized Spatial-Aware Augmentation Pipeline with config: SpatialAugmentationConfig(perspective_distortion_range=(0.1, 0.4), depth_variation_intensity=0.3, lighting_3d_aware=True, spatial_feature_guidance=True, synthetic_depth_variations=5, spatial_complexity_threshold=0.5, quality_evaluation_enabled=True, output_variations_per_image=3, spatial_resolution=(518, 518), preserve_spatial_features=True, use_existing_augmentation=True, fallback_to_standard=True)
+2025-06-07 12:39:31,554 - INFO - Testing with single image: augmented_pizza_legacy/pizza_0_basic_0_0.jpg
+2025-06-07 12:39:32,962 - INFO - Single image augmentation results:
+2025-06-07 12:39:32,962 - INFO -   - Original image: augmented_pizza_legacy/pizza_0_basic_0_0.jpg
+2025-06-07 12:39:32,962 - INFO -   - Generated variations: 3
+2025-06-07 12:39:32,962 - INFO -   - Augmentation types: ['geometric_pizza_reshaping', 'enhanced_burning', 'enhanced_mixed']
+2025-06-07 12:39:32,962 - INFO -   - Average quality score: 0.690
+2025-06-07 12:39:32,962 - INFO -   - Spatial consistency: 0.806
+2025-06-07 12:39:32,962 - INFO -   - Processing time: 1.407s
+2025-06-07 12:39:32,966 - INFO - Test results saved to temp_output/single_test_final/single_image_test

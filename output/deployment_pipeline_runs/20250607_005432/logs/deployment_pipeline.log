@@ -1,0 +1,19 @@
+[1;33m[WARNING][0m Skipping Docker tests as requested
+
+[0;34m=== Starting Deployment Pipeline - SPATIAL-4.2 ===[0m
+[0;32m[INFO][0m Pipeline run ID: 20250607_005432
+[0;32m[INFO][0m Output directory: /home/emilio/Documents/ai/pizza/output/deployment_pipeline_runs/20250607_005432
+
+[0;34m=== Checking Prerequisites ===[0m
+Python 3.12.3
+CUDA available: True
+[0;32m[INFO][0m CUDA availability check passed
+Docker version 28.2.2, build e6534b4
+[0;32m[INFO][0m Docker is available
+Docker Compose version v2.36.2
+[0;32m[INFO][0m Docker Compose (v2) is available
+[0;32m[INFO][0m Sufficient disk space available
+[0;32m[INFO][0m Container builds skipped
+
+[0;34m=== Running Spatial Feature Tests ===[0m
+[0;31m[ERROR][0m Spatial feature tests failed

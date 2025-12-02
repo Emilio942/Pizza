@@ -52,8 +52,8 @@ def run_pruning_for_sparsity(sparsity, base_model_path=None, fine_tune=True):
     logger.info(f"\n===== Running pruning with sparsity {sparsity:.2f} =====")
     
     # Build command for running pruning_tool.py
-    pruning_script = os.path.join(project_root, 'scripts', 'pruning_tool.py')
-    output_dir = os.path.join(project_root, 'models', 'pruned_model')
+    pruning_script = os.path.join(project_root, 'pruning_tool.py')
+    output_dir = os.path.join(project_root.parent, 'models', 'pruned_model')
     os.makedirs(output_dir, exist_ok=True)
     
     cmd = [sys.executable, pruning_script, f"--sparsity={sparsity}"]
@@ -299,10 +299,16 @@ def print_summary(results):
     # Base model summary
     base = results.get("base_model", {})
     logger.info(f"Base model:")
-    logger.info(f"  Size: {base.get('size_kb', 'N/A'):.2f} KB")
-    logger.info(f"  Accuracy: {base.get('accuracy', 'N/A'):.2f}%")
-    logger.info(f"  RAM usage: {base.get('ram_usage_kb', 'N/A'):.2f} KB")
-    logger.info(f"  Inference time: {base.get('inference_time_ms', 'N/A'):.2f} ms\n")
+    size_kb = base.get('size_kb', None)
+    accuracy = base.get('accuracy', None)
+    ram_usage = base.get('ram_usage_kb', None)
+    inference_time = base.get('inference_time_ms', None)
+    
+    logger.info(f"  Size: {size_kb:.2f} KB" if size_kb is not None else "  Size: N/A")
+    logger.info(f"  Accuracy: {accuracy:.2f}%" if accuracy is not None else "  Accuracy: N/A")
+    logger.info(f"  RAM usage: {ram_usage:.2f} KB" if ram_usage is not None else "  RAM usage: N/A")
+    logger.info(f"  Inference time: {inference_time:.2f} ms" if inference_time is not None else "  Inference time: N/A")
+    logger.info("")
     
     # For each pruned model
     for sparsity_key, model_info in results.get("pruned_models", {}).items():
@@ -339,8 +345,9 @@ def main():
         
         # Find base model path
         base_model_candidates = [
-            os.path.join(project_root, "models", "micro_pizza_model.pth"),
-            os.path.join(project_root, "models", "pizza_model_float32.pth")
+            os.path.join(project_root.parent, "models", "micro_pizza_model.pth"),
+            os.path.join(project_root.parent, "models", "pizza_model_float32.pth"),
+            os.path.join(project_root.parent, "models", "pizza_model_int8.pth")
         ]
         
         base_model_path = None

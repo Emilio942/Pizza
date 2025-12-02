@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/home/emilio/Documents/ai/pizza/scripts/spatial_model_validation.py", line 30, in <module>
+    from src.models.spatial_mllm import SpatialMLLM
+ModuleNotFoundError: No module named 'src.models'

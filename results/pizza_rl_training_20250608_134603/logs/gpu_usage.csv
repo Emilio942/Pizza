@@ -1,0 +1,2 @@
+timestamp, utilization.gpu [%], memory.used [MiB], memory.total [MiB], temperature.gpu, power.draw [W]
+2025/06/08 13:46:03.256, 40 %, 459 MiB, 12288 MiB, 45, 21.12 W

@@ -1,1 +1,0 @@
-/home/emilio/Documents/ai/pizza/docs/ORGANIZATION_SUMMARY.md

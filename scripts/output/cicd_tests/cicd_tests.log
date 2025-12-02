@@ -1,0 +1,30 @@
+2025-06-07 13:28:16,400 - INFO - Starting comprehensive CI/CD test suite
+2025-06-07 13:28:16,400 - INFO - Running Docker Tests...
+2025-06-07 13:28:16,400 - INFO - Running test: docker_build_standard
+2025-06-07 13:28:17,033 - ERROR - Standard Docker build failed: 500 Server Error for http+docker://localhost/v1.50/build?t=pizza-detection-test%3Alatest&q=False&nocache=False&rm=True&forcerm=False&pull=False&dockerfile=Dockerfile: Internal Server Error ("Cannot locate specified Dockerfile: Dockerfile")
+2025-06-07 13:28:17,033 - INFO - Test docker_build_standard completed: fail (0.63s)
+2025-06-07 13:28:17,033 - INFO - Running test: docker_build_spatial
+2025-06-07 13:28:17,086 - ERROR - Spatial Docker build failed: 500 Server Error for http+docker://localhost/v1.50/build?t=pizza-detection-spatial-test%3Alatest&q=False&nocache=False&rm=True&forcerm=False&pull=False&dockerfile=Dockerfile.spatial: Internal Server Error ("Cannot locate specified Dockerfile: Dockerfile.spatial")
+2025-06-07 13:28:17,086 - INFO - Test docker_build_spatial completed: fail (0.05s)
+2025-06-07 13:28:17,086 - INFO - Running test: container_startup_standard
+2025-06-07 13:28:18,412 - INFO - Test container_startup_standard completed: fail (1.33s)
+2025-06-07 13:28:18,413 - INFO - Running test: container_startup_spatial
+2025-06-07 13:28:19,652 - INFO - Test container_startup_spatial completed: fail (1.24s)
+2025-06-07 13:28:19,652 - INFO - Running Model Tests...
+2025-06-07 13:28:19,652 - INFO - Running test: model_loading
+2025-06-07 13:28:23,513 - INFO - Test model_loading completed: fail (3.86s)
+2025-06-07 13:28:23,513 - INFO - Running test: model_versioning
+2025-06-07 13:28:23,517 - INFO - Test model_versioning completed: pass (0.00s)
+2025-06-07 13:28:23,517 - INFO - Running Performance Tests...
+2025-06-07 13:28:23,517 - INFO - Running test: inference_performance
+2025-06-07 13:28:23,681 - INFO - set VIDEO_TOTAL_PIXELS: 90316800
+2025-06-07 13:28:23,682 - INFO - Test inference_performance completed: pass (0.17s)
+2025-06-07 13:28:23,682 - INFO - Running API Tests...
+2025-06-07 13:28:23,682 - INFO - Running test: api_health_check
+2025-06-07 13:28:23,686 - INFO - Test api_health_check completed: pass (0.00s)
+2025-06-07 13:28:23,686 - INFO - Running test: api_prediction_endpoints
+2025-06-07 13:28:23,691 - INFO - Test api_prediction_endpoints completed: fail (0.00s)
+2025-06-07 13:28:23,691 - INFO - Running Integration Tests...
+2025-06-07 13:28:23,691 - INFO - Running test: docker_compose_deployment
+2025-06-07 13:28:23,692 - INFO - Test docker_compose_deployment completed: fail (0.00s)
+2025-06-07 13:28:23,693 - INFO - CI/CD tests completed. Results saved to: /home/emilio/Documents/ai/pizza/scripts/output/cicd_tests/cicd_test_results_20250607_132823.json

@@ -356,114 +356,114 @@ def generate_html_report(selected_samples, thumbnail_map, output_dir, run_id):
     </div>
     
     <script>
-        /* Bilddaten aus Python */
+        // Bilddaten aus Python
         const imageData = {JSON_DATA_PLACEHOLDER};
         
-        /* Status der markierten Bilder
+        // Status der markierten Bilder
         let markedImages = new Set();
         let visibleImages = new Set();
         
-        /* Klassen-Filter
+        // Klassen-Filter
         let activeClassFilters = new Set();
         
-        /* Initialisiere die Seite
-        function initPage() {
-            /* Gesamtzahl der Bilder anzeigen */
+        // Initialisiere die Seite
+        function initPage() {{
+            // Gesamtzahl der Bilder anzeigen
             document.getElementById('total-count').textContent = imageData.images.length;
             
-            /* Sammle alle einzigartigen Klassen */
+            // Sammle alle einzigartigen Klassen
             const classes = [...new Set(imageData.images.map(img => img.className))];
             
-            /* Aktiviere alle Klassenfilter initial */
+            // Aktiviere alle Klassenfilter initial
             classes.forEach(className => activeClassFilters.add(className));
             
-            /* Erstelle Klassenfilter
+            // Erstelle Klassenfilter
             const classFiltersContainer = document.getElementById('class-filters');
-            classes.forEach(className => {
+            classes.forEach(className => {{
                 const classCount = imageData.images.filter(img => img.className === className).length;
                 
                 const checkbox = document.createElement('div');
                 checkbox.className = 'checkbox-container';
                 checkbox.innerHTML = `
-                    <input type="checkbox" id="filter-class-${className}" checked onchange="toggleClassFilter('${className}')">
-                    <label for="filter-class-${className}">${className} (${classCount})</label>
+                    <input type="checkbox" id="filter-class-${{className}}" checked onchange="toggleClassFilter('${{className}}')">
+                    <label for="filter-class-${{className}}">${{className}} (${{classCount}})</label>
                 `;
                 classFiltersContainer.appendChild(checkbox);
-            });
+            }});
             
-            /* Erstelle den Inhalt
+            // Erstelle den Inhalt
             renderContent();
-        }
+        }}
         
-        /* Rendere den gesamten Inhalt
-        function renderContent() {
+        // Rendere den gesamten Inhalt
+        function renderContent() {{
             const contentContainer = document.getElementById('content');
             contentContainer.innerHTML = '';
             
-            /* Gruppiere Bilder nach Klasse
-            const imagesByClass = {};
-            imageData.images.forEach(img => {
-                if (!imagesByClass[img.className]) {
+            // Gruppiere Bilder nach Klasse
+            const imagesByClass = {{}};
+            imageData.images.forEach(img => {{
+                if (!imagesByClass[img.className]) {{
                     imagesByClass[img.className] = [];
-                }
+                }}
                 imagesByClass[img.className].push(img);
-            });
+            }});
             
-            /* Erstelle Abschnitte für jede Klasse
-            Object.entries(imagesByClass).forEach(([className, images]) => {
-                /* Überspringe Klasse, wenn sie nicht im Filter ist
-                if (!activeClassFilters.has(className)) {
+            // Erstelle Abschnitte für jede Klasse
+            Object.entries(imagesByClass).forEach(([className, images]) => {{
+                // Überspringe Klasse, wenn sie nicht im Filter ist
+                if (!activeClassFilters.has(className)) {{
                     return;
-                }
+                }}
                 
                 const classSection = document.createElement('div');
                 classSection.className = 'class-section';
-                classSection.id = `class-${className}`;
+                classSection.id = `class-${{className}}`;
                 
                 const classTitle = document.createElement('h2');
-                classTitle.textContent = `Klasse: ${className}`;
+                classTitle.textContent = `Klasse: ${{className}}`;
                 classSection.appendChild(classTitle);
                 
                 const imageGrid = document.createElement('div');
                 imageGrid.className = 'image-grid';
                 
-                /* Erstelle eine Karte für jedes Bild
-                images.forEach(img => {
+                // Erstelle eine Karte für jedes Bild
+                images.forEach(img => {{
                     const imgCard = createImageCard(img);
                     
-                    /* Wenn nur markierte Bilder angezeigt werden sollen und dieses Bild nicht markiert ist, verstecke es
+                    // Wenn nur markierte Bilder angezeigt werden sollen und dieses Bild nicht markiert ist, verstecke es
                     const filterMarked = document.getElementById('filter-marked').checked;
-                    if (filterMarked && !markedImages.has(img.path)) {
+                    if (filterMarked && !markedImages.has(img.path)) {{
                         imgCard.style.display = 'none';
-                    } else {
+                    }} else {{
                         visibleImages.add(img.path);
-                    }
+                    }}
                     
                     imageGrid.appendChild(imgCard);
-                });
+                }});
                 
                 classSection.appendChild(imageGrid);
                 contentContainer.appendChild(classSection);
-            });
+            }});
             
-            /* Aktualisiere die Zähler
+            // Aktualisiere die Zähler
             updateCounters();
-        }
+        }}
         
-        /* Erstelle eine Bildkarte
-        function createImageCard(img) {
+        // Erstelle eine Bildkarte
+        function createImageCard(img) {{
             const card = document.createElement('div');
             card.className = 'image-card clickable';
             card.dataset.path = img.path;
             
-            if (markedImages.has(img.path)) {
+            if (markedImages.has(img.path)) {{
                 card.classList.add('marked');
                 
                 const badge = document.createElement('div');
                 badge.className = 'badge';
                 badge.textContent = 'Löschen';
                 card.appendChild(badge);
-            }
+            }}
             
             const thumbnail = document.createElement('img');
             thumbnail.className = 'thumbnail';
@@ -477,177 +477,177 @@ def generate_html_report(selected_samples, thumbnail_map, output_dir, run_id):
             
             const title = document.createElement('h4');
             title.textContent = img.id;
-            title.title = img.path; /* Vollständiger Pfad als Tooltip
+            title.title = img.path; // Vollständiger Pfad als Tooltip
             info.appendChild(title);
             
             const className = document.createElement('p');
-            className.textContent = `Klasse: ${img.className}`;
+            className.textContent = `Klasse: ${{img.className}}`;
             info.appendChild(className);
             
             card.appendChild(info);
             
-            /* Event-Listener zum Markieren/Entmarkieren des Bildes
+            // Event-Listener zum Markieren/Entmarkieren des Bildes
             card.addEventListener('click', () => toggleMark(img.path, card));
             
             return card;
-        }
+        }}
         
-        /* Markiere oder entmarkiere ein Bild
-        function toggleMark(imagePath, card) {
-            if (markedImages.has(imagePath)) {
+        // Markiere oder entmarkiere ein Bild
+        function toggleMark(imagePath, card) {{
+            if (markedImages.has(imagePath)) {{
                 markedImages.delete(imagePath);
                 card.classList.remove('marked');
                 
-                /* Entferne das Badge
+                // Entferne das Badge
                 const badge = card.querySelector('.badge');
-                if (badge) {
+                if (badge) {{
                     card.removeChild(badge);
-                }
-            } else {
+                }}
+            }} else {{
                 markedImages.add(imagePath);
                 card.classList.add('marked');
                 
-                /* Füge Badge hinzu
+                // Füge Badge hinzu
                 const badge = document.createElement('div');
                 badge.className = 'badge';
                 badge.textContent = 'Löschen';
                 card.appendChild(badge);
-            }
+            }}
             
-            /* Aktualisiere den Zähler
+            // Aktualisiere den Zähler
             updateCounters();
-        }
+        }}
         
-        /* Markiere alle sichtbaren Bilder
-        function markAllVisible() {
-            document.querySelectorAll('.image-card').forEach(card => {
+        // Markiere alle sichtbaren Bilder
+        function markAllVisible() {{
+            document.querySelectorAll('.image-card').forEach(card => {{
                 const imagePath = card.dataset.path;
-                if (card.style.display !== 'none' && !markedImages.has(imagePath)) {
+                if (card.style.display !== 'none' && !markedImages.has(imagePath)) {{
                     markedImages.add(imagePath);
                     card.classList.add('marked');
                     
-                    /* Füge Badge hinzu, falls nicht vorhanden
-                    if (!card.querySelector('.badge')) {
+                    // Füge Badge hinzu, falls nicht vorhanden
+                    if (!card.querySelector('.badge')) {{
                         const badge = document.createElement('div');
                         badge.className = 'badge';
                         badge.textContent = 'Löschen';
                         card.appendChild(badge);
-                    }
-                }
-            });
+                    }}
+                }}
+            }});
             
-            /* Aktualisiere den Zähler
+            // Aktualisiere den Zähler
             updateCounters();
-        }
+        }}
         
-        /* Entmarkiere alle sichtbaren Bilder
-        function unmarkAllVisible() {
-            document.querySelectorAll('.image-card').forEach(card => {
+        // Entmarkiere alle sichtbaren Bilder
+        function unmarkAllVisible() {{
+            document.querySelectorAll('.image-card').forEach(card => {{
                 const imagePath = card.dataset.path;
-                if (card.style.display !== 'none' && markedImages.has(imagePath)) {
+                if (card.style.display !== 'none' && markedImages.has(imagePath)) {{
                     markedImages.delete(imagePath);
                     card.classList.remove('marked');
                     
-                    /* Entferne das Badge
+                    // Entferne das Badge
                     const badge = card.querySelector('.badge');
-                    if (badge) {
+                    if (badge) {{
                         card.removeChild(badge);
-                    }
-                }
-            });
+                    }}
+                }}
+            }});
             
-            /* Aktualisiere den Zähler
+            // Aktualisiere den Zähler
             updateCounters();
-        }
+        }}
         
-        /* Filtere Bilder basierend auf dem "Nur markierte Bilder anzeigen" Checkbox
-        function filterImages() {
+        // Filtere Bilder basierend auf dem "Nur markierte Bilder anzeigen" Checkbox
+        function filterImages() {{
             visibleImages.clear();
             const filterMarked = document.getElementById('filter-marked').checked;
             
-            document.querySelectorAll('.image-card').forEach(card => {
+            document.querySelectorAll('.image-card').forEach(card => {{
                 const imagePath = card.dataset.path;
                 const img = imageData.images.find(img => img.path === imagePath);
                 
-                /* Prüfe, ob die Klasse des Bildes im aktiven Filter ist
+                // Prüfe, ob die Klasse des Bildes im aktiven Filter ist
                 const isClassFiltered = activeClassFilters.has(img.className);
                 
-                if (filterMarked) {
-                    /* Wenn "Nur markierte" aktiviert ist und das Bild nicht markiert ist, verstecke es
-                    if (!markedImages.has(imagePath) || !isClassFiltered) {
+                if (filterMarked) {{
+                    // Wenn "Nur markierte" aktiviert ist und das Bild nicht markiert ist, verstecke es
+                    if (!markedImages.has(imagePath) || !isClassFiltered) {{
                         card.style.display = 'none';
-                    } else {
+                    }} else {{
                         card.style.display = 'block';
                         visibleImages.add(imagePath);
-                    }
-                } else {
-                    /* Wenn "Nur markierte" nicht aktiviert ist, zeige es an, wenn die Klasse im Filter ist
-                    if (isClassFiltered) {
+                    }}
+                }} else {{
+                    // Wenn "Nur markierte" nicht aktiviert ist, zeige es an, wenn die Klasse im Filter ist
+                    if (isClassFiltered) {{
                         card.style.display = 'block';
                         visibleImages.add(imagePath);
-                    } else {
+                    }} else {{
                         card.style.display = 'none';
-                    }
-                }
-            });
+                    }}
+                }}
+            }});
             
-            /* Aktualisiere Klassenüberschriften
-            Object.keys(imageData.images.reduce((acc, img) => {
+            // Aktualisiere Klassenüberschriften
+            Object.keys(imageData.images.reduce((acc, img) => {{
                 acc[img.className] = true;
                 return acc;
-            }, {})).forEach(className => {
-                const classSection = document.getElementById(`class-${className}`);
-                if (classSection) {
-                    /* Zähle sichtbare Bilder in dieser Klasse
-                    const visibleInClass = Array.from(document.querySelectorAll(`.image-card[data-path^="${project_root}/augmented_pizza/${className}/"]`))
+            }}, {{}})).forEach(className => {{
+                const classSection = document.getElementById(`class-${{className}}`);
+                if (classSection) {{
+                    // Zähle sichtbare Bilder in dieser Klasse
+                    const visibleInClass = Array.from(document.querySelectorAll(`.image-card[data-path^="{project_root}/augmented_pizza/${{className}}/"]`))
                         .filter(card => card.style.display !== 'none').length;
                     
-                    if (visibleInClass === 0) {
+                    if (visibleInClass === 0) {{
                         classSection.style.display = 'none';
-                    } else {
+                    }} else {{
                         classSection.style.display = 'block';
-                    }
-                }
-            });
-        }
+                    }}
+                }}
+            }});
+        }}
         
-        /* Aktiviere/Deaktiviere einen Klassenfilter
-        function toggleClassFilter(className) {
-            const checkbox = document.getElementById(`filter-class-${className}`);
+        // Aktiviere/Deaktiviere einen Klassenfilter
+        function toggleClassFilter(className) {{
+            const checkbox = document.getElementById(`filter-class-${{className}}`);
             
-            if (checkbox.checked) {
+            if (checkbox.checked) {{
                 activeClassFilters.add(className);
-            } else {
+            }} else {{
                 activeClassFilters.delete(className);
-            }
+            }}
             
-            /* Rendere den Inhalt neu
+            // Rendere den Inhalt neu
             renderContent();
             
-            /* Wende den "Nur markierte" Filter an, falls aktiviert
-            if (document.getElementById('filter-marked').checked) {
+            // Wende den "Nur markierte" Filter an, falls aktiviert
+            if (document.getElementById('filter-marked').checked) {{
                 filterImages();
-            }
-        }
+            }}
+        }}
         
-        /* Aktualisiere den Zähler markierter Bilder
-        function updateCounters() {
+        // Aktualisiere den Zähler markierter Bilder
+        function updateCounters() {{
             document.getElementById('marked-count').textContent = markedImages.size;
-        }
+        }}
         
-        /* Speichere markierte Bilder in eine JSON-Datei
-        function saveMarkedImages() {
-            /* Erstelle ein spezielles Markierungsobjekt
-            const markedData = {
+        // Speichere markierte Bilder in eine JSON-Datei
+        function saveMarkedImages() {{
+            // Erstelle ein spezielles Markierungsobjekt
+            const markedData = {{
                 runId: imageData.runId,
                 timestamp: new Date().toISOString(),
                 markedImages: Array.from(markedImages)
-            };
+            }};
             
-            /* Erstelle eine versteckte Form zum Senden der Daten
+            // Erstelle eine versteckte Form zum Senden der Daten
             const form = document.createElement('form');
             form.method = 'POST';
-            form.action = `./save_marked_images.py?run_id=${imageData.runId}`;
+            form.action = `./save_marked_images.py?run_id=${{imageData.runId}}`;
             form.style.display = 'none';
             
             const input = document.createElement('input');
@@ -658,11 +658,11 @@ def generate_html_report(selected_samples, thumbnail_map, output_dir, run_id):
             form.appendChild(input);
             document.body.appendChild(form);
             
-            /* Sende die Form
+            // Sende die Form
             form.submit();
-        }
+        }}
         
-        /* Initialisiere die Seite beim Laden
+        // Initialisiere die Seite beim Laden
         window.onload = initPage;
     </script>
 </body>

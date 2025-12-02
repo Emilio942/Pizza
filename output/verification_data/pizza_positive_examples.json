@@ -1,0 +1,61 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2025-06-08T10:41:58.391809",
+  "dataset_type": "positive_examples",
+  "description": "High-quality pizza recognition examples for verifier training",
+  "statistics": {
+    "total_samples": 3,
+    "average_quality_score": 0.9166666666666666,
+    "food_safety_critical_samples": 0
+  },
+  "samples": [
+    {
+      "pizza_image_path": "test_images/basic_001.jpg",
+      "model_prediction": "basic",
+      "ground_truth_class": "basic",
+      "confidence_score": 0.95,
+      "quality_score": 0.95,
+      "temporal_smoothing_applied": true,
+      "cmsis_nn_optimized": true,
+      "hardware_platform": "rp2040_emulator",
+      "food_safety_critical": false,
+      "error_type": "none",
+      "prediction_metadata": {
+        "model_version": "MicroPizzaNetV2_1.0",
+        "timestamp": "2025-06-08T10:41:58.391773"
+      }
+    },
+    {
+      "pizza_image_path": "test_images/burnt_001.jpg",
+      "model_prediction": "burnt",
+      "ground_truth_class": "burnt",
+      "confidence_score": 0.88,
+      "quality_score": 0.88,
+      "temporal_smoothing_applied": true,
+      "cmsis_nn_optimized": true,
+      "hardware_platform": "rp2040_emulator",
+      "food_safety_critical": false,
+      "error_type": "none",
+      "prediction_metadata": {
+        "model_version": "MicroPizzaNetV2_1.0",
+        "timestamp": "2025-06-08T10:41:58.391782"
+      }
+    },
+    {
+      "pizza_image_path": "test_images/mixed_001.jpg",
+      "model_prediction": "mixed",
+      "ground_truth_class": "mixed",
+      "confidence_score": 0.92,
+      "quality_score": 0.92,
+      "temporal_smoothing_applied": true,
+      "cmsis_nn_optimized": true,
+      "hardware_platform": "rp2040_emulator",
+      "food_safety_critical": false,
+      "error_type": "none",
+      "prediction_metadata": {
+        "model_version": "MicroPizzaNetV2_1.0",
+        "timestamp": "2025-06-08T10:41:58.391784"
+      }
+    }
+  ]
+}

@@ -1,0 +1,106 @@
+{
+  "base_model": {
+    "path": "/home/emilio/Documents/ai/pizza/models/micro_pizza_model.pth",
+    "size_kb": 9.3359375,
+    "accuracy": 65.51980719383153,
+    "ram_usage_kb": 29.28515625,
+    "inference_time_ms": 0.16773462295532227
+  },
+  "clustered_models": {
+    "clusters_16": {
+      "n_clusters": 16,
+      "original": {
+        "path": "/home/emilio/Documents/ai/pizza/models/clustered/micropizzanetv2_clustered_16.pth",
+        "size_kb": 9.3359375,
+        "size_reduction_percent": 0.0,
+        "accuracy": 65.51980719383153,
+        "accuracy_loss_percent": 0.0,
+        "ram_usage_kb": 29.28515625,
+        "inference_time_ms": 0.15520572662353516
+      },
+      "int8_quantized": {
+        "path": "/home/emilio/Documents/ai/pizza/models/clustered/micropizzanetv2_clustered_16_int8.pth",
+        "size_kb": 9.3359375,
+        "size_reduction_percent": 0.0,
+        "accuracy": 65.51980719383153,
+        "accuracy_loss_percent": 0.0,
+        "ram_usage_kb": 29.28515625,
+        "inference_time_ms": 0.1788330078125
+      },
+      "int4_quantized": {
+        "path": "/home/emilio/Documents/ai/pizza/models/clustered/micropizzanetv2_clustered_16_int4.pth",
+        "size_kb": 9.3359375,
+        "size_reduction_percent": 0.0,
+        "accuracy": 65.51980719383153,
+        "accuracy_loss_percent": 0.0,
+        "ram_usage_kb": 29.28515625,
+        "inference_time_ms": 0.15631675720214844
+      }
+    },
+    "clusters_32": {
+      "n_clusters": 32,
+      "original": {
+        "path": "/home/emilio/Documents/ai/pizza/models/clustered/micropizzanetv2_clustered_32.pth",
+        "size_kb": 9.3359375,
+        "size_reduction_percent": 0.0,
+        "accuracy": 65.51980719383153,
+        "accuracy_loss_percent": 0.0,
+        "ram_usage_kb": 29.28515625,
+        "inference_time_ms": 0.15338659286499023
+      },
+      "int8_quantized": {
+        "path": "/home/emilio/Documents/ai/pizza/models/clustered/micropizzanetv2_clustered_32_int8.pth",
+        "size_kb": 9.3359375,
+        "size_reduction_percent": 0.0,
+        "accuracy": 65.51980719383153,
+        "accuracy_loss_percent": 0.0,
+        "ram_usage_kb": 29.28515625,
+        "inference_time_ms": 0.15578746795654297
+      },
+      "int4_quantized": {
+        "path": "/home/emilio/Documents/ai/pizza/models/clustered/micropizzanetv2_clustered_32_int4.pth",
+        "size_kb": 9.3359375,
+        "size_reduction_percent": 0.0,
+        "accuracy": 65.51980719383153,
+        "accuracy_loss_percent": 0.0,
+        "ram_usage_kb": 29.28515625,
+        "inference_time_ms": 0.15575885772705078
+      }
+    },
+    "clusters_64": {
+      "n_clusters": 64,
+      "original": {
+        "path": "/home/emilio/Documents/ai/pizza/models/clustered/micropizzanetv2_clustered_64.pth",
+        "size_kb": 9.3359375,
+        "size_reduction_percent": 0.0,
+        "accuracy": 65.51980719383153,
+        "accuracy_loss_percent": 0.0,
+        "ram_usage_kb": 29.28515625,
+        "inference_time_ms": 0.15417814254760742
+      },
+      "int8_quantized": {
+        "path": "/home/emilio/Documents/ai/pizza/models/clustered/micropizzanetv2_clustered_64_int8.pth",
+        "size_kb": 9.3359375,
+        "size_reduction_percent": 0.0,
+        "accuracy": 65.51980719383153,
+        "accuracy_loss_percent": 0.0,
+        "ram_usage_kb": 29.28515625,
+        "inference_time_ms": 0.15377521514892578
+      },
+      "int4_quantized": {
+        "path": "/home/emilio/Documents/ai/pizza/models/clustered/micropizzanetv2_clustered_64_int4.pth",
+        "size_kb": 9.3359375,
+        "size_reduction_percent": 0.0,
+        "accuracy": 65.51980719383153,
+        "accuracy_loss_percent": 0.0,
+        "ram_usage_kb": 29.28515625,
+        "inference_time_ms": 0.1539897918701172
+      }
+    }
+  },
+  "metadata": {
+    "timestamp": "2025-06-08T11:52:35.616819",
+    "script": "modell_1_2_weight_clustering.py",
+    "task": "MODELL-1.2: Gewichts-Clustering implementieren und evaluieren"
+  }
+}

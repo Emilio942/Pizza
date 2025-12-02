@@ -1,0 +1,120 @@
+{
+  "test_run_timestamp": "2025-06-07T13:06:23.601747",
+  "total_tests": 7,
+  "passed": 3,
+  "failed": 4,
+  "skipped": 0,
+  "success_rate": 0.42857142857142855,
+  "total_duration": 11.959896802902222,
+  "results": [
+    {
+      "test_name": "Spatial Model Loading",
+      "status": "pass",
+      "duration": 9.575865507125854,
+      "error_message": null,
+      "metrics": {
+        "load_time": 3.7575414180755615,
+        "total_parameters": 3754622976,
+        "model_size_mb": 14322.75
+      },
+      "details": {
+        "model_id": "Diankun/Spatial-MLLM-subset-sft",
+        "device": "cuda",
+        "model_type": "Qwen2_5_VLForConditionalGeneration"
+      }
+    },
+    {
+      "test_name": "Spatial Preprocessing Pipeline",
+      "status": "fail",
+      "duration": 0.07526707649230957,
+      "error_message": null,
+      "metrics": {},
+      "details": {
+        "error": "SpatialPreprocessingPipeline.__init__() got an unexpected keyword argument 'depth_method'"
+      }
+    },
+    {
+      "test_name": "Spatial API Integration",
+      "status": "fail",
+      "duration": 0.0009703636169433594,
+      "error_message": null,
+      "metrics": {},
+      "details": {
+        "error": "HTTPConnectionPool(host='localhost', port=8001): Max retries exceeded with url: /health (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x78f31b6a8bc0>: Failed to establish a new connection: [Errno 111] Connection refused'))"
+      }
+    },
+    {
+      "test_name": "Dual Encoder Functionality",
+      "status": "fail",
+      "duration": 0.0028145313262939453,
+      "error_message": null,
+      "metrics": {},
+      "details": {
+        "error": "OptimizedSpatialInference.__init__() missing 1 required positional argument: 'config'"
+      }
+    },
+    {
+      "test_name": "Memory Optimization",
+      "status": "fail",
+      "duration": 0.001527547836303711,
+      "error_message": null,
+      "metrics": {},
+      "details": {
+        "error": "cannot import name 'SpatialInferenceMemoryOptimized' from 'scripts.spatial_inference_memory_optimized' (/home/emilio/Documents/ai/pizza/scripts/spatial_inference_memory_optimized.py)"
+      }
+    },
+    {
+      "test_name": "Model Versioning",
+      "status": "pass",
+      "duration": 1.959803819656372,
+      "error_message": null,
+      "metrics": {
+        "total_models": 1,
+        "valid_models": 1,
+        "total_size_mb": 944.0062770843506
+      },
+      "details": {
+        "models": [
+          {
+            "path": "/home/emilio/Documents/ai/pizza/models/spatial_mllm/pizza_finetuned_v1.pth",
+            "size_mb": 944.0062770843506,
+            "has_metadata": false,
+            "has_state_dict": false
+          }
+        ]
+      }
+    },
+    {
+      "test_name": "Multi-Environment Compatibility",
+      "status": "pass",
+      "duration": 0.34364795684814453,
+      "error_message": null,
+      "metrics": {
+        "compatibility_score": 100,
+        "max_score": 100
+      },
+      "details": {
+        "cuda": {
+          "available": true,
+          "device_count": 1,
+          "version": "12.4"
+        },
+        "cpu": {
+          "model_loading": true,
+          "tokenizer_loading": true
+        },
+        "memory": {
+          "total_gb": 31.158138275146484,
+          "available_gb": 27.16668701171875,
+          "sufficient": true
+        },
+        "dependencies": {
+          "torch": true,
+          "transformers": true,
+          "PIL": true,
+          "numpy": true
+        }
+      }
+    }
+  ]
+}

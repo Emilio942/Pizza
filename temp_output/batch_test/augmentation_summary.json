@@ -1,0 +1,56 @@
+{
+  "total_images_processed": 3,
+  "successful_augmentations": 3,
+  "total_processing_time": 4.009390115737915,
+  "average_processing_time": 1.3364633719126384,
+  "average_quality_score": 0.7099012311145526,
+  "average_spatial_consistency": 0.9297268691753269,
+  "augmentation_type_distribution": {
+    "total_count": 9,
+    "distribution": {
+      "geometric_pizza_reshaping": {
+        "count": 3,
+        "percentage": 33.33333333333333,
+        "avg_quality": 0.6297036933436577,
+        "min_quality": 0.5577327849526091,
+        "max_quality": 0.6767342001095124
+      },
+      "enhanced_burning": {
+        "count": 3,
+        "percentage": 33.33333333333333,
+        "avg_quality": 0.75,
+        "min_quality": 0.75,
+        "max_quality": 0.75
+      },
+      "enhanced_mixed": {
+        "count": 3,
+        "percentage": 33.33333333333333,
+        "avg_quality": 0.75,
+        "min_quality": 0.75,
+        "max_quality": 0.75
+      }
+    },
+    "most_common_type": "geometric_pizza_reshaping",
+    "average_quality_overall": 0.7099012311145526
+  },
+  "config": {
+    "perspective_distortion_range": [
+      0.1,
+      0.4
+    ],
+    "depth_variation_intensity": 0.3,
+    "lighting_3d_aware": true,
+    "spatial_feature_guidance": true,
+    "synthetic_depth_variations": 5,
+    "spatial_complexity_threshold": 0.5,
+    "quality_evaluation_enabled": true,
+    "output_variations_per_image": 3,
+    "spatial_resolution": [
+      518,
+      518
+    ],
+    "preserve_spatial_features": true,
+    "use_existing_augmentation": true,
+    "fallback_to_standard": true
+  }
+}

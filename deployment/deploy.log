@@ -1,0 +1,29 @@
+2025-06-07 14:11:11 - Starting SPATIAL-6.2 production deployment...
+2025-06-07 14:11:11 - [0;34mINFO: Checking prerequisites...[0m
+2025-06-07 14:11:11 - [0;31mERROR: Docker Compose is not installed[0m
+2025-06-07 14:15:49 - Starting SPATIAL-6.2 production deployment...
+2025-06-07 14:15:49 - [0;34mINFO: Checking prerequisites...[0m
+2025-06-07 14:15:51 - [1;33mWARNING: NVIDIA Docker runtime not available. GPU acceleration disabled.[0m
+2025-06-07 14:15:51 - [0;32mSUCCESS: Prerequisites check passed[0m
+2025-06-07 14:15:51 - [0;34mINFO: Validating models...[0m
+2025-06-07 14:15:51 - [0;32mSUCCESS: Model validation passed[0m
+2025-06-07 14:15:51 - [0;34mINFO: Creating necessary directories...[0m
+2025-06-07 14:15:51 - [0;32mSUCCESS: Directories created[0m
+2025-06-07 14:15:51 - [0;34mINFO: Building production Docker images...[0m
+2025-06-07 14:16:03 - [0;31mERROR: Failed to build application image[0m
+2025-06-07 14:16:46 - Starting SPATIAL-6.2 production deployment...
+2025-06-07 14:16:46 - [0;34mINFO: Checking prerequisites...[0m
+2025-06-07 14:16:47 - [1;33mWARNING: NVIDIA Docker runtime not available. GPU acceleration disabled.[0m
+2025-06-07 14:16:47 - [0;32mSUCCESS: Prerequisites check passed[0m
+2025-06-07 14:16:47 - [0;34mINFO: Validating models...[0m
+2025-06-07 14:16:47 - [0;32mSUCCESS: Model validation passed[0m
+2025-06-07 14:16:47 - [0;34mINFO: Creating necessary directories...[0m
+2025-06-07 14:16:47 - [0;32mSUCCESS: Directories created[0m
+2025-06-07 14:16:47 - [0;34mINFO: Building production Docker images...[0m
+2025-06-07 15:37:20 - [0;32mSUCCESS: Docker images built successfully[0m
+2025-06-07 15:37:20 - [0;34mINFO: Image tagged as: pizza-classification:20250607-153719[0m
+2025-06-07 15:37:20 - [0;34mINFO: Deploying services...[0m
+2025-06-07 15:38:36 - [0;32mSUCCESS: Services deployed[0m
+2025-06-07 15:38:36 - [0;34mINFO: Waiting for services to be ready...[0m
+2025-06-07 15:38:36 - [0;34mINFO: Checking pizza-api:8001...[0m
+2025-06-07 15:43:39 - [0;31mERROR: pizza-api:8001 failed to start after 30 attempts[0m

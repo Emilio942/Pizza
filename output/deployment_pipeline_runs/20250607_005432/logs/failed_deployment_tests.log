@@ -1,0 +1,37 @@
+2025-06-07 00:54:34,591 - INFO - 🧪 Spatial Feature Tests initialized
+2025-06-07 00:54:34,591 - INFO - Device: cuda
+2025-06-07 00:54:34,591 - INFO - Test data: /home/emilio/Documents/ai/pizza/data/test
+2025-06-07 00:54:34,591 - INFO - API URL: http://localhost:8001
+2025-06-07 00:54:34,591 - INFO - 🚀 Starting comprehensive Spatial-MLLM feature testing...
+2025-06-07 00:54:34,591 - INFO - Running test: Spatial Model Loading
+2025-06-07 00:54:36.050625: I tensorflow/core/util/port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+2025-06-07 00:54:36.058399: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:467] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1749250476.067597   50292 cuda_dnn.cc:8579] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1749250476.070358   50292 cuda_blas.cc:1407] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+W0000 00:00:1749250476.077526   50292 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1749250476.077540   50292 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1749250476.077541   50292 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1749250476.077542   50292 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+2025-06-07 00:54:36.079834: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 AVX_VNNI FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+Loading checkpoint shards:   0%|          | 0/3 [00:00<?, ?it/s]Loading checkpoint shards:  33%|███▎      | 1/3 [00:30<01:00, 30.32s/it]Loading checkpoint shards:  67%|██████▋   | 2/3 [00:46<00:21, 21.78s/it]Loading checkpoint shards: 100%|██████████| 3/3 [00:46<00:00, 15.40s/it]
+Using a slow image processor as `use_fast` is unset and a slow processor was saved with this model. `use_fast=True` will be the default behavior in v4.52, even if the model was saved with a slow processor. This will result in minor differences in outputs. You'll still be able to use a slow processor with `use_fast=False`.
+2025-06-07 00:55:25,921 - INFO - ✅ Spatial Model Loading - PASSED (51.33s)
+2025-06-07 00:55:25,921 - INFO - Running test: Spatial Preprocessing Pipeline
+2025-06-07 00:55:26,031 - INFO - ✅ Spatial Preprocessing Pipeline - PASSED (0.11s)
+2025-06-07 00:55:26,031 - INFO - Running test: Spatial API Integration
+2025-06-07 00:55:26,033 - INFO - ✅ Spatial API Integration - PASSED (0.00s)
+2025-06-07 00:55:26,033 - INFO - Running test: Dual Encoder Functionality
+2025-06-07 00:55:26,043 - INFO - set VIDEO_TOTAL_PIXELS: 90316800
+2025-06-07 00:55:26,044 - INFO - ✅ Dual Encoder Functionality - PASSED (0.01s)
+2025-06-07 00:55:26,044 - INFO - Running test: Memory Optimization
+2025-06-07 00:55:26,048 - INFO - ✅ Memory Optimization - PASSED (0.00s)
+2025-06-07 00:55:26,048 - INFO - Running test: Model Versioning
+2025-06-07 00:55:27,993 - INFO - ✅ Model Versioning - PASSED (1.94s)
+2025-06-07 00:55:27,993 - INFO - Running test: Multi-Environment Compatibility
+2025-06-07 00:55:28,324 - INFO - ✅ Multi-Environment Compatibility - PASSED (0.33s)
+2025-06-07 00:55:28,325 - INFO - 📊 Test Summary: 3/7 passed, 4 failed, 0 skipped
+2025-06-07 00:55:28,325 - INFO - 📄 Test results saved to: output/spatial_tests/spatial_tests_20250607_005528.json
+2025-06-07 00:55:28,325 - ERROR - ❌ Some tests failed!
+⚠️  Partial import: qwen_vl_utils available, using standard transformers models

@@ -30,9 +30,9 @@ RP2040_CLOCK_SPEED = 133  # MHz
 # Alias for modules expecting explicit unit suffix
 RP2040_CLOCK_SPEED_MHZ = RP2040_CLOCK_SPEED
 RP2040_RAM = 264  # KB
+RP2040_RAM_SIZE_KB = 264  # KB - for compatibility
 RP2040_FLASH = 2048  # KB
-RP2040_FLASH_SIZE_KB = 2048  # Duplicate for compatibility
-RP2040_RAM_SIZE_KB = 264  # Duplicate for compatibility
+RP2040_FLASH_SIZE_KB = 2048  # KB - for compatibility
 
 # Camera parameters
 CAMERA_WIDTH = 320

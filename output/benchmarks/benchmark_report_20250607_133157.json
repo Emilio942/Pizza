@@ -1,0 +1,114 @@
+{
+  "benchmark_timestamp": "2025-06-07T13:31:57.956975",
+  "total_duration": 4.014800548553467,
+  "system_info": {
+    "cpu_model": "x86_64",
+    "cpu_cores": 16,
+    "total_ram_gb": 31.158138275146484,
+    "gpu_model": "NVIDIA GeForce RTX 3060",
+    "gpu_memory_gb": 11.63262939453125,
+    "cuda_version": "12.4",
+    "pytorch_version": "2.6.0+cu124",
+    "python_version": "3.12.3"
+  },
+  "total_tests": 7,
+  "successful_tests": 3,
+  "failed_tests": 4,
+  "success_rate": 0.42857142857142855,
+  "performance_metrics": {
+    "avg_inference_time": 0.003383159637451172,
+    "avg_memory_usage_mb": 0.0,
+    "avg_gpu_memory_mb": 0.0,
+    "avg_cpu_utilization": 0.0,
+    "avg_throughput_images_per_sec": 0,
+    "best_single_inference_time": 0.0013613700866699219,
+    "peak_memory_usage_mb": 0,
+    "peak_gpu_memory_mb": 0
+  },
+  "detailed_results": [
+    {
+      "test_name": "model_loading",
+      "environment": "cuda",
+      "model_type": "spatial_mllm",
+      "inference_time": 0,
+      "memory_usage_mb": 0,
+      "gpu_memory_mb": 0,
+      "cpu_utilization": 0,
+      "accuracy": null,
+      "throughput_images_per_sec": null,
+      "error_message": "CUDA out of memory. Tried to allocate 44.00 MiB. GPU 0 has a total capacity of 11.63 GiB of which 65.56 MiB is free. Process 137926 has 7.76 GiB memory in use. Including non-PyTorch memory, this process has 3.28 GiB memory in use. Of the allocated memory 3.16 GiB is allocated by PyTorch, and 17.28 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)"
+    },
+    {
+      "test_name": "single_inference",
+      "environment": "cuda",
+      "model_type": "spatial_mllm",
+      "inference_time": 0,
+      "memory_usage_mb": 0,
+      "gpu_memory_mb": 0,
+      "cpu_utilization": 0,
+      "accuracy": null,
+      "throughput_images_per_sec": null,
+      "error_message": "OptimizedSpatialInference.__init__() missing 1 required positional argument: 'config'"
+    },
+    {
+      "test_name": "batch_inference_size_1",
+      "environment": "cuda",
+      "model_type": "spatial_mllm",
+      "inference_time": 0,
+      "memory_usage_mb": 0,
+      "gpu_memory_mb": 0,
+      "cpu_utilization": 0,
+      "accuracy": null,
+      "throughput_images_per_sec": null,
+      "error_message": "OptimizedSpatialInference.__init__() missing 1 required positional argument: 'config'"
+    },
+    {
+      "test_name": "memory_optimized_inference",
+      "environment": "cuda",
+      "model_type": "spatial_mllm_optimized",
+      "inference_time": 0,
+      "memory_usage_mb": 0,
+      "gpu_memory_mb": 0,
+      "cpu_utilization": 0,
+      "accuracy": null,
+      "throughput_images_per_sec": null,
+      "error_message": "cannot import name 'SpatialInferenceMemoryOptimized' from 'scripts.spatial_inference_memory_optimized' (/home/emilio/Documents/ai/pizza/scripts/spatial_inference_memory_optimized.py)"
+    },
+    {
+      "test_name": "api__health",
+      "environment": "api",
+      "model_type": "api_endpoint",
+      "inference_time": 0.0061931610107421875,
+      "memory_usage_mb": 0,
+      "gpu_memory_mb": 0,
+      "cpu_utilization": 0,
+      "accuracy": 1.0,
+      "throughput_images_per_sec": null,
+      "error_message": null
+    },
+    {
+      "test_name": "api__predict_spatial",
+      "environment": "api",
+      "model_type": "api_endpoint",
+      "inference_time": 0.0025949478149414062,
+      "memory_usage_mb": 0,
+      "gpu_memory_mb": 0,
+      "cpu_utilization": 0,
+      "accuracy": 0.0,
+      "throughput_images_per_sec": null,
+      "error_message": null
+    },
+    {
+      "test_name": "api__predict_standard",
+      "environment": "api",
+      "model_type": "api_endpoint",
+      "inference_time": 0.0013613700866699219,
+      "memory_usage_mb": 0,
+      "gpu_memory_mb": 0,
+      "cpu_utilization": 0,
+      "accuracy": 0.0,
+      "throughput_images_per_sec": null,
+      "error_message": null
+    }
+  ]
+}

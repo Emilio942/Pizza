@@ -122,7 +122,7 @@ def get_prediction(
         class_names: List of class names
         
     Returns:
-        Tuple of (predicted class name, probability)
+        Tuple of (predicted class name, probability or dict of all probabilities)
     """
     # Set device
     device = next(model.parameters()).device

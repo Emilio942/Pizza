@@ -1,0 +1,125 @@
+{
+  "timestamp": "2025-06-07T13:28:23.693040",
+  "total_tests": 10,
+  "passed": 3,
+  "failed": 7,
+  "errors": 0,
+  "success_rate": 0.3,
+  "test_results": [
+    {
+      "test_name": "docker_build_standard",
+      "status": "fail",
+      "duration": 0.6331632137298584,
+      "error_message": "Test returned False",
+      "details": null,
+      "timestamp": "2025-06-07T13:28:16.400609"
+    },
+    {
+      "test_name": "docker_build_spatial",
+      "status": "fail",
+      "duration": 0.052475929260253906,
+      "error_message": "Test returned False",
+      "details": null,
+      "timestamp": "2025-06-07T13:28:17.033877"
+    },
+    {
+      "test_name": "container_startup_standard",
+      "status": "fail",
+      "duration": 1.3265714645385742,
+      "error_message": "{'success': False, 'error': '404 Client Error for http+docker://localhost/v1.50/images/create?tag=latest&fromImage=pizza-detection-test: Not Found (\"pull access denied for pizza-detection-test, repository does not exist or may require \\'docker login\\': denied: requested access to the resource is denied\")'}",
+      "details": null,
+      "timestamp": "2025-06-07T13:28:17.086386"
+    },
+    {
+      "test_name": "container_startup_spatial",
+      "status": "fail",
+      "duration": 1.2392785549163818,
+      "error_message": "{'success': False, 'error': '404 Client Error for http+docker://localhost/v1.50/images/create?tag=latest&fromImage=pizza-detection-spatial-test: Not Found (\"pull access denied for pizza-detection-spatial-test, repository does not exist or may require \\'docker login\\': denied: requested access to the resource is denied\")'}",
+      "details": null,
+      "timestamp": "2025-06-07T13:28:18.413051"
+    },
+    {
+      "test_name": "model_loading",
+      "status": "fail",
+      "duration": 3.8609468936920166,
+      "error_message": "{'success': False, 'details': {'standard_model': {'success': False, 'error': \"cannot import name 'PizzaAPI' from 'src.api.pizza_api' (/home/emilio/Documents/ai/pizza/src/api/pizza_api.py)\"}, 'spatial_model': {'success': False, 'error': \"No module named 'src.spatial'\"}}}",
+      "details": null,
+      "timestamp": "2025-06-07T13:28:19.652928"
+    },
+    {
+      "test_name": "model_versioning",
+      "status": "pass",
+      "duration": 0.003164052963256836,
+      "error_message": null,
+      "details": {
+        "success": true,
+        "spatial_versions": 0,
+        "standard_versions": 0,
+        "has_spatial": false,
+        "has_standard": false
+      },
+      "timestamp": "2025-06-07T13:28:23.513979"
+    },
+    {
+      "test_name": "inference_performance",
+      "status": "pass",
+      "duration": 0.16538023948669434,
+      "error_message": null,
+      "details": {
+        "success": true,
+        "details": {
+          "standard_inference": {
+            "success": true,
+            "inference_time": 0.10015749931335449,
+            "performance_ok": true
+          },
+          "spatial_inference": {
+            "success": false,
+            "error": "OptimizedSpatialInference.__init__() missing 1 required positional argument: 'config'"
+          }
+        }
+      },
+      "timestamp": "2025-06-07T13:28:23.517235"
+    },
+    {
+      "test_name": "api_health_check",
+      "status": "pass",
+      "duration": 0.003506183624267578,
+      "error_message": null,
+      "details": {
+        "success": true,
+        "details": {
+          "standard_api": {
+            "success": false,
+            "error": "HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /health (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x793f6039f860>: Failed to establish a new connection: [Errno 111] Connection refused'))"
+          },
+          "spatial_api": {
+            "status_code": 200,
+            "success": true
+          },
+          "load_balancer": {
+            "success": false,
+            "error": "HTTPConnectionPool(host='localhost', port=80): Max retries exceeded with url: /health (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x793f55f509e0>: Failed to establish a new connection: [Errno 111] Connection refused'))"
+          }
+        }
+      },
+      "timestamp": "2025-06-07T13:28:23.682700"
+    },
+    {
+      "test_name": "api_prediction_endpoints",
+      "status": "fail",
+      "duration": 0.00475764274597168,
+      "error_message": "{'success': False, 'details': {'standard_prediction': {'success': False, 'error': \"HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /predict (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x793f55f511f0>: Failed to establish a new connection: [Errno 111] Connection refused'))\"}, 'spatial_prediction': {'status_code': 404, 'success': False, 'response': None}}}",
+      "details": null,
+      "timestamp": "2025-06-07T13:28:23.686270"
+    },
+    {
+      "test_name": "docker_compose_deployment",
+      "status": "fail",
+      "duration": 0.00185394287109375,
+      "error_message": "{'success': False, 'error': \"[Errno 2] No such file or directory: 'docker-compose'\"}",
+      "details": null,
+      "timestamp": "2025-06-07T13:28:23.691119"
+    }
+  ]
+}

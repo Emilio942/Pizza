@@ -1,0 +1,28 @@
+WARNING:root:RP2040 emulator not available, using mock implementation
+INFO:__main__:CUDA available, using GPU: NVIDIA GeForce RTX 3060
+INFO:__main__:Pizza RL Trainer initialized on device: cuda
+INFO:__main__:Initializing Pizza RL components...
+WARNING:src.verification.pizza_verifier:Verifier model not found at None, using random initialization
+INFO:src.verification.pizza_verifier:Pizza verifier initialized on cuda
+INFO:src.integration.compatibility:CMSIS-NN export found: models/rp2040_export/pizza_model.c
+INFO:src.integration.compatibility:Model compatibility manager initialized on cuda
+WARNING:root:α,β-CROWN nicht gefunden. Formale Verifikation wird nicht verfügbar sein. Installiere mit: pip install auto_LiRPA
+INFO:src.integration.compatibility:Verifier integration initialized
+INFO:src.rl.pizza_rl_environment:Pizza verifier initialized successfully
+INFO:src.rl.pizza_rl_environment:Initialized MicroPizzaNet
+INFO:src.rl.pizza_rl_environment:Initialized MicroPizzaNetV2
+INFO:src.rl.pizza_rl_environment:Initialized MicroPizzaNetWithSE
+INFO:src.rl.pizza_rl_environment:Loaded 12 pizza tasks
+INFO:src.rl.pizza_rl_environment:Pizza RL Environment initialized with 15 max steps
+INFO:src.rl.pizza_rl_environment:Updated reward weights: accuracy=0.550, energy=0.250, speed=0.200
+INFO:src.rl.adaptive_pizza_policy:Initialized AdaptivePizzaRecognitionPolicy with 68394 parameters
+INFO:src.rl.ppo_pizza_agent:PPO Pizza Agent initialized with 68394 parameters
+Traceback (most recent call last):
+  File "/home/emilio/Documents/ai/pizza/scripts/train_pizza_rl.py", line 466, in <module>
+    main()
+  File "/home/emilio/Documents/ai/pizza/scripts/train_pizza_rl.py", line 459, in main
+    trainer.initialize_components()
+  File "/home/emilio/Documents/ai/pizza/scripts/train_pizza_rl.py", line 234, in initialize_components
+    self.performance_logger = PerformanceLogger(
+                              ^^^^^^^^^^^^^^^^^^
+TypeError: PerformanceLogger.__init__() got an unexpected keyword argument 'enable_memory_tracking'

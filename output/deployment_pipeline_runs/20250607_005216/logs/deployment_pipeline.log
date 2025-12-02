@@ -1,0 +1,17 @@
+
+[0;34m=== Starting Deployment Pipeline - SPATIAL-4.2 ===[0m
+[0;32m[INFO][0m Pipeline run ID: 20250607_005216
+[0;32m[INFO][0m Output directory: /home/emilio/Documents/ai/pizza/output/deployment_pipeline_runs/20250607_005216
+
+[0;34m=== Checking Prerequisites ===[0m
+Python 3.12.3
+CUDA available: True
+[0;32m[INFO][0m CUDA availability check passed
+Docker version 28.2.2, build e6534b4
+[0;32m[INFO][0m Docker is available
+[1;33m[WARNING][0m Docker Compose is not available
+[0;32m[INFO][0m Sufficient disk space available
+
+[0;34m=== Building Docker Containers ===[0m
+[0;32m[INFO][0m Building standard pizza detection container...
+[0;31m[ERROR][0m Failed to build standard container
