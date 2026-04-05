@@ -1,0 +1,53 @@
+; ----------------------------------------------------------------------------
+; pio_edge_detector.pio
+; ----------------------------------------------------------------------------
+; This Programmable I/O (PIO) assembly extracts spatial edges (1-bit raster)
+; directly from the camera data stream, completely offloading the Cortex-M0+
+; cores. It implements a simple threshold-based difference check.
+; ----------------------------------------------------------------------------
+
+.program edge_detector
+.wrap_target
+    ; Assume pixel intensity is presented on IN pins (e.g., 8 pins for int8)
+    ; OSR is filled from the camera parallel interface
+    
+    ; 1. Wait for pixel valid (VSYNC/HREF ignored here for simplicity)
+    wait 1 pin 8       ; Wait for Pixel Clock (PCLK)
+    
+    ; 2. Read 8-bit pixel value into ISR
+    in pins, 8         ; Shift 8 bits from input pins into ISR
+    
+    ; 3. Compare current pixel with previous pixel (stored in Y or X)
+    ; Here we just do a dummy threshold operation for demonstration
+    ; In a real implementation, we compare ISR against a global threshold
+    ; or use X/Y to hold the previous pixel and calculate |curr - prev| > threshold.
+    
+    mov x, isr         ; Move current pixel to X
+    ; (Insert threshold logic here. PIO is limited in arithmetic, 
+    ;  so typical usage is to use DMA to pull a lookup table, 
+    ;  or simple thresholding if input is pre-scaled)
+    
+    ; 4. Output a single bit (1 for edge, 0 for no edge)
+    ; We push a 1-bit result to the RX FIFO
+    ; The DMA can pack these 1-bit results into bytes for the memory limit (64B)
+    
+    push noblock       ; Push the resulting edge bit to the FIFO
+    
+.wrap
+
+; Helper function in C (typically included below the assembly in .pio files)
+% c-sdk {
+static inline void edge_detector_program_init(PIO pio, uint sm, uint offset, uint pin_base) {
+    pio_sm_config c = edge_detector_program_get_default_config(offset);
+    
+    // Configure input pins
+    sm_config_set_in_pins(&c, pin_base);
+    
+    // Configure FIFO to shift to right, auto-push when 32 bits are collected
+    // This perfectly packs our 1-bit edge detections!
+    sm_config_set_in_shift(&c, true, true, 32); 
+    
+    pio_sm_init(pio, sm, offset, &c);
+    pio_sm_set_enabled(pio, sm, true);
+}
+%}

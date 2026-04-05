@@ -6,6 +6,7 @@
 
 #include "arm_nnfunctions.h"
 #include "pizza_verifier_weights.h"
+#include "src/sheaf_consistency.h"
 #include <stdint.h>
 #include <string.h>
 
@@ -13,12 +14,12 @@
 static int8_t activation_buffer[8192];
 
 /**
- * Perform pizza quality verification
+ * Perform pizza quality verification with Sheaf Consistency
  * @param image_features: Input image features (normalized to int8)
  * @param prediction_features: Model prediction features
  * @param confidence_score: Confidence score (scaled to int8)
  * @param output_buffer: Output buffer for quality score
- * @return: 0 on success, negative on error
+ * @return: 0 on success, -2 on ghost pizza, negative on other error
  */
 int pizza_verifier_inference(
     const int8_t* image_features,
@@ -29,6 +30,15 @@ int pizza_verifier_inference(
     // Input validation
     if (!image_features || !prediction_features || !output_buffer) {
         return -1;
+    }
+    
+    // 1. Update Sheaf patches for consistency check
+    // We treat the current features as a local section
+    sheaf_update_patch(0, image_features[0], prediction_features[0]);
+    
+    // 2. Perform Global Consistency Check (Level 3 optimization)
+    if (!sheaf_check_global_consistency()) {
+        return -2; // Ghost Pizza Detected!
     }
     
     // Combine input features

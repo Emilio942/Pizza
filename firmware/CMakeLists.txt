@@ -10,6 +10,10 @@ include_directories(${CMSIS_NN_PATH}/Include)
 set(PIZZA_VERIFIER_SOURCES
     pizza_verifier_inference.c
     pizza_verifier_example.c
+    src/sheaf_consistency.c
+    src/optimal_transport.c
+    src/frequent_directions.c
+    src/evidential_logic.c
 )
 
 # CMSIS-NN library sources

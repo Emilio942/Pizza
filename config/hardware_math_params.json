@@ -1,0 +1,22 @@
+{
+  "rp2040_math": {
+    "sram_limit_kb": 264,
+    "bus_arbitration_delay_us": 1.5,
+    "pio_fifo_buffer_bytes": 4096,
+    "dvfs": {
+      "sleep_inference_duty_cycle": 0.15,
+      "max_average_power_mw": 50,
+      "clock_freq_mhz": 133
+    },
+    "stochastic_calculus": {
+      "max_arrival_rate_lambda_in_mbps": 2.4,
+      "overflow_probability_p": 0.001
+    },
+    "topology": {
+      "betti_0_expected": 1,
+      "betti_1_expected_range": [0, 2],
+      "betti_tolerance_delta": 0,
+      "bottleneck_distance_bound": 22
+    }
+  }
+}

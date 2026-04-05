@@ -128,6 +128,15 @@ def calibrate_and_quantize(model, train_loader, config, class_names, verbose=Tru
     
     # Import the correct module
     from torch import quantization
+    from src.optimization.spectral_sparsification import SpectralSparsifier
+    
+    # Mathematical Sparsification (Level 2 optimization)
+    logger.info("Applying Spectral Sparsification using Effective Resistance...")
+    sparsifier = SpectralSparsifier(epsilon=0.15)
+    with torch.no_grad():
+        for name, param in model.named_parameters():
+            if 'weight' in name and len(param.shape) >= 2:
+                param.data = sparsifier.sparsify(param.data)
     
     # Model paths - separate paths for quantized and fallback models
     quantized_model_path = os.path.join(config.MODEL_DIR, "pizza_model_int8.pth")
